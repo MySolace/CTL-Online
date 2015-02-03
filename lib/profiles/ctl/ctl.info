@@ -1,0 +1,68 @@
+name = CTL
+description = An installation profile for CTL Online.
+core = 7.x
+
+; CORE
+dependencies[] = block
+dependencies[] = comment
+dependencies[] = contextual
+dependencies[] = field
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = filter
+dependencies[] = image
+dependencies[] = list
+dependencies[] = node
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = system
+dependencies[] = taxonomy
+dependencies[] = text
+dependencies[] = toolbar
+dependencies[] = user
+
+; CONTRIB
+dependencies[] = addressfield
+dependencies[] = admin_menu
+dependencies[] = admin_menu_toolbar
+dependencies[] = better_exposed_filters
+dependencies[] = computed_field
+dependencies[] = conditional_fields
+dependencies[] = ctools
+dependencies[] = date
+dependencies[] = date_api
+dependencies[] = date_views
+dependencies[] = email
+dependencies[] = email_registration
+dependencies[] = entity
+dependencies[] = entityreference
+dependencies[] = entityreference_prepopulate
+dependencies[] = entity_token
+dependencies[] = inline_registration
+dependencies[] = libraries
+dependencies[] = node_limit
+dependencies[] = node_limit_role
+dependencies[] = node_limit_type
+dependencies[] = no_trimmed_preview
+dependencies[] = realname
+dependencies[] = rules_admin
+dependencies[] = rules_conditional
+dependencies[] = rules_scheduler
+dependencies[] = token
+dependencies[] = video
+dependencies[] = video_ui
+dependencies[] = views_bulk_operations
+dependencies[] = views_ui
+dependencies[] = field_group
+dependencies[] = auto_nodetitle
+dependencies[] = views
+dependencies[] = features
+dependencies[] = field_permissions
+dependencies[] = rules
+
+; CTL
+dependencies[] = ctl
+dependencies[] = ctl_application
+dependencies[] = ctl_online
+

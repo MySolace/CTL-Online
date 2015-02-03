@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the CTL Online feature.
+ */
+
+include_once 'ctl_online.features.inc';

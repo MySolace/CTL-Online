@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the CTL Application feature.
+ */
+
+include_once 'ctl_application.features.inc';

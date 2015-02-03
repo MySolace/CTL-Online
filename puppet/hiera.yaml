@@ -1,0 +1,14 @@
+---
+:hierarchy:
+    - common
+
+:backends:
+    - yaml
+    - puppet
+    - json
+
+:yaml:
+    :datadir: '/data/puppet/hieradata'
+
+:json:
+    :datadir: '/data/puppet/hieradata'

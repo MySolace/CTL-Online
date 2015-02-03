@@ -1,0 +1,15 @@
+[submodule "puppet/modules/mysql"]
+	path = puppet/modules/mysql
+	url = git@github.com:puppetlabs/puppetlabs-mysql.git
+[submodule "puppet/modules/nginx"]
+	path = puppet/modules/nginx
+	url = git@github.com:jfryman/puppet-nginx.git
+[submodule "puppet/modules/php"]
+	path = puppet/modules/php
+	url = git@github.com:Mayflower/puppet-php.git
+[submodule "puppet/modules/stdlib"]
+	path = puppet/modules/stdlib
+	url = git@github.com:puppetlabs/puppetlabs-stdlib.git
+[submodule "puppet/modules/remi"]
+	path = puppet/modules/remi
+	url = git@github.com:lboynton/puppet-remi.git

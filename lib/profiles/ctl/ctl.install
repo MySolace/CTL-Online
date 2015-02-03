@@ -1,0 +1,30 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the DoSomething installation profile.
+ */
+
+/**
+ * Implements hook_install_tasks().
+ */
+function ctl_install_tasks($install_state) {
+    $tasks = array (
+        'ctl_configure' => array(),
+    );
+
+    return $tasks;
+}
+
+/**
+ * Set up base configuration.
+ */
+function ctl_configure() {
+    db_update('system')
+        ->fields(array('status' => 1))
+        ->condition('type', 'theme')
+        ->condition('name', array('adminimal', 'ctl'), 'IN')
+        ->execute();
+
+    variable_set('admin_theme', 'ctl_theme');
+    variable_set('theme_default', 'ctl_theme');
+}
