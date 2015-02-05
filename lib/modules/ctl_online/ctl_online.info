@@ -5,7 +5,6 @@ package = Features
 version = 7.x-1.0
 project = ctl_online
 dependencies[] = addressfield
-dependencies[] = ctl
 dependencies[] = ctools
 dependencies[] = date
 dependencies[] = date_api
