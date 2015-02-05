@@ -18,5 +18,6 @@ projects[ctl_online][download][source] = './lib/modules/ctl_online'
 
 ; CTL Theme
 projects[ctl_theme][type] = "theme"
+projects[ctl_theme][subdir] = "ctl"
 projects[ctl_theme][download][type] = local
 projects[ctl_theme][download][source] = './lib/themes/ctl_theme'
