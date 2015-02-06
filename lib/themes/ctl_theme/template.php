@@ -11,3 +11,8 @@ function ctl_theme_preprocess_html(&$vars) {
         )
     );
 }
+
+function ctl_theme_date_combo($variables) {
+    return theme('form_element', $variables);
+}
+
