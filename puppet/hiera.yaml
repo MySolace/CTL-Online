@@ -12,3 +12,19 @@
 
 :json:
     :datadir: '/data/puppet/hieradata'
+
+php::settings:
+  Date/date.timezone: America/New_York
+
+php::extensions:
+  json: {}
+  mysql: {}
+  memcached:
+    provider: pecl
+    header_packages:
+      - libmemcached-dev
+  apc:
+    package_prefix: php-
+    settings:
+      apc.stat: 1
+      apc.stat_ctime: 1

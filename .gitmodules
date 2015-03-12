@@ -13,3 +13,9 @@
 [submodule "puppet/modules/remi"]
 	path = puppet/modules/remi
 	url = git@github.com:lboynton/puppet-remi.git
+[submodule "puppet/modules/pear"]
+	path = puppet/modules/pear
+	url = git@github.com:rafaelfelix/puppet-pear.git
+[submodule "puppet/modules/drush"]
+	path = puppet/modules/drush
+	url = git@github.com:erikwebb/erikwebb-drush.git
