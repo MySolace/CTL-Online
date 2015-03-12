@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
 # Every Vagrant virtual environment requires a box to build off of.
-    config.vm.box = "puppetlabs/centos-6.5-64-puppet"
+    config.vm.box = "puppetlabs/centos-6.6-64-puppet"
 
     config.vm.network :private_network, ip: "192.168.7.7"
 

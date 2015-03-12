@@ -60,3 +60,5 @@ projects[views][version] = "3.8"
 projects[views_bulk_operations][version] = "3.2"
 
 projects[adminimal_theme][version] = "1.20"
+
+projects[mailcontrol][version] = "1.0"
