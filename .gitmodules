@@ -19,6 +19,9 @@
 [submodule "puppet/modules/puppetlabs-inifile"]
 	path = puppet/modules/puppetlabs-inifile
 	url = git://github.com/puppetlabs/puppetlabs-inifile.git
-[submodule "puppet/modules/puppet-drush"]
+[submodule "puppet/modules/drush"]
 	path = puppet/modules/puppet-drush
 	url = git@github.com:jonhattan/puppet-drush.git
+[submodule "puppet/modules/puppetlabs-concat"]
+	path = puppet/modules/puppetlabs-concat
+	url = git@github.com:puppetlabs/puppetlabs-concat.git
