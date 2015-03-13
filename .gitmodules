@@ -16,6 +16,9 @@
 [submodule "puppet/modules/pear"]
 	path = puppet/modules/pear
 	url = git@github.com:rafaelfelix/puppet-pear.git
-[submodule "puppet/modules/drush"]
-	path = puppet/modules/drush
-	url = git@github.com:erikwebb/erikwebb-drush.git
+[submodule "puppet/modules/puppetlabs-inifile"]
+	path = puppet/modules/puppetlabs-inifile
+	url = git://github.com/puppetlabs/puppetlabs-inifile.git
+[submodule "puppet/modules/puppet-drush"]
+	path = puppet/modules/puppet-drush
+	url = git@github.com:jonhattan/puppet-drush.git

@@ -1,0 +1,14 @@
+php::settings:
+  Date/date.timezone: America/New_York
+
+php::extensions:
+  mysql: {}
+  memcached:
+    provider: pecl
+    header_packages:
+      - libmemcached-devel
+  apc:
+    package_prefix: php-pecl-
+    settings:
+      apc.stat: 1
+      apc.stat_ctime: 1

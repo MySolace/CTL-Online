@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.network :private_network, ip: "192.168.7.7"
 
-    config.vm.synced_folder 'puppet', '/data/puppet', :nfs => false
+    config.vm.synced_folder '.', '/data', :nfs => false
 
     config.vm.hostname = "drupal.local"
 
