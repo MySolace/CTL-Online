@@ -1,23 +1,25 @@
+resources { "firewall":
+    purge => true
+}
 
 node default {
     include ::php
     include ::nginx
     include ::mysql::server
     include ::php
+    include ctl_online
 
     include drush
-
+    
     exec { 'drush-reqs-root':
-        command => '/usr/bin/drush dl make_local-7.x-1.1',
-        require => File['symlink drush'],
-        creates => '/root/.drush/make_local'
+        command => '/usr/local/bin/drush dl make_local-6.x-1.0',
+        require => File['/usr/local/bin/drush'],
+        creates => '/usr/share/drush/commands/make_local'
     }
 
-    exec { 'drush-reqs-vagrant':
-        command => '/usr/bin/drush dl make_local-7.x-1.1',
-        require => File['symlink drush'],
-        creates => '/home/vagrant/.drush/make_local',
-        user    => 'vagrant'
+    exec { 'drush-path':
+        command => "/bin/echo 'export PATH=\$PATH:/usr/local/bin' > /etc/profile.d/drush-path.sh; source /etc/profile.d/drush-path.sh",
+        creates => '/etc/profile.d/drush-path.sh'
     }
 
     package { 'git':
@@ -32,12 +34,45 @@ node default {
 
     file { 'build-script':
         path   => '/home/vagrant/build.sh',
-        source => 'puppet:///modules/ctl-online/build.sh'
+        source => 'puppet:///modules/ctl_online/build.sh'
     }
         
     exec { 'build':
-        require => File['build-script'],
+        require => File['build-script', '/usr/local/bin/drush'],
         command => '/bin/sh /home/vagrant/build.sh',
         creates => '/var/www/online.crisistextline.org/current'
+    }
+
+    nginx::resource::vhost { 'ctl_online.dev':
+      www_root => '/var/www/online.crisistextline.org/current',
+      try_files => ['$uri', '$uri/', "/index.php?\$args"],
+    }
+
+    nginx::resource::location { "${name}_root":
+        ensure          => present,
+        vhost           => "ctl_online.dev",
+        www_root        => "/var/www/online.crisistextline.org/current/",
+        location        => '~ \.php$',
+        index_files     => ['index.php'],
+        proxy           => undef,
+        try_files       => ['$uri', '$uri/', "/index.php?\$args"],
+        fastcgi         => "127.0.0.1:9000",
+        fastcgi_script  => undef,
+        location_cfg_append => {
+            fastcgi_connect_timeout => '3m',
+            fastcgi_read_timeout    => '3m',
+            fastcgi_send_timeout    => '3m'
+        }
+    }
+
+    firewall { '100 allow ssh':
+        dport   => [22],
+        proto  => tcp,
+        action => accept,
+    }
+    firewall { '100 allow http access':
+        dport   => [80],
+        proto  => tcp,
+        action => accept,
     }
 }
