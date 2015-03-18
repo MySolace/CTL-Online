@@ -10,6 +10,9 @@ function ctl_theme_preprocess_html(&$vars) {
             'weight' => 5
         )
     );
+
+    drupal_add_js($adminimal_path . '/scripts/scroll-left.js');
+
 }
 
 function ctl_theme_date_combo($variables) {

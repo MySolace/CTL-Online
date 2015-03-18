@@ -48,3 +48,12 @@ div.breadcrumb a, #branding div.breadcrumb {
 .video-preview {
     display: none;
 }
+
+.block {
+    margin: 0 0 2em 0;
+}
+
+.field-multiple-table tbody label span {
+    display: none;
+}
+

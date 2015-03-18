@@ -21,7 +21,7 @@ function ctl_features_form_alter(&$form, &$form_state, $form_id) {
         $form['actions']['draft'] = array(
             '#type' => 'submit',
             '#value' => t('Save as Draft'),
-            '#weight' => '9',
+            '#weight' => '1',
             '#submit' => array('_ctl_features_save_draft_submit'),
             '#validate' => array('_ctl_features_save_draft_validate'),
             '#attributes' => array(
@@ -31,6 +31,10 @@ function ctl_features_form_alter(&$form, &$form_state, $form_id) {
 
         $form['actions']['submit']['#value'] = 'Submit Application';
         $form['actions']['submit']['#validate'][] = '_ctl_features_submit_app';
+    }
+
+    else if ($form_id == 'recommendation_node_form') {
+        $form['actions']['submit']['#value'] = 'Submit';
     }
 }
 
@@ -53,17 +57,16 @@ function _ctl_features_save_draft_submit($form, &$form_state) {
 }
 
 function _ctl_features_submit_app($form, &$form_state) {
-    global $user;
-
-    $r1email = trim($form_state['values']['field_r1_email_address'][LANGUAGE_NONE][0]['email']);
-    $r2email = trim($form_state['values']['field_r2_email_address'][LANGUAGE_NONE][0]['email']);
-
-    if ($r1email == $user->mail || $r2email == $user->mail) {
-        form_set_error(
-            'r1_email_address',
-            t('You cannot enter your own email address as a reference.')
-        );
-    }
-
     $form_state['values']['status'] = 1;
+}
+
+/**
+* Implements hook_field_widget_form_alter().
+*
+* Have boolean fields output the true first.
+*/
+function ctl_features_field_widget_form_alter(&$element, &$form_state, $context) {
+    if ($context['field']['type'] == 'list_boolean' && isset($element['#options'])) {
+        $element['#options'] = array_reverse($element['#options'], TRUE);
+    }
 }

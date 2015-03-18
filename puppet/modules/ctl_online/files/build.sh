@@ -11,6 +11,9 @@ drush make --prepare-install --no-gitinfofile --no-cache "$MAKEFILE" "$WEB_ROOT"
 
 cd $WEB_ROOT
 drush site-install ctl -y --db-url=mysql://root@localhost/ctl --site-name="CTL Online"
+drush dl reroute_email
+drush en reroute_email -y
+echo "\$conf['reroute_email_enable'] = 1;" >> sites/default/settings.php
 
 rm -rf $WEB_ROOT/profiles/ctl/modules/ctl
 ln -s $LIB_DIR/modules/ $WEB_ROOT/profiles/ctl/modules/ctl
