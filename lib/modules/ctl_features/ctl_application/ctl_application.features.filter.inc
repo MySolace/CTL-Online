@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * ctl_online.features.filter.inc
+ * ctl_application.features.filter.inc
  */
 
 /**
  * Implements hook_filter_default_formats().
  */
-function ctl_online_filter_default_formats() {
+function ctl_application_filter_default_formats() {
   $formats = array();
 
   // Exported format: HTML.
