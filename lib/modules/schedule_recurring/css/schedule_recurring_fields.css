@@ -1,0 +1,7 @@
+.schedule-recurring-shift-field {
+  display: inline-block;
+}
+
+.schedule-recurring-shift-field label {
+  display: none;
+}
