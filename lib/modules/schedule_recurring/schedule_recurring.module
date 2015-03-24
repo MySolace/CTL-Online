@@ -1,185 +1,112 @@
 <?php
 
+module_load_include('inc', 'schedule_recurring', 'field');
+
 /**
- *
+ * Implements hook_permission().
  */
-function schedule_recurring_entity_info() {
-  $entities = array(
-    'time_off' => array(
-      'label'            => t('Time Off'),
-      'base table'       => 'time_off',
-      'fieldable'        => TRUE,
-      'uri_callback'     => 'time_off_uri',
-      'entity keys'      => array(
-        'id' => 'id',
-        'bundle' => 'type',
+function schedule_recurring_permission() {
+  return array(
+    'administer schedule recurring settings' => array(
+      'title' => t('Administer schedule recurring'),
+      'description' => t('Manage settings for recurring scheduling'),
+    ),
+    'sign up for shifts' => array(
+      'title' => t('Sign up for shifts'),
+      'description' => t('Sign up for shifts using schedule recurring'),
       ),
-    ),
-  );
-
-  return $entities;
-}
-
-function time_off_uri($entity) {
-  return array(
-    'path' => 'time_off/' . $entity->id,
   );
 }
 
-function schedule_recurring_field_info() {
-  return array(
-    'schedule_recurring_shift' => array(
-      'label' => t('Shift'),
-      'description' => t('A weekly shift'),
-      'settings' => array(
-        'allowed_values' => array(),
-        'allowed_values_function' => '',
-      ),
-      'default_widget' => 'schedule_recurring_shift',
-      'default_formatter' => 'schedule_recurring_shift',
-    ),
+
+/**
+ * Implements hook_menu().
+ */
+function schedule_recurring_menu() {
+  $items = array();
+
+  $items['admin/config/schedule_recurring'] = array(
+    'title' => 'Recurring Scheduler settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('schedule_recurring_admin'),
+    'access arguments' => array('administer schedule recurring settings'),
+    'type' => MENU_NORMAL_ITEM,
   );
-}
 
-function schedule_recurring_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
-  foreach ($items as $delta => $item) {
-    if (intval($item['start']) > intval($item['end'])) {
-      $errors[$field['field_name']][$langcode][$delta][] = array(
-        'error' => 'schedule_recurring_end_time_invalid',
-        'message' => t('%name: The end time of a shift cannot be before the start time.', array('%name' => $instance['label'])),
-      );
-    }
-  }
-}
-
-function schedule_recurring_field_widget_error($element, $error, $form, &$form_state) {
-  switch ($error['error']) {
-    case 'schedule_recurring_end_time_invalid':
-      form_error($element, $error['message']);
-      break;
-  }
-}
-
-function schedule_recurring_field_is_empty($item, $field) {
-  switch ($field['type']) {
-    case 'schedule_recurring_shift':
-      return $item['day'] == -1 || $item['start'] == -1 || $item['end'] == -1;
-  }
-}
-
-function schedule_recurring_field_widget_info() {
-  return array(
-    'schedule_recurring_shift' => array(
-      'label' => t('Shift'),
-      'field types' => array('schedule_recurring_shift'),
-    ),
+  $items['schedule'] = array(
+    'title' => 'Shift scheduling',
+    'file' => 'schedule.inc',
+    'file path' => drupal_get_path('module', 'schedule_recurring'),
+    'page callback' => 'schedule_recurring_schedule',
+    'access arguments' => array('sign up for shifts'),
+    'type' => MENU_NORMAL_ITEM,
   );
+  
+  return $items;
 }
 
-function schedule_recurring_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
-  switch ($instance['widget']['type']) {
-    case 'schedule_recurring_shift':
-      $settings = $form_state['field'][$instance['field_name']][$langcode]['field']['settings'];
+/**
+ * Menu callback for module settings.
+ */
+function schedule_recurring_admin() {
+  $form = array();
 
-      $fields = array(
-        'day' => array(
-          'label' => t('Day'),
-          'options' => _schedule_recurring_days(),
-          'prefix' => t('On'),
-        ),
-        'start' => array(
-          'label' => t('Start Time'),
-          'options' => _schedule_recurring_times(),
-          'prefix' =>  t('from'),
-        ),
-        'end' => array(
-          'label' => t('End Time'),
-          'options' => _schedule_recurring_times(TRUE),
-          'prefix' => t('until'),
-        ),
-      );
-
-      foreach ($fields as $key => $opts) {
-        $opts['options'] = array(-1 => '- ' . $opts['label'] . ' -') + $opts['options'];
-
-        $element[$key] = array(
-          '#type'          => 'select',
-          '#options'       => $opts['options'],
-          '#title'         => $opts['label'],
-          '#default_value' => isset($items[$delta][$key]) ? $items[$delta][$key] : -1,
-          '#attached'      => array(
-            'css' => array(drupal_get_path('module', 'schedule_recurring') . '/css/schedule_recurring_fields.css'),
-            'js'  => array(),
-          ),
-          '#prefix'        => (isset($opts['prefix']) ? $opts['prefix'] : '') . ' <div class="schedule-recurring-shift-field">',
-          '#suffix'        => '</div> ' . (isset($opts['suffix']) ? $opts['suffix'] : ''),
-        );
-      }
-      break;
-  }
-
-  return $element;
-}
-
-function schedule_recurring_multiple_field_remove_button_field_widgets_alter(&$field_widgets) {
-  $field_widgets[] = 'schedule_recurring_shift';
-}
-
-function schedule_recurring_field_formatter_info() {
-  return array(
-    'schedule_recurring_shift' => array(
-      'label' => t('Default'),
-      'field types' => array('schedule_recurring_shift'),
-    ),
+  $form['schedule_recurring_shift_setters'] = array(
+    '#type' => 'checkboxes',
+    '#multiple' => TRUE,
+    '#options' => user_roles(),
+    '#default_value' => variable_get('schedule_recurring_shift_setters', array()),
+    '#description' => t('The roles whose shifts will define the available shifts.'),
+    '#title' => t('Shift availability definers'),
+    '#required' => FALSE,
   );
+
+  $form['schedule_recurring_users_per_block'] = array(
+    '#type' => 'textfield',
+    '#element_validate' => array('element_validate_number'),
+    '#title' => t('Maximum number of users to be supervised during a timeslot.'),
+    '#default_value' => variable_get('schedule_recurring_users_per_block', 50),
+    '#size' => 5,
+  );
+
+  $form['schedule_recurring_shift_increment'] = array(
+    '#type' => 'textfield',
+    '#element_validate' => array('element_validate_number'),
+    '#title' => t('Shift interval'),
+    '#field_prefix' => 'start a shift every',
+    '#field_suffix' => 'minutes',
+    '#default_value' => variable_get('schedule_recurring_shift_increment', 30),
+    '#size' => 5,
+  );
+
+  $form['schedule_recurring_shift_duration'] = array(
+    '#type' => 'textfield',
+    '#element_validate' => array('element_validate_number'),
+    '#title' => t('Shift length'),
+    '#field_suffix' => 'minutes',
+    '#default_value' => variable_get('schedule_recurring_shift_duration', 240),
+    '#size' => 5,
+  );
+
+  return system_settings_form($form);
 }
 
-function schedule_recurring_field_presave($entity_type, $entity, $field, $instance, $langcode, &$items) {
-  switch ($instance['widget']['type']) {
-    case 'schedule_recurring_shift':
-      usort($items, function ($a, $b) {
-        if ($a['day'] == $b['day']) {
-          return $a['start'] - $b['start'];
-        } else {
-          return $a['day'] - $b['day'];
-        }
-      });
-      break;
-  }
-}
+/**
+ * Internal method for who is a setter.
+ */
+function _schedule_recurring_setters() {
+  $setters = &drupal_static(__FUNCTION__);
 
-function schedule_recurring_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
-  $element = array();
-
-  switch ($display['type']) {
-    case 'schedule_recurring_shift':
-      $days = _schedule_recurring_days();
-      $times = _schedule_recurring_times();
-
-      $headers = array(
-        t('Day'),
-        t('Time'),
-      );
-
-      $rows = array();
-      foreach ($items as $delta => $item) {
-        $rows[] = array(
-          $days[$item['day']],
-          $times[$item['start']] . ' - '. $times[$item['end']],
-        );
-      }
-
-      $element[0] = array(
-        '#theme' => 'table',
-        '#header' => $headers,
-        '#rows' => $rows,
-      );
-
-      break;
+  if (!isset($setters)) {
+    $setters = variable_get('schedule_recurring_shift_setters', array());
+    $setters = array_filter(array_values($setters), function ($var) {
+      return $var != 0;
+    });
   }
 
-  return $element;
+  return $setters;
 }
+
 
 function _schedule_recurring_days() {
   return array(
@@ -197,13 +124,16 @@ function _schedule_recurring_times($include_2400 = FALSE) {
   static $times;
 
   $accessor = ($include_2400) ? 'include' : 'exclude';
+  $interval = variable_get('schedule_recurring_shift_increment');
 
   if (!isset($times[$accessor])) {
     $times[$accessor] = array();
 
     for ($i = 0; $i < 24; $i++) {
-      $times[$accessor][intval($i . '00')] = (($i % 12) ?: 12) . ':00 ' . (($i < 12) ? 'am' : 'pm');
-      $times[$accessor][intval($i . '30')] = (($i % 12) ?: 12) . ':30 ' . (($i < 12) ? 'am' : 'pm');
+      for ($j = 0; $j < 60; $j += $interval) {
+        $k = $j < 10 ? '0'.$j : $j;
+        $times[$accessor][intval($i . $k)] = (($i % 12) ?: 12) . ':'.$k.' '. (($i < 12) ? 'am' : 'pm');
+      }
     }
 
     if ($accessor == 'include') {

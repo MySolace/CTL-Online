@@ -1,5 +1,10 @@
 <?php
 
+function schedule_recurring_install() {
+  variable_set('schedule_recurring_shift_duration', 240);
+  variable_get('schedule_recurring_shift_increment', 30);
+}
+
 function schedule_recurring_schema() {
   $schema['time_off'] = array(
     'description' => 'The main store for time off entities',
