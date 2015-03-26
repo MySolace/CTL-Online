@@ -1,32 +1,6 @@
 <?php
 
 
-/**
- *
- */
-function schedule_recurring_entity_info() {
-  $entities = array(
-    'time_off' => array(
-      'label'            => t('Time Off'),
-      'base table'       => 'time_off',
-      'fieldable'        => TRUE,
-      'uri_callback'     => 'time_off_uri',
-      'entity keys'      => array(
-        'id' => 'id',
-        'bundle' => 'type',
-      ),
-    ),
-  );
-
-  return $entities;
-}
-
-function time_off_uri($entity) {
-  return array(
-    'path' => 'time_off/' . $entity->id,
-  );
-}
-
 function schedule_recurring_field_info() {
   return array(
     'schedule_recurring_shift' => array(

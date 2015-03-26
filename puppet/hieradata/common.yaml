@@ -1,5 +1,7 @@
 php::settings:
   Date/date.timezone: America/New_York
+  display_errors: On
+  display_startup_errors: On
 
 php::extensions:
   mysql: {}

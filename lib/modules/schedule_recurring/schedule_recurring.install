@@ -24,12 +24,14 @@ function schedule_recurring_schema() {
       ),
       'start' => array(
         'description' => 'The start date of the time off',
-        'type' => 'int',
+        'type' => 'varchar',
+        'length' => '16',
         'not null' => TRUE,
       ),
       'end' => array(
         'description' => 'The end date of the time off',
-        'type' => 'int',
+        'type' => 'varchar',
+        'length' => '16',
         'not null' => TRUE,
       ),
     ),

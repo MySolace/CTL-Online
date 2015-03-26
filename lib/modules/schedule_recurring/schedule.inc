@@ -66,6 +66,7 @@ function schedule_recurring_schedule() {
   return array(
     '#theme' => 'table',
     '#rows' => $shifts,
+    '#header' => array('Day', 'Start time', 'End time'),
   );
 }
 

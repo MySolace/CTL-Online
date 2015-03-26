@@ -1,12 +1,14 @@
 <?php
 
 module_load_include('inc', 'schedule_recurring', 'field');
+module_load_include('inc', 'schedule_recurring', 'entity');
 
 /**
  * Implements hook_permission().
  */
 function schedule_recurring_permission() {
   return array(
+    // SHIFTS
     'administer schedule recurring settings' => array(
       'title' => t('Administer schedule recurring'),
       'description' => t('Manage settings for recurring scheduling'),
@@ -14,7 +16,7 @@ function schedule_recurring_permission() {
     'sign up for shifts' => array(
       'title' => t('Sign up for shifts'),
       'description' => t('Sign up for shifts using schedule recurring'),
-      ),
+    ),
   );
 }
 
@@ -26,7 +28,7 @@ function schedule_recurring_menu() {
   $items = array();
 
   $items['admin/config/schedule_recurring'] = array(
-    'title' => 'Recurring Scheduler settings',
+    'title' => t('Recurring Scheduler settings'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('schedule_recurring_admin'),
     'access arguments' => array('administer schedule recurring settings'),
@@ -34,14 +36,30 @@ function schedule_recurring_menu() {
   );
 
   $items['schedule'] = array(
-    'title' => 'Shift scheduling',
+    'title' => t('Shift scheduling'),
     'file' => 'schedule.inc',
     'file path' => drupal_get_path('module', 'schedule_recurring'),
     'page callback' => 'schedule_recurring_schedule',
     'access arguments' => array('sign up for shifts'),
     'type' => MENU_NORMAL_ITEM,
   );
-  
+
+  $items['time-off'] = array(
+    'title' => t('Take time off'),
+    'description' => t('TODO'),
+    'page callback' => 'time_off_request',
+    'access arguments' => array('sign up for shifts'),
+  );
+
+  $items['time-off/request'] = array(
+    'title' => t('Request time off'),
+    'page callback' => 'time_off_add',
+    'access arguments' => array('sign up for shifts'),
+    'file' => 'entity.inc',
+    'file path' => drupal_get_path('module', 'schedule_recurring'),
+  );
+
+
   return $items;
 }
 
