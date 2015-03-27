@@ -1,6 +1,6 @@
 <?php
 
-function schedule_recurring_schedule() {
+function schedule_recurring_available() {
   $setter_roles = _schedule_recurring_setters();
 
   // Users base table
@@ -68,6 +68,10 @@ function schedule_recurring_schedule() {
     '#rows' => $shifts,
     '#header' => array('Day', 'Start time', 'End time'),
   );
+}
+
+function schedule_recurring_schedule() {
+  
 }
 
 function _schedule_recurring_is_available($shift, $shifts) {

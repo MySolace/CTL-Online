@@ -22,6 +22,11 @@ function schedule_recurring_schema() {
         'default' => 'vacation',
         'not null' => TRUE,
       ),
+      'author' => array(
+        'description' => 'Who is reqesting time off',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
       'start' => array(
         'description' => 'The start date of the time off',
         'type' => 'varchar',

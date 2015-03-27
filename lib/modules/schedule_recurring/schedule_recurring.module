@@ -35,8 +35,17 @@ function schedule_recurring_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
-  $items['schedule'] = array(
+  $items['schedule/available'] = array(
     'title' => t('Shift scheduling'),
+    'file' => 'schedule.inc',
+    'file path' => drupal_get_path('module', 'schedule_recurring'),
+    'page callback' => 'schedule_recurring_available',
+    'access arguments' => array('sign up for shifts'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['schedule'] = array(
+    'title' => t('This week\'s schedule'),
     'file' => 'schedule.inc',
     'file path' => drupal_get_path('module', 'schedule_recurring'),
     'page callback' => 'schedule_recurring_schedule',
@@ -48,6 +57,12 @@ function schedule_recurring_menu() {
     'title' => t('Take time off'),
     'description' => t('TODO'),
     'page callback' => 'time_off_request',
+    'access arguments' => array('sign up for shifts'),
+  );
+
+  $items['time-off/%'] = array(
+    'page callback' => 'time_off_view',
+    'page arguments' => array(1),
     'access arguments' => array('sign up for shifts'),
   );
 

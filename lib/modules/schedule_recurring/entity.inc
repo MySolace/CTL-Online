@@ -94,7 +94,7 @@ function time_off_form($form, &$form_state, $time_off) {
 }
 
 function time_off_form_validate($form, &$form_state) {
-
+  // TODO: validate the date end is after the start date
 }
 
 function time_off_form_submit($form, &$form_state) {
@@ -102,6 +102,7 @@ function time_off_form_submit($form, &$form_state) {
 
   $time_off = entity_create('time_off', $form_state['values']);
   $time_off->type = end($user->roles);
+  $time_off->author = $user->uid;
   $time_off->save();
 
   $form_state['redirect'] = 'time-off/' . $time_off->id;
@@ -111,3 +112,18 @@ function time_off_save(&$time_off) {
   return $time_off->save();
 }
 
+function time_off_view($id) {
+  $time_off = entity_load('time_off', array($id));
+  $time_off = array_shift($time_off);
+
+  $rows = array();
+
+  $rows[] = array('Start', $time_off->start);
+  $rows[] = array('End', $time_off->end);
+
+  return array(
+    '#theme' => 'table',
+    '#rows' => $rows,
+    '#header' => array('Label', 'Value'),
+  );
+}
