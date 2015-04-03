@@ -1,10 +1,5 @@
 <?php
 
-function schedule_recurring_install() {
-  variable_set('schedule_recurring_shift_duration', 240);
-  variable_get('schedule_recurring_shift_increment', 30);
-}
-
 function schedule_recurring_schema() {
   $schema['time_off'] = array(
     'description' => 'The main store for time off entities',
@@ -76,3 +71,36 @@ function schedule_recurring_field_schema($field) {
   return $schema;
 }
 
+
+function schedule_recurring_enable() {
+  variable_set('schedule_recurring_shift_duration', 240);
+  variable_set('schedule_recurring_shift_increment', 30);
+
+  field_cache_clear();
+  field_associate_fields('schedule_recurring');
+
+  $field = array(
+    'field_name'    => 'field_shifts',
+    'type'          => 'schedule_recurring_shift',
+    'cardinality'   => FIELD_CARDINALITY_UNLIMITED,
+  );
+
+  field_create_field($field);
+
+  $field_instance = array(
+    'field_name'  => 'field_shifts',
+    'entity_type' => 'user',
+    'label'       => 'Shifts',
+    'bundle'      => 'user',
+    'settings'    => array(
+      'user_register_form' => 0,
+    ),
+    'widget'      => array('type' => 'schedule_recurring_shift'),
+  );
+
+  field_create_instance($field_instance);
+}
+
+function schedule_recurring_disable() {
+  field_delete_field('field_shifts');
+}
