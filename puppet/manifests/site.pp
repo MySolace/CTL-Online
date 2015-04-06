@@ -1,7 +1,3 @@
-resources { "firewall":
-    purge => true
-}
-
 node default {
     include ::php
     include ::nginx
@@ -10,7 +6,7 @@ node default {
     include ctl_online
 
     include drush
-    
+
     exec { 'drush-reqs-root':
         command => '/usr/local/bin/drush dl make_local-6.x-1.0',
         require => File['/usr/local/bin/drush'],
@@ -36,10 +32,10 @@ node default {
         path   => '/home/vagrant/build.sh',
         source => 'puppet:///modules/ctl_online/build.sh'
     }
-        
+
     exec { 'build':
         require => File['build-script', '/usr/local/bin/drush'],
-        command => '/bin/sh /home/vagrant/build.sh',
+        command => '/bin/sh /home/vagrant/build.sh &',
         creates => '/var/www/online.crisistextline.org/current'
     }
 
@@ -66,12 +62,12 @@ node default {
     }
 
     firewall { '100 allow ssh':
-        dport   => [22],
+        port   => [22],
         proto  => tcp,
         action => accept,
     }
     firewall { '100 allow http access':
-        dport   => [80],
+        port   => [80],
         proto  => tcp,
         action => accept,
     }

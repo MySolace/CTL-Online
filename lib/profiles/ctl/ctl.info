@@ -65,5 +65,4 @@ dependencies[] = mailcontrol
 ; CTL
 dependencies[] = ctl
 dependencies[] = ctl_application
-dependencies[] = ctl_online
 
