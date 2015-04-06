@@ -7,7 +7,7 @@ LIB_DIR=$DATA_ROOT/lib
 MAKEFILE=build-ctl.make
 
 cd $DATA_ROOT
-drush make --prepare-install --no-gitinfofile --shallow-clone "$MAKEFILE" "$WEB_ROOT"
+drush make --prepare-install --no-gitinfofile "$MAKEFILE" "$WEB_ROOT"
 
 cd $WEB_ROOT
 drush site-install ctl -y --db-url=mysql://root@localhost/ctl --site-name="CTL Online"
