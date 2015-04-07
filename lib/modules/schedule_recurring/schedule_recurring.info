@@ -1,3 +1,5 @@
 core = "7.x"
 description = "Recurring shift scheduler"
 name = "Schedule Recurring"
+
+dependencies[] = date_popup

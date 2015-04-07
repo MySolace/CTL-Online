@@ -59,9 +59,19 @@ function time_off_add() {
   return drupal_get_form('time_off_form', $time_off);
 }
 
+function time_off_date_format() {
+  return 'Y-m-d';
+}
+
 function time_off_form($form, &$form_state, $time_off) {
-  $format = 'Y-m-d';
-  $form = array();
+  $format = time_off_date_format();
+  $form = array(
+    '#submit' => array('time_off_form_submit'),
+    '#validate' => array(
+      'time_off_convert_dates',
+      'time_off_form_validate',
+    ),
+  );
 
   $form['start'] = array(
     '#type' => 'date_select',
@@ -93,8 +103,21 @@ function time_off_form($form, &$form_state, $time_off) {
   return $form;
 }
 
+function time_off_convert_dates($form, &$form_state) {
+  $start = date_create_from_format(time_off_date_format(), $form_state['values']['start']);
+  $end = date_create_from_format(time_off_date_format(), $form_state['values']['end']);
+
+  $start->setTime(0,0,0);
+  $end->setTime(23,59,59);
+
+  $form_state['values']['start'] = $start->getTimestamp();
+  $form_state['values']['end'] = $end->getTimestamp();
+}
+
 function time_off_form_validate($form, &$form_state) {
-  // TODO: validate the date end is after the start date
+  if ($form_state['values']['start'] > $form_state['values']['end']) {
+    form_set_error('end', t('Start date must be before the end day.'));
+  }
 }
 
 function time_off_form_submit($form, &$form_state) {
@@ -115,6 +138,9 @@ function time_off_save(&$time_off) {
 function time_off_view($id) {
   $time_off = entity_load('time_off', array($id));
   $time_off = array_shift($time_off);
+
+  $time_off->start = date(time_off_date_format(), $time_off->start);
+  $time_off->end = date(time_off_date_format(), $time_off->end);
 
   $rows = array();
 

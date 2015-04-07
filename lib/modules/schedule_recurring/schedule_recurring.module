@@ -39,16 +39,27 @@ function schedule_recurring_menu() {
     'title' => t('Shift scheduling'),
     'file' => 'schedule.inc',
     'file path' => drupal_get_path('module', 'schedule_recurring'),
-    'page callback' => 'schedule_recurring_available',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('schedule_recurring_available'),
+    'access arguments' => array('sign up for shifts'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['schedule/confirm'] = array(
+    'title' => t('Shift confirmation'),
+    'file' => 'schedule.inc',
+    'file path' => drupal_get_path('module', 'schedule_recurring'),
+    'page callback' => 'schedule_recurring_confirm',
     'access arguments' => array('sign up for shifts'),
     'type' => MENU_NORMAL_ITEM,
   );
 
   $items['schedule'] = array(
-    'title' => t('This week\'s schedule'),
+    'title' => t('Schedule'),
     'file' => 'schedule.inc',
     'file path' => drupal_get_path('module', 'schedule_recurring'),
-    'page callback' => 'schedule_recurring_schedule',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('schedule_recurring_schedule'),
     'access arguments' => array('sign up for shifts'),
     'type' => MENU_NORMAL_ITEM,
   );
@@ -84,15 +95,42 @@ function schedule_recurring_menu() {
 function schedule_recurring_admin() {
   $form = array();
 
-  $form['schedule_recurring_shift_setters'] = array(
-    '#type' => 'checkboxes',
-    '#multiple' => TRUE,
-    '#options' => user_roles(),
-    '#default_value' => variable_get('schedule_recurring_shift_setters', array()),
-    '#description' => t('The roles whose shifts will define the available shifts.'),
-    '#title' => t('Shift availability definers'),
-    '#required' => FALSE,
+  $mapping = variable_get('schedule_recurring_shift_mapping', array());
+  $mapping[] = array(
+    'publisher' => '',
+    'subscriber' => '',
   );
+
+  $form['schedule_recurring_shift_mapping'] = array(
+    '#theme' => 'table',
+    '#tree' => TRUE,
+    '#suffix' => t('Reset a role to "- Select -" to remove it from the mapping.'),
+    '#rows' => array(),
+    '#header' => array('Shift publisher', 'Shift subscriber'),
+  );
+
+
+  foreach ($mapping as $key => $map) {
+    $form['schedule_recurring_shift_mapping'][$key]['publisher'] = array(
+      '#type' => 'select',
+      '#options' => array('' => '- Select -') + user_roles(),
+      '#default_value' => $map['publisher'],
+    );
+
+    $form['schedule_recurring_shift_mapping'][$key]['subscriber'] = array(
+      '#type' => 'select',
+      '#options' => array('' => '- Select -') + user_roles(),
+      '#default_value' => $map['subscriber'],
+    );
+
+    $form['schedule_recurring_shift_mapping']['#rows'][] = array(
+      array(
+        'data' => &$form['schedule_recurring_shift_mapping'][$key]['publisher'],
+      ), array(
+        'data' => &$form['schedule_recurring_shift_mapping'][$key]['subscriber'],
+      ),
+    );
+  }
 
   $form['schedule_recurring_users_per_block'] = array(
     '#type' => 'textfield',
@@ -121,7 +159,20 @@ function schedule_recurring_admin() {
     '#size' => 5,
   );
 
-  return system_settings_form($form);
+  $form = system_settings_form($form);
+  array_unshift($form['#submit'], '_schedule_recurring_admin_submit');
+
+  return $form;
+}
+
+function _schedule_recurring_admin_submit($form, &$form_state) {
+  foreach ($form_state['values']['schedule_recurring_shift_mapping'] as $key => $map) {
+    if (empty($map['publisher']) || empty($map['subscriber'])) {
+      unset($form_state['values']['schedule_recurring_shift_mapping'][$key]);
+    }
+  }
+
+  var_dump($form_state['values']);
 }
 
 /**
@@ -174,7 +225,7 @@ function _schedule_recurring_times($include_2400 = FALSE) {
       $times[$accessor][2400] = '12:00 am (following day)';
     }
   }
-  
+
   return $times[$accessor];
 }
 
