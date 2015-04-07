@@ -61,6 +61,7 @@ dependencies[] = features
 dependencies[] = field_permissions
 dependencies[] = rules
 dependencies[] = mailcontrol
+dependencies[] = course
 
 ; CTL
 dependencies[] = ctl
