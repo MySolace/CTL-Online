@@ -11,6 +11,7 @@ drush make --prepare-install --no-gitinfofile "$MAKEFILE" "$WEB_ROOT"
 
 cd $WEB_ROOT
 drush site-install ctl -y --db-url=mysql://root@localhost/ctl --site-name="CTL Online"
+drush dis filefield_nginx_progress -y
 drush dl reroute_email
 drush en reroute_email -y
 echo "\$conf['reroute_email_enable'] = 1;" >> sites/default/settings.php

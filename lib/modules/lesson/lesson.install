@@ -1,12 +1,7 @@
 <?php
 
-/**
- * Implements hook_install().
- */
-function lesson_install() {
-  node_types_rebuild();
-
-  $fields = array(
+function _lesson_fields() {
+  return array(
     'slide' => array(
       'field_name' => 'slide',
       'label' => t('Slide'),
@@ -20,7 +15,10 @@ function lesson_install() {
     ),
   );
 
-  $instances = array(
+}
+
+function _lesson_field_instances() {
+  $i = array(
     'slide' => array(
       'field_name' => 'slide',
       'type' => 'text',
@@ -35,7 +33,7 @@ function lesson_install() {
       'label' => t('Lesson audio'),
       'settings' => array(
         'file_extensions' => 'mp3',
-        'max_filesize' => '8MB',
+        'max_filesize' => '128MB',
       ),
       'widget' => array(
         'type' => 'managed_file',
@@ -43,13 +41,26 @@ function lesson_install() {
     ),
   );
 
-  foreach ($fields as $field) {
+  foreach ($i as &$instance) {
+    $instance['entity_type'] = 'node';
+    $instance['bundle'] = 'lesson';
+  }
+
+  return $i;
+}
+
+
+/**
+ * Implements hook_install().
+ */
+function lesson_install() {
+  node_types_rebuild();
+
+  foreach (_lesson_fields() as $field) {
     field_create_field($field);
   }
 
-  foreach ($instances as $instance) {
-    $instance['entity_type'] = 'node';
-    $instance['bundle'] = 'lesson';
+  foreach (_lesson_field_instances() as $instance) {
     field_create_instance($instance);
   }
 
@@ -59,15 +70,21 @@ function lesson_install() {
  * Implements hook_uninstall().
  */
 function lesson_uninstall() {
-  $ournewtype = 'lesson';
-  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
-  $result = db_query($sql, array(':type' => $ournewtype));
+  $type = 'lesson';
+  $q = new EntityFieldQuery();
+  $q->entityCondition('entity_type', 'node');
+  $q->entityCondition('bundle', 'lesson');
 
-  $nodeids = array();
-  foreach ($result as $row) {
-      $nodeids[] = $row->nid;
+  node_delete_multiple($q->execute());
+
+  foreach (_lesson_field_instances() as $instance) {
+    field_delete_instance($instance);
   }
 
-  node_delete_multiple($nodeids);
-  node_type_delete($ournewtype);
+  foreach (array_keys(_lesson_fields()) as $field) {
+    field_delete_field($fiend);
+  }
+
+  node_type_delete($type);
+  field_purge_batch(500);
 }
