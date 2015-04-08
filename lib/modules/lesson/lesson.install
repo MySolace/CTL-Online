@@ -1,0 +1,73 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function lesson_install() {
+  node_types_rebuild();
+
+  $fields = array(
+    'slide' => array(
+      'field_name' => 'slide',
+      'label' => t('Slide'),
+      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+      'type' => 'text',
+    ),
+    'lesson_audio' => array(
+      'field_name' => 'lesson_audio',
+      'label' => t('Audio'),
+      'type' => 'file',
+    ),
+  );
+
+  $instances = array(
+    'slide' => array(
+      'field_name' => 'slide',
+      'type' => 'text',
+      'label' => t('Slide content'),
+      'widget' => array(
+        'type' => 'text_textarea',
+      ),
+    ),
+    'lesson_audio' => array(
+      'field_name' => 'lesson_audio',
+      'type' => 'file',
+      'label' => t('Lesson audio'),
+      'settings' => array(
+        'file_extensions' => 'mp3',
+        'max_filesize' => '8MB',
+      ),
+      'widget' => array(
+        'type' => 'managed_file',
+      ),
+    ),
+  );
+
+  foreach ($fields as $field) {
+    field_create_field($field);
+  }
+
+  foreach ($instances as $instance) {
+    $instance['entity_type'] = 'node';
+    $instance['bundle'] = 'lesson';
+    field_create_instance($instance);
+  }
+
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function lesson_uninstall() {
+  $ournewtype = 'lesson';
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+  $result = db_query($sql, array(':type' => $ournewtype));
+
+  $nodeids = array();
+  foreach ($result as $row) {
+      $nodeids[] = $row->nid;
+  }
+
+  node_delete_multiple($nodeids);
+  node_type_delete($ournewtype);
+}

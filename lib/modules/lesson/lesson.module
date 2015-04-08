@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * Implements hook_node_info().
+ */
+function lesson_node_info() {
+  return array(
+    'lesson' => array(
+      'name' => t('Lesson'),
+      'base' => 'lesson',
+      'description' => t('A lesson including slides and a voiceover.'),
+      'has_title' => TRUE,
+      'title_label' => t('Title'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_form().
+ */
+function lesson_form($node, $form_state) {
+  return node_content_form($node, $form_state);
+}
