@@ -34,3 +34,6 @@
 [submodule "puppet/modules/firewall"]
 	path = puppet/modules/firewall
 	url = git@github.com:puppetlabs/puppetlabs-firewall.git
+[submodule "lib/themes/ctl_theme/lib"]
+	path = lib/themes/ctl_theme/lib
+	url = git@github.com:smithln/ctl.git
