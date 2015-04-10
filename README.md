@@ -39,7 +39,7 @@ This install uses our own CTL theme, a subtheme of [Adminimal](https://www.drupa
 Lauren Smith designed [the template](https://github.com/smithln/ctl), which is included as a subtheme at /lib/themes/ctl_theme/lib. To get started:
 
 ```
-cd lib/themes/ctl_theme
+cd lib/themes/ctl_theme/.npm
 npm install
 gulp
 ```

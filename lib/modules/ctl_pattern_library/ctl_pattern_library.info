@@ -1,0 +1,5 @@
+core = "7.x"
+description = "Simple demonstration of CTL's pattern library"
+name = "CTL Pattern Library"
+
+package = "Crisis Text Line"

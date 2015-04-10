@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * Implements hook_menu()
+ */
+function ctl_pattern_library_menu() {
+  $items['admin/appearance/pattern-library'] = array(
+    'title' => 'CTL Pattern Library',
+    'page callback' => 'pattern_library_page',
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme()
+ */
+function ctl_pattern_library_theme() {
+  return array(
+    'pattern_library_template' => array(
+      // file name will be ---.tpl.php
+      'template' => 'pattern-library',
+    ),
+  );
+}
+
+/**
+ * Returns statically defined pattern library page
+ */
+function pattern_library_page() {
+  return theme('pattern_library_template');
+}

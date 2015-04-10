@@ -1,4 +1,3 @@
 core = "7.x"
 description = "Slides and voiceover"
 name = "Lesson"
-
