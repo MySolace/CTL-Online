@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>CTL Patterns</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container page--patterns">
+
+      <div class="page-header">
+        <h1>CTL Patterns</h1>
+      </div>
+
+      <h2 class="section-header--h2">Main Elements</h2>
+
+      <h3 class="section-header--h3">Colors</h3>
+
+      <div class="row">
+        <div class="col-xs-6 col-md-3">
+          <div class="color-block color-block--red">
+          </div>
+          <div class="color-block__titles">
+            <h4>Red</h4>
+            <code>$brand-primary, #ed1a34</code>
+          </div>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <div class="color-block color-block--black">
+          </div>
+          <div class="color-block__titles">
+            <h4>Black</h4>
+            <code>$black, #222222</code>
+          </div>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <div class="color-block color-block--brand-gray">
+          </div>
+          <div class="color-block__titles">
+            <h4>Gray</h4>
+            <code>$brand-gray, #cccccc</code>
+          </div>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <div class="color-block color-block--blue">
+          </div>
+          <div class="color-block__titles">
+            <h4>Blue</h4>
+            <code>$blue, #87cefa</code>
+          </div>
+        </div>
+      </div>
+
+      <h3>Font Families</h3>
+
+      <div class="row">
+        <div class="col-xs-12 col-md-6 font--roboto">
+          <span>Roboto</span>
+          <p>Should be used as the base body copy, and some headings</p>
+          <code>$font-family-base</code>
+        </div>
+        <div class="col-xs-12 col-md-6 font--oswald">
+          <span>Oswald</span>
+          <p>Should be used for smaller headings, like section identifiers</p>
+          <code>$font-family-decor</code>
+        </div>
+        <div class="col-xs-12 example-pairing">
+          <span>This is an example</span>
+          <p>Of how these fonts should be paired</p>
+          <code>$weight-light, $weight-black</code>
+        </div>
+      </div>
+
+      <h3>Headings</h3>
+
+      <div class="row">
+        <div class="col-xs-12 headings">
+          <p>Heading styles can be attributed to other elements by adding a <code>.h#</code> class.</p>
+          <span>hero heading</span>
+          <h1>h1. heading</h1>
+          <h2>h2. heading</h2>
+          <h3>h3. heading</h3>
+          <h4>h4. heading</h4>
+          <h5>h5. heading</h5>
+          <h6>h6. heading</h6>
+        </div>
+      </div>
+
+      <h3>Inline Elements</h3>
+
+      <div class="row">
+        <div class='col-xs-12 inline-elements'>
+          <p>You can help a young person <strong>in crisis</strong>. If you are
+            <mark>willing to listen</mark> and you <em>text in your personal life</em>,
+            you have what it takes to be a great Crisis Text Line Volunteer.</p>
+          <p>This is a <a href="#">link</a>, this is a <a class="secondary" href="#">secondary link.</a></p>
+        </div>
+      </div>
+
+      <h3>Typography</h3>
+
+        <div class="row typography">
+          <div class='col-xs-12 typography__cite'>
+            <h4>Citation</h4>
+            <cite>-- Nancy Lublin</cite>
+          </div>
+        </div>
+
+        <div class="row typography">
+          <div class='col-xs-12 typography__block-quote'>
+            <h4>Blockquote</h4>
+            <blockquote cite="www.google.com">
+              <p>We bring a new technology to an old problem. Our specialists practice active listening to help texters in crisis move from a hot moment to a cool calm – all through a medium they know and trust: text.</p>
+              <p>Crisis Text Line is free, 24/7 emotional support for those in crisis.</p>
+              <cite>Citation goes here</cite>
+            </blockquote>
+          </div>
+        </div>
+
+        <div class="row typography">
+          <div class='col-xs-12 typography__pull-quote'>
+            <h4>Pull Quote</h4>
+            <q class="pull-quote">Fight for the texter</q>
+          </div>
+        </div>
+
+        <div class="row typography">
+          <div class='col-xs-12 typography__ol'>
+            <h4>Ordered Lists</h4>
+            <ol>
+              <li>List Item 1</li>
+              <li>List Item 2</li>
+              <li>List Item 3</li>
+            </ol>
+            <p>Example with a heading style applied:</p>
+            <ol class="h3">
+              <li>List Item 1</li>
+              <li>List Item 2</li>
+              <li>List Item 3</li>
+            </ol>
+            <code>.h3</code>
+          </div>
+        </div>
+
+        <div class="row typography">
+          <div class='col-xs-12 typography__ul'>
+            <h4>Unordered Lists</h4>
+            <ul>
+              <li>List Item 1</li>
+              <li>List Item 2</li>
+              <li>List Item 3</li>
+            </ul>
+
+            <p>Example with added styling for li:</p>
+            <ul class="styled">
+              <li>List Item 1</li>
+              <li>List Item 2</li>
+              <li>List Item 3</li>
+            </ul>
+            <code>.styled</code>
+          </div>
+        </div>
+
+        <h2 class="section-header--h2">Components</h2>
+
+        <h3 class="section-header--h3">Forms</h3>
+
+        <div class="row components">
+          <div class='forms__buttons'>
+            <div class="col-xs-12 button-group">
+              <h4>Buttons</h4>
+              <p>Your base button styling</p>
+              <button>I am a button</button>
+            </div>
+
+            <div class="col-xs-12 button-group">
+              <p>Primary buttons</p>
+              <button class="primary">I am a button</button>
+              <br>
+              <code>.primary</code>
+            </div>
+
+            <div class="col-xs-12 button-group">
+              <p>Secondary buttons</p>
+              <button class="secondary">I am a button</button>
+              <br>
+              <code>.secondary</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="row components">
+          <div class='forms__fields'>
+            <div class="col-xs-12 col-md-6">
+              <h4>Form Item</h4>
+              <p>A label and text field group</p>
+              <div class="form-group">
+                <label class="field-label">First Name</label>
+                <input type= "text" >
+              </div>
+              <div class="form-group">
+                <label class="field-label">Last Name</label>
+                <input type= "text" >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row components">
+          <div class='forms__fields'>
+            <div class="col-xs-12 col-md-6">
+              <h4>Option Field</h4>
+              <label class="field-label">Checkboxes</label>
+              <form class="h4">
+                  <input id="option" type="checkbox">
+                  <label class="checkbox" for="option"> Option 1 </label>
+
+                  <input id="option2" type="checkbox" >
+                  <label class="checkbox" for="option2"> Option 2 </label>
+
+                  <input id="option3" type="checkbox" >
+                  <label class="checkbox" for="option3"> Option 3 </label>
+
+                  <input id="option4" type="checkbox" >
+                  <label class="checkbox" for="option4"> Option 4 </label>
+              </form>
+              <br>
+              <label class="field-label">Radio Buttons</label>
+              <form class="h4">
+                  <input id="option5" type="radio">
+                  <label class="radio" for="option5"> Option 1 </label>
+
+                  <input id="option6" type="radio" >
+                  <label class="radio" for="option6"> Option 2 </label>
+
+                  <input id="option7" type="radio" >
+                  <label class="radio" for="option7"> Option 3 </label>
+
+                  <input id="option8" type="radio" >
+                  <label class="radio" for="option8"> Option 4 </label>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="section-header--h3">Message</h3>
+
+        <div class="row">
+          <div class="col-xs-12 col-md-6">
+            <div class="message">
+              <p><span class="fa fa-exclamation-triangle"></span>Remember to do this thing.</p>
+              <button id="message-btn-close"><i class="fa fa-times fa-2x"></i></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div><!-- /.container -->
+  </body>
+</html>
