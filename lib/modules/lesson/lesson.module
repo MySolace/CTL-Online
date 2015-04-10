@@ -34,8 +34,7 @@ function lesson_ajax_audio_progress($nid) {
 
   entity_save('audio_progress', $e);
 
-  var_dump($e);
-  exit;
+  return TRUE;
 }
 
 
@@ -47,6 +46,7 @@ function lesson_node_info() {
     'lesson' => array(
       'name' => t('Lesson'),
       'base' => 'lesson',
+      'node_submitted' => FALSE,
       'description' => t('A lesson including slides and a voiceover.'),
       'has_title' => TRUE,
       'title_label' => t('Title'),
@@ -74,6 +74,10 @@ function lesson_field_formatter_info() {
       'label' => t('HTML5 Audio'),
       'field types' => array('file'),
     ),
+    'lesson_transcript' => array(
+      'label' => t('Lesson transcript'),
+      'field types' => array('text', 'text_long'),
+    ),
   );
 }
 
@@ -91,6 +95,11 @@ function lesson_field_formatter_view($entity_type, $entity, $field, $instance, $
           '#file' => $items[0],
         );
       }
+    case 'lesson_transcript':
+      return array(
+        '#theme' => 'lesson_transcript',
+        '#transcript' => $items[0],
+      );
   }
 }
 
@@ -178,7 +187,17 @@ function lesson_theme() {
         'file' => NULL,
       ),
     ),
+
+    'lesson_transcript' => array(
+      'variables' => array(
+        'transcript' => NULL,
+      ),
+    ),
   );
+}
+
+function theme_lesson_transcript($variables) {
+  return '<script type="text/script" class="transcript">' . $variables['transcript']['value'] . '</script>';
 }
 
 function theme_lesson_slide($variables) {

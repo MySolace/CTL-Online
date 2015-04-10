@@ -13,6 +13,11 @@ function _lesson_fields() {
       'label' => t('Audio'),
       'type' => 'file',
     ),
+    'transcript' => array(
+      'field_name' => 'lesson_transcript',
+      'label' => t('Transcript'),
+      'type' => 'text_long',
+    ),
   );
 
 }
@@ -23,6 +28,7 @@ function _lesson_field_instances() {
       'field_name' => 'slide',
       'type' => 'text_long',
       'label' => t('Slide content'),
+      'required' => TRUE,
       'widget' => array(
         'type' => 'text_textarea',
       ),
@@ -37,12 +43,28 @@ function _lesson_field_instances() {
       'field_name' => 'lesson_audio',
       'type' => 'file',
       'label' => t('Lesson audio'),
+      'required' => TRUE,
       'settings' => array(
         'file_extensions' => 'mp3',
         'max_filesize' => '128MB',
       ),
       'widget' => array(
         'type' => 'managed_file',
+      ),
+    ),
+    'transcript' => array(
+      'field_name' => 'lesson_transcript',
+      'type' => 'text_long',
+      'label' => t('Lesson Transcript'),
+      'required' => TRUE,
+      'widget' => array(
+        'type' => 'text_textarea',
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'type' => 'lesson_transcript',
+        ),
       ),
     ),
   );
