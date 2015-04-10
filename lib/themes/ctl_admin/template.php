@@ -13,8 +13,15 @@ function ctl_admin_preprocess_html(&$vars) {
 
     drupal_add_js($adminimal_path . '/scripts/scroll-left.js');
 
+    $path = drupal_get_path_alias();
+    $aliases = explode('/', $path);
+
+    foreach($aliases as $alias) {
+        $vars['classes_array'][] = drupal_clean_css_identifier($alias);
+    }
+
 }
 
-function ctl_theme_date_combo($variables) {
+function ctl_admin_date_combo($variables) {
     return theme('form_element', $variables);
 }

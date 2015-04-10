@@ -3,8 +3,22 @@
 // import from lib
 @import "../lib/resources/sass/general";
 
+body {
+    padding-top: 0px !important;
+}
+
 #branding {
-    background-color: #789bb3;
+    background-color: $brand-gray;
+}
+
+.breadcrumb {
+    background-color: $brand-gray;
+    padding-left: 30px;
+}
+
+.page-title {
+    margin-top: 11px;
+    padding-left: 30px;
 }
 
 div.breadcrumb a, #branding div.breadcrumb {
