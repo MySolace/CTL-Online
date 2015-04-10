@@ -25,4 +25,3 @@ function pattern_library_page() {
   );
   return $output;
 }
-
