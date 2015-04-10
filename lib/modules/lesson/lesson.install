@@ -8,15 +8,15 @@ function _lesson_fields() {
       'cardinality' => FIELD_CARDINALITY_UNLIMITED,
       'type' => 'text_long',
     ),
-    'lesson_audio' => array(
-      'field_name' => 'lesson_audio',
-      'label' => t('Audio'),
-      'type' => 'file',
-    ),
     'transcript' => array(
       'field_name' => 'lesson_transcript',
       'label' => t('Transcript'),
       'type' => 'text_long',
+    ),
+    'lesson_audio' => array(
+      'field_name' => 'lesson_audio',
+      'label' => t('Audio'),
+      'type' => 'file',
     ),
   );
 
