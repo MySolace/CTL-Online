@@ -1,33 +1,9 @@
-// General CSS that should live in the base file.
+// General CSS that won't fit elsewhere.
 
 // import from lib
-@import "../lib/resources/sass/general";
+@import "../lib/resources/sass/misc";
 
-body {
-    padding-top: 0px !important;
-}
-
-#branding {
-    background-color: $brand-gray;
-}
-
-.breadcrumb {
-    background-color: $brand-gray;
-    padding-left: 30px;
-}
-
-.page-title {
-    margin-top: 11px;
-    padding-left: 30px;
-}
-
-div.breadcrumb a, #branding div.breadcrumb {
-    color: #ADC8DA;
-}
-
-div.breadcrumb a, #branding div.breadcrumb {
-    color: #ADC8DA;
-}
+@import "main/structure";
 
 .node-unpublished {
     background: transparent;
@@ -35,10 +11,6 @@ div.breadcrumb a, #branding div.breadcrumb {
 
 .field {
     margin-top: 1em;
-}
-
-.form-item {
-    margin-top: 3em;
 }
 
 .multipage-controls-list input.form-submit {
