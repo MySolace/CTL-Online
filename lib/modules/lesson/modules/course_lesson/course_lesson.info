@@ -1,0 +1,9 @@
+name = Course lesson
+description = Exposes Lessons as a course object.
+package = Course objects
+core = 7.x
+dependencies[] = course
+dependencies[] = lesson
+
+
+files[] = course_lesson.classes.inc

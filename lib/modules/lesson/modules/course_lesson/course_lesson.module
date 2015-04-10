@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * Implements hook_course_handlers().
+ */
+function course_lesson_course_handlers() {
+  return array(
+    'object' => array(
+      'lesson' => array(
+        'name' => t('Lesson'),
+        'class' => 'CourseObjectLesson',
+        'description' => t('A Quiz course object.'),
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_lesson_complete().
+ */
+function course_lesson_lesson_complete($lesson) {
+  global $user;
+
+  if ($courseObject = course_get_course_object('course_lesson', 'lesson', $lesson->nid, $user)) {
+    $courseObject->getFulfillment()->setComplete()->save();
+  }
+}

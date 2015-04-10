@@ -1,6 +1,9 @@
 <?php
 
 
+// equivalent to 50 1's in binary
+define('LESSON_AUDIO_COMPLETE', '3ffffffffffff');
+
 /**
  * Implements hook_menu().
  */
@@ -33,6 +36,10 @@ function lesson_ajax_audio_progress($nid) {
   $e->progress = $progress;
 
   entity_save('audio_progress', $e);
+
+  if ($progress == LESSON_AUDIO_COMPLETE) {
+    module_invoke_all('lesson_complete', node_load($nid));
+  }
 
   return TRUE;
 }

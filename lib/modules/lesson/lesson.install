@@ -51,6 +51,12 @@ function _lesson_field_instances() {
       'widget' => array(
         'type' => 'managed_file',
       ),
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'type' => 'html5audio',
+        ),
+      ),
     ),
     'transcript' => array(
       'field_name' => 'lesson_transcript',
