@@ -1,7 +1,7 @@
 <?php
 
 /**
- *
+ * Implements hook_entity_info().
  */
 function schedule_recurring_entity_info() {
   $entities = array(

@@ -57,3 +57,9 @@ div.breadcrumb a, #branding div.breadcrumb {
     display: none;
 }
 
+@media (min-width: 1200px) {
+    #page {
+        width: 1200px;
+        margin: 0 auto;
+    }
+}

@@ -19,3 +19,10 @@ function ctl_theme_date_combo($variables) {
     return theme('form_element', $variables);
 }
 
+/**
+ * Implements hook_js_alter().
+ */
+function ctl_theme_js_alter(&$javascript) {
+  $javascript['misc/jquery.js']['type'] = 'external';
+  $javascript['misc/jquery.js']['data'] = '//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js';
+}

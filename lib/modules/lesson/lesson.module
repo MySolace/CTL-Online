@@ -1,5 +1,44 @@
 <?php
 
+
+/**
+ * Implements hook_menu().
+ */
+function lesson_menu() {
+  return array(
+    'node/%/audio_progress' => array(
+      'page callback' => 'lesson_ajax_audio_progress',
+      'page arguments' => array(1),
+      'type' => MENU_CALLBACK,
+      'access arguments' => array('access content'),
+      'delivery callback' => 'drupal_json_output',
+    ),
+  );
+}
+
+function lesson_ajax_audio_progress($nid) {
+  global $user;
+
+  $progress = $_REQUEST['progress'];
+
+  $e = audio_progress_load($nid, $user->uid);
+
+  if (!$e) {
+    $e = entity_create('audio_progress', array(
+      'nid' => $nid,
+      'uid' => $user->uid,
+    ));
+  }
+
+  $e->progress = $progress;
+
+  entity_save('audio_progress', $e);
+
+  var_dump($e);
+  exit;
+}
+
+
 /**
  * Implements hook_node_info().
  */
@@ -20,4 +59,183 @@ function lesson_node_info() {
  */
 function lesson_form($node, $form_state) {
   return node_content_form($node, $form_state);
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function lesson_field_formatter_info() {
+  return array(
+    'lesson_slides' => array(
+      'label' => t('Lesson slides'),
+      'field types' => array('text', 'text_long'),
+    ),
+    'html5audio' => array(
+      'label' => t('HTML5 Audio'),
+      'field types' => array('file'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function lesson_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  switch($display['type']) {
+    case 'lesson_slides':
+      return _lesson_format_lesson_slides($items, $entity);
+    case 'html5audio':
+      if (count($items) > 0) {
+        return array(
+          '#theme' => 'html5audio',
+          '#file' => $items[0],
+        );
+      }
+  }
+}
+
+function _lesson_format_lesson_slides($items, $entity) {
+  global $user;
+
+  $external = array('type' => 'external');
+
+  $progress = audio_progress_load($entity->nid, $user->uid);
+
+  if (!$progress) {
+    $progress = entity_create('audio_progress', array(
+      'nid' => $entity->nid,
+      'uid' => $user->uid,
+      'progress' => 0,
+    ));
+
+    entity_save('audio_progress', $progress);
+  }
+
+  $element = array(
+    '#prefix' => '<div class="deck-container">',
+    '#suffix' => '</div>',
+    '#theme' => 'lesson_slides',
+    '#attached' => array(
+      'js' => array(
+        '//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js' => $external + array('scope' => 'header'),
+        '//cdnjs.cloudflare.com/ajax/libs/deck.js/1.1.0/core/deck.core.js' => $external,
+
+        drupal_get_path('module', 'lesson') . '/lesson.js',
+        array(
+          'data' => array(
+            'lesson_progress' => $progress->progress,
+            'nid' => $entity->nid,
+          ),
+          'type' => 'setting',
+        ),
+      ),
+      'css' => array(
+        '//cdnjs.cloudflare.com/ajax/libs/deck.js/1.1.0/core/deck.core.min.css' => $external,
+        '//cdnjs.cloudflare.com/ajax/libs/deck.js/1.1.0/themes/transition/horizontal-slide.min.css' => $external,
+
+        drupal_get_path('module', 'lesson') . '/lesson.css',
+      ),
+    ),
+  );
+
+  $plugins = array(
+    'scale',
+  );
+
+  foreach ($plugins as $plugin) {
+    $element['#attached']['js']["//cdnjs.cloudflare.com/ajax/libs/deck.js/1.1.0/extensions/$plugin/deck.$plugin.min.js"] = $external;
+    $element['#attached']['css']["//cdnjs.cloudflare.com/ajax/libs/deck.js/1.1.0/extensions/$plugin/deck.$plugin.min.css"] = $external;
+  }
+
+  foreach ($items as $delta => $item) {
+    $element['#items'][] = array(
+      '#theme' => 'lesson_slide',
+      '#content' => $item['value'],
+    );
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function lesson_theme() {
+  return array(
+    'lesson_slide' => array(
+      'variables' => array(
+        'content' => NULL,
+      ),
+    ),
+    'lesson_slides' => array(
+      'variables' => array(
+        'items' => NULL,
+      ),
+    ),
+
+    'html5audio' => array(
+      'variables' => array(
+        'file' => NULL,
+      ),
+    ),
+  );
+}
+
+function theme_lesson_slide($variables) {
+  return '<section class="slide"><div>' . nl2br($variables['content']) . '</div></section>';
+}
+
+function theme_lesson_slides($variables) {
+  $html = '';
+  foreach ($variables['items'] as $item) {
+    $html .= drupal_render($item);
+  }
+
+  return $html;
+}
+
+function theme_html5audio($variables) {
+  $url = file_create_url($variables['file']['uri']);
+  return '<audio src="'.$url.'" preload="auto" controls></audio>';
+}
+
+
+/**
+ * Implements hook_entity_info().
+ */
+function lesson_entity_info() {
+  $entities = array(
+    'audio_progress' => array(
+      'label'            => t('Audio Progress'),
+      'base table'       => 'audio_progress',
+      'fieldable'        => FALSE,
+      'controller class' => 'AudioProgressController',
+      'entity class'     => 'AudioProgress',
+      'entity keys'      => array(
+        'id' => 'id',
+      ),
+    ),
+  );
+
+  return $entities;
+}
+
+class AudioProgress extends Entity {}
+
+class AudioProgressController extends EntityAPIController {}
+
+function audio_progress_load($nid, $uid) {
+  $q = new EntityFieldQuery();
+  $q->entityCondition('entity_type', 'audio_progress');
+  $q->propertyCondition('uid', $uid);
+  $q->propertyCondition('nid', $nid);
+
+  $res = $q->execute();
+
+  if (empty($res)) {
+    return FALSE;
+  } else {
+    reset($res['audio_progress']);
+    return reset(entity_load('audio_progress', array(key($res['audio_progress']))));
+  }
 }

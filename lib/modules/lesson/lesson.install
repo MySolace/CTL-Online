@@ -6,7 +6,7 @@ function _lesson_fields() {
       'field_name' => 'slide',
       'label' => t('Slide'),
       'cardinality' => FIELD_CARDINALITY_UNLIMITED,
-      'type' => 'text',
+      'type' => 'text_long',
     ),
     'lesson_audio' => array(
       'field_name' => 'lesson_audio',
@@ -21,10 +21,16 @@ function _lesson_field_instances() {
   $i = array(
     'slide' => array(
       'field_name' => 'slide',
-      'type' => 'text',
+      'type' => 'text_long',
       'label' => t('Slide content'),
       'widget' => array(
         'type' => 'text_textarea',
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'type' => 'lesson_slides',
+        ),
       ),
     ),
     'lesson_audio' => array(
@@ -74,17 +80,58 @@ function lesson_uninstall() {
   $q = new EntityFieldQuery();
   $q->entityCondition('entity_type', 'node');
   $q->entityCondition('bundle', 'lesson');
+  $res = $q->execute();
 
-  node_delete_multiple($q->execute());
+  if (!empty($res['node'])) {
+    //node_delete_multiple(array_keys($res['node']));
+  }
 
   foreach (_lesson_field_instances() as $instance) {
-    field_delete_instance($instance);
+    //field_delete_instance($instance);
   }
 
   foreach (array_keys(_lesson_fields()) as $field) {
-    field_delete_field($fiend);
+    //field_delete_field($fiend);
   }
 
-  node_type_delete($type);
+  //node_type_delete($type);
   field_purge_batch(500);
+}
+
+/**
+ * Implements hook_schema()
+ */
+function lesson_schema() {
+  $schema['audio_progress'] = array(
+    'description' => 'The main store for audio progress entities',
+    'fields' => array(
+      'id' => array(
+        'description' => 'The id of the entity.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'nid' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'progress' => array(
+        'type' => 'text',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id'),
+    'indexes' => array(
+      'idx_nid_uid' => array('nid', 'uid'),
+    ),
+    'unique keys' => array(
+      'key_nid_uid' => array('nid', 'uid'),
+    ),
+  );
+
+  return $schema;
 }
