@@ -106,3 +106,68 @@ function ctl_theme_form_element($variables) {
 
   return $output;
 }
+
+function ctl_theme_form_element_label($variables) {
+  $element = $variables ['element'];
+  // This is also used in the installer, pre-database setup.
+  $t = get_t();
+
+  // If title and required marker are both empty, output no label.
+  if ((!isset($element ['#title']) || $element ['#title'] === '') && empty($element ['#required'])) {
+    return '';
+  }
+
+  // If the element is required, a required marker is appended to the label.
+  $required = !empty($element ['#required']) ? theme('form_required_marker', array('element' => $element)) : '';
+
+  $title = filter_xss_admin($element ['#title']);
+
+  $attributes = array();
+  // Style the label as class option to display inline with the element.
+  if ($element ['#title_display'] == 'after') {
+    $attributes ['class'] = 'option';
+  }
+  // Show label only to screen readers to avoid disruption in visual flows.
+  elseif ($element ['#title_display'] == 'invisible') {
+    $attributes ['class'] = 'element-invisible';
+  }
+
+  if (!empty($element ['#id'])) {
+    $attributes ['for'] = $element ['#id'];
+  }
+
+  // Adding input type to label, for checkbox and radio styling
+  switch($element ['#type']) {
+    case 'radio':
+    case 'checkbox':
+      $attributes ['class'] = array(
+        $attributes ['class'],
+        $element ['#type']
+      );
+      break;
+  }
+
+  // The leading whitespace helps visually separate fields from inline labels.
+  return ' <label' . drupal_attributes($attributes) . '>' . $t('!title !required', array('!title' => $title, '!required' => $required)) . "</label>\n";
+}
+
+function ctl_theme_button($variables) {
+  $element = $variables ['element'];
+  $element ['#attributes']['type'] = 'submit';
+  element_set_attributes($element, array('id', 'name', 'value'));
+
+  $element ['#attributes']['class'][] = 'form-' . $element ['#button_type'];
+  switch ($element ['#value']) {
+    case 'Save':
+      $element ['#attributes']['class'][] = 'primary';
+      break;
+    default:
+      $element ['#attributes']['class'][] = 'secondary';
+      break;
+  }
+  if (!empty($element ['#attributes']['disabled'])) {
+    $element ['#attributes']['class'][] = 'form-button-disabled';
+  }
+
+  return '<input' . drupal_attributes($element ['#attributes']) . ' />';
+}
