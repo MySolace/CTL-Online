@@ -61,6 +61,10 @@ node default {
         }
     }
 
+    nginx::config {
+        sendfile => 'off'
+    }
+
     firewall { '100 allow ssh':
         port   => [22],
         proto  => tcp,

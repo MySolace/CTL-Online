@@ -1,0 +1,30 @@
+// main box model structure here
+
+body {
+    padding-top: $margin/2;
+}
+
+#header {
+    background-color: none;
+    width: 100%;
+}
+
+#branding,
+#navigator {
+    background-color: none;
+}
+
+.breadcrumb {
+    background-color: transparent;
+    padding-left: 0px;
+    padding-left: 0px;
+    margin: 0px;
+}
+
+body.pattern-library #content .page-header {
+    display: none;
+}
+
+.page-title {
+    margin-top: $margin/2;
+}

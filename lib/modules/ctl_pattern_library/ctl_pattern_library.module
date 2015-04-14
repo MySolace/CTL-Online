@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * Implements hook_menu()
+ */
+function ctl_pattern_library_menu() {
+  $items['front/pattern-library'] = array(
+//  $items['admin/appearance/pattern-library'] = array(
+    'title' => 'CTL Pattern Library',
+    'page callback' => 'pattern_library_page',
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Returns statically defined pattern library page, as provided in the submodule
+ */
+function pattern_library_page() {
+  $output = array(
+    'the thing' => array(
+      '#type' => 'markup',
+      '#markup' => file_get_contents(drupal_get_path('theme', 'ctl_theme')."/lib/public/patterns.html"),
+    ),
+  );
+  return $output;
+}
