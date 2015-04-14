@@ -1,0 +1,47 @@
+// form styling will go here
+
+// import from lib
+@import "../../lib/resources/sass/components/forms";
+
+.form-group {
+    width: 50%;
+}
+
+.form-item {
+    margin: 2em 0 3em;
+    &:first-of-type {
+        margin-top: 0px;
+    }
+}
+
+.checkbox, .radio {
+    cursor: pointer;
+    display: block !important;
+    margin: 10px 0 !important;
+}
+
+textarea {
+    @extend input;
+}
+
+label {
+    margin-bottom: 5px !important;
+}
+
+input[type="submit"] {
+    @extend button;
+}
+
+.vertical-tabs {
+    .form-group {
+        width: 100%;
+    }
+    .form-type-textfield input {
+        box-sizing: border-box;
+    }
+    .checkbox, .radio {
+        &:before {
+            margin-right: 1.5%;
+        }
+    }
+}
