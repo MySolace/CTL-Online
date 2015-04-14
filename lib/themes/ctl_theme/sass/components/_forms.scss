@@ -28,6 +28,13 @@ label {
     margin-bottom: 5px !important;
 }
 
+button {
+    margin-right: 2em;
+    &:last-of-type {
+        margin-right: 0px;
+    }
+}
+
 input[type="submit"] {
     @extend button;
 }

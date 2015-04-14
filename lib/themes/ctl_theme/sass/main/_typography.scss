@@ -2,3 +2,18 @@
 
 // import from lib
 @import "../../lib/resources/sass/main/typography";
+
+.admin-list {
+    span.label {    // do we need the "span" part of this?
+        @extend h3;
+        padding: 0;
+        margin: .75em 0 .25em;
+        text-align: left;
+        display: block;
+    }
+    li:first-of-type {
+        span.label {
+            margin-top: 0px;
+        }
+    }
+}

@@ -51,3 +51,18 @@
 .field-multiple-table tbody label span {
     display: none;
 }
+
+// overriding damn Drupal defaults
+ul.tabs {
+    margin: 1em 0;
+}
+
+ul.primary li {
+    padding-right: 2em;
+    &:last-of-type {
+        padding-right: 0;
+    }
+    a, a:hover {
+        background-color: transparent;
+    }
+}

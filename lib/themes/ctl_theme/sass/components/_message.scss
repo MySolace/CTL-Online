@@ -2,3 +2,24 @@
 
 // import from lib
 @import "../../lib/resources/sass/components/message";
+
+div.messages {
+    @extend .message;
+    color: $off-white;
+    .message-icon,
+    .message-content {
+        display: inline-block;
+    }
+}
+
+div.status {
+
+}
+
+div.warning {
+    @extend .message--warning;
+}
+
+div.error {
+    @extend .message--error;
+}

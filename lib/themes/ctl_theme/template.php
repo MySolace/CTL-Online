@@ -3,6 +3,10 @@
 function ctl_theme_preprocess_html(&$vars) {
     $adminimal_path = drupal_get_path('theme', 'ctl_theme');
 
+    drupal_set_message('status', 'status', true);
+    drupal_set_message('warning', 'warning', true);
+    drupal_set_message('error', 'error', true);
+
     drupal_add_css($adminimal_path . '/css/style.css',
         array(
             'group' => CSS_THEME,
@@ -22,6 +26,10 @@ function ctl_theme_preprocess_html(&$vars) {
         $vars['classes_array'][] = drupal_clean_css_identifier($alias);
     }
 
+}
+
+function ctl_theme_css_alter(&$css) {
+    unset($css[drupal_get_path('module','system').'/system.messages.css']);
 }
 
 function ctl_theme_date_combo($variables) {
@@ -158,11 +166,11 @@ function ctl_theme_button($variables) {
 
   $element ['#attributes']['class'][] = 'form-' . $element ['#button_type'];
   switch ($element ['#value']) {
-    case 'Save':
-      $element ['#attributes']['class'][] = 'primary';
+    case 'Preview':
+      $element ['#attributes']['class'][] = 'secondary';
       break;
     default:
-      $element ['#attributes']['class'][] = 'secondary';
+      $element ['#attributes']['class'][] = 'primary';
       break;
   }
   if (!empty($element ['#attributes']['disabled'])) {
@@ -170,4 +178,46 @@ function ctl_theme_button($variables) {
   }
 
   return '<input' . drupal_attributes($element ['#attributes']) . ' />';
+}
+
+function ctl_theme_status_messages($variables) {
+  $display = $variables ['display'];
+  $output = '';
+
+  $status_heading = array(
+    'status' => t('Status message'),
+    'error' => t('Error message'),
+    'warning' => t('Warning message'),
+  );
+  foreach (drupal_get_messages($display) as $type => $messages) {
+    $output .= "<div class=\"messages $type\">\n";
+    if (!empty($status_heading [$type])) {
+      $output .= '<h2 class="element-invisible">' . $status_heading [$type] . "</h2>\n";
+    }
+    switch ($type) {
+      case 'error':
+        $typeFa = 'fa-exclamation-triangle';
+        break;
+      case 'warning':
+        $typeFa = 'fa-exclamation-triangle';
+        break;
+      case 'status':
+      default:
+        $typeFa = 'fa-info-circle';
+        break;
+    }
+    $output .= '<div class="message-inner"><div class="message-icon fa '.$typeFa.'"></div><div class="message-content">';
+    if (count($messages) > 1) {
+      $output .= " <ul>\n";
+      foreach ($messages as $message) {
+        $output .= '  <li>' . $message . "</li>\n";
+      }
+      $output .= " </ul>\n";
+    }
+    else {
+      $output .= reset($messages);
+    }
+    $output .= "</div></div><button id=\"message-btn-close\"><i class=\"fa fa-times fa-2x\"></i></button></div>\n";
+  }
+  return $output;
 }

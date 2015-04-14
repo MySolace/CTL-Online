@@ -13,7 +13,7 @@
     	<?php print render($title_prefix); ?>
 
     	<?php if ($title): ?>
-    		<h1 class="page-title page-header"><?php print $title; ?></h1>
+    		<h1 class="page-title"><?php print $title; ?></h1>
     	<?php endif; ?>
 
     	<?php print render($title_suffix); ?>
@@ -65,16 +65,16 @@
     <?php endif; ?>
 
     <div id="main-content">
-	    <?php print render($page['content']); ?>
-	  </div>
+      <?php print render($page['content']); ?>
+    </div>
 
     <?php if (isset($page['sidebar_right'])): ?>
       <div id="sidebar-right">
         <?php print render($page['sidebar_right']); ?>
       </div>
     <?php endif; ?>
-	
-	</div>
+  
+  </div>
 
 	<?php if (isset($page['content_after'])): ?>
 		<div id="content-after">
@@ -84,7 +84,7 @@
 
 	</div>
 
-	<div id="footer" class="container">
+    <div id="footer" class="container">
 		<?php print $feed_icons; ?>
 	</div>
 

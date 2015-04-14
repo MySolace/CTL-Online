@@ -1,7 +1,7 @@
 <?php
 /**
 * @file
-* Main page template.
+* Module page template. Only change is to warn if the theme is disabled.
 */
 ?>
 
@@ -13,7 +13,7 @@
     	<?php print render($title_prefix); ?>
 
     	<?php if ($title): ?>
-    		<h1 class="page-title page-header"><?php print $title; ?></h1>
+    		<h1 class="page-title"><?php print $title; ?></h1>
     	<?php endif; ?>
 
     	<?php print render($title_suffix); ?>
@@ -34,6 +34,18 @@
 </div>
 
 <div id="page">
+
+	<?php
+		// Get enabled themes.
+		$active_themes = list_themes();
+
+		// Check if adminimal is enabled.
+		if ($active_themes['adminimal']->status == 0) {
+
+		// Include the disabled message div.
+		include 'adminimal-status-check.inc';
+		}
+	?>
 
 	<div id="content" class="container clearfix">
 		<div class="element-invisible"><a id="main-content"></a></div>
@@ -65,16 +77,16 @@
     <?php endif; ?>
 
     <div id="main-content">
-	    <?php print render($page['content']); ?>
-	  </div>
+      <?php print render($page['content']); ?>
+    </div>
 
     <?php if (isset($page['sidebar_right'])): ?>
       <div id="sidebar-right">
         <?php print render($page['sidebar_right']); ?>
       </div>
     <?php endif; ?>
-	
-	</div>
+  
+  </div>
 
 	<?php if (isset($page['content_after'])): ?>
 		<div id="content-after">

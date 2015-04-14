@@ -21,10 +21,16 @@ body {
     margin: 0px;
 }
 
-body.pattern-library #content .page-header {
-    display: none;
-}
-
 .page-title {
     margin-top: $margin/2;
+}
+
+// To reformat the pattern library page to fit into the Drupal styling
+body.pattern-library #content {
+    .page-header {
+        display: none;
+    }
+    .container {
+        padding: 0px;
+    }
 }
