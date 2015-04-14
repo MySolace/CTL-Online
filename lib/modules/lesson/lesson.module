@@ -135,6 +135,7 @@ function _lesson_format_lesson_slides($items, $entity) {
       'js' => array(
         '//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js' => $external + array('scope' => 'header'),
         '//cdnjs.cloudflare.com/ajax/libs/deck.js/1.1.0/core/deck.core.js' => $external,
+        '//cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js' => $external,
 
         drupal_get_path('module', 'lesson') . '/lesson.js',
         array(
@@ -208,7 +209,7 @@ function theme_lesson_transcript($variables) {
 }
 
 function theme_lesson_slide($variables) {
-  return '<section class="slide"><div>' . nl2br($variables['content']) . '</div></section>';
+  return '<section class="slide"><div>' . $variables['content'] . '</div></section>';
 }
 
 function theme_lesson_slides($variables) {
