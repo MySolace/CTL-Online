@@ -29,11 +29,12 @@ function ctl_theme_preprocess_html(&$vars) {
 }
 
 function ctl_theme_css_alter(&$css) {
-    unset($css[drupal_get_path('module','system').'/system.messages.css']);
+  unset($css[drupal_get_path('module','system').'/system.messages.css']);
+  unset($css[drupal_get_path('module','field_group').'/multipage/multipage.css']);
 }
 
 function ctl_theme_date_combo($variables) {
-    return theme('form_element', $variables);
+  return theme('form_element', $variables);
 }
 
 function ctl_theme_breadcrumb($variables) {
@@ -166,11 +167,13 @@ function ctl_theme_button($variables) {
 
   $element ['#attributes']['class'][] = 'form-' . $element ['#button_type'];
   switch ($element ['#value']) {
+    case 'Save':
+    case 'Log in':
+    case 'Next page':
+      $element ['#attributes']['class'][] = 'primary';
+      break; 
     case 'Preview':
       $element ['#attributes']['class'][] = 'secondary';
-      break;
-    default:
-      $element ['#attributes']['class'][] = 'primary';
       break;
   }
   if (!empty($element ['#attributes']['disabled'])) {

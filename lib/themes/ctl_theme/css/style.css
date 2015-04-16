@@ -25,12 +25,12 @@ figure { margin: 1em 40px; }
 hr { box-sizing: content-box; height: 0; }
 pre { overflow: auto; }
 code, kbd, pre, samp { font-family: monospace, monospace; font-size: 1em; }
-button, input[type="submit"], textarea[type="submit"], input, textarea, optgroup, select, textarea { color: inherit; font: inherit; margin: 0; }
-button, input[type="submit"], textarea[type="submit"] { overflow: visible; }
-button, input[type="submit"], textarea[type="submit"], select { text-transform: none; }
-button, input[type="submit"], textarea[type="submit"], html input[type="button"], html textarea[type="button"], input[type="reset"], textarea[type="reset"], input[type="submit"], textarea[type="submit"] { -webkit-appearance: button; cursor: pointer; }
-button[disabled], input[disabled][type="submit"], textarea[disabled][type="submit"], html input[disabled], html textarea[disabled] { cursor: default; }
-button::-moz-focus-inner, input[type="submit"]::-moz-focus-inner, textarea[type="submit"]::-moz-focus-inner, input::-moz-focus-inner, textarea::-moz-focus-inner { border: 0; padding: 0; }
+button, input[type="submit"], textarea[type="submit"], input[type="button"], textarea[type="button"], input, textarea, optgroup, select, textarea { color: inherit; font: inherit; margin: 0; }
+button, input[type="submit"], textarea[type="submit"], input[type="button"], textarea[type="button"] { overflow: visible; }
+button, input[type="submit"], textarea[type="submit"], input[type="button"], textarea[type="button"], select { text-transform: none; }
+button, input[type="submit"], textarea[type="submit"], input[type="button"], textarea[type="button"], html input[type="button"], html textarea[type="button"], input[type="reset"], textarea[type="reset"], input[type="submit"], textarea[type="submit"] { -webkit-appearance: button; cursor: pointer; }
+button[disabled], input[disabled][type="submit"], textarea[disabled][type="submit"], input[disabled][type="button"], textarea[disabled][type="button"], html input[disabled], html textarea[disabled] { cursor: default; }
+button::-moz-focus-inner, input[type="submit"]::-moz-focus-inner, textarea[type="submit"]::-moz-focus-inner, input[type="button"]::-moz-focus-inner, textarea[type="button"]::-moz-focus-inner, input::-moz-focus-inner, textarea::-moz-focus-inner { border: 0; padding: 0; }
 input, textarea { line-height: normal; }
 input[type="checkbox"], textarea[type="checkbox"], input[type="radio"], textarea[type="radio"] { box-sizing: border-box; padding: 0; }
 input[type="number"]::-webkit-inner-spin-button, textarea[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button, textarea[type="number"]::-webkit-outer-spin-button { height: auto; }
@@ -329,7 +329,7 @@ td, th { padding: 0; }
 *:before, *:after { box-sizing: border-box; }
 html { font-size: 10px; -webkit-tap-highlight-color: transparent; }
 body { font-family: "Roboto", sans-serif; font-size: 16px; line-height: 1.42857; color: #333333; background-color: #fff; }
-input, textarea, button, input[type="submit"], textarea[type="submit"], select, textarea { font-family: inherit; font-size: inherit; line-height: inherit; }
+input, textarea, button, input[type="submit"], textarea[type="submit"], input[type="button"], textarea[type="button"], select, textarea { font-family: inherit; font-size: inherit; line-height: inherit; }
 a { color: #337ab7; text-decoration: none; }
 a:hover, a:focus { color: #23527c; text-decoration: underline; }
 a:focus { outline: thin dotted; outline: 5px auto -webkit-focus-ring-color; outline-offset: -2px; }
@@ -1281,7 +1281,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 .well-sm { padding: 9px; border-radius: 3px; }
 .close { float: right; font-size: 24px; font-weight: bold; line-height: 1; color: #000; text-shadow: 0 1px 0 #fff; opacity: 0.2; filter: alpha(opacity=20); }
 .close:hover, .close:focus { color: #000; text-decoration: none; cursor: pointer; opacity: 0.5; filter: alpha(opacity=50); }
-button.close, input.close[type="submit"], textarea.close[type="submit"] { padding: 0; cursor: pointer; background: transparent; border: 0; -webkit-appearance: none; }
+button.close, input.close[type="submit"], textarea.close[type="submit"], input.close[type="button"], textarea.close[type="button"] { padding: 0; cursor: pointer; background: transparent; border: 0; -webkit-appearance: none; }
 .modal-open { overflow: hidden; }
 .modal { display: none; overflow: hidden; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 1050; -webkit-overflow-scrolling: touch; outline: 0; }
 .modal.fade .modal-dialog { -webkit-transform: translate(0, -25%); -ms-transform: translate(0, -25%); transform: translate(0, -25%); transition: -webkit-transform 0.3s ease-out; transition: transform 0.3s ease-out; }
@@ -2029,13 +2029,13 @@ ul.styled > li:first-child { padding-top: 16px; }
 ul.large li { font-size: 20px; }
 .admin-list span.label { padding: 0; margin: .75em 0 .25em; text-align: left; display: block; }
 .admin-list li:first-of-type span.label { margin-top: 0px; }
-button, input[type="submit"], textarea[type="submit"] { color: gainsboro; background: #A9A9A9; border: 2px solid transparent; border-radius: 0px; display: inline-block; font-size: 1.125em; font-weight: 700; letter-spacing: .2rem; line-height: 1; margin-bottom: 2%; padding: 15px 30px; text-transform: uppercase; }
-button:focus, input[type="submit"]:focus, textarea[type="submit"]:focus { outline: none; }
-button:hover, input[type="submit"]:hover, textarea[type="submit"]:hover { background: #c3c3c3; }
-button.primary, input.primary[type="submit"], textarea.primary[type="submit"] { background: #13B7FF; color: #ffffff; }
-button.primary:hover, input.primary[type="submit"]:hover, textarea.primary[type="submit"]:hover { background: #46c7ff; }
-button.secondary, input.secondary[type="submit"], textarea.secondary[type="submit"] { background: transparent; border: 2px solid #A9A9A9; color: #A9A9A9; }
-button.secondary:hover, input.secondary[type="submit"]:hover, textarea.secondary[type="submit"]:hover { background: #eaeaea; }
+button, input[type="submit"], textarea[type="submit"], input[type="button"], textarea[type="button"] { color: gainsboro; background: #A9A9A9; border: 2px solid transparent; border-radius: 0px; display: inline-block; font-size: 1.125em; font-weight: 700; letter-spacing: .2rem; line-height: 1; margin-bottom: 2%; padding: 15px 30px; text-transform: uppercase; }
+button:focus, input[type="submit"]:focus, textarea[type="submit"]:focus, input[type="button"]:focus, textarea[type="button"]:focus { outline: none; }
+button:hover, input[type="submit"]:hover, textarea[type="submit"]:hover, input[type="button"]:hover, textarea[type="button"]:hover { background: #c3c3c3; }
+button.primary, input.primary[type="submit"], textarea.primary[type="submit"], input.primary[type="button"], textarea.primary[type="button"] { background: #13B7FF; color: #ffffff; }
+button.primary:hover, input.primary[type="submit"]:hover, textarea.primary[type="submit"]:hover, input.primary[type="button"]:hover, textarea.primary[type="button"]:hover { background: #46c7ff; }
+button.secondary, input.secondary[type="submit"], textarea.secondary[type="submit"], input.secondary[type="button"], textarea.secondary[type="button"] { background: transparent; border: 2px solid #A9A9A9; color: #A9A9A9; }
+button.secondary:hover, input.secondary[type="submit"]:hover, textarea.secondary[type="submit"]:hover, input.secondary[type="button"]:hover, textarea.secondary[type="button"]:hover { background: #eaeaea; }
 .form-group label.field-label { display: block; font-size: 1.125em; font-weight: 400; }
 .form-group input, .form-group textarea { border: 1px solid gainsboro; padding: 14px; width: 100%; }
 .form-group input:focus, .form-group textarea:focus { outline: none; }
@@ -2049,36 +2049,39 @@ input[type=checkbox], textarea[type=checkbox], input[type=radio], textarea[type=
 input[type=checkbox]:checked + .checkbox:before, textarea[type=checkbox]:checked + .checkbox:before { content: "\f00c"; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2); font: normal normal normal 12px/1.5 FontAwesome; vertical-align: middle; }
 input[type=radio]:checked + .checkbox:before, textarea[type=radio]:checked + .checkbox:before { content: "\f111"; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2); font: normal normal normal 12px/1.5 FontAwesome; vertical-align: middle; }
 .form-group { width: 50%; }
+.form-group .form-group { width: 100%; }
 .form-item { margin: 2em 0 3em; }
 .form-item:first-of-type { margin-top: 0px; }
 .checkbox, .radio { cursor: pointer; display: block !important; margin: 10px 0 !important; }
 label { margin-bottom: 5px !important; }
-button, input[type="submit"], textarea[type="submit"] { margin-right: 2em; }
-button:last-of-type, input[type="submit"]:last-of-type, textarea[type="submit"]:last-of-type { margin-right: 0px; }
+button, input[type="submit"], textarea[type="submit"], input[type="button"], textarea[type="button"] { margin-right: 2em; }
+button:last-of-type, input[type="submit"]:last-of-type, textarea[type="submit"]:last-of-type, input[type="button"]:last-of-type, textarea[type="button"]:last-of-type { margin-right: 0px; }
+table.field-multiple-table .form-group { width: 100%; }
 .vertical-tabs .form-group { width: 100%; }
 .vertical-tabs .form-type-textfield input, .vertical-tabs .form-type-textfield textarea { box-sizing: border-box; }
 .vertical-tabs .checkbox:before, .vertical-tabs .radio:before { margin-right: 1.5%; }
 .message, div.messages { background-color: #13B7FF; border: 1px solid #009bdf; border-radius: 3px; margin-bottom: 24px; padding: 18px 24px; position: relative; }
 .message .message-inner, div.messages .message-inner { font-size: 20px; margin: 0; color: #fefefe; max-width: 85%; }
 .message .message-inner .message-icon, div.messages .message-inner .message-icon { color: #ffffff; font-size: 24px; margin-right: 10px; }
-.message button, div.messages button, .message input[type="submit"], div.messages input[type="submit"], .message textarea[type="submit"], div.messages textarea[type="submit"] { background-color: transparent; color: #46c7ff; padding: 0; position: absolute; right: 24px; top: 10px; }
-.message button:hover, div.messages button:hover, .message input[type="submit"]:hover, div.messages input[type="submit"]:hover, .message textarea[type="submit"]:hover, div.messages textarea[type="submit"]:hover { color: #f47988; }
+.message button, div.messages button, .message input[type="submit"], div.messages input[type="submit"], .message textarea[type="submit"], div.messages textarea[type="submit"], .message input[type="button"], div.messages input[type="button"], .message textarea[type="button"], div.messages textarea[type="button"] { background-color: transparent; color: #46c7ff; padding: 0; position: absolute; right: 24px; top: 10px; }
+.message button:hover, div.messages button:hover, .message input[type="submit"]:hover, div.messages input[type="submit"]:hover, .message textarea[type="submit"]:hover, div.messages textarea[type="submit"]:hover, .message input[type="button"]:hover, div.messages input[type="button"]:hover, .message textarea[type="button"]:hover, div.messages textarea[type="button"]:hover { color: #f47988; }
 .message--error, div.error { background-color: #ad0e21; border: 1px solid #950c1d; }
 .message--error .message-inner, div.error .message-inner { color: #fefefe; }
 .message--error .message-inner .message-icon, div.error .message-inner .message-icon { color: #ffffff; }
-.message--error button, div.error button, .message--error input[type="submit"], div.error input[type="submit"], .message--error textarea[type="submit"], div.error textarea[type="submit"] { background-color: transparent; color: #ed1a34; }
-.message--error button:hover, div.error button:hover, .message--error input[type="submit"]:hover, div.error input[type="submit"]:hover, .message--error textarea[type="submit"]:hover, div.error textarea[type="submit"]:hover { color: #f47988; }
+.message--error button, div.error button, .message--error input[type="submit"], div.error input[type="submit"], .message--error textarea[type="submit"], div.error textarea[type="submit"], .message--error input[type="button"], div.error input[type="button"], .message--error textarea[type="button"], div.error textarea[type="button"] { background-color: transparent; color: #ed1a34; }
+.message--error button:hover, div.error button:hover, .message--error input[type="submit"]:hover, div.error input[type="submit"]:hover, .message--error textarea[type="submit"]:hover, div.error textarea[type="submit"]:hover, .message--error input[type="button"]:hover, div.error input[type="button"]:hover, .message--error textarea[type="button"]:hover, div.error textarea[type="button"]:hover { color: #f47988; }
 .message--warning, div.warning { background-color: #BAD320; border: 1px solid #93a719; }
 .message--warning .message-inner, div.warning .message-inner { color: #fefefe; }
 .message--warning .message-inner .message-icon, div.warning .message-inner .message-icon { color: #ffffff; }
-.message--warning button, div.warning button, .message--warning input[type="submit"], div.warning input[type="submit"], .message--warning textarea[type="submit"], div.warning textarea[type="submit"] { background-color: transparent; color: #cce343; }
-.message--warning button:hover, div.warning button:hover, .message--warning input[type="submit"]:hover, div.warning input[type="submit"]:hover, .message--warning textarea[type="submit"]:hover, div.warning textarea[type="submit"]:hover { color: #f47988; }
+.message--warning button, div.warning button, .message--warning input[type="submit"], div.warning input[type="submit"], .message--warning textarea[type="submit"], div.warning textarea[type="submit"], .message--warning input[type="button"], div.warning input[type="button"], .message--warning textarea[type="button"], div.warning textarea[type="button"] { background-color: transparent; color: #cce343; }
+.message--warning button:hover, div.warning button:hover, .message--warning input[type="submit"]:hover, div.warning input[type="submit"]:hover, .message--warning textarea[type="submit"]:hover, div.warning textarea[type="submit"]:hover, .message--warning input[type="button"]:hover, div.warning input[type="button"]:hover, .message--warning textarea[type="button"]:hover, div.warning textarea[type="button"]:hover { color: #f47988; }
 div.messages { color: #fefefe; }
 div.messages .message-icon, div.messages .message-content { display: inline-block; }
 .table--default caption { color: #767676; font-family: Roboto, sans-serif; font-weight: 700; }
 .table--default thead { border-bottom: 2px solid gainsboro; color: #ed1a34; font-weight: 500; letter-spacing: .1rem; text-transform: uppercase; }
 .table--default th { padding: 10px 15px; }
 .table--default tr { border-bottom: 1px solid #eaeaea; }
+table.field-multiple-table { margin-bottom: 1em; }
 .c-speech-bubbles { position: relative; padding: 15px; margin: 50px 0 0.5em; color: #ffffff; background: #ed1a34; border-radius: 10px; }
 .c-speech-bubbles :after { content: ""; position: absolute; bottom: -20px; left: 12%; border-width: 20px 20px 0 20px; border-style: solid; border-color: #ed1a34 transparent; display: block; width: 0; }
 .c-speech-bubbles p { font-size: 18px; letter-spacing: .04rem; margin: 0; padding: 18px; }
@@ -2162,9 +2165,10 @@ body { padding-top: 11px; }
 body.pattern-library #content .page-header { display: none; }
 body.pattern-library #content .container { padding: 0px; }
 .node-unpublished { background: transparent; }
-.field { margin-top: 1em; }
-.multipage-controls-list input.form-submit, .multipage-controls-list textarea.form-submit { cursor: pointer; background: #e3e3e3; border: none; border-radius: 0; padding: 6px 10px; margin-bottom: 1em; margin-right: 1em; color: #555; text-align: center; font-weight: normal; font-size: 1.077em; font-family: "Lucida Grande",Verdana,sans-serif; text-shadow: none; }
-.multipage-controls-list input.form-submit:hover, .multipage-controls-list textarea.form-submit:hover { background: #0074BD; color: #fff; -webkit-box-shadow: none; }
+/*
+.field { margin-top: 1em;
+}
+*/
 .multipage-pane-title { font-size: 2em; font-weight: 500; }
 .video-preview { display: none; }
 .block { margin: 0 0 2em 0; }
