@@ -4,12 +4,12 @@ var gulp = require('gulp'),
     sass = require('gulp-ruby-sass')
     autoprefix = require('gulp-autoprefixer')
     notify = require("gulp-notify")
-    bower = require('gulp-bower')
-    removeEmptyLines = require('gulp-remove-empty-lines');
+    bower = require('gulp-bower');
 
 var config = {
-    sassPath: '../sass',
-    bowerDir: './bower_components'
+    themeBase:'./lib/themes/ctl_theme',
+    bowerDir: './bower_components',
+    source:   'ctl.scss'
 }
 
 gulp.task('bower', function() {
@@ -19,25 +19,24 @@ gulp.task('bower', function() {
 
 gulp.task('icons', function() {
     return gulp.src(config.bowerDir + '/fontawesome/fonts/**.*')
-        .pipe(gulp.dest('../fonts'));
+        .pipe(gulp.dest(config.themeBase + '/fonts'));
 });
 
 gulp.task('css', function() {
-    return gulp.src(config.sassPath + '/style.scss')
+    return gulp.src(config.themeBase + '/sass/' + config.source)
         .pipe(sass({
-            style: 'compact',
+            style: 'compressed',
             loadPath: [
-                '../sass',
+                './resources/sass',
                 config.bowerDir + '/bootstrap-sass-official/assets/stylesheets',
                 config.bowerDir + '/fontawesome/scss',
             ]
         })
-            .on("error", notify.onError(function (error) {
-                return "Error: " + error.message;
-            })))
+        .on("error", notify.onError(function (error) {
+            return "Error: " + error.message;
+        })))
         .pipe(autoprefix('last 2 version'))
-        .pipe(removeEmptyLines())
-        .pipe(gulp.dest('../css'));
+        .pipe(gulp.dest(config.themeBase + '/css'));
 });
 
 // Rerun the task when a file changes

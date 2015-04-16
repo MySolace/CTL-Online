@@ -1,10 +1,8 @@
 {
-  "name": "ctl-online-styling",
+  "name": "ctl",
   "version": "0.0.0",
-  "homepage": "https://github.com/CrisisTextLine/CTL-Online",
+  "homepage": "https://github.com/smithln/ctl",
   "authors": [
-    "Lauren Smith <laurenicolesmith@gmail.com>",
-    "Toshiro Kida <toshiro.kida@gmail.com>"
   ],
   "description": "A layout and patterns resource for CTL Online Training",
   "license": "MIT",

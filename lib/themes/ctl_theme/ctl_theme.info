@@ -1,5 +1,5 @@
-name = CTL Public-facing
-description = CTL Theme customizations
+name = CTL Theme
+description = CTL Theme
 core = 7.x
 base theme = adminimal
 
