@@ -20,3 +20,7 @@ input[type="submit"],button {
 input[type="submit"][id^="edit-submit"], input#edit-actions-submit, input[id^="save-continue"], input[type="submit"][id^="edit-save"], input#edit-save, input#edit-submit, input#edit-actions-save, #media-browser-page a.button-yes {
     @extend button.primary;
 }
+
+.form-item {
+    @extend .form-group;
+}

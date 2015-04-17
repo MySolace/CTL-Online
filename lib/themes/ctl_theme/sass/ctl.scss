@@ -3,5 +3,41 @@
 @import "extend";
 
 body {
-    padding-top: 0;
+    //padding-top: 0;
+    &.admin-menu .navbar {
+        margin-top: 30px;
+    }
+
+    #admin-menu {
+        z-index: 2000;
+    }
+}
+
+.field-multiple-table td {
+    position: relative;
+
+    .form-item {
+        width: -moz-calc(100% - 250px);
+        width: -webkit-calc(100% - 250px);
+        width: calc(100% - 250px);
+    }
+
+    input.multiple-fields-remove-button {
+          position: absolute;
+          right: 6px;
+          top: 7px;
+          margin: 0;
+          width: 230px;
+    }
+}
+
+.form-group {
+    select {
+        padding-right: 20px;
+        display: block;
+    }
+}
+
+.block h1, h2 {
+    font-size: 1em;
 }
