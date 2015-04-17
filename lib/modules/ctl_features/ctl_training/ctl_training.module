@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * Implements hook_node_view().
+ */
+function ctl_training_node_view($node, $view_mode, $langcode) {
+  if ($node->type == 'course') {
+    if ($view_mode == 'full' && $node->course['outline'] == 'course') {
+      drupal_goto('node/'.$node->nid.'/takecourse');
+    }
+  }
+}

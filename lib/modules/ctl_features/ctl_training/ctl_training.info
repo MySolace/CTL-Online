@@ -1,0 +1,6 @@
+name = CTL Training
+description = Training content and customizations
+core = 7.x
+package = Features
+version = 7.x-1.0
+project = ctl_training

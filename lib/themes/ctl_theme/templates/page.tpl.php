@@ -19,12 +19,10 @@
 
 <div id="navigation">
     <div class="container">
-
-
-  <?php if ($secondary_local_tasks): ?>
-    <div class="tabs-secondary clearfix"><ul class="tabs secondary"><?php print render($secondary_local_tasks); ?></ul></div>
-  <?php endif; ?>
-</div>
+        <?php if ($secondary_local_tasks): ?>
+            <div class="tabs-secondary clearfix"><ul class="tabs secondary"><?php print render($secondary_local_tasks); ?></ul></div>
+        <?php endif; ?>
+    </div>
 </div>
 
 <div id="page">
