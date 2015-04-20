@@ -263,8 +263,8 @@ function audio_progress_load($nid, $uid) {
     return FALSE;
   } else {
     reset($res['audio_progress']);
-    $key = key($res['audio_progress']));
-    $progresses = entity_load('audio_progress', array($key);
+    $key = key($res['audio_progress']);
+    $progresses = entity_load('audio_progress', array($key));
     return reset($progresses);
   }
 }
