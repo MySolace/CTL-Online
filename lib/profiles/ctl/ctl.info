@@ -29,6 +29,10 @@ dependencies[] = admin_menu_toolbar
 dependencies[] = better_exposed_filters
 dependencies[] = computed_field
 dependencies[] = conditional_fields
+dependencies[] = course
+dependencies[] = course_relationships
+dependencies[] = course_lesson
+dependencies[] = course_quiz
 dependencies[] = ctools
 dependencies[] = date
 dependencies[] = date_api
@@ -45,6 +49,9 @@ dependencies[] = node_limit
 dependencies[] = node_limit_role
 dependencies[] = node_limit_type
 dependencies[] = no_trimmed_preview
+dependencies[] = privatemsg
+dependencies[] = pm_email_notify
+dependencies[] = privatemsg_realname
 dependencies[] = realname
 dependencies[] = rules_admin
 dependencies[] = rules_conditional
@@ -66,4 +73,4 @@ dependencies[] = course
 ; CTL
 dependencies[] = ctl
 dependencies[] = ctl_application
-
+dependencies[] = lesson

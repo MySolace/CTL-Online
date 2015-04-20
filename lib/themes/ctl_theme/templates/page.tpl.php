@@ -8,6 +8,9 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <a class="navbar-brand" href="/">CTL ONLINE</a>
+        <?php if ($page['site_nav']): ?>
+            <?php print render($page['site_nav']); ?>
+        <?php endif; ?>
     </div>
 </nav>
 
@@ -29,13 +32,18 @@
     <div class="container">
         <?php print render($title_prefix); ?>
 
+        <?php if (isset($page['content_before'])): ?>
+                <div id="content-before">
+                        <?php print render($page['content_before']); ?>
+                </div>
+        <?php endif; ?>
         <?php if ($title): ?>
                 <h1 class="page-title"><?php print $title; ?></h1>
         <?php endif; ?>
 
         <?php print render($title_suffix); ?>
 
-        <div class="collapse navbar-collapse">
+        <div class="node-nav">
             <?php if ($primary_local_tasks): ?>
                 <?php print render($primary_local_tasks); ?>
             <?php endif; ?>
@@ -51,12 +59,6 @@
         <?php if ($page['help']): ?>
                 <div id="help">
                         <?php print render($page['help']); ?>
-                </div>
-        <?php endif; ?>
-
-        <?php if (isset($page['content_before'])): ?>
-                <div id="content-before">
-                        <?php print render($page['content_before']); ?>
                 </div>
         <?php endif; ?>
 

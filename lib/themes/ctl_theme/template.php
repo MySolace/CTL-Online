@@ -12,6 +12,7 @@ function ctl_theme_preprocess_html(&$vars) {
 
     //drupal_add_js($adminimal_path . '/scripts/scroll-left.js');
     drupal_add_js($adminimal_path . '/js/label.js');
+    drupal_add_js($adminimal_path . '/js/lesson.js');
 }
 
 function ctl_theme_date_combo($variables) {
@@ -22,10 +23,18 @@ function ctl_theme_menu_local_tasks(&$variables) {
     $output = '';
 
     if (!empty($variables['primary'])) {
-        $variables['primary']['#prefix'] = '<h2 class="element-invisible">' . t('Primary tabs') . '</h2>';
-        $variables['primary']['#prefix'] .= '<ul class="nav nav-tabs">';
-        $variables['primary']['#suffix'] = '</ul>';
-        $output .= drupal_render($variables['primary']);
+        foreach ($variables['primary'] as $key => $link) {
+            if (strpos($link['#link']['path'], 'takecourse')) {
+                unset($variables['primary'][$key]);
+            }
+        }
+
+        if (count($variables['primary']) > 1) {
+            $variables['primary']['#prefix'] = '<h2 class="element-invisible">' . t('Primary tabs') . '</h2>';
+            $variables['primary']['#prefix'] .= '<ul class="nav nav-tabs">';
+            $variables['primary']['#suffix'] = '</ul>';
+            $output .= drupal_render($variables['primary']);
+        }
     }
 
     if (!empty($variables['secondary'])) {
@@ -36,3 +45,13 @@ function ctl_theme_menu_local_tasks(&$variables) {
     return $output;
 }
 
+function ctl_theme_preprocess_block(&$variables) {
+    if ($variables['block']->region == 'site_nav') {
+        $variables['content'] = str_replace('class="menu"', 'class="nav navbar-nav"', $variables['content']);
+        $variables['block']->subject = NULL;
+    }
+}
+
+function ctl_theme_block_view_course_navigation_alter(&$data, $block) {
+    $data['content'] = str_replace('id="course-nav"', 'id="course-nav" class="pagination"', $data['content']);
+}

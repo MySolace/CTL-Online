@@ -18,6 +18,12 @@ function _lesson_fields() {
       'label' => t('Audio'),
       'type' => 'file',
     ),
+    'lesson_images' => array(
+      'field_name' => 'lesson_images',
+      'label' => t('Images'),
+      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+      'type' => 'file',
+    ),
   );
 
 }
@@ -46,6 +52,25 @@ function _lesson_field_instances() {
       'required' => TRUE,
       'settings' => array(
         'file_extensions' => 'mp3',
+        'max_filesize' => '128MB',
+      ),
+      'widget' => array(
+        'type' => 'managed_file',
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'type' => 'html5audio',
+        ),
+      ),
+    ),
+    'lesson_images' => array(
+      'field_name' => 'lesson_images',
+      'type' => 'file',
+      'label' => t('Lesson images'),
+      'required' => FALSE,
+      'settings' => array(
+        'file_extensions' => 'jpg jpeg png gif',
         'max_filesize' => '128MB',
       ),
       'widget' => array(

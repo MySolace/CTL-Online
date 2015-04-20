@@ -1,5 +1,7 @@
 <?php
 
+include_once 'ctl_training.features.inc';
+
 /**
  * Implements hook_node_view().
  */
@@ -9,4 +11,72 @@ function ctl_training_node_view($node, $view_mode, $langcode) {
       drupal_goto('node/'.$node->nid.'/takecourse');
     }
   }
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function ctl_training_menu_local_tasks_alter(&$data, $router_item, $root_path) {
+    global $user;
+
+    $account = user_load($user->uid);
+
+    foreach ($data['actions']['output'] as $key => $item) {
+        if ($item['#link']['path'] == 'messages/new') {
+            if (isset($account->field_trainer) && !empty($account->field_trainer)) {
+                unset($data['actions']['output'][$key]);
+
+                $tid = $account->field_trainer[LANGUAGE_NONE][0]['target_id'];
+
+                $data['actions']['output'][] = array(
+                    '#theme' => 'menu_local_action',
+                    '#link' => array(
+                        'href' => 'messages/new/'.$tid,
+                        'title' => t('Message my trainer'),
+                    ),
+                );
+            } else if (in_array('Trainer', $user->roles)) {
+                unset($data['actions']['output'][$key]);
+
+                $q = new EntityFieldQuery('entity_type', 'user');
+                $q->fieldCondition('field_trainer', 'target_id', $user->uid, '=');
+                $res = $q->execute();
+
+                $uids = implode(',', array_keys($res['user']));
+
+                $data['actions']['output'][] = array(
+                    '#theme' => 'menu_local_action',
+                    '#link' => array(
+                        'href' => 'messages/new/'.$uids,
+                        'title' => t('Message all trainees (starts a thread that all trainees participate in)'),
+                    ),
+                );
+            }
+        }
+    }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function ctl_training_module_implements_alter(&$implementations, $hook) {
+    if ($hook == 'menu_local_tasks_alter') {
+        $local = $implementations['ctl_training'];
+        unset($implementations['ctl_training']);
+        $implementations['ctl_training'] = $local;
+    }
+}
+
+function ctl_training_form_privatemsg_new_alter(&$form, &$form_state, $form_id) {
+    if (strpos(arg(2), ',')) {
+        drupal_set_title('Write new message to group');
+        $form['recipient']['#access'] = FALSE;
+    } else if (!is_null(arg(2))) {
+        $title = drupal_get_title();
+        $search = '/\[(.*)\]/';
+        drupal_set_title(preg_replace($search, '', $title));
+        $form['recipient']['#access'] = FALSE;
+    } else {
+
+    }
 }

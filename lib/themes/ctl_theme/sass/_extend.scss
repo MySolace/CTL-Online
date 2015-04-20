@@ -2,6 +2,16 @@
     @extend .checkbox;
 }
 
+th.checkbox, td.checkbox {
+    display: table-cell;
+    &:before, label:before {
+        display: none;
+    }
+    input[type="checkbox"] {
+        display: inline;
+    }
+}
+
 .form-type-radio label {
     @extend .radio;
 }
@@ -23,4 +33,77 @@ input[type="submit"][id^="edit-submit"], input#edit-actions-submit, input[id^="s
 
 .form-item {
     @extend .form-group;
+}
+
+.z-300 {
+    z-index: 300;
+    position: relative;
+}
+
+.slide {
+    img {
+        margin: 0 auto;
+        display: block;
+    }
+    &>div {
+        height: 100%;
+        &>div {
+            height: 100%;
+        }
+    }
+    @extend .template--base;
+
+    &:not(:first-child) {
+        @extend .template--internal-page;
+
+        h1 {
+
+        }
+
+        h2 {
+            @extend .page__subtitle;
+        }
+
+        p {
+            @extend .large;
+        }
+    }
+
+    &:first-child {
+        @extend .template--title-page;
+
+        h1 {
+            @extend .lesson__module-name;
+            font-size: 1em;
+            margin: 0;
+        }
+
+        h2 {
+            @extend span;
+            @extend span.intro;
+            @extend .z-300;
+        }
+
+        h3 {
+            @extend .lesson__title;
+            @extend h2.lesson__title;
+            @extend .z-300;
+        }
+
+        .titles:after {
+            content: ' ';
+            background: url('../lib/public/images/speech-bubble-01.svg');
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            @extend img;
+            margin-top: -27.5%;
+            width: 400px;
+        }
+
+        .titles {
+            top: 20%;
+        }
+    }
+
 }

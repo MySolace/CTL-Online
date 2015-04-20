@@ -38,10 +38,43 @@ body {
     }
 }
 
-.block h1, h2 {
+.region-sidebar-left h1, h2 {
     font-size: 1em;
 }
 
 .course-take-course-link {
     @extend button.primary;
+}
+
+form[id^=course-relationships] .description {
+    display: none;
+}
+
+.page-node-takecourse .nav-tabs {
+    display: none;
+}
+
+.region-site-nav {
+    .block {
+        margin: 0 auto;
+    }
+}
+
+.block {
+    ul, li {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.nav-tabs {
+    margin: 0;
+}
+
+.node-nav {
+    margin-bottom: 1em;
+}
+
+#block-course-navigation {
+    text-align: center;
 }
