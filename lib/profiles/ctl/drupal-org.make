@@ -60,6 +60,7 @@ projects[token][version] = "1.6"
 projects[uuid][version] = "1.0-alpha6"
 projects[video][version] = "2.11"
 projects[views][version] = "3.10"
+projects[views][patch][] = https://www.drupal.org/files/issues/views-data-cache-rebuild-1944674-42.patch
 projects[views_bulk_operations][version] = "3.2"
 projects[views_field_view][version] = "1.x-dev"
 projects[views_fieldsets][version] = "1.3"
