@@ -8,6 +8,7 @@ include_once 'ctl_training.features.inc';
 function ctl_training_node_view($node, $view_mode, $langcode) {
   if ($node->type == 'course') {
     if ($view_mode == 'full' && $node->course['outline'] == 'course') {
+      course_take_course($node);
       drupal_goto('node/'.$node->nid.'/takecourse');
     }
   }
@@ -36,21 +37,22 @@ function ctl_training_menu_local_tasks_alter(&$data, $router_item, $root_path) {
                     ),
                 );
             } else if (in_array('Trainer', $user->roles)) {
-                unset($data['actions']['output'][$key]);
-
                 $q = new EntityFieldQuery('entity_type', 'user');
                 $q->fieldCondition('field_trainer', 'target_id', $user->uid, '=');
                 $res = $q->execute();
 
-                $uids = implode(',', array_keys($res['user']));
+                if (isset($res['user'])) {
+                    unset($data['actions']['output'][$key]);
+                    $uids = implode(',', array_keys($res['user']));
 
-                $data['actions']['output'][] = array(
-                    '#theme' => 'menu_local_action',
-                    '#link' => array(
-                        'href' => 'messages/new/'.$uids,
-                        'title' => t('Message all trainees (starts a thread that all trainees participate in)'),
-                    ),
-                );
+                    $data['actions']['output'][] = array(
+                        '#theme' => 'menu_local_action',
+                        '#link' => array(
+                            'href' => 'messages/new/'.$uids,
+                            'title' => t('Message all trainees (starts a thread that all trainees participate in)'),
+                        ),
+                    );
+                }
             }
         }
     }
