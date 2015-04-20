@@ -11,6 +11,21 @@
         <?php if ($page['site_nav']): ?>
             <?php print render($page['site_nav']); ?>
         <?php endif; ?>
+
+        <ul class="nav navbar-nav navbar-right">
+        <?php if (user_is_logged_in()): ?>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo format_username($user); ?><span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/user">My Account</a></li>
+
+            <li><a href="/user/logout">Log Out</a></li>
+          </ul>
+        </li>
+        <?php else: ?>
+            <li><a href="/user">Log In</a></li>
+        <?php endif; ?>
+        </ul>
     </div>
 </nav>
 
