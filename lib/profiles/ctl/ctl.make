@@ -10,6 +10,12 @@ projects[ctl_features][subdir] = "ctl"
 projects[ctl_features][download][type] = local
 projects[ctl_features][download][source] = './lib/modules/ctl_features'
 
+; Lesson
+projects[lesson][type] = "module"
+projects[lesson][subdir] = "ctl"
+projects[lesson][download][type] = local
+projects[lesson][download][source] = './lib/modules/lesson'
+
 ; CTL Theme
 projects[ctl_theme][type] = "theme"
 projects[ctl_theme][subdir] = "ctl"
