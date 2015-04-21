@@ -67,6 +67,10 @@ input[type="submit"][id^="edit-submit"], input#edit-actions-submit, input[id^="s
         p {
             @extend .large;
         }
+
+        .titles {
+            margin-top: -40px;
+        }
     }
 
     &:first-child {

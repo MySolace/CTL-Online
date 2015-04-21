@@ -6,12 +6,12 @@ include_once 'ctl_training.features.inc';
  * Implements hook_node_view().
  */
 function ctl_training_node_view($node, $view_mode, $langcode) {
-  if ($node->type == 'course') {
-    if ($view_mode == 'full' && $node->course['outline'] == 'course') {
-      course_take_course($node);
-      drupal_goto('node/'.$node->nid.'/takecourse');
+    if ($node->type == 'course') {
+        if ($view_mode == 'full' && $node->course['outline'] == 'course') {
+            course_take_course($node);
+            drupal_goto('node/'.$node->nid.'/takecourse');
+        }
     }
-  }
 }
 
 /**
@@ -37,24 +37,33 @@ function ctl_training_menu_local_tasks_alter(&$data, $router_item, $root_path) {
                     ),
                 );
             } else if (in_array('Trainer', $user->roles)) {
-                $q = new EntityFieldQuery('entity_type', 'user');
-                $q->fieldCondition('field_trainer', 'target_id', $user->uid, '=');
-                $res = $q->execute();
+                $trainees = _ctl_training_get_trainees();
+                //unset($data['actions']['output'][$key]);
+                $uids = implode(',', $trainees);
 
-                if (isset($res['user'])) {
-                    unset($data['actions']['output'][$key]);
-                    $uids = implode(',', array_keys($res['user']));
-
-                    $data['actions']['output'][] = array(
-                        '#theme' => 'menu_local_action',
-                        '#link' => array(
-                            'href' => 'messages/new/'.$uids,
-                            'title' => t('Message all trainees (starts a thread that all trainees participate in)'),
-                        ),
-                    );
-                }
+                $data['actions']['output'][] = array(
+                    '#theme' => 'menu_local_action',
+                    '#link' => array(
+                        'href' => 'messages/new/'.$uids,
+                        'title' => t('Message all trainees (starts a thread that all trainees participate in)'),
+                    ),
+                );
             }
         }
+    }
+}
+
+function _ctl_training_get_trainees() {
+    global $user;
+
+    $q = new EntityFieldQuery('entity_type', 'user');
+    $q->fieldCondition('field_trainer', 'target_id', $user->uid, '=');
+    $res = $q->execute();
+
+    if (isset($res['user'])) {
+        return array_keys($res['user']);
+    } else {
+        return array();
     }
 }
 
@@ -79,6 +88,29 @@ function ctl_training_form_privatemsg_new_alter(&$form, &$form_state, $form_id) 
         drupal_set_title(preg_replace($search, '', $title));
         $form['recipient']['#access'] = FALSE;
     } else {
+        $accounts = user_load_multiple(_ctl_training_get_trainees());
 
+        if (!empty($accounts)) {
+            $options = array();
+            foreach ($accounts as $account) {
+                $options[$account->uid] = format_username($account);
+            }
+
+            $form['recipient']['#type'] = 'select';
+            unset($form['recipient']['#size']);
+            $form['recipient']['#options'] = $options;
+        }
+    }
+}
+
+/**
+ * Implements hook_privatemsg_name_lookup().
+ */
+function ctl_training_privatemsg_name_lookup($string) {
+    $res = db_query("SELECT * FROM {users} WHERE uid=:uid", array('uid' => intval($string)));
+    if ($account = $res->fetch()) {
+        $account->type = 'user';
+        $account->recipient = $account->uid;
+        return array($account);
     }
 }
