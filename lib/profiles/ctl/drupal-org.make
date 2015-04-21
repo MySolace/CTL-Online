@@ -13,6 +13,10 @@ libraries[mandrill][download][type] = "get"
 libraries[mandrill][download][url] = "https://bitbucket.org/mailchimp/mandrill-api-php/get/1.0.54.zip"
 libraries[mandrill][directory_name] = "mandrill"
 
+libraries[twilio][download][type] = "get"
+libraries[twilio][download][url] = "https://github.com/twilio/twilio-php/archive/master.zip"
+libraries[twilio][directory_name] = "twilio"
+
 ; Modules
 projects[addressfield][version] = "1.0"
 projects[admin_menu][version] = "3.0-rc5"
@@ -57,6 +61,7 @@ projects[rules][patch][] = https://www.drupal.org/files/rules-site-property-meta
 
 projects[rules_conditional][version] = "1.0-beta2"
 projects[token][version] = "1.6"
+projects[twilio][version] = "1.10"
 projects[uuid][version] = "1.0-alpha6"
 projects[video][version] = "2.11"
 projects[views][version] = "3.10"
