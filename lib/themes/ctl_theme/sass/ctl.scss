@@ -82,3 +82,15 @@ form[id^=course-relationships] .description {
 #field-comments-add-more-wrapper .form-item {
     margin-top: 0;
 }
+
+.course-outline {
+    li {
+        list-style-type: none;
+
+        br { display: none; }
+        a {
+            display: inline-block;
+            width: 50%;
+        }
+    }
+}
