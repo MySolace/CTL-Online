@@ -1,0 +1,86 @@
+<?php
+
+
+/**
+ * Implements hook_twilio_sms_incoming().
+ */
+function ctl_sms_twilio_sms_incoming($sms, $options) {
+    if ($account = twilio_verify_number($sms['number'], TRUE)) {
+        if (!empty($account->field_trainer) || TRUE) {
+            $trainer = user_load($account->field_trainer[LANGUAGE_NONE][0]['target_id']);
+            $number = $sms['number'];
+            $options = array('author' => $account);
+
+            $res = db_query("SELECT thread_id FROM pm_message JOIN pm_index ON pm_message.mid=pm_index.mid WHERE subject=:subject", array(':subject' => $number));
+            if ($thread_id = $res->fetchField()) {
+                // Add to thread
+                privatemsg_reply($thread_id, $sms['message'], $options);
+            } else {
+                // new thread
+                $participants = array($account, $trainer);
+                privatemsg_new_thread($participants, $sms['number'], $sms['message']);
+            }
+        }
+    }
+}
+
+/**
+ * Implements hook_privatemsg_message_insert().
+ */
+function ctl_sms_privatemsg_message_insert($message) {
+    global $user;
+
+    if (is_numeric($message->subject) && $account = twilio_verify_number($message->subject, TRUE)) {
+        if (user_is_logged_in() && $account->uid !== $user->uid) {
+            twilio_send($account->twilio_user['number'], $message->body, $account->twilio_user['country']);
+        }
+    }
+}
+
+function _ctl_sms_save_number($number, $uid, $new_record = TRUE) {
+    $number = ctl_sms_convert($number);
+
+    if (strlen($number) < 10) return;
+
+    $record = array(
+        'number' => $number,
+        'uid' => $uid,
+        'status' => TWILIO_USER_CONFIRMED,
+    );
+
+    $keys = array();
+    if (!$new_record) {
+        $keys[] = 'uid';
+    }
+
+    drupal_write_record('twilio_user', $record, $keys);
+}
+
+/**
+ * Implements hook_user_insert().
+ */
+function ctl_sms_user_insert(&$edit, $account, $category) {
+    $number = $edit['field_phone_number'][LANGUAGE_NONE][0]['value'];
+    _ctl_sms_save_number($number, $account->uid, TRUE);
+}
+
+/**
+ * Implements hook_user_update().
+ */
+function ctl_sms_user_update(&$edit, $account, $category) {
+    $number = $edit['field_phone_number'][LANGUAGE_NONE][0]['value'];
+    _ctl_sms_save_number($number, $account->uid, FALSE);
+}
+
+/**
+ * Convert string to int
+ */
+function ctl_sms_convert($num) {
+    $num = preg_replace("/[^0-9]/", "", $num);
+
+    if ($num[0] == 1) {
+        $num = substr($num, 1);
+    }
+
+    return $num;
+}
