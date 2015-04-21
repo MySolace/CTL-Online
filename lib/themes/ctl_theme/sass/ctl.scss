@@ -84,8 +84,12 @@ form[id^=course-relationships] .description {
 }
 
 .course-outline {
-    li {
+    .item-list ul li {
+        &.required {
+            a { padding-left: 11px; }
+        }
         list-style-type: none;
+        line-height: 4em;
 
         br { display: none; }
         a {
