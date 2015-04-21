@@ -71,7 +71,12 @@ function _ctl_training_get_trainees() {
  * Implements hook_module_implements_alter().
  */
 function ctl_training_module_implements_alter(&$implementations, $hook) {
-    if ($hook == 'menu_local_tasks_alter') {
+    $make_last = array(
+        'menu_local_tasks_alter',
+        'privatemsg_name_lookup',
+    );
+
+    if (in_array($hook, $make_last)) {
         $local = $implementations['ctl_training'];
         unset($implementations['ctl_training']);
         $implementations['ctl_training'] = $local;
