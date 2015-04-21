@@ -6,20 +6,24 @@
  */
 function ctl_sms_twilio_sms_incoming($sms, $options) {
     if ($account = twilio_verify_number($sms['number'], TRUE)) {
-        if (!empty($account->field_trainer) || TRUE) {
-            $trainer = user_load($account->field_trainer[LANGUAGE_NONE][0]['target_id']);
-            $number = $sms['number'];
-            $options = array('author' => $account);
+        $to = NULL;
+        if (!empty($account->field_trainer)) {
+            $to = user_load($account->field_trainer[LANGUAGE_NONE][0]['target_id']);
+        } else {
+            $to = user_load(1);
+        }
 
-            $res = db_query("SELECT thread_id FROM pm_message JOIN pm_index ON pm_message.mid=pm_index.mid WHERE subject=:subject", array(':subject' => $number));
-            if ($thread_id = $res->fetchField()) {
-                // Add to thread
-                privatemsg_reply($thread_id, $sms['message'], $options);
-            } else {
-                // new thread
-                $participants = array($account, $trainer);
-                privatemsg_new_thread($participants, $sms['number'], $sms['message']);
-            }
+        $number = $sms['number'];
+        $options = array('author' => $account);
+
+        $res = db_query("SELECT thread_id FROM pm_message JOIN pm_index ON pm_message.mid=pm_index.mid WHERE subject=:subject", array(':subject' => $number));
+        if ($thread_id = $res->fetchField()) {
+            // Add to thread
+            privatemsg_reply($thread_id, $sms['message'], $options);
+        } else {
+            // new thread
+            $participants = array($account, $to);
+            privatemsg_new_thread($participants, $sms['number'], $sms['message']);
         }
     }
 }

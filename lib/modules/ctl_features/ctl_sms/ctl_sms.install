@@ -4,6 +4,8 @@ function ctl_sms_install() {
     $res = db_query("SELECT entity_id, field_phone_number_value as num FROM {field_data_field_phone_number} WHERE entity_type='user' AND entity_id NOT IN (SELECT uid FROM twilio_user)");
 
     foreach ($res as $record) {
-        _ctl_sms_save_number($record->num, $record->entity_id);
+        try {
+            @_ctl_sms_save_number($record->num, $record->entity_id);
+        } catch (Exception $e) {}
     }
 }
