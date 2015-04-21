@@ -6,7 +6,7 @@
 function ctl_features_node_access($node, $op, $account) {
     if (is_object($node) && $node->type == 'application') {
         if ($node->status == 1) {
-            if ($op != 'create') {
+            if ($op != 'create' && !user_access('access user profiles')) {
                 return NODE_ACCESS_DENY;
             }
         }
