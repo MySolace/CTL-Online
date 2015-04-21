@@ -86,7 +86,11 @@ form[id^=course-relationships] .description {
 .course-outline {
     .item-list ul li {
         &.required {
-            a { padding-left: 11px; }
+            a { margin-left: 11px; }
+        }
+
+        &:nth-child(odd) {
+            background: #f3f4ee;
         }
         list-style-type: none;
         line-height: 4em;
