@@ -36,16 +36,23 @@ You can log into the admin account via 192.168.7.7/user/login, using the passwor
 # Front-End
 
 This install uses our own CTL theme, a subtheme of [Adminimal](https://www.drupal.org/project/adminimal_theme).
-Lauren Smith designed [the template](https://github.com/smithln/ctl), which is included as a subtheme at /lib/themes/ctl_theme/lib. To get started:
+Lauren Smith designed [the template](https://github.com/smithln/ctl), which is included as a subtheme at /lib/themes/ctl_theme/lib. To get started, exit out of the vagrant box and cd back to the base repo directory, then:
 
 ```
-cd lib/themes/ctl_theme/.npm
 npm install
 gulp
 ```
 
 This will compile the SASS into /lib/themes/ctl_theme/css, where it can then be used by the Drupal custom theming system.
 Stem files with imports back to Lauren's submoduled repository are provided, which we can build off of for actual implementation in the site.
+
+If you've already provisioned the Vagrant box a while ago and are seeing funky things happen after updating to the latest commit, clearing cache will likely solve 99% of your problems:
+
+```
+vagrant ssh
+cd /var/www/online.crisistextline.org/current
+drush cc all
+```
 
 # Enjoy
 
