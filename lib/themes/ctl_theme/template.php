@@ -23,6 +23,7 @@ function ctl_theme_date_combo($variables) {
 }
 
 function ctl_theme_menu_local_tasks(&$variables) {
+    //var_dump($variables);
     $output = '';
 
     if (!empty($variables['primary'])) {
@@ -41,7 +42,7 @@ function ctl_theme_menu_local_tasks(&$variables) {
     }
 
     if (!empty($variables['secondary'])) {
-        $output .= drupal_render($varialbes['secondary']);
+        $output .= drupal_render($variables['secondary']);
 
     }
 
