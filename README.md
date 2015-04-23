@@ -26,7 +26,7 @@ sudo su
 sh /home/vagrant/build.sh
 ```
 
-Sit back and wait while drush builds the Drupal install.
+Sit back and wait while drush builds the Drupal install. You might also need to edit the nginx config to set sendmail off, at /etc/nginx/nginx.conf. We are working to set this off automatically -> see /puppet/manifests/site.pp of the base repo.
 
 ## Using locally
 

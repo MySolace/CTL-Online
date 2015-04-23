@@ -61,9 +61,15 @@ node default {
         }
     }
 
-    nginx::config {
-        sendfile => 'off'
-    }
+    # The following isn't working. The closest so far is https://github.com/jfryman/puppet-nginx/blob/master/docs/hiera.md:
+    # class { 'nginx::config':
+    #    sendfile => 'off',
+    # }
+    # which only 'redeclares' nginx::config, so currently manually editing puppet/modules/nginx/manifests/config.pp
+    #
+    #nginx::config { 'sendfile':
+    #    sendfile => 'off',
+    #}
 
     firewall { '100 allow ssh':
         port   => [22],
