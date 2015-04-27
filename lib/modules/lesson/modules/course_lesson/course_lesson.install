@@ -1,6 +1,6 @@
 <?php
 
-function course_lesson_update_7107() {
+function course_lesson_update_7101() {
   $res = db_select('audio_progress', 'a')
     ->fields('a', array('nid', 'uid', 'progress'))
     ->execute()
