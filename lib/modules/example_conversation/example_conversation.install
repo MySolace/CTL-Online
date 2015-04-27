@@ -1,0 +1,157 @@
+<?php
+
+function _example_conversation_fields() {
+  return array(
+    'example_conversation' => array(
+      'field_name' => 'example_conversation',
+      'label' => t('Example conversation'),
+      'type' => 'text_long',
+    ),
+    'pluses' => array(
+      'field_name' => 'pluses',
+      'label' => t('Pluses'),
+      'type' => 'text',
+      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+    ),
+    'wishes' => array(
+      'field_name' => 'wishes',
+      'label' => t('Wishes'),
+      'type' => 'text',
+      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+    ),
+    'plus_count' => array(
+      'field_name' => 'plus_count',
+      'label' => t('Plus submission requirement'),
+      'type' => 'number_integer'
+    ),
+    'wish_count' => array(
+      'field_name' => 'wish_count',
+      'label' => t('Wish submission requirement'),
+      'type' => 'number_integer'
+    ),
+  );
+
+}
+
+function _example_conversation_field_instances() {
+  $i = array(
+    'example_conversation' => array(
+      'field_name' => 'example_conversation',
+      'type' => 'text_long',
+      'label' => t('Example Conversation'),
+      'required' => TRUE,
+      'widget' => array(
+        'type' => 'text_textarea',
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'type' => 'example_conversation',
+        ),
+      ),
+    ),
+    'pluses' => array(
+      'field_name' => 'pluses',
+      'type' => 'text',
+      'label' => t('Pluses'),
+      'required' => TRUE,
+      'widget' => array(
+        'type' => 'text',
+      ),
+      'display' => array(
+        'default' => array(
+          'type' => 'hidden',
+        ),
+      ),
+    ),
+    'wishes' => array(
+      'field_name' => 'wishes',
+      'type' => 'text',
+      'label' => t('Wishes'),
+      'required' => TRUE,
+      'widget' => array(
+        'type' => 'text',
+      ),
+      'display' => array(
+        'default' => array(
+          'type' => 'hidden',
+        ),
+      ),
+    ),
+    'plus_count' => array(
+      'field_name' => 'plus_count',
+      'label' => t('Plus submission requirement'),
+      'type' => 'number_integer',
+      'required' => TRUE,
+      'default_value' => array(array('value' => 5)),
+      'display' => array(
+        'default' => array(
+          'type' => 'hidden',
+        ),
+      ),
+    ),
+    'wish_count' => array(
+      'field_name' => 'wish_count',
+      'label' => t('Wish submission requirement'),
+      'type' => 'number_integer',
+      'required' => TRUE,
+      'default_value' => array(array('value' => 5)),
+      'display' => array(
+        'default' => array(
+          'type' => 'hidden',
+        ),
+      ),
+    ),
+  );
+
+  foreach ($i as &$instance) {
+    $instance['entity_type'] = 'node';
+    $instance['bundle'] = 'example_conversation';
+  }
+
+  return $i;
+}
+
+
+/**
+ * Implements hook_install().
+ */
+function example_conversation_install() {
+  node_types_rebuild();
+
+  foreach (_example_conversation_fields() as $field) {
+    field_create_field($field);
+  }
+
+  foreach (_example_conversation_field_instances() as $instance) {
+    field_create_instance($instance);
+  }
+
+  variable_set('webform_node_example_conversation', TRUE);
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function example_conversation_uninstall() {
+  $type = 'example_conversation';
+  $q = new EntityFieldQuery();
+  $q->entityCondition('entity_type', 'node');
+  $q->entityCondition('bundle', 'lesson');
+  $res = $q->execute();
+
+  if (!empty($res['node'])) {
+    node_delete_multiple(array_keys($res['node']));
+  }
+
+  foreach (_lesson_field_instances() as $instance) {
+    field_delete_instance($instance);
+  }
+
+  foreach (array_keys(_lesson_fields()) as $field) {
+    field_delete_field($fiend);
+  }
+
+  node_type_delete($type);
+  field_purge_batch(500);
+}

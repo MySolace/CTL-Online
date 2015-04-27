@@ -1,0 +1,169 @@
+<?php
+
+/**
+ * Implements hook_node_info().
+ */
+function example_conversation_node_info() {
+  return array(
+    'example_conversation' => array(
+      'name' => t('Example conversation'),
+      'base' => 'example_conversation',
+      'node_submitted' => FALSE,
+      'description' => t('An example conversation.'),
+      'has_title' => FALSE,
+      'title_label' => t('Title'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function example_conversation_field_formatter_info() {
+  return array(
+    'example_conversation' => array(
+      'label' => t('Example Conversation'),
+      'field types' => array('text', 'text_long'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function example_conversation_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  switch($display['type']) {
+    case 'example_conversation':
+      return array(
+        '#theme' => 'example_conversation',
+        '#transcript' => $items[0]['value'],
+      );
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function example_conversation_theme() {
+  return array(
+    'example_conversation' => array(
+      'variables' => array(
+        'transcript' => NULL,
+      ),
+    ),
+  );
+}
+
+function theme_example_conversation($variables) {
+  $t = explode("\n", $variables['transcript']);
+
+  $odd = TRUE;
+  $return = '';
+  foreach ($t as $row) {
+    $row = trim($row);
+    $label = $label_class = $class = '';
+    if ($odd) {
+      $class = 'c-speech-bubbles--teen';
+      $label = 'Texter';
+      $label_class = 'texter__name--user';
+    } else {
+      $class = 'c-speech-bubbles--ctl';
+      $label = 'Crisis Counselor';
+      $label_class = 'texter__name--ctl';
+    }
+
+    if (!empty($row)) {
+      $return .= '<div class="c-speech-bubbles ' . $class . '"><p>'.$row.'</p></div>';
+      $return .= '<span class="texter__name '.$label_class.'">'.$label.'</span>';
+    }
+    $odd = !$odd;
+  }
+
+  return $return;
+}
+
+/**
+ * Implements hook_insert().
+ */
+function example_conversation_insert($node) {
+  module_load_include('inc', 'webform', 'includes/webform.components');
+
+  $components = example_converastion_components();
+
+  $node->webform['components'] = array();
+  foreach ($components as $key => $component) {
+    $component['nid'] = $node->nid;
+    $node->webform['components'][$key] = $component;
+  }
+}
+
+/**
+ * Implements hook_view().
+ */
+function example_conversation_view($node) {
+  drupal_add_js(drupal_get_path('module', 'example_conversation') . '/example_conversation.js');
+  drupal_add_css(drupal_get_path('module', 'example_conversation') . '/example_conversation.css');
+
+  $pluses = array();
+  $wishes = array();
+  foreach ($node->pluses[LANGUAGE_NONE] as $plus) {
+    $pluses[] = $plus['value'];
+  }
+
+  foreach ($node->wishes[LANGUAGE_NONE] as $wish) {
+    $wishes[] = $wish['value'];
+  }
+
+  drupal_add_js(array(
+    'example_conversation' => array(
+      'pluses' => $pluses,
+      'wishes' => $wishes,
+      'min_pluses' => $node->plus_count[LANGUAGE_NONE][0]['value'],
+      'min_wishes' => $node->wish_count[LANGUAGE_NONE][0]['value'],
+    ),
+  ), 'setting');
+
+  return $node;
+}
+
+/**
+ * Returns the components that will be attached to an example_conversation
+ * node.
+ *
+ * @return array components for an example conversation
+ */
+function example_converastion_components() {
+  $comps = array('pluses', 'wishes');
+  $return = array();
+
+  foreach ($comps as $idx => $comp) {
+    $return[$idx+1] = array(
+      'cid' => $idx+1,
+      'pid' => 0,
+      'form_key' => $comp,
+      'name' => $comp,
+      'type' => 'textarea',
+      'value' => '',
+      'required' => 1,
+      'weight' => $idx,
+      'page_num' => 1,
+      'extra' => array(
+        'title_display' => 'none',
+        'private' => 0,
+        'wrapper_classes' => '',
+        'css_classes' => '',
+        'cols' => '',
+        'rows' => '',
+        'resizable' => 1,
+        'disabled' => 0,
+        'description' => '',
+        'placeholder' => '',
+        'attributes' => array(),
+        'analysis' => false
+      ),
+    );
+  }
+
+  return $return;
+}
+

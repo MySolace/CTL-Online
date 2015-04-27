@@ -1,0 +1,19 @@
+
+.content .node-example-conversation .content {
+  width: 60%;
+  display: inline-block;
+}
+
+.node-example-conversation .webform-client-form {
+  display: none;
+}
+
+.plus-wish-wrap {
+  width: 35%;
+  display: inline-block;
+  margin-left: 5%;
+}
+
+.plus-wish-wrap, .content .node-example-conversation .content {
+  vertical-align: top;
+}
