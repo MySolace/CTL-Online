@@ -78,7 +78,7 @@ form[id^=course-relationships] .description {
 }
 
 .course-outline {
-    .course-outline-status .placeholder {
+    .not-accessible .course-outline-status .placeholder:first-child {
         display: none;
     }
 
