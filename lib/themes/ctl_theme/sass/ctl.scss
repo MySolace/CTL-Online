@@ -53,13 +53,11 @@ form[id^=course-relationships] .description {
 .region-site-nav {
     .block {
         margin: 0 auto;
-    }
-}
 
-.block {
-    ul, li {
-        margin: 0;
-        padding: 0;
+        ul, li {
+            margin: 0;
+            padding: 0;
+        }
     }
 }
 
@@ -80,6 +78,10 @@ form[id^=course-relationships] .description {
 }
 
 .course-outline {
+    .course-outline-status .placeholder {
+        display: none;
+    }
+
     .item-list ul li {
         &.completed {
             a { margin-left: 0; }
