@@ -136,18 +136,18 @@ function lesson_uninstall() {
   $res = $q->execute();
 
   if (!empty($res['node'])) {
-    //node_delete_multiple(array_keys($res['node']));
+    node_delete_multiple(array_keys($res['node']));
   }
 
   foreach (_lesson_field_instances() as $instance) {
-    //field_delete_instance($instance);
+    field_delete_instance($instance);
   }
 
   foreach (array_keys(_lesson_fields()) as $field) {
-    //field_delete_field($fiend);
+    field_delete_field($fiend);
   }
 
-  //node_type_delete($type);
+  node_type_delete($type);
   field_purge_batch(500);
 }
 
