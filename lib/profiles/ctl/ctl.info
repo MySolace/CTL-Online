@@ -74,5 +74,6 @@ dependencies[] = course
 ; CTL
 dependencies[] = ctl
 dependencies[] = ctl_application
+dependencies[] = ctl_office_hours
 dependencies[] = lesson
 dependencies[] = example_conversation

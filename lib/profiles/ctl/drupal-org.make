@@ -21,6 +21,7 @@ libraries[twilio][directory_name] = "twilio"
 projects[addressfield][version] = "1.0"
 projects[admin_menu][version] = "3.0-rc5"
 projects[auto_nodetitle][version] = "1.0"
+projects[bbb][version] = "1.x-dev"
 projects[better_exposed_filters][version] = "3.0"
 projects[computed_field][version] = "1.0"
 projects[conditional_fields][version] = "3.0-alpha1"
@@ -73,5 +74,3 @@ projects[views_data_export][version] = "3.0-beta8"
 projects[views_role_based_global_text][version] = "1.1"
 projects[webform][version] = "4.7"
 projects[webform_validation][version] = "1.9"
-
-
