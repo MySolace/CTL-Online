@@ -14,9 +14,9 @@ function ctl_office_hours_views_pre_render(&$view) {
 
   if ($view->name == 'office_hours') {
     if (in_array('Trainee', $user->roles)) {
-      unset($view->field['join_moderator']);
+      unset($view->field['nothing']);
     } else {
-      unset($view->field['join_attendee']);
+      unset($view->field['nothing_1']);
     }
   }
 }

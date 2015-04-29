@@ -106,20 +106,27 @@ function ctl_office_hours_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: Big Blue Button: Join moderator */
-  $handler->display->display_options['fields']['join_moderator']['id'] = 'join_moderator';
-  $handler->display->display_options['fields']['join_moderator']['table'] = 'bbb_meetings';
-  $handler->display->display_options['fields']['join_moderator']['field'] = 'join_moderator';
-  $handler->display->display_options['fields']['join_moderator']['label'] = '';
-  $handler->display->display_options['fields']['join_moderator']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['join_moderator']['text'] = 'Start Office Hours';
-  /* Field: Big Blue Button: Join */
-  $handler->display->display_options['fields']['join_attendee']['id'] = 'join_attendee';
-  $handler->display->display_options['fields']['join_attendee']['table'] = 'bbb_meetings';
-  $handler->display->display_options['fields']['join_attendee']['field'] = 'join_attendee';
-  $handler->display->display_options['fields']['join_attendee']['label'] = '';
-  $handler->display->display_options['fields']['join_attendee']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['join_attendee']['text'] = 'Join office hours';
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['label'] = '';
+  $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = '';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<a href="/node/[nid]/meeting/moderate">Start office hours</a>';
+  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+  $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_1']['label'] = '';
+  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = '<a href="/node/[nid]/meeting/attend">Join office hours</a>';
+  $handler->display->display_options['fields']['nothing_1']['element_label_colon'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
