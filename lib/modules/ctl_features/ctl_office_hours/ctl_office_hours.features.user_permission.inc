@@ -20,21 +20,29 @@ function ctl_office_hours_user_default_permissions() {
   // Exported permission: 'attend meetings'.
   $permissions['attend meetings'] = array(
     'name' => 'attend meetings',
-    'roles' => array(),
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+    ),
     'module' => 'bbb',
   );
 
   // Exported permission: 'moderate meetings'.
   $permissions['moderate meetings'] = array(
     'name' => 'moderate meetings',
-    'roles' => array(),
+    'roles' => array(
+      'Staff' => 'Staff',
+      'Trainer' => 'Trainer',
+      'administrator' => 'administrator',
+    ),
     'module' => 'bbb',
   );
 
   // Exported permission: 'moderate own meetings'.
   $permissions['moderate own meetings'] = array(
     'name' => 'moderate own meetings',
-    'roles' => array(),
+    'roles' => array(
+      'Trainer' => 'Trainer',
+    ),
     'module' => 'bbb',
   );
 
