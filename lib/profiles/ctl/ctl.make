@@ -16,6 +16,12 @@ projects[lesson][subdir] = "ctl"
 projects[lesson][download][type] = local
 projects[lesson][download][source] = './lib/modules/lesson'
 
+; Example Conversations
+projects[example_conversations][type] = "module"
+projects[example_conversations][subdir] = "ctl"
+projects[example_conversations][download][type] = local
+projects[example_conversations][download][source] = './lib/modules/example_conversations'
+
 ; CTL Theme
 projects[ctl_theme][type] = "theme"
 projects[ctl_theme][subdir] = "ctl"
