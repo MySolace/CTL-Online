@@ -17,10 +17,10 @@ projects[lesson][download][type] = local
 projects[lesson][download][source] = './lib/modules/lesson'
 
 ; Example Conversations
-projects[example_conversations][type] = "module"
-projects[example_conversations][subdir] = "ctl"
-projects[example_conversations][download][type] = local
-projects[example_conversations][download][source] = './lib/modules/example_conversations'
+projects[example_conversation][type] = "module"
+projects[example_conversation][subdir] = "ctl"
+projects[example_conversation][download][type] = local
+projects[example_conversation][download][source] = './lib/modules/example_conversation'
 
 ; CTL Theme
 projects[ctl_theme][type] = "theme"
