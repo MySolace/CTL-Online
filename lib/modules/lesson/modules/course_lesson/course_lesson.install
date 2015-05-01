@@ -15,3 +15,7 @@ function course_lesson_update_7101() {
     }
   }
 }
+
+function course_lesson_update_7102() {
+  course_lesson_update_7101();
+}
