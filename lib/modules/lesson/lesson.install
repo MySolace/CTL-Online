@@ -1,5 +1,7 @@
 <?php
 
+module_load_include('inc', 'lesson', 'lesson.migrations');
+
 function _lesson_fields() {
   return array(
     'slide' => array(
@@ -173,8 +175,9 @@ function lesson_schema() {
         'not null' => TRUE,
       ),
       'progress' => array(
-        'type' => 'text',
+        'type' => 'float',
         'not null' => TRUE,
+        'default' => 0,
       ),
     ),
     'primary key' => array('id'),

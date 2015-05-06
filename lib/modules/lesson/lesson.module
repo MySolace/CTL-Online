@@ -2,7 +2,7 @@
 
 
 // equivalent to 50 1's in binary
-define('LESSON_AUDIO_COMPLETE', '3ffffffffffff');
+define('LESSON_AUDIO_COMPLETE', 1);
 
 /**
  * Implements hook_menu().
@@ -24,6 +24,10 @@ function lesson_ajax_audio_progress($nid) {
 
   $progress = $_REQUEST['progress'];
 
+  if (floatval($progress) >= .99) {
+    $progress = 1;
+  }
+
   $e = audio_progress_load($nid, $user->uid);
 
   if (!$e) {
@@ -41,7 +45,7 @@ function lesson_ajax_audio_progress($nid) {
     module_invoke_all('lesson_complete', node_load($nid));
   }
 
-  return TRUE;
+  return $e->progress;
 }
 
 
