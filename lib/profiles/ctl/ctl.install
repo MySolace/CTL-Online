@@ -30,6 +30,9 @@ function ctl_configure() {
 }
 
 function ctl_update_7001() {
+  return;
+
+  // failed update (wrong call to course_get_course_object)
   $res = db_select('quiz_node_results', 'r')
     ->fields('r', array('nid', 'uid'))
     ->execute()
@@ -38,6 +41,20 @@ function ctl_update_7001() {
   foreach ($res as $row) {
     $account = user_load($row->uid);
     if ($object = course_get_course_object('course_lesson', 'lesson', $row->nid, $account)) {
+      $object->getFulfillment()->setComplete()->save();
+    }
+  }
+}
+
+function ctl_update_7002() {
+  $res = db_select('quiz_node_results', 'r')
+    ->fields('r', array('nid', 'uid'))
+    ->execute()
+    ->fetchAll();
+
+  foreach ($res as $row) {
+    $account = user_load($row->uid);
+    if ($object = course_get_course_object('course_quiz', 'quiz', $row->nid, $account)) {
       $object->getFulfillment()->setComplete()->save();
     }
   }
