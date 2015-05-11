@@ -1,30 +1,44 @@
 <?php
 /**
  * @file
- * Install, update and uninstall functions for the DoSomething installation profile.
+ * Install, update and uninstall functions for the Crisis Text Line installation profile.
  */
 
 /**
  * Implements hook_install_tasks().
  */
 function ctl_install_tasks($install_state) {
-    $tasks = array (
-        'ctl_configure' => array(),
-    );
+  $tasks = array (
+    'ctl_configure' => array(),
+  );
 
-    return $tasks;
+  return $tasks;
 }
 
 /**
  * Set up base configuration.
  */
 function ctl_configure() {
-    db_update('system')
-        ->fields(array('status' => 1))
-        ->condition('type', 'theme')
-        ->condition('name', array('adminimal', 'ctl'), 'IN')
-        ->execute();
+  db_update('system')
+    ->fields(array('status' => 1))
+    ->condition('type', 'theme')
+    ->condition('name', array('adminimal', 'ctl'), 'IN')
+    ->execute();
 
-    variable_set('admin_theme', 'ctl_theme');
-    variable_set('theme_default', 'ctl_theme');
+  variable_set('admin_theme', 'ctl_theme');
+  variable_set('theme_default', 'ctl_theme');
+}
+
+function ctl_update_7001() {
+  $res = db_select('quiz_node_results', 'r')
+    ->fields('r', array('nid', 'uid'))
+    ->execute()
+    ->fetchAll();
+
+  foreach ($res as $row) {
+    $account = user_load($row->uid);
+    if ($object = course_get_course_object('course_lesson', 'lesson', $row->nid, $account)) {
+      $object->getFulfillment()->setComplete()->save();
+    }
+  }
 }
