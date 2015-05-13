@@ -45,7 +45,15 @@ function ctl_training_menu_local_tasks_alter(&$data, $router_item, $root_path) {
                     '#theme' => 'menu_local_action',
                     '#link' => array(
                         'href' => 'messages/new/'.$uids,
-                        'title' => t('Message all trainees (starts a thread that all trainees participate in)'),
+                        'title' => t('Message ALL trainees'),
+                    ),
+                );
+
+                $data['actions']['output'][] = array(
+                    '#theme' => 'menu_local_action',
+                    '#link' => array(
+                        'href' => 'messages/new/multi',
+                        'title' => t('Message multiple trainees'),
                     ),
                 );
             }
@@ -87,6 +95,10 @@ function ctl_training_form_privatemsg_new_alter(&$form, &$form_state, $form_id) 
     if (strpos(arg(2), ',')) {
         drupal_set_title('Write new message to group');
         $form['recipient']['#access'] = FALSE;
+    } else if (arg(2) == 'multi') {
+        $title = drupal_get_title();
+        $search = '/\[(.*)\]/';
+        drupal_set_title(preg_replace($search, '', $title));
     } else if (!is_null(arg(2))) {
         $title = drupal_get_title();
         $search = '/\[(.*)\]/';
