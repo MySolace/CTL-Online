@@ -136,3 +136,40 @@ function ctl_training_privatemsg_name_lookup($string) {
         }
     }
 }
+
+/**
+ * Implements hook_privatemsg_message_insert().
+ */
+function ctl_training_privatemsg_message_insert($message) {
+    $lang = language_default();
+
+    $author = $message->author;
+    $thread = $message->subject;
+
+    foreach ($message->recipients as $recipient) {
+        $params = array(
+            'author' => $author,
+            'thread' => $thread,
+        );
+
+        $message = drupal_mail('ctl_training', 'new_message', $recipient->mail, $lang, $params);
+    }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function ctl_training_mail($key, &$message, $params) {
+    switch ($key) {
+        case 'new_message':
+            $message['subject'] = t('You have a new message on CTL Online.');
+            $message['body'][] = t("@name has sent a new message in \"@thread\".\n\n
+                Log in to read the message: https://online.crisistextline.org/login?destination=messages",
+                array(
+                    '@name' => format_username($params['author']),
+                    '@thread' => $params['thread'],
+                )
+            );
+            break;
+    }
+}
