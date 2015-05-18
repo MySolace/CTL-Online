@@ -164,7 +164,7 @@ function ctl_training_mail($key, &$message, $params) {
         case 'new_message':
             $message['subject'] = t('You have a new message on CTL Online.');
             $message['body'][] = t("@name has sent a new message in \"@thread\".\n\n
-                Log in to read the message: https://online.crisistextline.org/login?destination=messages",
+                Log in to read the message: https://online.crisistextline.org/user/login?destination=messages",
                 array(
                     '@name' => format_username($params['author']),
                     '@thread' => $params['thread'],
