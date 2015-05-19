@@ -141,6 +141,15 @@ function ctl_training_privatemsg_name_lookup($string) {
  * Implements hook_privatemsg_message_insert().
  */
 function ctl_training_privatemsg_message_insert($message) {
+    $cutoff = 60 * 60 * 3;
+    $thread = privatemsg_thread_load($message->thread_id);
+
+    $last_message = end($thread['messages']);
+
+    if ($last_message->timestamp > time() - $cutoff) {
+        return;
+    }
+
     $lang = language_default();
 
     $author = $message->author;
