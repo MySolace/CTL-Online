@@ -141,7 +141,8 @@ function ctl_training_privatemsg_name_lookup($string) {
  * Implements hook_privatemsg_message_insert().
  */
 function ctl_training_privatemsg_message_insert($message) {
-    $cutoff = 60 * 60 * 3;
+    $hours = variable_get('ctl_training_message_cutoff', 3);
+    $cutoff = 60 * 60 * $hours;
     $thread = privatemsg_thread_load($message->thread_id);
 
     $last_message = end($thread['messages']);
