@@ -59,3 +59,7 @@ function ctl_update_7002() {
     }
   }
 }
+
+function ctl_update_7003() {
+  ctl_update_7002();
+}
