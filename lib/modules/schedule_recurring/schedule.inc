@@ -1,9 +1,7 @@
 <?php
 
 function schedule_recurring_available($form, $form_state) {
-  $setter_roles = schedule_recurring_get_role('publisher');
-
-  var_dump($setter_roles);
+  $setter_roles = schedule_recurring_get_mapping_value('subscriber', 'publisher');
 
   // Users base table
   $q = db_select('users', 'u');
@@ -138,7 +136,6 @@ function schedule_recurring_available_submit($form, &$form_state) {
 
   $account->field_shifts[LANGUAGE_NONE] = array_merge($account->field_shifts[LANGUAGE_NONE], $shifts);
 
-  var_dump($account);
   user_save($account);
 
   $form_state['redirect'] = array(
@@ -151,19 +148,17 @@ function schedule_recurring_available_submit($form, &$form_state) {
   );
 }
 
-function schedule_recurring_get_role($return) {
+function schedule_recurring_get_mapping_value($searchField, $returnField) {
   global $user;
-
-  $input = ($return == 'publisher') ? 'publisher' : 'subscriber';
-  $output = $return;
 
   $mapping = variable_get('schedule_recurring_shift_mapping');
 
   $return = array();
+
   foreach ($mapping as $map) {
     foreach ($user->roles as $key => $role) {
-      if ($key == $map[$input]) {
-        $return[] = $map[$output];
+      if ($key == $map[$searchField]) {
+        $return[] = $map[$returnField];
       }
     }
   }
@@ -209,8 +204,10 @@ function schedule_recurring_get_off($am, $pm) {
 }
 
 function schedule_recurring_role_subquery($role) {
+  $search = ($role == 'subscriber') ? 'publisher' : 'subscriber';
+
   $subq = db_select('users_roles', 'r');
-  $subq->condition('r.rid', schedule_recurring_get_role($role), 'IN');
+  $subq->condition('r.rid', schedule_recurring_get_mapping_value($search, $role), 'IN');
   $subq->fields('r', array('uid'));
 
   return $subq;
@@ -339,9 +336,8 @@ function _schedule_recurring_is_available($shift, $shifts, $account = NULL) {
     $account = $user;
   }
 
-  _schedule_recurring_get_mapping('test');exit;
-
-  $worth = $mapping;
+  $points = schedule_recurring_get_mapping_value('subscriber', 'points');
+  $points = (int)$points[0];
 
   $time = $shift['start'];
   $day = $shift['day'];
@@ -351,7 +347,7 @@ function _schedule_recurring_is_available($shift, $shifts, $account = NULL) {
   _schedule_recurring_time_increment($end_time, variable_get('schedule_recurring_shift_duration'));
 
   while ($time < $end_time) {
-    if (!isset($shifts[$day][$time]) || $shifts[$day][$time] <= 0) {
+    if (!isset($shifts[$day][$time]) || $shifts[$day][$time] < $points) {
       return FALSE;
     }
 
@@ -363,18 +359,20 @@ function _schedule_recurring_is_available($shift, $shifts, $account = NULL) {
   return TRUE;
 }
 
-function _schedule_recurring_get_mapping($role) {
-  $mapping = &drupal_static(__FUNCTION__);
+function _schedule_recurring_get_mapping($role, $account) {
+  $points = &drupal_static(__FUNCTION__);
 
-  if (is_null($mapping)) {
-    $mapping = variable_get(schedule_recurring_shift_mapping);
+  if (!$points) {
+    foreach ($mapping as $map) {
+      foreach ($account->roles as $key => $role) {
+        if ($key == $map[$input]) {
+          $points = $map['points'];
+        }
+      }
+    }
   }
 
-  foreach ($mapping as $map) {
-    var_dump($map);
-  }
-
-  return FALSE;
+  return $points;
 }
 
 /**
