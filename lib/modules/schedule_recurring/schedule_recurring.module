@@ -99,6 +99,7 @@ function schedule_recurring_admin() {
   $mapping[] = array(
     'publisher' => '',
     'subscriber' => '',
+    'points' => '',
   );
 
   $form['schedule_recurring_shift_mapping'] = array(
@@ -106,7 +107,7 @@ function schedule_recurring_admin() {
     '#tree' => TRUE,
     '#suffix' => t('Reset a role to "- Select -" to remove it from the mapping.'),
     '#rows' => array(),
-    '#header' => array('Shift publisher', 'Shift subscriber'),
+    '#header' => array('Shift publisher', 'Shift subscriber', 'Points'),
   );
 
 
@@ -123,20 +124,28 @@ function schedule_recurring_admin() {
       '#default_value' => $map['subscriber'],
     );
 
+    $form['schedule_recurring_shift_mapping'][$key]['points'] = array(
+      '#type' => 'textfield',
+      '#default_value' => $map['points'],
+      '#size' => 3,
+    );
+
     $form['schedule_recurring_shift_mapping']['#rows'][] = array(
       array(
         'data' => &$form['schedule_recurring_shift_mapping'][$key]['publisher'],
       ), array(
         'data' => &$form['schedule_recurring_shift_mapping'][$key]['subscriber'],
+      ), array(
+        'data' => &$form['schedule_recurring_shift_mapping'][$key]['points'],
       ),
     );
   }
 
-  $form['schedule_recurring_users_per_block'] = array(
+  $form['schedule_recurring_points_per_block'] = array(
     '#type' => 'textfield',
     '#element_validate' => array('element_validate_number'),
-    '#title' => t('Maximum number of users to be supervised during a timeslot.'),
-    '#default_value' => variable_get('schedule_recurring_users_per_block', 50),
+    '#title' => t('Maximum number of points available during a timeslot.'),
+    '#default_value' => variable_get('schedule_recurring_points_per_block', 100),
     '#size' => 5,
   );
 

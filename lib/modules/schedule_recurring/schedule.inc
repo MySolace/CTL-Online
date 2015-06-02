@@ -3,6 +3,8 @@
 function schedule_recurring_available($form, $form_state) {
   $setter_roles = schedule_recurring_get_role('publisher');
 
+  var_dump($setter_roles);
+
   // Users base table
   $q = db_select('users', 'u');
 
@@ -25,7 +27,7 @@ function schedule_recurring_available($form, $form_state) {
   $slots = array();
 
   foreach ($results as $result) {
-    for ($i = $result->start; $i < $result->end; time_increment($i)) {
+    for ($i = $result->start; $i < $result->end; _schedule_recurring_time_increment($i)) {
       if (!isset($slots[$result->day])) {
         $slots[$result->day] = array();
       }
@@ -34,7 +36,7 @@ function schedule_recurring_available($form, $form_state) {
         $slots[$result->day][$i] = 0;
       }
 
-      $slots[$result->day][$i] += variable_get('schedule_recurring_users_per_block', 50);
+      $slots[$result->day][$i] += variable_get('schedule_recurring_points_per_block', 100);
     }
   }
 
@@ -50,7 +52,7 @@ function schedule_recurring_available($form, $form_state) {
       if (_schedule_recurring_is_available($shift, $slots)) {
         $end_time = $time;
         $suffix = '';
-        if (time_increment($end_time, variable_get('schedule_recurring_shift_duration')) === FALSE) {
+        if (_schedule_recurring_time_increment($end_time, variable_get('schedule_recurring_shift_duration')) === FALSE) {
           $suffix = ' the next morning';
         }
 
@@ -330,20 +332,30 @@ function schedule_recurring_schedule_filter() {
   return $form;
 }
 
-function _schedule_recurring_is_available($shift, $shifts) {
+function _schedule_recurring_is_available($shift, $shifts, $account = NULL) {
+  global $user;
+
+  if (is_null($account)) {
+    $account = $user;
+  }
+
+  _schedule_recurring_get_mapping('test');exit;
+
+  $worth = $mapping;
+
   $time = $shift['start'];
   $day = $shift['day'];
 
   $increment = variable_get('schedule_recurring_shift_increment');
   $end_time = $time;
-  time_increment($end_time, variable_get('schedule_recurring_shift_duration'));
+  _schedule_recurring_time_increment($end_time, variable_get('schedule_recurring_shift_duration'));
 
   while ($time < $end_time) {
     if (!isset($shifts[$day][$time]) || $shifts[$day][$time] <= 0) {
       return FALSE;
     }
 
-    if (time_increment($time, $increment) === FALSE) {
+    if (_schedule_recurring_time_increment($time, $increment) === FALSE) {
       $day = ($day + 1 > 6) ? 0 : $day + 1;
     }
   }
@@ -351,11 +363,25 @@ function _schedule_recurring_is_available($shift, $shifts) {
   return TRUE;
 }
 
+function _schedule_recurring_get_mapping($role) {
+  $mapping = &drupal_static(__FUNCTION__);
+
+  if (is_null($mapping)) {
+    $mapping = variable_get(schedule_recurring_shift_mapping);
+  }
+
+  foreach ($mapping as $map) {
+    var_dump($map);
+  }
+
+  return FALSE;
+}
+
 /**
  * Given a military time input, output a time incremented
  * by $amount.
  */
-function time_increment(&$val, $amount = NULL) {
+function _schedule_recurring_time_increment(&$val, $amount = NULL) {
   if ($amount == NULL) {
     $amount = variable_get('schedule_recurring_shift_increment');
   }
