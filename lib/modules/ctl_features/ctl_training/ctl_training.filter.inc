@@ -28,7 +28,6 @@ function _ctl_training_filter_node_view($node) {
         && isset($node->content['body']['#items'])
         && $node->content['body']['#items'][0]['format'] == 'markdown'
     ) {
-        drupal_add_js('//cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js', 'external');
-        drupal_add_js(drupal_get_path('module', 'ctl_training') . '/ctl_training.js');
+
     }
 }

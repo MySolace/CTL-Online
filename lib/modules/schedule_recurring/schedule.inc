@@ -134,6 +134,12 @@ function schedule_recurring_available_submit($form, &$form_state) {
     $shifts[0]['end'] = $shift[2];
   }
 
+  if (!$account->field_shifts) {
+    $account->field_shifts = array(
+      LANGUAGE_NONE => array(),
+    );
+  }
+
   $account->field_shifts[LANGUAGE_NONE] = array_merge($account->field_shifts[LANGUAGE_NONE], $shifts);
 
   user_save($account);

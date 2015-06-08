@@ -13,7 +13,9 @@ function ctl_theme_preprocess_html(&$vars) {
     //drupal_add_js($adminimal_path . '/scripts/scroll-left.js');
     drupal_add_js('//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js', 'external');
     drupal_add_js('//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.js', 'external');
+    drupal_add_js('//cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js', 'external');
     drupal_add_js('var $jq = jQuery.noConflict(true);', 'inline');
+    drupal_add_js($adminimal_path . '/js/md.js');
     drupal_add_js($adminimal_path . '/js/label.js');
     drupal_add_js($adminimal_path . '/js/lesson.js');
 }
