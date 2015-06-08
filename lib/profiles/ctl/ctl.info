@@ -39,6 +39,7 @@ dependencies[] = date
 dependencies[] = date_api
 dependencies[] = date_views
 dependencies[] = drupalchat
+dependencies[] = nodejs
 dependencies[] = email
 dependencies[] = email_registration
 dependencies[] = entity
