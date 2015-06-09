@@ -61,11 +61,29 @@ function _ctl_sms_save_number($number, $uid, $new_record = TRUE) {
 }
 
 /**
- * Implements hook_user_insert().
+ * Implement hook_form_FORM_ID_alter().
  */
-function ctl_sms_user_insert(&$edit, $account, $category) {
-    $number = $edit['field_phone_number'][LANGUAGE_NONE][0]['value'];
-    _ctl_sms_save_number($number, $account->uid, TRUE);
+function ctl_sms_form_user_register_form_alter(&$form, &$form_state, $form_id) {
+    $form['#validate'][] = 'ctl_sms_user_validate';
+    return $form;
+}
+
+/**
+ * Implements hook_user_presave().
+ */
+function ctl_sms_user_validate($form, &$form_state) {
+    global $user;
+    if (form_get_errors()) return;
+
+    $number = $form_state['values']['field_phone_number'][LANGUAGE_NONE][0]['value'];
+
+    if ($account = twilio_verify_number($number, TRUE)) {
+        $email = explode('@', $account->mail);
+        $email[0] = $email[0][0] . '...' . substr($email[0], -1);
+        $email = implode('@', $email);
+
+        form_set_error('ctl_sms', t('An account already exists with that phone number with an email that looks like: @email', array('@email' => $email)));
+    }
 }
 
 /**
