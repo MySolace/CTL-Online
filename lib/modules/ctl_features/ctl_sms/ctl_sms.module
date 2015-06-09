@@ -82,7 +82,10 @@ function ctl_sms_user_validate($form, &$form_state) {
         $email[0] = $email[0][0] . '...' . substr($email[0], -1);
         $email = implode('@', $email);
 
-        form_set_error('ctl_sms', t('An account already exists with that phone number with an email that looks like: @email', array('@email' => $email)));
+        form_set_error('ctl_sms', t('An account already exists with that phone number with an email that looks like: @email. Please <a href="@link">reset your password</a> instead.', array(
+            '@email' => $email,
+            '@link'  => '/user/password',
+        )));
     }
 }
 
