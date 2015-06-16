@@ -213,13 +213,16 @@ function schedule_recurring_role_subquery($role) {
   return $subq;
 }
 
-function schedule_recurring_get_on($am, $pm, $day, $exclude = array()) {
+function schedule_recurring_get_on($day, $exclude = array(), $all_shifts = FALSE, $format = 'output') {
   $today = array();
 
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'user')
-    ->entityCondition('entity_id', schedule_recurring_role_subquery('subscriber'), 'IN')
     ->fieldCondition('field_shifts', 'day', $day);
+
+  if (!$all_shifts) {
+    $query->entityCondition('entity_id', schedule_recurring_role_subquery('subscriber'), 'IN');
+  }
 
   if (!empty($exclude)) {
     $query->entityCondition('entity_id', $exclude, 'NOT IN');
@@ -237,11 +240,21 @@ function schedule_recurring_get_on($am, $pm, $day, $exclude = array()) {
     foreach ($user->field_shifts[LANGUAGE_NONE] as $shift) {
       unset($user->roles[2]);
       if ($shift['day'] == $day) {
-        $today[] = array(
-          '<a href="/user/'.$user->uid.'">'.format_username($user).'</a>',
-          $times_start[$shift['start']] . ' - ' . $times_end[$shift['end']],
-          implode(', ', $user->roles)
-        );
+        switch ($format) {
+          case 'output':
+            $today[] = array(
+              '<a href="/user/'.$user->uid.'">'.format_username($user).'</a>',
+              $times_start[$shift['start']] . ' - ' . $times_end[$shift['end']],
+              implode(', ', $user->roles)
+            );
+            break;
+          case 'raw':
+            $today[] = array(
+              'shift' => $shift,
+              'user' => $user,
+            );
+            break;
+        }
       }
     }
   }
@@ -275,7 +288,7 @@ function schedule_recurring_schedule($form, $form_state) {
   if (empty($form_state['input']) || $form_state['rebuild'] == true) {
     $off_res = schedule_recurring_get_off($am, $pm);
     $off = $off_res['results'];
-    $on = schedule_recurring_get_on($am, $pm, $today, $off_res['uids']);
+    $on = schedule_recurring_get_on($today, $off_res['uids']);
   }
 
   $form[] = array(

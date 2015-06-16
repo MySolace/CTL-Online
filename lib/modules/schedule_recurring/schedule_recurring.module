@@ -174,14 +174,44 @@ function schedule_recurring_admin() {
   return $form;
 }
 
+function schedule_recurring_cron() {
+  $next_shift = schedule_recurring_next_shift(60 / variable_get('schedule_recurring_shift_increment'));
+  $next_day = date('w');
+
+  if (intval($next_shift) >= 2400) {
+    $next_day += floor(intval($next_shift) / 2399); // one less than 2400 to make sure 2400 forces $next_day to increment
+    $next_shift = intval($next_shift) % 2400;
+  }
+
+  if ($next_day > 6) {
+    $next_day = $next_day % 7;
+  }
+
+  $last_check = variable_get('schedule_recurring_last_cron', '00');
+  $this_check = $next_day . $next_shift;
+
+  if ($last_check == $this_check) {
+    return;
+  }
+
+  module_load_include('inc', 'schedule_recurring', 'schedule');
+
+  $shifts = schedule_recurring_get_on($next_day, array(), TRUE, 'raw');
+
+  foreach ($shifts as $shift) {
+    if ($shift['shift']['day'] == $next_day &&
+        $shift['shift']['start'] == $next_shift) {
+
+    }
+  }
+}
+
 function _schedule_recurring_admin_submit($form, &$form_state) {
   foreach ($form_state['values']['schedule_recurring_shift_mapping'] as $key => $map) {
     if (empty($map['publisher']) || empty($map['subscriber'])) {
       unset($form_state['values']['schedule_recurring_shift_mapping'][$key]);
     }
   }
-
-  var_dump($form_state['values']);
 }
 
 /**
@@ -236,5 +266,22 @@ function _schedule_recurring_times($include_2400 = FALSE) {
   }
 
   return $times[$accessor];
+}
+
+function schedule_recurring_next_shift($num_increments = 1) {
+  $increment = variable_get('schedule_recurring_shift_increment');
+
+  $today = date('w');
+
+  $next_minutes = (floor(date('i') / $increment) * $increment) + ($increment * $num_increments);
+  $next_hour = date('H') + floor($next_minutes / 60);
+
+  if ($next_minutes >= 60) {
+    $next_minutes = $next_minutes % 60;
+  }
+
+  $next_shift = $next_hour . str_pad($next_minutes, 2, '0', STR_PAD_LEFT);
+
+  return $next_shift;
 }
 
