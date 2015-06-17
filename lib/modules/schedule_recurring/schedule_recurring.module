@@ -168,6 +168,14 @@ function schedule_recurring_admin() {
     '#size' => 5,
   );
 
+  $form['schedule_recurring_priority_shifts'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Prioritized shifts'),
+    '#rows' => 10,
+    '#description' => 'One time range per line. For Monday (0-based day 1 of the week), 3pm-11pm, use: 1:1500-2300',
+    '#default_value' => implode("\n", variable_get('schedule_recurring_priority_shifts', array())),
+  );
+
   $form = system_settings_form($form);
   array_unshift($form['#submit'], '_schedule_recurring_admin_submit');
 
@@ -207,6 +215,7 @@ function schedule_recurring_cron() {
 }
 
 function _schedule_recurring_admin_submit($form, &$form_state) {
+  $form_state['values']['schedule_recurring_priority_shifts'] = explode("\n", $form_state['values']['schedule_recurring_priority_shifts']);
   foreach ($form_state['values']['schedule_recurring_shift_mapping'] as $key => $map) {
     if (empty($map['publisher']) || empty($map['subscriber'])) {
       unset($form_state['values']['schedule_recurring_shift_mapping'][$key]);

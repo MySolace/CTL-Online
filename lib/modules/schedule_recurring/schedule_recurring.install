@@ -5,6 +5,7 @@ function schedule_recurring_enable() {
   variable_set('schedule_recurring_shift_duration', 240);
   variable_set('schedule_recurring_shift_increment', 30);
   variable_set('schedule_recurring_shift_mapping', array());
+  variable_get('schedule_recurring_priority_shifts', array());
 
   field_cache_clear();
   field_associate_fields('schedule_recurring');

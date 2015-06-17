@@ -58,6 +58,12 @@ function schedule_recurring_available($form, $form_state) {
           'day'        => $days[$day],
           'start_time' => $times[$time],
           'end_time'   => $times[$end_time] . $suffix,
+          '#attributes' => array(
+            'class' => array(
+              'day-' . $day,
+              (schedule_recurring_is_priority_shift($day, $time, $end_time)) ? 'priority' : '',
+            )
+          ),
         );
       }
     }
@@ -83,12 +89,62 @@ function schedule_recurring_available($form, $form_state) {
     drupal_get_path('module', 'schedule_recurring') . '/js/tableselect.js',
   );
 
+  $form['#validate'][] = 'schedule_recurring_overlapping_shift';
+
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Sign up for this shift',
   );
 
   return $form;
+}
+
+function schedule_recurring_is_priority_shift($day, $start, $end) {
+  $shifts = &drupal_static(__FUNCTION__);
+
+  if (!$shifts) {
+    $shifts_unordered = variable_get('schedule_recurring_priority_shifts');
+
+    foreach ($shifts_unordered as $shift) {
+      $shift = preg_replace('/\s+/', '', $shift);
+      $shift = explode(':', $shift);
+      $time = explode('-', $shift[1]);
+
+      $shifts[$shift[0]][] = array(
+        'start' => $time[0],
+        'end' => $time[1]
+      );
+    }
+  }
+
+  if (isset($shifts[$day])) {
+    foreach ($shifts[$day] as $shift) {
+      if (($start >= $shift['start'] && $start < $shift['end']) ||
+        ($end > $shift['start'] && $end <= $shift['end'])
+      ) {
+        return true;
+      }
+    }
+  }
+}
+
+function schedule_recurring_overlapping_shift(&$form, &$form_state) {
+  global $user;
+
+  $account = user_load($user->uid);
+
+  if (empty($account->field_shifts) || empty($account->field_shifts[LANGUAGE_NONE])) {
+    return;
+  }
+
+  list($day, $start, $end) = explode(':', $form_state['values']['shift']);
+
+  foreach ($account->field_shifts[LANGUAGE_NONE] as $shift) {
+    if (abs($start - $shift['start']) <= variable_get('schedule_recurring_shift_duration')) {
+      form_set_error('schedule_recurring', t('It looks like you already have a shift that overlaps with this one. No need to sign up twice!'));
+      return;
+    }
+  }
 }
 
 function schedule_recurring_confirm() {
