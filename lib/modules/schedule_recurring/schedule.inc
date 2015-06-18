@@ -319,6 +319,11 @@ function schedule_recurring_get_on($day, $exclude = array(), $all_shifts = FALSE
 }
 
 function schedule_recurring_schedule($form, $form_state) {
+  if (!schedule_recurring_is_publisher()) {
+    drupal_goto('schedule/my-schedule');
+    return;
+  }
+
   $form = schedule_recurring_schedule_filter($form, $form_state);
   $am = $pm = $today = NULL;
 
@@ -364,6 +369,58 @@ function schedule_recurring_schedule($form, $form_state) {
   );
 
   return $form;
+}
+
+function schedule_recurring_my_schedule() {
+  global $user;
+
+  $account = user_load($user->uid);
+  $rows = array();
+
+  if (isset($account->field_shifts[LANGUAGE_NONE])) {
+    $shifts = $account->field_shifts[LANGUAGE_NONE];
+
+    $days = _schedule_recurring_days();
+    $start_times = _schedule_recurring_times();
+    $end_times = _schedule_recurring_times(TRUE);
+
+    foreach ($shifts as $shift) {
+      $rows[] = array(
+        $days[$shift['day']],
+        $start_times[$shift['start']],
+        $end_times[$shift['end']],
+      );
+    }
+  }
+
+  $link_options = array(
+    'html' => FALSE,
+    'attributes' => array(
+      'class' => array(
+        'button',
+      ),
+    ),
+  );
+
+  return array(
+    array(
+      '#theme' => 'table',
+      '#rows' => $rows,
+      '#empty' => t('You are not signed up for any shifts yet.'),
+    ),
+    array(
+      '#theme' => 'link',
+      '#text' => t('Sign up for a shift'),
+      '#path' => 'schedule/sign-up',
+      '#options' => $link_options,
+    ),
+    array(
+      '#theme' => 'link',
+      '#text' => t('Take time off'),
+      '#path' => 'time-off',
+      '#options' => $link_options,
+    ),
+  );
 }
 
 function schedule_recurring_schedule_submit($form, &$form_state) {
