@@ -51,8 +51,8 @@ function time_off_load_multiple($ids = array(), $conditions = array(), $reset = 
 function time_off_add() {
   $time_off = entity_create('time_off', array(
     'id' => '',
-    'start' => date('Y-m-d'),
-    'end' => date('Y-m-d', strtotime('+7 days')),
+    'start' => time(),
+    'end' => strtotime('+7 days'),
     'type' => 'user',
   ));
 
@@ -64,6 +64,11 @@ function time_off_date_format() {
 }
 
 function time_off_form($form, &$form_state, $time_off) {
+  if (!is_object($time_off)) {
+    $time_off = entity_load('time_off', array($time_off));
+    $time_off = array_shift($time_off);
+  }
+
   $format = time_off_date_format();
   $form = array(
     '#submit' => array('time_off_form_submit'),
@@ -77,7 +82,7 @@ function time_off_form($form, &$form_state, $time_off) {
     '#type' => 'date_select',
     '#title' => t('Start date'),
     '#required' => TRUE,
-    '#default_value' => $time_off->start,
+    '#default_value' => date('Y-m-d', $time_off->start),
     '#date_format' => $format,
     '#date_year_range' => '0:+1',
     '#date_label_position' => 'none',
@@ -87,18 +92,23 @@ function time_off_form($form, &$form_state, $time_off) {
     '#type' => 'date_select',
     '#title' => t('End date'),
     '#required' => TRUE,
-    '#default_value' => $time_off->end,
+    '#default_value' => date('Y-m-d', $time_off->end),
     '#date_format' => $format,
     '#date_year_range' => '0:+1',
     '#date_label_position' => 'none',
   );
 
+  $form['entity'] = array(
+    '#type' => 'value',
+    '#value' => $time_off,
+  );
+
+  field_attach_form('time_off', $time_off, $form, $form_state);
+
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save'),
   );
-
-  field_attach_form('time_off', $time_off, $form, $form_state);
 
   return $form;
 }
@@ -123,7 +133,9 @@ function time_off_form_validate($form, &$form_state) {
 function time_off_form_submit($form, &$form_state) {
   global $user;
 
-  $time_off = entity_create('time_off', $form_state['values']);
+  $time_off = $form_state['values']['entity'];
+  $time_off->start = $form_state['values']['start'];
+  $time_off->end = $form_state['values']['end'];
   $time_off->type = end($user->roles);
   $time_off->author = $user->uid;
   $time_off->save();
@@ -133,6 +145,12 @@ function time_off_form_submit($form, &$form_state) {
 
 function time_off_save(&$time_off) {
   return $time_off->save();
+}
+
+function time_off_delete($time_off) {
+  entity_delete('time_off', $time_off);
+
+  drupal_goto('time-off');
 }
 
 function time_off_view($id) {

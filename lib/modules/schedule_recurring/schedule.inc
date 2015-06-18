@@ -194,6 +194,13 @@ function schedule_recurring_available_submit($form, &$form_state) {
 
   user_save($account);
 
+  $mail_params = array(
+    $account => $account,
+    $shift => $shifts[0],
+  );
+
+  drupal_mail('schedule_recurring', 'shift_confirmation', $account->mail, user_preferred_language($account), $mail_params);
+
   $form_state['redirect'] = array(
     'schedule/confirm',
     array(
@@ -393,6 +400,18 @@ function schedule_recurring_my_schedule() {
     }
   }
 
+  $time_off = schedule_recurring_my_time_off();
+
+  $off = array();
+  foreach ($time_off as $time) {
+    $off[] = array(
+      date('F d, Y', $time->start),
+      date('F d, Y', $time->end),
+      l('Edit', 'time-off/' . $time->id . '/edit', array('query' => array('destination' => 'schedule'))) . ' | ' .
+      l('Delete', 'time-off/' . $time->id . '/delete', array('query' => array('destination' => 'schedule'))),
+    );
+  }
+
   $link_options = array(
     'html' => FALSE,
     'attributes' => array(
@@ -406,7 +425,22 @@ function schedule_recurring_my_schedule() {
     array(
       '#theme' => 'table',
       '#rows' => $rows,
+      '#header' => array(
+        'Day',
+        'Start Time',
+        'End Time',
+      ),
       '#empty' => t('You are not signed up for any shifts yet.'),
+    ),
+    array(
+      '#prefix' => '<h3>Time Off</h3>',
+      '#theme' => 'table',
+      '#rows' => $off,
+      '#header' => array(
+        'Start date',
+        'End date',
+      ),
+      '#empty' => t('You don\'t have any time off requests in the future.'),
     ),
     array(
       '#theme' => 'link',
@@ -418,9 +452,25 @@ function schedule_recurring_my_schedule() {
       '#theme' => 'link',
       '#text' => t('Take time off'),
       '#path' => 'time-off',
-      '#options' => $link_options,
+      '#options' => $link_options + array('query' => array('destination' => 'schedule')),
     ),
   );
+}
+
+function schedule_recurring_my_time_off() {
+  global $user;
+
+  $query = db_select('time_off', 't');
+  $query->leftJoin('users', 'u', 'u.uid=t.author');
+  $query->condition('u.uid', $user->uid);
+  $query->fields('t', array('start', 'end', 'id'));
+  $query->fields('u', array('uid', 'name'));
+  $query->condition('t.end', time(), '>=');
+  $query->orderBy('t.end', 'ASC');
+
+  $results = $query->execute()->fetchAll();
+
+  return $results;
 }
 
 function schedule_recurring_schedule_submit($form, &$form_state) {

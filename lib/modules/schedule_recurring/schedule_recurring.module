@@ -74,10 +74,11 @@ function schedule_recurring_menu() {
   );
 
   $items['time-off'] = array(
-    'title' => t('Take time off'),
-    'description' => t('TODO'),
-    'page callback' => 'time_off_request',
+    'title' => t('Request time off'),
+    'page callback' => 'time_off_add',
     'access arguments' => array('sign up for shifts'),
+    'file' => 'entity.inc',
+    'file path' => drupal_get_path('module', 'schedule_recurring'),
   );
 
   $items['time-off/%'] = array(
@@ -86,14 +87,17 @@ function schedule_recurring_menu() {
     'access arguments' => array('sign up for shifts'),
   );
 
-  $items['time-off/request'] = array(
-    'title' => t('Request time off'),
-    'page callback' => 'time_off_add',
+  $items['time-off/%/edit'] = array(
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('time_off_form', 1),
     'access arguments' => array('sign up for shifts'),
-    'file' => 'entity.inc',
-    'file path' => drupal_get_path('module', 'schedule_recurring'),
   );
 
+  $items['time-off/%/delete'] = array(
+    'page callback' => 'time_off_delete',
+    'page arguments' => array(1),
+    'access arguments' => array('sign up for shifts'),
+  );
 
   return $items;
 }
