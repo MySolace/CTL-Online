@@ -71,6 +71,7 @@ dependencies[] = field_permissions
 dependencies[] = rules
 dependencies[] = mailcontrol
 dependencies[] = course
+dependencies[] = webform_references
 
 ; CTL
 dependencies[] = ctl
