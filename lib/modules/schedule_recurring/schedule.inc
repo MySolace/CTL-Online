@@ -89,6 +89,7 @@ function schedule_recurring_available($form, $form_state) {
     drupal_get_path('module', 'schedule_recurring') . '/js/tableselect.js',
   );
 
+  $form['#validate'][] = 'schedule_recurring_picked_shift';
   $form['#validate'][] = 'schedule_recurring_overlapping_shift';
 
   $form['submit'] = array(
@@ -128,6 +129,12 @@ function schedule_recurring_is_priority_shift($day, $start, $end) {
   }
 }
 
+function schedule_recurring_picked_shift(&$form, &$form_state) {
+  if (empty($form_state['values']['shift'])) {
+    form_set_error('schedule_recurring', t('Oops! You didn\'t select a shift. Please try again.'));
+  }
+}
+
 function schedule_recurring_overlapping_shift(&$form, &$form_state) {
   global $user;
 
@@ -140,13 +147,24 @@ function schedule_recurring_overlapping_shift(&$form, &$form_state) {
   list($day, $start, $end) = explode(':', $form_state['values']['shift']);
 
   foreach ($account->field_shifts[LANGUAGE_NONE] as $shift) {
+    schedule_recurring_wrapping_shifts($shift['start']);
     if (abs($start - $shift['start']) <= variable_get('schedule_recurring_shift_duration')) {
-      form_set_error('schedule_recurring', t('It looks like you already have a shift that overlaps with this one. No need to sign up twice!'));
-      return;
+      //form_set_error('schedule_recurring', t('It looks like you already have a shift that overlaps with this one. No need to sign up twice!'));
+      //return;
     }
   }
 }
 
+funtion schedule_recurring_wrapping_shifts($start) {
+  $times = _schedule_recurring_times();
+
+  var_dump($times);exit;
+
+  $num_wrapping = variable_get('schedule_recurring_shift_duration') / variable_get('schedule_recurring_shift_increment');
+  for ($i = $start; $i < $num_wrapping; $i++) {
+    $wrapping[] = $num_wrapping[$i]
+  }
+}
 function schedule_recurring_confirm() {
   list($day, $start, $end) = explode(':', $_GET['shift']);
 
