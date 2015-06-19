@@ -53,6 +53,7 @@ function time_off_add() {
     'id' => '',
     'start' => time(),
     'end' => strtotime('+7 days'),
+    'reason' => '',
     'type' => 'user',
   ));
 
@@ -98,6 +99,14 @@ function time_off_form($form, &$form_state, $time_off) {
     '#date_label_position' => 'none',
   );
 
+  $form['reason'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Reason for taking time off'),
+    '#required' => FALSE,
+    '#default_value' => $time_off->reason,
+    '#rows' => 2,
+  );
+
   $form['entity'] = array(
     '#type' => 'value',
     '#value' => $time_off,
@@ -136,6 +145,7 @@ function time_off_form_submit($form, &$form_state) {
   $time_off = $form_state['values']['entity'];
   $time_off->start = $form_state['values']['start'];
   $time_off->end = $form_state['values']['end'];
+  $time_off->reason = $form_state['values']['reason'];
   $time_off->type = end($user->roles);
   $time_off->author = $user->uid;
   $time_off->save();
@@ -164,6 +174,7 @@ function time_off_view($id) {
 
   $rows[] = array('Start', $time_off->start);
   $rows[] = array('End', $time_off->end);
+  $rows[] = array('Reason', check_plain($time_off->reason));
 
   return array(
     '#theme' => 'table',

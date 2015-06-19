@@ -71,6 +71,11 @@ function schedule_recurring_schema() {
         'type' => 'int',
         'not null' => TRUE,
       ),
+      'reason' => array(
+        'description' => 'Reason for taking time off',
+        'type' => 'text',
+        'not null' => FALSE,
+      ),
     ),
     'primary key' => array('id'),
     'indexes' => array(),

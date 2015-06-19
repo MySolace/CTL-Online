@@ -18,7 +18,7 @@ function schedule_recurring_field_info() {
 
 function schedule_recurring_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
   foreach ($items as $delta => $item) {
-    if (intval($item['start']) >= intval($item['end'])) {
+    if ($item['start'] > -1 && (intval($item['start']) >= intval($item['end']))) {
       $errors[$field['field_name']][$langcode][$delta][] = array(
         'error' => 'schedule_recurring_end_time_invalid',
         'message' => t('%name: The end time of a shift cannot be before or exactly the same as the start time.', array('%name' => $instance['label'])),

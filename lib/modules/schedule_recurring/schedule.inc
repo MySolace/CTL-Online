@@ -146,25 +146,55 @@ function schedule_recurring_overlapping_shift(&$form, &$form_state) {
 
   list($day, $start, $end) = explode(':', $form_state['values']['shift']);
 
+  $check = array();
   foreach ($account->field_shifts[LANGUAGE_NONE] as $shift) {
-    schedule_recurring_wrapping_shifts($shift['start']);
-    if (abs($start - $shift['start']) <= variable_get('schedule_recurring_shift_duration')) {
-      //form_set_error('schedule_recurring', t('It looks like you already have a shift that overlaps with this one. No need to sign up twice!'));
-      //return;
+    if ($shift['day'] == $day) {
+      $wrapping_shifts = schedule_recurring_wrapping_shifts($shift['start']);
+      $check = array_merge($check, $wrapping_shifts);
     }
   }
-}
 
-funtion schedule_recurring_wrapping_shifts($start) {
-  $times = _schedule_recurring_times();
-
-  var_dump($times);exit;
-
-  $num_wrapping = variable_get('schedule_recurring_shift_duration') / variable_get('schedule_recurring_shift_increment');
-  for ($i = $start; $i < $num_wrapping; $i++) {
-    $wrapping[] = $num_wrapping[$i]
+  if (in_array($start, $check)) {
+    form_set_error('schedule_recurring', t('It looks like you already have a shift that overlaps with this one. No need to sign up twice!'));
   }
 }
+
+function schedule_recurring_wrapping_shifts($start) {
+  $times = _schedule_recurring_times();
+
+  $num_wrapping = variable_get('schedule_recurring_shift_duration') / variable_get('schedule_recurring_shift_increment');
+
+  $i = 0;
+  $count = FALSE;
+  $wrapping_shifts = array();
+
+  foreach ($times as $time => $time_string) {
+    if ($time == $start) {
+      $count = TRUE;
+      $i++;
+    }
+
+    if (!$count) {
+      // start adding elements to the beginning of the array
+      $wrapping_shifts[] = $time;
+
+      // if we have as many shifts as there are supposed to be wrapping, pull out the first element of the array
+      if (count($wrapping_shifts) > $num_wrapping) {
+        array_shift($wrapping_shifts);
+      }
+    } else {
+      if ($i > $num_wrapping) {
+        break;
+      } else {
+        $i++;
+        $wrapping_shifts[] = $time;
+      }
+    }
+  }
+
+  return $wrapping_shifts;
+}
+
 function schedule_recurring_confirm() {
   list($day, $start, $end) = explode(':', $_GET['shift']);
 
@@ -219,8 +249,8 @@ function schedule_recurring_available_submit($form, &$form_state) {
   user_save($account);
 
   $mail_params = array(
-    $account => $account,
-    $shift => $shifts[0],
+    'account' => $account,
+    'shift' => $shifts[0],
   );
 
   drupal_mail('schedule_recurring', 'shift_confirmation', $account->mail, user_preferred_language($account), $mail_params);
@@ -261,7 +291,7 @@ function schedule_recurring_get_off($am, $pm) {
   $query = db_select('time_off', 't');
   $query->leftJoin('users', 'u', 'u.uid=t.author');
   $query->condition('u.uid', schedule_recurring_role_subquery('subscriber'), 'IN');
-  $query->fields('t', array('start', 'end'));
+  $query->fields('t', array('start', 'end', 'id'));
   $query->fields('u', array('uid', 'name'));
   $query->condition('t.start', $am, '<=');
   $query->condition('t.end', $pm, '>=');
@@ -280,7 +310,8 @@ function schedule_recurring_get_off($am, $pm) {
     $off[] = array(
       '<a href="/user/'.$res->uid.'">'.format_username($users[$res->uid]).'</a>',
       date(time_off_date_format(), $res->start) . ' until ' .
-      date(time_off_date_format(), $res->end)
+      date(time_off_date_format(), $res->end),
+      l('View reason', 'time-off/' . $res->id)
     );
   }
 
@@ -395,7 +426,7 @@ function schedule_recurring_schedule($form, $form_state) {
     '#prefix' => '<h1>Out '.$off_label.'</h1>',
     '#theme' => 'table',
     '#rows' => $off,
-    '#header' => array('Name', 'Out'),
+    '#header' => array('Name', 'Out', 'Reason'),
     '#empty' => t('No one is out @l.', array('@l' => $off_label)),
   );
 
