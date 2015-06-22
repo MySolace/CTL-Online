@@ -602,6 +602,14 @@ function schedule_recurring_schedule_filter() {
 function _schedule_recurring_is_available($shift, $shifts, $account = NULL) {
   global $user;
 
+  $roles = variable_get('schedule_recurring_shift_mapping');
+  $filter_roles = array();
+  $role_indexed = array();
+  foreach ($roles as $role) {
+    $filter_roles[] = $role['subscriber'];
+    $role_indexed[$role['subscriber']] = $role['points'];
+  }
+
   if (is_null($account)) {
     $account = $user;
   }
@@ -617,7 +625,29 @@ function _schedule_recurring_is_available($shift, $shifts, $account = NULL) {
   _schedule_recurring_time_increment($end_time, variable_get('schedule_recurring_shift_duration'));
 
   while ($time < $end_time) {
-    if (!isset($shifts[$day][$time]) || $shifts[$day][$time] < $points) {
+    $q = db_query("
+      SELECT r.rid, count(r.rid) as count FROM users u
+      JOIN users_roles r ON r.uid=u.uid
+      JOIN field_data_field_shifts s ON s.entity_id = u.uid
+      WHERE r.rid IN (:roles)
+      AND s.field_shifts_day = :day
+      AND :time >= s.field_shifts_start
+      AND :time < s.field_shifts_end
+      GROUP BY r.rid
+    ", array(
+      ':roles' => $filter_roles,
+      ':day' => $day,
+      ':time' => $time,
+    ));
+
+    $results = $q->fetchAll();
+
+    $used_points = 0;
+    foreach ($results as $res) {
+      $used_points += $role_indexed[$res->rid] * $res->count;
+    }
+
+    if (!isset($shifts[$day][$time]) || ($used_points + $points) >= $shifts[$day][$time]) {
       return FALSE;
     }
 
