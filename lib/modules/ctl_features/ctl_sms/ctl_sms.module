@@ -93,8 +93,13 @@ function ctl_sms_user_validate($form, &$form_state) {
  * Implements hook_user_update().
  */
 function ctl_sms_user_update(&$edit, $account, $category) {
-    $number = $edit['field_phone_number'][LANGUAGE_NONE][0]['value'];
-    _ctl_sms_save_number($number, $account->uid, FALSE);
+    if (isset($edit['field_phone_number']) &&
+        isset($edit['field_phone_number'][LANGUAGE_NONE]) &&
+        isset($edit['field_phone_number'][LANGUAGE_NONE][0])
+    ) {
+        $number = $edit['field_phone_number'][LANGUAGE_NONE][0]['value'];
+        _ctl_sms_save_number($number, $account->uid, FALSE);
+    }
 }
 
 /**
