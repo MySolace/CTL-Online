@@ -129,7 +129,8 @@ function schedule_recurring_field_formatter_view($entity_type, $entity, $field, 
   switch ($display['type']) {
     case 'schedule_recurring_shift':
       $days = _schedule_recurring_days();
-      $times = _schedule_recurring_times();
+      $start_times = _schedule_recurring_times();
+      $end_times = _schedule_recurring_times(TRUE);
 
       $headers = array(
         t('Day'),
@@ -140,7 +141,7 @@ function schedule_recurring_field_formatter_view($entity_type, $entity, $field, 
       foreach ($items as $delta => $item) {
         $rows[] = array(
           $days[$item['day']],
-          $times[$item['start']] . ' - '. $times[$item['end']],
+          $start_times[$item['start']] . ' - '. $end_times[$item['end']],
         );
       }
 

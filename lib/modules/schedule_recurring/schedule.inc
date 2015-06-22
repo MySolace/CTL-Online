@@ -1,42 +1,7 @@
 <?php
 
 function schedule_recurring_available($form, $form_state) {
-  $setter_roles = schedule_recurring_get_mapping_value('subscriber', 'publisher');
-
-  // Users base table
-  $q = db_select('users', 'u');
-
-  // Filter by those who are setters
-  $subq = db_select('users_roles', 'r');
-  $subq->condition('r.rid', $setter_roles, 'IN');
-  $subq->fields('r', array('uid'));
-  $q->condition('u.uid', $subq, 'IN');
-
-  // Get the fields
-  $q->join('field_data_field_shifts', 'shifts', 'u.uid = shifts.entity_id');
-  $q->condition('shifts.entity_type', 'user', '=');
-
-  $q->addField('shifts', 'field_shifts_day', 'day');
-  $q->addField('shifts', 'field_shifts_start', 'start');
-  $q->addField('shifts', 'field_shifts_end', 'end');
-
-  $results = $q->execute()->fetchAll();
-
-  $slots = array();
-
-  foreach ($results as $result) {
-    for ($i = $result->start; $i < $result->end; _schedule_recurring_time_increment($i)) {
-      if (!isset($slots[$result->day])) {
-        $slots[$result->day] = array();
-      }
-
-      if (!isset($slots[$result->day][$i])) {
-        $slots[$result->day][$i] = 0;
-      }
-
-      $slots[$result->day][$i] += variable_get('schedule_recurring_points_per_block', 100);
-    }
-  }
+  $slots = schedule_recurring_get_slots();
 
   $days = _schedule_recurring_days();
   $times = _schedule_recurring_times();
@@ -91,6 +56,7 @@ function schedule_recurring_available($form, $form_state) {
 
   $form['#validate'][] = 'schedule_recurring_picked_shift';
   $form['#validate'][] = 'schedule_recurring_overlapping_shift';
+  $form['#validate'][] = 'schedule_recurring_shift_available';
 
   $form['submit'] = array(
     '#type' => 'submit',
@@ -98,6 +64,64 @@ function schedule_recurring_available($form, $form_state) {
   );
 
   return $form;
+}
+
+function schedule_recurring_get_slots() {
+  $setter_roles = schedule_recurring_get_mapping_value('subscriber', 'publisher');
+  // Users base table
+  $q = db_select('users', 'u');
+
+  // Filter by those who are setters
+  $subq = db_select('users_roles', 'r');
+  $subq->condition('r.rid', $setter_roles, 'IN');
+  $subq->fields('r', array('uid'));
+  $q->condition('u.uid', $subq, 'IN');
+
+  // Get the fields
+  $q->join('field_data_field_shifts', 'shifts', 'u.uid = shifts.entity_id');
+  $q->condition('shifts.entity_type', 'user', '=');
+
+  $q->addField('shifts', 'field_shifts_day', 'day');
+  $q->addField('shifts', 'field_shifts_start', 'start');
+  $q->addField('shifts', 'field_shifts_end', 'end');
+
+  $results = $q->execute()->fetchAll();
+
+  $slots = array();
+
+  foreach ($results as $result) {
+    for ($i = $result->start; $i < $result->end; _schedule_recurring_time_increment($i)) {
+      if (!isset($slots[$result->day])) {
+        $slots[$result->day] = array();
+      }
+
+      if (!isset($slots[$result->day][$i])) {
+        $slots[$result->day][$i] = 0;
+      }
+
+      $slots[$result->day][$i] += variable_get('schedule_recurring_points_per_block', 100);
+    }
+  }
+
+  return $slots;
+}
+
+function schedule_recurring_shift_available(&$form, &$form_state) {
+  $slots = schedule_recurring_get_slots();
+
+  $days = _schedule_recurring_days();
+  $times = _schedule_recurring_times();
+  $shift = explode(':', $form_state['values']['shift']);
+
+  $shift = array(
+    'day' => $shift[0],
+    'start' => $shift[1],
+    'end' => $shift[2],
+  );
+
+  if(!_schedule_recurring_is_available($shift, $slots)) {
+    form_set_error('schedule_recurring', t('Oops! It looks like someone booked that shift while you were choosing. Please select a different shift.'));
+  }
 }
 
 function schedule_recurring_is_priority_shift($day, $start, $end) {
@@ -381,12 +405,27 @@ function schedule_recurring_get_on($day, $exclude = array(), $all_shifts = FALSE
 }
 
 function schedule_recurring_schedule($form, $form_state) {
+  global $user;
+  $uid = $user->uid;
+
   if (!schedule_recurring_is_publisher()) {
     drupal_goto('schedule/my-schedule');
     return;
   }
 
   $form = schedule_recurring_schedule_filter($form, $form_state);
+
+  $prefix = array(
+    '#markup' => l('Edit my supervisor shifts', 'user/'.$uid.'/edit', array(
+      'query' => array('destination' => 'schedule'),
+      'attributes' => array(
+        'class' => array('button'),
+      )
+    )),
+  );
+
+  array_unshift($form, $prefix);
+
   $am = $pm = $today = NULL;
 
   if (isset($form_state['filters']['date'])) {
