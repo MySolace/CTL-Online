@@ -36,6 +36,13 @@ function schedule_recurring_available($form, $form_state) {
     }
   }
 
+  uksort($shifts, function ($a, $b) {
+    list($day_a, $time_a,) = explode(':', $a);
+    list($day_b, $time_b,) = explode(':', $b);
+
+    return (($day_a * 100000) + $time_a) - (($day_b * 100000) + $time_b);
+  });
+
   $form = array();
   $form['shift'] = array(
     '#type' => 'tableselect',
