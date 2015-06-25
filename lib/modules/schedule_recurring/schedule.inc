@@ -393,7 +393,7 @@ function schedule_recurring_get_on($day, $exclude = array(), $all_shifts = FALSE
       if ($shift['day'] == $day) {
         switch ($format) {
           case 'output':
-            $today[$shift['day'] . ':' . $shift['start']] = array(
+            $today[$shift['day'] . ':' . $shift['start'] . ':' . $user->uid] = array(
               '<a href="/user/'.$user->uid.'">'.format_username($user).'</a>',
               $times_start[$shift['start']] . ' - ' . $times_end[$shift['end']],
               implode(', ', $user->roles)
@@ -412,8 +412,8 @@ function schedule_recurring_get_on($day, $exclude = array(), $all_shifts = FALSE
 
   if ($format == 'output') {
     uksort($today, function ($a, $b) {
-      list($day_a, $time_a) = explode(':', $a);
-      list($day_b, $time_b) = explode(':', $b);
+      list($day_a, $time_a,) = explode(':', $a);
+      list($day_b, $time_b,) = explode(':', $b);
 
       return (($day_a * 100000) + $time_a) - (($day_b * 100000) + $time_b);
     });
