@@ -31,4 +31,4 @@ projects[ctl_theme][download][source] = './lib/themes/ctl_theme'
 projects[schedule_recurring][type] = "module"
 projects[schedule_recurring][subdir] = "ctl"
 projects[schedule_recurring][download][type] = local
-projects[ctl_theme][download][source] = './lib/modules/schedule_recurring'
+projects[schedule_recurring][download][source] = './lib/modules/schedule_recurring'
