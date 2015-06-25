@@ -4,7 +4,9 @@ function schedule_recurring_available($form, $form_state) {
   $slots = schedule_recurring_get_slots();
 
   $days = _schedule_recurring_days();
-  $times = _schedule_recurring_times();
+  $start_times = _schedule_recurring_times();
+  $end_times = _schedule_recurring_times(TRUE);
+
   $shifts = array();
   foreach ($slots as $day => $day_shifts) {
     foreach ($day_shifts as $time => $availability) {
@@ -21,8 +23,8 @@ function schedule_recurring_available($form, $form_state) {
 
         $shifts[$day.':'.$time.':'.$end_time] = array(
           'day'        => $days[$day],
-          'start_time' => $times[$time],
-          'end_time'   => $times[$end_time] . $suffix,
+          'start_time' => $start_times[$time],
+          'end_time'   => $end_times[$end_time] . $suffix,
           '#attributes' => array(
             'class' => array(
               'day-' . $day,
