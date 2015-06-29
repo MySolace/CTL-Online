@@ -81,6 +81,40 @@ function schedule_recurring_schema() {
     'indexes' => array(),
   );
 
+  $schema['make_up'] = array(
+    'description' => 'Store for make up shifts',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Primary key',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'type' => array(
+        'description' => 'Type of make up',
+        'type' => 'varchar',
+        'length' => 64,
+        'default' => 'make-up',
+        'not null' => TRUE,
+      ),
+      'author' => array(
+        'description' => 'Who is making up a shift',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'start' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'end' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id'),
+    'indexes' => array(),
+  );
+
   return $schema;
 }
 
@@ -114,3 +148,40 @@ function schedule_recurring_field_schema($field) {
 }
 
 
+function schedule_recurring_update_7001() {
+  $make_up_table = array(
+    'description' => 'Store for make up shifts',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Primary key',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'type' => array(
+        'description' => 'Type of make up',
+        'type' => 'varchar',
+        'length' => 64,
+        'default' => 'make-up',
+        'not null' => TRUE,
+      ),
+      'author' => array(
+        'description' => 'Who is making up a shift',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'start' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'end' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id'),
+    'indexes' => array(),
+  );
+
+  db_create_table('make_up', $make_up_table);
+}

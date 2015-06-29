@@ -1,30 +1,24 @@
 <?php
 
-/**
- * Implements hook_entity_info().
- */
-function schedule_recurring_entity_info() {
-  $entities = array(
-    'time_off' => array(
-      'label'            => t('Time Off'),
-      'base table'       => 'time_off',
-      'fieldable'        => TRUE,
-      'uri_callback'     => 'time_off_uri',
-      'controller class' => 'TimeOffController',
-      'entity class'     => 'TimeOff',
-      'entity keys'      => array(
-        'id' => 'id',
-        'bundle' => 'type',
-      ),
+
+function schedule_recurring_time_off_entity() {
+  return array(
+    'label'            => t('Time Off'),
+    'base table'       => 'time_off',
+    'fieldable'        => TRUE,
+    'uri_callback'     => 'time_off_uri',
+    'controller class' => 'TimeOffController',
+    'entity class'     => 'TimeOff',
+    'entity keys'      => array(
+      'id' => 'id',
+      'bundle' => 'type',
     ),
   );
-
-  return $entities;
 }
 
 class TimeOff extends Entity {
   protected function defaultUri() {
-    return array('path' => 'time_off/' . $this->identifier());
+    return array('path' => 'time-off/' . $this->identifier());
   }
 }
 
@@ -33,7 +27,7 @@ class TimeOffController extends EntityAPIController {
 
 function time_off_uri($entity) {
   return array(
-    'path' => 'time_off/' . $entity->id,
+    'path' => 'time-off/' . $entity->id,
   );
 }
 

@@ -321,6 +321,8 @@ function schedule_recurring_get_mapping_value($searchField, $returnField) {
 }
 
 function schedule_recurring_get_off($am, $pm) {
+  module_load_include('inc', 'schedule_recurring', 'time_off');
+
   $query = db_select('time_off', 't');
   $query->leftJoin('users', 'u', 'u.uid=t.author');
   $query->condition('u.uid', schedule_recurring_role_subquery('subscriber'), 'IN');
@@ -430,6 +432,8 @@ function schedule_recurring_schedule($form, $form_state) {
     drupal_goto('schedule/my-schedule');
     return;
   }
+
+  module_load_include('inc', 'schedule_recurring', 'time_off');
 
   $form = schedule_recurring_schedule_filter($form, $form_state);
 
@@ -591,7 +595,7 @@ function schedule_recurring_schedule_submit($form, &$form_state) {
 }
 
 function schedule_recurring_schedule_filter() {
-  module_load_include('inc', 'schedule_recurring', 'entity');
+  module_load_include('inc', 'schedule_recurring', 'time_off');
 
   $form = array();
 
