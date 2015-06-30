@@ -55,13 +55,16 @@ function make_up_add() {
 }
 
 function make_up_form($form, &$form_state, $make_up) {
-  $default = !empty($form_state['values']['howmany_select']) ? $form_state['values']['howmany_select'] : 1;
+  $day = !empty($form_state['values']['date']) ? $form_state['values']['date'] : date('Y-m-d');
 
-  $form['howmany_select'] = array(
-    '#title' => t('How many checkboxes do you want?'),
-    '#type' => 'select',
-    '#options' => array(1 => 1, 2 => 2, 3 => 3, 4 => 4),
-    '#default_value' => $default,
+  $form['date'] = array(
+    '#title' => t('Pick a day for your make-up shift.'),
+    '#type' => 'date_select',
+    '#required' => TRUE,
+    '#default_value' => $day,
+    '#date_format' => 'Y-m-d',
+    '#date_year_range' => '0:+1',
+    '#date_label_position' => 'none',
     '#ajax' => array(
       'callback' => 'ajax_example_autocheckboxes_callback',
       'wrapper' => 'checkboxes-div',
