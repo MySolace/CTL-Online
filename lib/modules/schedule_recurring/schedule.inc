@@ -424,6 +424,34 @@ function schedule_recurring_get_on($day, $exclude = array(), $all_shifts = FALSE
   return $today;
 }
 
+function schedule_recurring_get_make_ups($start, $end) {
+  $q = db_select('make_up', 'm');
+
+  $q->fields('m', array('start', 'id'));
+  $q->fields('u', array('uid'));
+  $q->leftJoin('users', 'u', 'u.uid=m.author');
+  $q->condition('m.start', $start, '>=');
+  $q->condition('m.start', $end, '<=');
+
+  $results = $q->execute()->fetchAll();
+
+  $return = $uids = array();
+  foreach ($results as $res) {
+    $uids[] = $res->uid;
+  }
+
+  $users = user_load_multiple($uids);
+
+  foreach ($results as $res) {
+    $return[$res->uid] = array(
+      '<a href="/user/'.$res->uid.'">'.format_username($users[$res->uid]).'</a>',
+      date('g:i a', $res->start),
+    );
+  }
+
+  return $return;
+}
+
 function schedule_recurring_schedule($form, $form_state) {
   global $user;
   $uid = $user->uid;
@@ -475,12 +503,22 @@ function schedule_recurring_schedule($form, $form_state) {
     $on = schedule_recurring_get_on($today, $off_res['uids']);
   }
 
+  $make_ups = schedule_recurring_get_make_ups($am, $pm);
+
   $form[] = array(
     '#prefix' => '<h1>Scheduled: '.$off_label.'</h1>',
     '#theme' => 'table',
     '#rows' => $on,
     '#header' => array('', 'Shift', 'Role'),
     '#empty' => t('No one is scheduled @l.', array('@l' => $off_label)),
+  );
+
+  $form[] = array(
+    '#prefix' => '<h1>Make-up shifts</h1>',
+    '#theme' => 'table',
+    '#rows' => $make_ups,
+    '#header' => array('', 'Shift'),
+    '#empty' => t('No make up shifts @l.', array('@l' => $off_label)),
   );
 
   $form[] = array(
@@ -528,6 +566,17 @@ function schedule_recurring_my_schedule() {
     );
   }
 
+  $make_up_shifts = schedule_recurring_my_make_ups();
+
+  $make_ups = array();
+  foreach ($make_up_shifts as $make_up) {
+    $make_ups[] = array(
+      date('F j', $make_up->start),
+      date('g:i a', $make_up->start),
+      l('Delete', 'make-up/' . $make_up->id . '/cancel', array('query' => array('destination' => 'schedule'))),
+    );
+  }
+
   $link_options = array(
     'html' => FALSE,
     'attributes' => array(
@@ -539,6 +588,24 @@ function schedule_recurring_my_schedule() {
 
   return array(
     array(
+      '#theme' => 'link',
+      '#text' => t('Sign up for a shift'),
+      '#path' => 'schedule/sign-up',
+      '#options' => $link_options,
+    ),
+    array(
+      '#theme' => 'link',
+      '#text' => t('Take time off'),
+      '#path' => 'time-off',
+      '#options' => $link_options + array('query' => array('destination' => 'make-up')),
+    ),
+    array(
+      '#theme' => 'link',
+      '#text' => t('Schedule a make-up shift'),
+      '#path' => 'make-up',
+      '#options' => $link_options + array('query' => array('destination' => 'schedule')),
+    ),
+    array(
       '#theme' => 'table',
       '#rows' => $rows,
       '#header' => array(
@@ -549,6 +616,16 @@ function schedule_recurring_my_schedule() {
       '#empty' => t('You are not signed up for any shifts yet.'),
     ),
     array(
+      '#prefix' => '<h3>Make-up Shifts</h3>',
+      '#theme' => 'table',
+      '#rows' => $make_ups,
+      '#header' => array(
+        'Date',
+        'Start Time',
+      ),
+      '#empty' => t('You don\'t have any make up shifts in the future.'),
+    ),
+    array(
       '#prefix' => '<h3>Time Off</h3>',
       '#theme' => 'table',
       '#rows' => $off,
@@ -556,19 +633,7 @@ function schedule_recurring_my_schedule() {
         'Start date',
         'End date',
       ),
-      '#empty' => t('You don\'t have any time off requests in the future.'),
-    ),
-    array(
-      '#theme' => 'link',
-      '#text' => t('Sign up for a shift'),
-      '#path' => 'schedule/sign-up',
-      '#options' => $link_options,
-    ),
-    array(
-      '#theme' => 'link',
-      '#text' => t('Take time off'),
-      '#path' => 'time-off',
-      '#options' => $link_options + array('query' => array('destination' => 'schedule')),
+      '#empty' => t('You don\'t have any time off in the future.'),
     ),
   );
 }
@@ -583,6 +648,22 @@ function schedule_recurring_my_time_off() {
   $query->fields('u', array('uid', 'name'));
   $query->condition('t.end', time(), '>=');
   $query->orderBy('t.end', 'ASC');
+
+  $results = $query->execute()->fetchAll();
+
+  return $results;
+}
+
+function schedule_recurring_my_make_ups() {
+  global $user;
+
+  $query = db_select('make_up', 'm');
+  $query->leftJoin('users', 'u', 'u.uid=m.author');
+  $query->condition('u.uid', $user->uid);
+  $query->fields('m', array('start', 'end', 'id'));
+  $query->fields('u', array('uid', 'name'));
+  $query->condition('m.end', time(), '>=');
+  $query->orderBy('m.end', 'ASC');
 
   $results = $query->execute()->fetchAll();
 
