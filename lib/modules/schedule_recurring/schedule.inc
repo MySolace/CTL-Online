@@ -320,7 +320,7 @@ function schedule_recurring_get_mapping_value($searchField, $returnField) {
   return $return;
 }
 
-function schedule_recurring_get_off($am, $pm) {
+function schedule_recurring_get_off($am, $pm, $format = 'render') {
   module_load_include('inc', 'schedule_recurring', 'time_off');
 
   $query = db_select('time_off', 't');
@@ -342,12 +342,16 @@ function schedule_recurring_get_off($am, $pm) {
   $users = user_load_multiple($uids);
 
   foreach ($results as $res) {
-    $off[] = array(
-      '<a href="/user/'.$res->uid.'">'.format_username($users[$res->uid]).'</a>',
-      date(time_off_date_format(), $res->start) . ' until ' .
-      date(time_off_date_format(), $res->end),
-      l('View reason', 'time-off/' . $res->id)
-    );
+    if ($format == 'render') {
+      $off[] = array(
+        '<a href="/user/'.$res->uid.'">'.format_username($users[$res->uid]).'</a>',
+        date(time_off_date_format(), $res->start) . ' until ' .
+        date(time_off_date_format(), $res->end),
+        l('View reason', 'time-off/' . $res->id)
+      );
+    } else {
+      $off[] = $res;
+    }
   }
 
   return array(
@@ -702,7 +706,7 @@ function schedule_recurring_schedule_filter() {
   return $form;
 }
 
-function _schedule_recurring_is_available($shift, $shifts, $account = NULL) {
+function _schedule_recurring_is_available($shift, $shifts, $account = NULL, $shift_multiplier = 1) {
   global $user;
 
   $roles = variable_get('schedule_recurring_shift_mapping');
@@ -718,7 +722,7 @@ function _schedule_recurring_is_available($shift, $shifts, $account = NULL) {
   }
 
   $points = schedule_recurring_get_mapping_value('subscriber', 'points');
-  $points = (int)$points[0];
+  $points = (int)$points[0] * $shift_multiplier;
 
   $time = $shift['start'];
   $day = $shift['day'];

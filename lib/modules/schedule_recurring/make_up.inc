@@ -118,7 +118,66 @@ function make_up_get_shifts_for_day($date) {
   module_load_include('inc', 'schedule_recurring', 'schedule');
 
   $shift_day = (int) date('w', strtotime($date));
-  $slots = schedule_recurring_get_slots();
+
+  $off = schedule_recurring_get_off(strtotime($date . ' 0:00:00'), strtotime($date . ' 23:59:59'), 'raw');
+  $off_uids = $off['uids'];
+
+  if (empty($off_uids)) {
+    $off_uids = array(0);
+  }
+
+  // Select all shifts on this day where people have taken time off
+  // spit out how many people have made a make-up shift at that time
+  $time_off = db_query('
+    SELECT * FROM time_off t
+    JOIN field_data_field_shifts s on s.entity_id = t.author
+    WHERE t.author IN (:uids)
+    AND s.field_shifts_day = :day
+  ', array(
+    ':uids' => $off_uids,
+    ':day' => $shift_day,
+  ));
+
+  $make_ups = db_query('
+    SELECT * FROM make_up m
+    JOIN field_data_field_shifts s on s.entity_id = m.author
+    WHERE m.start BETWEEN :start AND :end
+  ', array(
+    ':start' => strtotime($date . ' 0:00:00'),
+    ':end' => strtotime($date . ' 23:59:59'),
+  ));
+
+  $available_make_ups = array();
+  foreach ($time_off as $res) {
+    if (!isset($available_make_ups[$res->field_shifts_start])) {
+      $available_make_ups[$res->field_shifts_start] = 0;
+    }
+
+    $available_make_ups[$res->field_shifts_start]++;
+  }
+
+  foreach ($make_ups as $m) {
+    $available_make_ups[$res->field_shifts_start]--;
+  }
+
+  $time_off = array(
+    $shift_day => array()
+  );
+
+  foreach ($available_make_ups as $time => $val) {
+    if ($val <= 0) continue;
+
+    if (isset($time_off[$shift_day][$time])) {
+      $time_off[$shift_day][$time]['availability']++;
+    } else {
+      $time_off[$shift_day][$time] = array(
+        'validate' => FALSE,
+        'availability' => 1,
+      );
+    }
+  }
+
+  $slots = schedule_recurring_get_slots() + $time_off;
 
   $days = _schedule_recurring_days(FALSE);
   $start_times = _schedule_recurring_times();
@@ -132,7 +191,9 @@ function make_up_get_shifts_for_day($date) {
         'day'   => $day,
         'start' => $time,
       );
-      if (_schedule_recurring_is_available($shift, $slots) && _make_up_shift_is_available($date, $shift)) {
+      if ((_schedule_recurring_is_available($shift, $slots, NULL, 2) && _make_up_shift_is_available($date, $shift)) ||
+          (is_array($availability) && $availability['validate'] == FALSE)
+      ) {
         $end_time = $time;
         $suffix = '';
         if (_schedule_recurring_time_increment($end_time, variable_get('schedule_recurring_shift_duration')) === FALSE) {
