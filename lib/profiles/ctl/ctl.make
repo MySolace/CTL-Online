@@ -28,7 +28,14 @@ projects[ctl_theme][subdir] = "ctl"
 projects[ctl_theme][download][type] = local
 projects[ctl_theme][download][source] = './lib/themes/ctl_theme'
 
+; Recurring Scheduling
 projects[schedule_recurring][type] = "module"
 projects[schedule_recurring][subdir] = "ctl"
 projects[schedule_recurring][download][type] = local
 projects[schedule_recurring][download][source] = './lib/modules/schedule_recurring'
+
+; CTL Roleplays
+projects[ctl_roleplays][type] = "module"
+projects[ctl_roleplays][subdir] = "ctl"
+projects[ctl_roleplays][download][type] = local
+projects[ctl_roleplays][download][source] = './lib/modules/ctl_features/ctl_roleplays'
