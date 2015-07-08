@@ -320,12 +320,14 @@ function schedule_recurring_get_mapping_value($searchField, $returnField) {
   return $return;
 }
 
-function schedule_recurring_get_off($am, $pm, $format = 'render') {
+function schedule_recurring_get_off($am, $pm, $viewable = TRUE, $format = 'render') {
   module_load_include('inc', 'schedule_recurring', 'time_off');
 
   $query = db_select('time_off', 't');
   $query->leftJoin('users', 'u', 'u.uid=t.author');
-  $query->condition('u.uid', schedule_recurring_role_subquery('subscriber'), 'IN');
+  if ($viewable) {
+    $query->condition('u.uid', schedule_recurring_role_subquery('subscriber'), 'IN');
+  }
   $query->fields('t', array('start', 'end', 'id'));
   $query->fields('u', array('uid', 'name'));
   $query->condition('t.start', $am, '<=');
@@ -577,7 +579,7 @@ function schedule_recurring_my_schedule() {
     $make_ups[] = array(
       date('F j', $make_up->start),
       date('g:i a', $make_up->start),
-      l('Delete', 'make-up/' . $make_up->id . '/cancel', array('query' => array('destination' => 'schedule'))),
+      l('Cancel', 'make-up/' . $make_up->id . '/cancel', array('query' => array('destination' => 'make-up'))),
     );
   }
 
