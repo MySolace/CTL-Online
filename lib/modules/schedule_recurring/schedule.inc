@@ -730,37 +730,42 @@ function _schedule_recurring_is_available($shift, $shifts, $account = NULL, $shi
   $increment = variable_get('schedule_recurring_shift_increment');
   $end_time = $time;
   _schedule_recurring_time_increment($end_time, variable_get('schedule_recurring_shift_duration'));
+  if ($end_time > 2400) $end_time = 2400;
 
-  while ($time < $end_time) {
-    $q = db_query("
-      SELECT r.rid, count(r.rid) as count FROM users u
-      JOIN users_roles r ON r.uid=u.uid
-      JOIN field_data_field_shifts s ON s.entity_id = u.uid
-      WHERE r.rid IN (:roles)
-      AND s.field_shifts_day = :day
-      AND :time >= s.field_shifts_start
-      AND :time < s.field_shifts_end
-      GROUP BY r.rid
-    ", array(
-      ':roles' => $filter_roles,
-      ':day' => $day,
-      ':time' => $time,
-    ));
+  $q = db_query("
+    SELECT r.rid, count(r.rid) as count, s.field_shifts_start FROM users u
+    JOIN users_roles r ON r.uid=u.uid
+    JOIN field_data_field_shifts s ON s.entity_id = u.uid
+    WHERE r.rid IN (:roles)
+    AND ((
+      # shifts that end during this shift
+      s.field_shifts_day = :day AND
+      s.field_shifts_start <= :start_time AND
+      s.field_shifts_end > :start_time
+    ) OR (
+      # shifts that start during this shift
+      s.field_shifts_day = :day AND
+      s.field_shifts_start >= :start_time AND
+      s.field_shifts_start < :end_time
+    ))
+    GROUP BY field_shifts_start, r.rid
+  ", array(
+    ':roles' => $filter_roles,
+    ':day' => $day,
+    ':start_time' => $time,
+    ':end_time' => $end_time,
+  ));
 
-    $results = $q->fetchAll();
+  $results = $q->fetchAll();
 
-    $used_points = 0;
-    foreach ($results as $res) {
-      $used_points += $role_indexed[$res->rid] * $res->count;
-    }
+  $used_points = 0;
 
-    if (!isset($shifts[$day][$time]) || ($used_points + $points) >= $shifts[$day][$time]) {
-      return FALSE;
-    }
+  foreach ($results as $res) {
+    $used_points += $role_indexed[$res->rid] * $res->count;
+  }
 
-    if (_schedule_recurring_time_increment($time, $increment) === FALSE) {
-      $day = ($day + 1 > 6) ? 0 : $day + 1;
-    }
+  if (!isset($shifts[$day][$time]) || ($used_points + $points) >= $shifts[$day][$time]) {
+    return FALSE;
   }
 
   return TRUE;
