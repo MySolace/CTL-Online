@@ -75,6 +75,13 @@ function sr_reminders_form_submit($form, &$form_state) {
  */
 function sr_reminders_cron() {
   // Only run at the top of every hour
+  $last_run = variable_get('sr_reminders_last_run', -1);
+
+  if ($last_run == date('G')) {
+    return;
+  }
+
+  variable_set('sr_reminders_last_run', date('G'));
 
   // load up all users who have shifts and who have reminders set
   $day = date('w');
