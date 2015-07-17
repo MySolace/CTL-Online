@@ -47,6 +47,7 @@ function make_up_add() {
     'id' => '',
     'start' => time(),
     'end' => strtotime('+4 hours'),
+    'reason' => '',
     'type' => 'user',
   ));
 
@@ -54,11 +55,10 @@ function make_up_add() {
 }
 
 function make_up_form($form, &$form_state, $make_up) {
-  $day = !empty($form_state['values']['date']) ? $form_state['values']['date'] : date('Y-m-d', strtotime('+1 day'));
+  $day = !empty($form_state['values']['date']) ? $form_state['values']['date'] : date('Y-m-d');
 
   $form['date'] = array(
     '#title' => t('Pick a day for your make-up shift.'),
-    '#prefix' => t('<p>If you need to miss a shift - that\'s okay, life happens! We ask that you schedule a make up shift to fulfill your commitment to taking one four hour shift a week.'),
     '#type' => 'date_select',
     '#required' => TRUE,
     '#default_value' => $day,
@@ -119,7 +119,7 @@ function make_up_get_shifts_for_day($date) {
 
   $shift_day = (int) date('w', strtotime($date));
 
-  $off = schedule_recurring_get_off(strtotime($date . ' 0:00:00'), strtotime($date . ' 23:59:59'), FALSE, 'raw');
+  $off = schedule_recurring_get_off(strtotime($date . ' 0:00:00'), strtotime($date . ' 23:59:59'), 'raw');
   $off_uids = $off['uids'];
 
   if (empty($off_uids)) {
@@ -177,7 +177,6 @@ function make_up_get_shifts_for_day($date) {
     }
   }
 
-  //$slots = $time_off;
   $slots = schedule_recurring_get_slots() + $time_off;
 
   $days = _schedule_recurring_days(FALSE);
@@ -208,7 +207,7 @@ function make_up_get_shifts_for_day($date) {
           '#attributes' => array(
             'class' => array(
               'day-' . $day,
-              (isset($time_off[$day][$time])) ? 'priority' : '',
+              (schedule_recurring_is_priority_shift($day, $time, $end_time)) ? 'priority' : '',
             )
           ),
         );
@@ -273,7 +272,6 @@ function make_up_save(&$make_up) {
 }
 
 function make_up_delete($make_up) {
-  drupal_set_message(t('Sorry to see you can\'t do that make up shift. Please select a different time that works for you.'));
   entity_delete('make_up', $make_up);
 
   drupal_goto('make-up');
