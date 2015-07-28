@@ -273,6 +273,42 @@ function application_v2_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_mp|node|application|form';
+  $field_group->group_name = 'group_mp';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'application_2';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'CTL Application',
+    'weight' => '1',
+    'children' => array(
+      0 => 'group_additional',
+      1 => 'group_more_info',
+      2 => 'group_you',
+      3 => 'group_empathy',
+      4 => 'group_expectations',
+    ),
+    'format_type' => 'multipage-group',
+    'format_settings' => array(
+      'label' => 'CTL Application',
+      'instance_settings' => array(
+        'nonjs_multistep' => '0',
+        'ajaxify' => '0',
+        'multipage_jumplist_block' => 1,
+        'classes' => 'group-mp field-group-multipage-group',
+        'page_header' => '1',
+        'page_counter' => '1',
+        'move_button' => '0',
+        'move_additional' => '1',
+      ),
+    ),
+  );
+  $export['group_mp|node|application|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_time|node|application|form';
   $field_group->group_name = 'group_time';
   $field_group->entity_type = 'node';

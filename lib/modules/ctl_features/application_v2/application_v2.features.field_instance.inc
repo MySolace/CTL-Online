@@ -2625,54 +2625,6 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_birthdate'
-  $field_instances['user-user-field_birthdate'] = array(
-    'bundle' => 'user',
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => 'both',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-        ),
-        'type' => 'date_default',
-        'weight' => 3,
-      ),
-    ),
-    'entity_type' => 'user',
-    'field_name' => 'field_birthdate',
-    'label' => 'Birthdate',
-    'required' => 1,
-    'settings' => array(
-      'course_enrollment' => FALSE,
-      'default_value' => 'blank',
-      'default_value2' => 'same',
-      'default_value_code' => '',
-      'default_value_code2' => '',
-      'user_register_form' => 1,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'date',
-      'settings' => array(
-        'increment' => 15,
-        'input_format' => 'm/d/Y - H:i:s',
-        'input_format_custom' => '',
-        'label_position' => 'above',
-        'text_parts' => array(),
-        'year_range' => '-3:+3',
-      ),
-      'type' => 'date_text',
-      'weight' => 6,
-    ),
-  );
-
   // Exported field_instance: 'user-user-field_first_name'
   $field_instances['user-user-field_first_name'] = array(
     'bundle' => 'user',
@@ -2822,7 +2774,6 @@ function application_v2_field_default_field_instances() {
   t('Becoming extremely involved in a good book or movie is somewhat rare for me.');
   t('Before criticizing somebody, I try to imagine how I would feel if I were in their place. ');
   t('Being in a tense emotional situation scares me.');
-  t('Birthdate');
   t('Do they feel like you are ready to take on this difficult but meaningful work?');
   t('Do you agree to commit to being a volunteer for one year, completing a recurring weekly four-hour shift, if accepted.');
   t('Do you have a US SSN and agree to undergo a background check? ');
