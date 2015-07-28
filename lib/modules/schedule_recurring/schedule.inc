@@ -320,10 +320,14 @@ function schedule_recurring_get_mapping_value($searchField, $returnField) {
   return $return;
 }
 
-function schedule_recurring_get_off($am, $pm) {
+function schedule_recurring_get_off($am, $pm, $viewable = TRUE, $format = 'render') {
+  module_load_include('inc', 'schedule_recurring', 'time_off');
+
   $query = db_select('time_off', 't');
   $query->leftJoin('users', 'u', 'u.uid=t.author');
-  $query->condition('u.uid', schedule_recurring_role_subquery('subscriber'), 'IN');
+  if ($viewable) {
+    $query->condition('u.uid', schedule_recurring_role_subquery('subscriber'), 'IN');
+  }
   $query->fields('t', array('start', 'end', 'id'));
   $query->fields('u', array('uid', 'name'));
   $query->condition('t.start', $am, '<=');
@@ -340,12 +344,16 @@ function schedule_recurring_get_off($am, $pm) {
   $users = user_load_multiple($uids);
 
   foreach ($results as $res) {
-    $off[] = array(
-      '<a href="/user/'.$res->uid.'">'.format_username($users[$res->uid]).'</a>',
-      date(time_off_date_format(), $res->start) . ' until ' .
-      date(time_off_date_format(), $res->end),
-      l('View reason', 'time-off/' . $res->id)
-    );
+    if ($format == 'render') {
+      $off[] = array(
+        '<a href="/user/'.$res->uid.'">'.format_username($users[$res->uid]).'</a>',
+        date(time_off_date_format(), $res->start) . ' until ' .
+        date(time_off_date_format(), $res->end),
+        l('View reason', 'time-off/' . $res->id)
+      );
+    } else {
+      $off[] = $res;
+    }
   }
 
   return array(
@@ -422,6 +430,34 @@ function schedule_recurring_get_on($day, $exclude = array(), $all_shifts = FALSE
   return $today;
 }
 
+function schedule_recurring_get_make_ups($start, $end) {
+  $q = db_select('make_up', 'm');
+
+  $q->fields('m', array('start', 'id'));
+  $q->fields('u', array('uid'));
+  $q->leftJoin('users', 'u', 'u.uid=m.author');
+  $q->condition('m.start', $start, '>=');
+  $q->condition('m.start', $end, '<=');
+
+  $results = $q->execute()->fetchAll();
+
+  $return = $uids = array();
+  foreach ($results as $res) {
+    $uids[] = $res->uid;
+  }
+
+  $users = user_load_multiple($uids);
+
+  foreach ($results as $res) {
+    $return[$res->uid] = array(
+      '<a href="/user/'.$res->uid.'">'.format_username($users[$res->uid]).'</a>',
+      date('g:i a', $res->start),
+    );
+  }
+
+  return $return;
+}
+
 function schedule_recurring_schedule($form, $form_state) {
   global $user;
   $uid = $user->uid;
@@ -430,6 +466,8 @@ function schedule_recurring_schedule($form, $form_state) {
     drupal_goto('schedule/my-schedule');
     return;
   }
+
+  module_load_include('inc', 'schedule_recurring', 'time_off');
 
   $form = schedule_recurring_schedule_filter($form, $form_state);
 
@@ -471,12 +509,22 @@ function schedule_recurring_schedule($form, $form_state) {
     $on = schedule_recurring_get_on($today, $off_res['uids']);
   }
 
+  $make_ups = schedule_recurring_get_make_ups($am, $pm);
+
   $form[] = array(
     '#prefix' => '<h1>Scheduled: '.$off_label.'</h1>',
     '#theme' => 'table',
     '#rows' => $on,
     '#header' => array('', 'Shift', 'Role'),
     '#empty' => t('No one is scheduled @l.', array('@l' => $off_label)),
+  );
+
+  $form[] = array(
+    '#prefix' => '<h1>Make-up shifts</h1>',
+    '#theme' => 'table',
+    '#rows' => $make_ups,
+    '#header' => array('', 'Shift'),
+    '#empty' => t('No make up shifts @l.', array('@l' => $off_label)),
   );
 
   $form[] = array(
@@ -524,6 +572,17 @@ function schedule_recurring_my_schedule() {
     );
   }
 
+  $make_up_shifts = schedule_recurring_my_make_ups();
+
+  $make_ups = array();
+  foreach ($make_up_shifts as $make_up) {
+    $make_ups[] = array(
+      date('F j', $make_up->start),
+      date('g:i a', $make_up->start),
+      l('Cancel', 'make-up/' . $make_up->id . '/cancel', array('query' => array('destination' => 'make-up'))),
+    );
+  }
+
   $link_options = array(
     'html' => FALSE,
     'attributes' => array(
@@ -535,6 +594,24 @@ function schedule_recurring_my_schedule() {
 
   return array(
     array(
+      '#theme' => 'link',
+      '#text' => t('Sign up for a shift'),
+      '#path' => 'schedule/sign-up',
+      '#options' => $link_options,
+    ),
+    array(
+      '#theme' => 'link',
+      '#text' => t('Take time off'),
+      '#path' => 'time-off',
+      '#options' => $link_options + array('query' => array('destination' => 'make-up')),
+    ),
+    array(
+      '#theme' => 'link',
+      '#text' => t('Schedule a make-up shift'),
+      '#path' => 'make-up',
+      '#options' => $link_options + array('query' => array('destination' => 'schedule')),
+    ),
+    array(
       '#theme' => 'table',
       '#rows' => $rows,
       '#header' => array(
@@ -545,6 +622,16 @@ function schedule_recurring_my_schedule() {
       '#empty' => t('You are not signed up for any shifts yet.'),
     ),
     array(
+      '#prefix' => '<h3>Make-up Shifts</h3>',
+      '#theme' => 'table',
+      '#rows' => $make_ups,
+      '#header' => array(
+        'Date',
+        'Start Time',
+      ),
+      '#empty' => t('You don\'t have any make up shifts in the future.'),
+    ),
+    array(
       '#prefix' => '<h3>Time Off</h3>',
       '#theme' => 'table',
       '#rows' => $off,
@@ -552,19 +639,7 @@ function schedule_recurring_my_schedule() {
         'Start date',
         'End date',
       ),
-      '#empty' => t('You don\'t have any time off requests in the future.'),
-    ),
-    array(
-      '#theme' => 'link',
-      '#text' => t('Sign up for a shift'),
-      '#path' => 'schedule/sign-up',
-      '#options' => $link_options,
-    ),
-    array(
-      '#theme' => 'link',
-      '#text' => t('Take time off'),
-      '#path' => 'time-off',
-      '#options' => $link_options + array('query' => array('destination' => 'schedule')),
+      '#empty' => t('You don\'t have any time off in the future.'),
     ),
   );
 }
@@ -585,13 +660,29 @@ function schedule_recurring_my_time_off() {
   return $results;
 }
 
+function schedule_recurring_my_make_ups() {
+  global $user;
+
+  $query = db_select('make_up', 'm');
+  $query->leftJoin('users', 'u', 'u.uid=m.author');
+  $query->condition('u.uid', $user->uid);
+  $query->fields('m', array('start', 'end', 'id'));
+  $query->fields('u', array('uid', 'name'));
+  $query->condition('m.end', time(), '>=');
+  $query->orderBy('m.end', 'ASC');
+
+  $results = $query->execute()->fetchAll();
+
+  return $results;
+}
+
 function schedule_recurring_schedule_submit($form, &$form_state) {
   $form_state['filters']['date'] = $form_state['values']['filter_day'];
   $form_state['rebuild'] = TRUE;
 }
 
 function schedule_recurring_schedule_filter() {
-  module_load_include('inc', 'schedule_recurring', 'entity');
+  module_load_include('inc', 'schedule_recurring', 'time_off');
 
   $form = array();
 
@@ -617,7 +708,7 @@ function schedule_recurring_schedule_filter() {
   return $form;
 }
 
-function _schedule_recurring_is_available($shift, $shifts, $account = NULL) {
+function _schedule_recurring_is_available($shift, $shifts, $account = NULL, $shift_multiplier = 1) {
   global $user;
 
   $roles = variable_get('schedule_recurring_shift_mapping');
@@ -633,7 +724,7 @@ function _schedule_recurring_is_available($shift, $shifts, $account = NULL) {
   }
 
   $points = schedule_recurring_get_mapping_value('subscriber', 'points');
-  $points = (int)$points[0];
+  $points = (int)$points[0] * $shift_multiplier;
 
   $time = $shift['start'];
   $day = $shift['day'];
@@ -641,37 +732,42 @@ function _schedule_recurring_is_available($shift, $shifts, $account = NULL) {
   $increment = variable_get('schedule_recurring_shift_increment');
   $end_time = $time;
   _schedule_recurring_time_increment($end_time, variable_get('schedule_recurring_shift_duration'));
+  if ($end_time > 2400) $end_time = 2400;
 
-  while ($time < $end_time) {
-    $q = db_query("
-      SELECT r.rid, count(r.rid) as count FROM users u
-      JOIN users_roles r ON r.uid=u.uid
-      JOIN field_data_field_shifts s ON s.entity_id = u.uid
-      WHERE r.rid IN (:roles)
-      AND s.field_shifts_day = :day
-      AND :time >= s.field_shifts_start
-      AND :time < s.field_shifts_end
-      GROUP BY r.rid
-    ", array(
-      ':roles' => $filter_roles,
-      ':day' => $day,
-      ':time' => $time,
-    ));
+  $q = db_query("
+    SELECT r.rid, count(r.rid) as count, s.field_shifts_start FROM users u
+    JOIN users_roles r ON r.uid=u.uid
+    JOIN field_data_field_shifts s ON s.entity_id = u.uid
+    WHERE r.rid IN (:roles)
+    AND ((
+      # shifts that end during this shift
+      s.field_shifts_day = :day AND
+      s.field_shifts_start <= :start_time AND
+      s.field_shifts_end > :start_time
+    ) OR (
+      # shifts that start during this shift
+      s.field_shifts_day = :day AND
+      s.field_shifts_start >= :start_time AND
+      s.field_shifts_start < :end_time
+    ))
+    GROUP BY field_shifts_start, r.rid
+  ", array(
+    ':roles' => $filter_roles,
+    ':day' => $day,
+    ':start_time' => $time,
+    ':end_time' => $end_time,
+  ));
 
-    $results = $q->fetchAll();
+  $results = $q->fetchAll();
 
-    $used_points = 0;
-    foreach ($results as $res) {
-      $used_points += $role_indexed[$res->rid] * $res->count;
-    }
+  $used_points = 0;
 
-    if (!isset($shifts[$day][$time]) || ($used_points + $points) >= $shifts[$day][$time]) {
-      return FALSE;
-    }
+  foreach ($results as $res) {
+    $used_points += $role_indexed[$res->rid] * $res->count;
+  }
 
-    if (_schedule_recurring_time_increment($time, $increment) === FALSE) {
-      $day = ($day + 1 > 6) ? 0 : $day + 1;
-    }
+  if (!isset($shifts[$day][$time]) || ($used_points + $points) >= $shifts[$day][$time]) {
+    return FALSE;
   }
 
   return TRUE;

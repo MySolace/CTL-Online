@@ -28,6 +28,7 @@ projects[ctl_theme][subdir] = "ctl"
 projects[ctl_theme][download][type] = local
 projects[ctl_theme][download][source] = './lib/themes/ctl_theme'
 
+; Recurring Scheduling
 projects[schedule_recurring][type] = "module"
 projects[schedule_recurring][subdir] = "ctl"
 projects[schedule_recurring][download][type] = local

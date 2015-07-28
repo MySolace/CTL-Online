@@ -1,7 +1,9 @@
 <?php
 
 module_load_include('inc', 'schedule_recurring', 'field');
-module_load_include('inc', 'schedule_recurring', 'entity');
+
+module_load_include('inc', 'schedule_recurring', 'time_off');
+module_load_include('inc', 'schedule_recurring', 'make_up');
 
 /**
  * Implements hook_permission().
@@ -18,6 +20,18 @@ function schedule_recurring_permission() {
       'description' => t('Sign up for shifts using schedule recurring'),
     ),
   );
+}
+
+/**
+ * Implements hook_entity_info().
+ */
+function schedule_recurring_entity_info() {
+  $entities = array(
+    'time_off' => schedule_recurring_time_off_entity(),
+    'make_up' => schedule_recurring_make_up_entity(),
+  );
+
+  return $entities;
 }
 
 
@@ -73,11 +87,15 @@ function schedule_recurring_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  /**
+   * Time off
+   */
+
   $items['time-off'] = array(
-    'title' => t('Request time off'),
+    'title' => t('Take time off'),
     'page callback' => 'time_off_add',
     'access arguments' => array('sign up for shifts'),
-    'file' => 'entity.inc',
+    'file' => 'time_off.inc',
     'file path' => drupal_get_path('module', 'schedule_recurring'),
   );
 
@@ -85,18 +103,51 @@ function schedule_recurring_menu() {
     'page callback' => 'time_off_view',
     'page arguments' => array(1),
     'access arguments' => array('sign up for shifts'),
+    'file' => 'time_off.inc',
+    'file path' => drupal_get_path('module', 'schedule_recurring'),
   );
 
   $items['time-off/%/edit'] = array(
     'page callback' => 'drupal_get_form',
     'page arguments' => array('time_off_form', 1),
     'access arguments' => array('sign up for shifts'),
+    'file' => 'time_off.inc',
+    'file path' => drupal_get_path('module', 'schedule_recurring'),
   );
 
   $items['time-off/%/delete'] = array(
     'page callback' => 'time_off_delete',
     'page arguments' => array(1),
     'access arguments' => array('sign up for shifts'),
+    'file' => 'time_off.inc',
+    'file path' => drupal_get_path('module', 'schedule_recurring'),
+  );
+
+  /**
+   * Make ups
+   */
+  $items['make-up'] = array(
+    'title' => t('Make up a shift'),
+    'page callback' => 'make_up_add',
+    'access arguments' => array('sign up for shifts'),
+    'file' => 'make_up.inc',
+    'file path' => drupal_get_path('module', 'schedule_recurring'),
+  );
+
+  $items['make-up/%'] = array(
+    'page callback' => 'make_up_view',
+    'page arguments' => array(1),
+    'access arguments' => array('sign up for shifts'),
+    'file' => 'make_up.inc',
+    'file path' => drupal_get_path('module', 'schedule_recurring'),
+  );
+
+  $items['make-up/%/cancel'] = array(
+    'page callback' => 'make_up_delete',
+    'page arguments' => array(1),
+    'access arguments' => array('sign up for shifts'),
+    'file' => 'make_up.inc',
+    'file path' => drupal_get_path('module', 'schedule_recurring'),
   );
 
   return $items;
@@ -274,16 +325,28 @@ function _schedule_recurring_setters() {
 }
 
 
-function _schedule_recurring_days() {
-  return array(
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  );
+function _schedule_recurring_days($pluralize = TRUE) {
+  if ($pluralize) {
+    return array(
+      'Sundays',
+      'Mondays',
+      'Tuesdays',
+      'Wednesdays',
+      'Thursdays',
+      'Fridays',
+      'Saturdays',
+    );
+  } else {
+    return array(
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    );
+  }
 }
 
 function _schedule_recurring_times($include_2400 = FALSE) {
