@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Application v2 feature.
+ */
+
+include_once 'application_v2.features.inc';
