@@ -21,7 +21,7 @@ function application_v2_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Contact Information',
-    'weight' => '1',
+    'weight' => '2',
     'children' => array(
       0 => 'field_birthdate',
       1 => 'field_first_name',
@@ -30,7 +30,7 @@ function application_v2_field_group_info() {
       4 => 'field_zip_code',
       5 => 'field_zip_code_text',
       6 => 'field_preferred_name',
-      7 => 'account',
+      7 => 'field_address',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

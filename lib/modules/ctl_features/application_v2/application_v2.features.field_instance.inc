@@ -2215,6 +2215,44 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-application_2-field_referral_other_keyword'
+  $field_instances['node-application_2-field_referral_other_keyword'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 134,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_referral_other_keyword',
+    'label' => 'Other',
+    'required' => 0,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 128,
+    ),
+  );
+
   // Exported field_instance: 'node-application_2-field_shift'
   $field_instances['node-application_2-field_shift'] = array(
     'bundle' => 'application_2',
@@ -2537,6 +2575,56 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_address'
+  $field_instances['user-user-field_address'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'We appreciate you and want to be able to send you goodies!',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'addressfield',
+        'settings' => array(
+          'format_handlers' => array(
+            0 => 'address',
+          ),
+          'use_widget_handlers' => 1,
+        ),
+        'type' => 'addressfield_default',
+        'weight' => 17,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_address',
+    'label' => 'What is your postal address?',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'user_register_form' => 1,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'addressfield',
+      'settings' => array(
+        'available_countries' => array(),
+        'default_country' => 'US',
+        'format_handlers' => array(
+          'address' => 'address',
+          'address-hide-postal-code' => 0,
+          'address-hide-street' => 0,
+          'address-hide-country' => 0,
+          'organisation' => 0,
+          'name-full' => 0,
+          'name-oneline' => 0,
+          'address-optional' => 0,
+        ),
+      ),
+      'type' => 'addressfield_standard',
+      'weight' => 9,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_birthdate'
   $field_instances['user-user-field_birthdate'] = array(
     'bundle' => 'user',
@@ -2581,7 +2669,7 @@ function application_v2_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_text',
-      'weight' => -5,
+      'weight' => 6,
     ),
   );
 
@@ -2616,7 +2704,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => -9,
+      'weight' => 2,
     ),
   );
 
@@ -2650,7 +2738,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => -7,
+      'weight' => 4,
     ),
   );
 
@@ -2684,7 +2772,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => -6,
+      'weight' => 5,
     ),
   );
 
@@ -2719,47 +2807,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => -8,
-    ),
-  );
-
-  // Exported field_instance: 'user-user-field_zip_code'
-  $field_instances['user-user-field_zip_code'] = array(
-    'bundle' => 'user',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'number',
-        'settings' => array(
-          'decimal_separator' => '.',
-          'prefix_suffix' => 1,
-          'scale' => 0,
-          'thousand_separator' => '',
-        ),
-        'type' => 'number_integer',
-        'weight' => 7,
-      ),
-    ),
-    'entity_type' => 'user',
-    'field_name' => 'field_zip_code',
-    'label' => 'Zip Code (old integer field)',
-    'required' => 0,
-    'settings' => array(
-      'max' => '',
-      'min' => '',
-      'prefix' => '',
-      'suffix' => '',
-      'user_register_form' => 0,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'number',
-      'settings' => array(),
-      'type' => 'number',
-      'weight' => -3,
+      'weight' => 3,
     ),
   );
 
@@ -2819,11 +2867,13 @@ function application_v2_field_default_field_instances() {
   t('Such as abuse, stalking, solicitation of a child, or child pornography');
   t('WARNING: The work that Crisis Counselors do, both during training and on the platform, can trigger strong emotions for people with a history of physical or mental health issues such as abuse or suicidal thoughts. We want to remind you that self-care is extremely important to us at Crisis Text Line. ');
   t('Was it a violent crime or sex offense, such as abuse, stalking, solicitation of a child, or child pornography?');
+  t('We appreciate you and want to be able to send you goodies!');
   t('We are proud that so many people living with physical disabilities have found our service to be helpful and our volunteer program to be meaningful. We try to provide accommodations to crisis counselors from any of the following communities. ');
   t('We request that you disclose possible triggers to ensure that we can provide extra support to you.');
   t('We suggest discussing this opportunity with your counselor or therapist before completing this application. ');
   t('We would love to know if you identify as:');
   t('What is the highest level of education you\'ve completed?');
+  t('What is your postal address?');
   t('What is your race/ethnicity? Check all that apply. ');
   t('What prompted you to apply to be a Crisis Counselor with Crisis Text Line? ');
   t('What source? ');
@@ -2838,7 +2888,6 @@ function application_v2_field_default_field_instances() {
   t('Which of the following best describes your current occupation?');
   t('Who?');
   t('Will volunteering at CTL help to fulfill a community service or class requirement at your school or for your program?');
-  t('Zip Code (old integer field)');
 
   return $field_instances;
 }

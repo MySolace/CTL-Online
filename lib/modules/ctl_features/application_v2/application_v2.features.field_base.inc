@@ -10,6 +10,24 @@
 function application_v2_field_default_field_bases() {
   $field_bases = array();
 
+  // Exported field_base: 'field_address'
+  $field_bases['field_address'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_address',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'addressfield',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'addressfield',
+  );
+
   // Exported field_base: 'field_armed_forces'
   $field_bases['field_armed_forces'] = array(
     'active' => 1,
@@ -1787,6 +1805,53 @@ function application_v2_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_referral_other_keyword'
+  $field_bases['field_referral_other_keyword'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_referral_other_keyword',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'ACC' => 'Atlanta City Council',
+        'CSA' => 'Center for Suicide Awareness',
+        'charlotte' => 'Charlotte Behavioral Healthcare',
+        'tacoma' => 'City of Tacoma',
+        'clemson' => 'Clemson University',
+        'cwc' => 'Contact We Care',
+        'google' => 'Google',
+        'iava' => 'IAVA',
+        'muskogee' => 'Muskogee Creek Nation',
+        'nclr' => 'National Center for Lesbian Rights',
+        'nebraska' => 'Nebraska Region 1',
+        'nevada' => 'Nevada Coalition',
+        'nmn' => 'Now Matters Now',
+        'SFsuicide' => 'San Francisco Suicide Prevention',
+        'SoH' => 'Seeds of Hope',
+        'sju' => 'St. John\'s University',
+        'ssUSA' => 'Stand Strong USA',
+        'stark' => 'Stark Country',
+        'switchboard' => 'Switchboard Miami',
+        'twloha' => 'To Write Love on Her Arms',
+        'skimm' => 'TheSkimm',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
   // Exported field_base: 'field_shift'
   $field_bases['field_shift'] = array(
     'active' => 1,
@@ -1996,24 +2061,6 @@ function application_v2_field_default_field_bases() {
     'settings' => array(),
     'translatable' => 0,
     'type' => 'text_long',
-  );
-
-  // Exported field_base: 'field_zip_code'
-  $field_bases['field_zip_code'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_zip_code',
-    'field_permissions' => array(
-      'type' => 2,
-    ),
-    'indexes' => array(),
-    'locked' => 0,
-    'module' => 'number',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'number_integer',
   );
 
   return $field_bases;
