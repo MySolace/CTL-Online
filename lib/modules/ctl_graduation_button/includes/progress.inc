@@ -1,31 +1,46 @@
 <?php
 
-require_once __DIR__ . '/email.inc';
+require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_graduation_button') . '/includes/email.inc';
+
+
+/**
+ * Checks to see if the trainee has completed all the courses.
+ */
+function _ctl_graduation_button_courses_completed($uid) {
+  // Find which course the trainee has not yet completed
+  $query = db_select('course_node', 'cn');
+  $query->leftJoin('course_report', 'cr', 'cn.nid = cr.nid');
+  $query->addField('cr', 'nid');
+  $result = $query
+    ->condition(
+      db_or()
+        ->condition('cr.complete', 0)
+        ->condition('cr.complete', NULL)
+    )
+    ->execute()
+    ->fetchAll();
+  $completed = empty($result);
+  return $completed;
+}
 
 
 /**
  * Trainee progress page.
  */
 function _ctl_graduation_button_progress_page($user) {
-  $uid = $user->uid;
-
-  $view = views_get_view('trainee_course_progress');
-  $result = $view->preview('default', array($uid));
-
-  $markup = implode('<br />', array(
-    '<strong>' . var_export($result, TRUE) . '</strong>',
-  ));
-
   if (in_array('Graduate', $user->roles)) {
     $content['course_progress'] = array(
       '#type'   => 'markup',
-      '#markup' => '<p>This person has already graduated.',
+      '#markup' => '<p>This person has already graduated.</p>',
     );
   }
   else {
+    $uid = $user->uid;
+    $courses_completed = _ctl_graduation_button_courses_completed($uid);
     $content['course_progress'] = array(
       '#type'   => 'markup',
-      '#markup' => '<p>Has this trainee completed all the course modules?</p><p>' . '' . '</p>',
+      '#markup' => '<p>Has this trainee completed all the required course modules?</p>'
+                . '<p><strong>' . ($courses_completed ? 'Yes!' : 'Not yet') . '</strong></p>',
     );
     $content['graduate'] = drupal_get_form('ctl_graduation_button_form', $uid);
   }
@@ -39,9 +54,8 @@ function _ctl_graduation_button_progress_page($user) {
  */
 function ctl_graduation_button_form($form, &$form_state, $uid) {
   $form['additional_requirements'] = array(
-    '#type'     => 'checkboxes',
-    '#title'    => t('Additional requirements'),
-    '#required' => TRUE,
+    '#type'  => 'checkboxes',
+    '#title' => t('Additional requirements'),
     '#options' => array(
       'did_live_sessions'     => t('This trainee has attended all live sessions.'),
       'did_observation_shift' => t('This trainee has completed 1 observation shift.'),
@@ -83,14 +97,12 @@ function ctl_graduation_button_form($form, &$form_state, $uid) {
  * Verifies that all the graduation requirements have been met.
  */
 function _ctl_graduation_button_form_validate_graduate($form, &$form_state) {
-  $form_values                 = $form_state['values'];
-  $additional_requirements     = $form_values['additional_requirements'];
-  $unmet_additional_requirements = array_filter($additional_requirements, function ($v) {
-    return empty($v);
-  });
-
-  if (!empty($unmet_additional_requirements)) {
-    form_set_error('additional_requirements', t('The trainee must pass all the additional requirements.'));
+  $form_values = $form_state['values'];
+  $unmet_requirements = array(_ctl_graduation_button_courses_completed($form_values['uid']))
+                      + $form_values['additional_requirements'];
+  $unmet_requirements = array_filter($unmet_requirements, function ($v) { return empty($v); });
+  if (!empty($unmet_requirements)) {
+    form_set_error('additional_requirements', t('The trainee must pass all the requirements.'));
   }
 }
 
@@ -103,6 +115,9 @@ function _ctl_graduation_button_form_submit_graduate($form, &$form_state) {
 
   $uid = $form_values['uid'];
 
+  // drupal_write_record('ctl_graduation_button_requirements', $record);
+  // drupal_write_record('ctl_graduation_button_requirements', $record, 'uid');
+
   // // The graduate is no longer a trainee.
   // $cur_role = 'Trainee';
   // $role = user_role_load_by_name($cur_role);
@@ -114,9 +129,6 @@ function _ctl_graduation_button_form_submit_graduate($form, &$form_state) {
   //   $role = user_role_load_by_name($next_role);
   //   user_multiple_role_edit(array($uid), 'add_role', $role->rid);
   // }
-
-  // drupal_write_record('ctl_graduation_button_requirements', $record);
-  // drupal_write_record('ctl_graduation_button_requirements', $record, 'uid');
 
   drupal_set_message(t('This trainee has now been graduated!'));
 
