@@ -1,0 +1,5 @@
+core = "7.x"
+description = "Provides a button for trainers to graduate their trainees more easily."
+name = "CTL Graduation Button"
+
+package = "Crisis Text Line"
