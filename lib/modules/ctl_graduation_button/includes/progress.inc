@@ -7,14 +7,17 @@ require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_graduation_butto
  * Checks to see if the trainee has completed all the courses.
  */
 function _ctl_graduation_button_courses_completed($uid) {
-  // Find which course the trainee has not yet completed
+  // Find which courses the trainee has not yet completed.
   $query = db_select('course_node', 'cn');
   $query->leftJoin('course_report', 'cr', 'cn.nid = cr.nid');
   $query->addField('cr', 'nid');
   $result = $query
     ->condition(
       db_or()
+        // This is of course means the course is incomplete.
         ->condition('cr.complete', 0)
+        // But this means the course has yet to have been
+        // enrolled into in the first place.
         ->condition('cr.complete', NULL)
     )
     ->execute()
@@ -44,7 +47,6 @@ function _ctl_graduation_button_progress_page($user) {
     );
     $content['graduate'] = drupal_get_form('ctl_graduation_button_form', $uid);
   }
-
   return $content;
 }
 
