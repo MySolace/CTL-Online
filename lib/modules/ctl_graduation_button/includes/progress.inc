@@ -99,13 +99,13 @@ function ctl_graduation_button_form($form, &$form_state, $uid) {
  * Verifies that all the graduation requirements have been met.
  */
 function _ctl_graduation_button_form_validate_graduate($form, &$form_state) {
-  $form_values = $form_state['values'];
-  $unmet_requirements = array(_ctl_graduation_button_courses_completed($form_values['uid']))
-                      + $form_values['additional_requirements'];
-  $unmet_requirements = array_filter($unmet_requirements, function ($v) { return empty($v); });
-  if (!empty($unmet_requirements)) {
-    form_set_error('additional_requirements', t('The trainee must pass all the requirements.'));
-  }
+  // $form_values = $form_state['values'];
+  // $unmet_requirements = array(_ctl_graduation_button_courses_completed($form_values['uid']))
+  //                     + $form_values['additional_requirements'];
+  // $unmet_requirements = array_filter($unmet_requirements, function ($v) { return empty($v); });
+  // if (!empty($unmet_requirements)) {
+  //   form_set_error('additional_requirements', t('The trainee must pass all the requirements.'));
+  // }
 }
 
 
@@ -116,9 +116,6 @@ function _ctl_graduation_button_form_submit_graduate($form, &$form_state) {
   $form_values = $form_state['values'];
 
   $uid = $form_values['uid'];
-
-  // drupal_write_record('ctl_graduation_button_requirements', $record);
-  // drupal_write_record('ctl_graduation_button_requirements', $record, 'uid');
 
   // // The graduate is no longer a trainee.
   // $cur_role = 'Trainee';
@@ -132,13 +129,16 @@ function _ctl_graduation_button_form_submit_graduate($form, &$form_state) {
   //   user_multiple_role_edit(array($uid), 'add_role', $role->rid);
   // }
 
+  // drupal_write_record('ctl_graduation_button_requirements', $record);
+  // drupal_write_record('ctl_graduation_button_requirements', $record, 'uid');
+
   drupal_set_message(t('This trainee has now been graduated!'));
 
-  // $result = _ctl_graduation_button_mail_send($form_state['values']);
-  // if ($result['result'] == TRUE) {
-  //   drupal_set_message(t('An graduation email has been sent to the trainee.'));
-  // }
-  // else {
-  //   drupal_set_message(t('There was a problem sending the trainee the graduation message.'), 'error');
-  // }
+  $result = _ctl_graduation_button_mail_send($form_values);
+  if (isset($result['result']) && $result['result']) {
+    drupal_set_message(t('An graduation email has been sent to the trainee.'));
+  }
+  else {
+    drupal_set_message(t('There was a problem sending the trainee the graduation message.'), 'error');
+  }
 }

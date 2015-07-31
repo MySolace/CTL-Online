@@ -13,6 +13,10 @@ libraries[mandrill][download][type] = "get"
 libraries[mandrill][download][url] = "https://bitbucket.org/mailchimp/mandrill-api-php/get/1.0.54.zip"
 libraries[mandrill][directory_name] = "mandrill"
 
+libraries[tcpdf][download][type] = "get"
+libraries[tcpdf][download][url] = "https://github.com/tecnickcom/TCPDF/archive/develop.zip"
+libraries[tcpdf][directory_name] = "tcpdf"
+
 libraries[twilio][download][type] = "get"
 libraries[twilio][download][url] = "https://github.com/twilio/twilio-php/archive/master.zip"
 libraries[twilio][directory_name] = "twilio"
@@ -69,6 +73,7 @@ projects[rules][version] = "2.9"
 projects[rules][patch][] = https://www.drupal.org/files/rules-site-property-metadata-fix-1423234-15.patch
 
 projects[rules_conditional][version] = "1.0-beta2"
+projects[tcpdf][version] = "1.0-beta1"
 projects[token][version] = "1.6"
 projects[twilio][version] = "1.10"
 projects[uuid][version] = "1.0-alpha6"
