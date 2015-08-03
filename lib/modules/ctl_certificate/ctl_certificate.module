@@ -1,0 +1,57 @@
+<?php
+/**
+ * @file
+ * Provide examples of using the TCPDF module.
+ */
+
+
+/**
+ * Implements hook_menu().
+ */
+function ctl_certificate_menu() {
+  $items['user/%/certificate'] = array(
+    'title'            => 'CTL Certificate',
+    'description'      => 'The CTL certificate for graduates.',
+    'page callback'    => '_ctl_certificate_generate',
+    'page arguments'   => array(1),
+
+    'access callback'  => TRUE,
+    // 'access arguments' => array('view certificate'),
+
+    'file'             => 'ctl_certificate.pages.inc',
+  );
+  return $items;
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function ctl_certificate_theme($existing, $type, $theme, $path) {
+  if ($type === 'module') {
+    $themes = array(
+      'ctl_certificate' => array(
+        'template' => 'ctl_certificate',
+        'variables' => array(
+          'certificate_image'  => theme('image', array('path' => drupal_get_path('module', 'ctl_certificate') . '/images/ctl-certificate-template.png')),
+          'graduate_name'      => NULL,
+          'certification_date' => NULL,
+        ),
+      ),
+    );
+  }
+  return $themes;
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function ctl_certificate_permission() {
+  return array(
+    'view certificate' => array(
+      'title' => t('View certificate'),
+      'description' => t('View the certificate'),
+    ),
+  );
+}

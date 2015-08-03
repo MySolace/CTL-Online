@@ -4,14 +4,6 @@
  * Implements hook_menu().
  */
 function ctl_graduation_button_menu() {
-  $items['user/%user/certificate'] = array(
-    'title'            => 'Certificate',
-    'page callback'    => '_ctl_graduation_button_certificate_page',
-    'page arguments'   => array(1),
-    'access arguments' => array('access course'),
-    'type'             => MENU_CALLBACK,
-    'file'             => 'includes/certificate.inc',
-  );
   $items['user/%user/progress'] = array(
     'title'            => 'Progress',
     'page callback'    => '_ctl_graduation_button_progress_page',

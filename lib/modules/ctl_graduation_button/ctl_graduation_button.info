@@ -1,5 +1,4 @@
-core = "7.x"
-description = "Provides a button for trainers to graduate their trainees more easily."
 name = "CTL Graduation Button"
-
+description = "Provides a button for trainers to graduate their trainees more easily."
 package = "Crisis Text Line"
+core = "7.x"

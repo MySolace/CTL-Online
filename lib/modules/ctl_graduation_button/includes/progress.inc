@@ -117,17 +117,17 @@ function _ctl_graduation_button_form_submit_graduate($form, &$form_state) {
 
   $uid = $form_values['uid'];
 
-  // // The graduate is no longer a trainee.
-  // $cur_role = 'Trainee';
-  // $role = user_role_load_by_name($cur_role);
-  // user_multiple_role_edit(array($uid), 'remove_role', $role->rid);
+  // The graduate is no longer a trainee.
+  $cur_role = 'Trainee';
+  $role = user_role_load_by_name($cur_role);
+  user_multiple_role_edit(array($uid), 'remove_role', $role->rid);
 
-  // // Assign new roles.
-  // $next_roles = array('Graduate', 'Crisis Counselor I');
-  // foreach ($next_roles as $next_role) {
-  //   $role = user_role_load_by_name($next_role);
-  //   user_multiple_role_edit(array($uid), 'add_role', $role->rid);
-  // }
+  // Assign new roles.
+  $next_roles = array('Graduate', 'Crisis Counselor I');
+  foreach ($next_roles as $next_role) {
+    $role = user_role_load_by_name($next_role);
+    user_multiple_role_edit(array($uid), 'add_role', $role->rid);
+  }
 
   // drupal_write_record('ctl_graduation_button_requirements', $record);
   // drupal_write_record('ctl_graduation_button_requirements', $record, 'uid');
