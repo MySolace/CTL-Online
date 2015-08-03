@@ -28,13 +28,13 @@ function application_v2_field_default_field_bases() {
     'type' => 'addressfield',
   );
 
-  // Exported field_base: 'field_armed_forces'
-  $field_bases['field_armed_forces'] = array(
+  // Exported field_base: 'field_armed_forces_2'
+  $field_bases['field_armed_forces_2'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_armed_forces',
+    'field_name' => 'field_armed_forces_2',
     'field_permissions' => array(
       'type' => 0,
     ),
@@ -116,13 +116,13 @@ function application_v2_field_default_field_bases() {
     'type' => 'list_text',
   );
 
-  // Exported field_base: 'field_crisis_services'
-  $field_bases['field_crisis_services'] = array(
+  // Exported field_base: 'field_crisis_services_2'
+  $field_bases['field_crisis_services_2'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_crisis_services',
+    'field_name' => 'field_crisis_services_2',
     'field_permissions' => array(
       'type' => 0,
     ),
@@ -353,13 +353,13 @@ function application_v2_field_default_field_bases() {
     'type' => 'list_integer',
   );
 
-  // Exported field_base: 'field_employment'
-  $field_bases['field_employment'] = array(
+  // Exported field_base: 'field_employment_2'
+  $field_bases['field_employment_2'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_employment',
+    'field_name' => 'field_employment_2',
     'field_permissions' => array(
       'type' => 0,
     ),
@@ -386,13 +386,13 @@ function application_v2_field_default_field_bases() {
     'type' => 'list_text',
   );
 
-  // Exported field_base: 'field_employment_requirement'
-  $field_bases['field_employment_requirement'] = array(
+  // Exported field_base: 'field_employment_2_requirement'
+  $field_bases['field_employment_2_requirement'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_employment_requirement',
+    'field_name' => 'field_employment_2_requirement',
     'field_permissions' => array(
       'type' => 0,
     ),

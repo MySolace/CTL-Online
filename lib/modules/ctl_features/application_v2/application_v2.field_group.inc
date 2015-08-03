@@ -58,7 +58,7 @@ function application_v2_field_group_info() {
     'label' => 'Additional Info',
     'weight' => '11',
     'children' => array(
-      0 => 'field_armed_forces',
+      0 => 'field_armed_forces_2',
       1 => 'field_disabilities_',
       2 => 'field_race',
       3 => 'field_race_other',
@@ -255,8 +255,8 @@ function application_v2_field_group_info() {
       0 => 'field_education',
       1 => 'field_education_field',
       2 => 'field_education_field_other',
-      3 => 'field_employment',
-      4 => 'field_employment_requirement',
+      3 => 'field_employment_2',
+      4 => 'field_employment_2_requirement',
     ),
     'format_type' => 'multipage',
     'format_settings' => array(
@@ -389,7 +389,7 @@ function application_v2_field_group_info() {
     'children' => array(
       0 => 'field_past_crisis_work_type',
       1 => 'field_used_crisis_support',
-      2 => 'field_crisis_services',
+      2 => 'field_crisis_services_2',
       3 => 'field_referal_friend',
       4 => 'field_referral_news',
       5 => 'field_referral_other',

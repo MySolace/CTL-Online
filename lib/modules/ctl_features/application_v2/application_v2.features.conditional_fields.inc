@@ -252,8 +252,8 @@ function application_v2_conditional_fields_default_fields() {
   $items[] = array(
     'entity' => 'node',
     'bundle' => 'application_2',
-    'dependent' => 'field_employment_requirement',
-    'dependee' => 'field_employment',
+    'dependent' => 'field_employment_2_requirement',
+    'dependee' => 'field_employment_2',
     'options' => array(
       'state' => 'visible',
       'condition' => 'value',
@@ -1012,7 +1012,7 @@ function application_v2_conditional_fields_default_fields() {
   $items[] = array(
     'entity' => 'node',
     'bundle' => 'application_2',
-    'dependent' => 'field_crisis_services',
+    'dependent' => 'field_crisis_services_2',
     'dependee' => 'field_used_crisis_support',
     'options' => array(
       'state' => 'visible',

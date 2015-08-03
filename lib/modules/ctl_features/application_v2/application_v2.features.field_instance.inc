@@ -10,8 +10,8 @@
 function application_v2_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-application_2-field_armed_forces'
-  $field_instances['node-application_2-field_armed_forces'] = array(
+  // Exported field_instance: 'node-application_2-field_armed_forces_2'
+  $field_instances['node-application_2-field_armed_forces_2'] = array(
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
@@ -33,7 +33,7 @@ function application_v2_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_armed_forces',
+    'field_name' => 'field_armed_forces_2',
     'label' => 'We would love to know if you identify as:',
     'required' => 1,
     'settings' => array(
@@ -127,8 +127,8 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-application_2-field_crisis_services'
-  $field_instances['node-application_2-field_crisis_services'] = array(
+  // Exported field_instance: 'node-application_2-field_crisis_services_2'
+  $field_instances['node-application_2-field_crisis_services_2'] = array(
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
@@ -149,7 +149,7 @@ function application_v2_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_crisis_services',
+    'field_name' => 'field_crisis_services_2',
     'label' => 'Have you ever used Crisis Text Line?',
     'required' => 1,
     'settings' => array(
@@ -442,8 +442,8 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-application_2-field_employment'
-  $field_instances['node-application_2-field_employment'] = array(
+  // Exported field_instance: 'node-application_2-field_employment_2'
+  $field_instances['node-application_2-field_employment_2'] = array(
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
@@ -466,7 +466,7 @@ function application_v2_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_employment',
+    'field_name' => 'field_employment_2',
     'label' => 'Which of the following best describes your current occupation?',
     'required' => 1,
     'settings' => array(
@@ -482,8 +482,8 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-application_2-field_employment_requirement'
-  $field_instances['node-application_2-field_employment_requirement'] = array(
+  // Exported field_instance: 'node-application_2-field_employment_2_requirement'
+  $field_instances['node-application_2-field_employment_2_requirement'] = array(
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
@@ -506,7 +506,7 @@ function application_v2_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_employment_requirement',
+    'field_name' => 'field_employment_2_requirement',
     'label' => 'Will volunteering at CTL help to fulfill a community service or class requirement at your school or for your program?',
     'required' => 1,
     'settings' => array(
