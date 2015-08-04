@@ -10,16 +10,29 @@
 function application_v2_user_default_roles() {
   $roles = array();
 
-  // Exported role: Applicant.
   $roles['Applicant'] = array(
     'name' => 'Applicant',
     'weight' => 4,
   );
 
-  // Exported role: Applied.
   $roles['Applied'] = array(
     'name' => 'Applied',
     'weight' => 6,
+  );
+
+  $roles['Submitted'] = array(
+    'name' => 'Submitted',
+    'weight' => 8,
+  );
+
+  $roles['Incomplete'] = array(
+    'name' => 'Incomplete',
+    'weight' => 9,
+  );
+
+  $roles['Lead'] = array(
+    'name' => 'Lead',
+    'weight' => 9,
   );
 
   return $roles;

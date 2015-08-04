@@ -10,6 +10,337 @@
 function application_v2_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'comment-comment_node_application-comment_body'
+  $field_instances['comment-comment_node_application-comment_body'] = array(
+    'bundle' => 'comment_node_application',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'comment',
+    'field_name' => 'comment_body',
+    'label' => 'Comment',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance: 'comment-comment_node_application_2-comment_body'
+  $field_instances['comment-comment_node_application_2-comment_body'] = array(
+    'bundle' => 'comment_node_application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'comment',
+    'field_name' => 'comment_body',
+    'label' => 'Comment',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance: 'comment-comment_node_course-comment_body'
+  $field_instances['comment-comment_node_course-comment_body'] = array(
+    'bundle' => 'comment_node_course',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'comment',
+    'field_name' => 'comment_body',
+    'label' => 'Comment',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'comment-comment_node_example_conversation-comment_body'
+  $field_instances['comment-comment_node_example_conversation-comment_body'] = array(
+    'bundle' => 'comment_node_example_conversation',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'comment',
+    'field_name' => 'comment_body',
+    'label' => 'Comment',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance: 'comment-comment_node_lesson-comment_body'
+  $field_instances['comment-comment_node_lesson-comment_body'] = array(
+    'bundle' => 'comment_node_lesson',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'comment',
+    'field_name' => 'comment_body',
+    'label' => 'Comment',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance: 'comment-comment_node_office_hours-comment_body'
+  $field_instances['comment-comment_node_office_hours-comment_body'] = array(
+    'bundle' => 'comment_node_office_hours',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'comment',
+    'field_name' => 'comment_body',
+    'label' => 'Comment',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance: 'comment-comment_node_quiz-comment_body'
+  $field_instances['comment-comment_node_quiz-comment_body'] = array(
+    'bundle' => 'comment_node_quiz',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'comment',
+    'field_name' => 'comment_body',
+    'label' => 'Comment',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance: 'comment-comment_node_recommendation-comment_body'
+  $field_instances['comment-comment_node_recommendation-comment_body'] = array(
+    'bundle' => 'comment_node_recommendation',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'comment',
+    'field_name' => 'comment_body',
+    'label' => 'Comment',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance: 'comment-comment_node_test-comment_body'
+  $field_instances['comment-comment_node_test-comment_body'] = array(
+    'bundle' => 'comment_node_test',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'comment',
+    'field_name' => 'comment_body',
+    'label' => 'Comment',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance: 'comment-comment_node_webform-comment_body'
+  $field_instances['comment-comment_node_webform-comment_body'] = array(
+    'bundle' => 'comment_node_webform',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'comment',
+    'field_name' => 'comment_body',
+    'label' => 'Comment',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 0,
+    ),
+  );
+
   // Exported field_instance: 'node-application_2-field_armed_forces_2'
   $field_instances['node-application_2-field_armed_forces_2'] = array(
     'bundle' => 'application_2',
@@ -130,7 +461,11 @@ function application_v2_field_default_field_instances() {
   // Exported field_instance: 'node-application_2-field_crisis_services_2'
   $field_instances['node-application_2-field_crisis_services_2'] = array(
     'bundle' => 'application_2',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
     'deleted' => 0,
     'description' => '',
     'display' => array(
@@ -482,10 +817,15 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-application_2-field_employment_2_requirement'
+  // Exported field_instance:
+  // 'node-application_2-field_employment_2_requirement'
   $field_instances['node-application_2-field_employment_2_requirement'] = array(
     'bundle' => 'application_2',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
     'deleted' => 0,
     'description' => '',
     'display' => array(
@@ -771,7 +1111,11 @@ function application_v2_field_default_field_instances() {
   // 'node-application_2-field_in_counseling_spoke_ready'
   $field_instances['node-application_2-field_in_counseling_spoke_ready'] = array(
     'bundle' => 'application_2',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'value' => 'yes',
+      ),
+    ),
     'deleted' => 0,
     'description' => '',
     'display' => array(
@@ -2054,8 +2398,8 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-application_2-field_referral'
-  $field_instances['node-application_2-field_referral'] = array(
+  // Exported field_instance: 'node-application_2-field_referral_2'
+  $field_instances['node-application_2-field_referral_2'] = array(
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
@@ -2076,7 +2420,7 @@ function application_v2_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_referral',
+    'field_name' => 'field_referral_2',
     'label' => 'How did you find out about volunteering with Crisis Text Line?	',
     'required' => 1,
     'settings' => array(
@@ -2092,8 +2436,8 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-application_2-field_referral_celeb'
-  $field_instances['node-application_2-field_referral_celeb'] = array(
+  // Exported field_instance: 'node-application_2-field_referral_2_celeb'
+  $field_instances['node-application_2-field_referral_2_celeb'] = array(
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
@@ -2114,7 +2458,7 @@ function application_v2_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_referral_celeb',
+    'field_name' => 'field_referral_2_celeb',
     'label' => 'Who?',
     'required' => 0,
     'settings' => array(
@@ -2133,8 +2477,8 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-application_2-field_referral_news'
-  $field_instances['node-application_2-field_referral_news'] = array(
+  // Exported field_instance: 'node-application_2-field_referral_2_news'
+  $field_instances['node-application_2-field_referral_2_news'] = array(
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
@@ -2155,7 +2499,7 @@ function application_v2_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_referral_news',
+    'field_name' => 'field_referral_2_news',
     'label' => 'What source? ',
     'required' => 0,
     'settings' => array(
@@ -2174,8 +2518,8 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-application_2-field_referral_other'
-  $field_instances['node-application_2-field_referral_other'] = array(
+  // Exported field_instance: 'node-application_2-field_referral_2_other'
+  $field_instances['node-application_2-field_referral_2_other'] = array(
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
@@ -2196,7 +2540,7 @@ function application_v2_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_referral_other',
+    'field_name' => 'field_referral_2_other',
     'label' => 'Other',
     'required' => 0,
     'settings' => array(
@@ -2215,8 +2559,9 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-application_2-field_referral_other_keyword'
-  $field_instances['node-application_2-field_referral_other_keyword'] = array(
+  // Exported field_instance:
+  // 'node-application_2-field_referral_2_other_keyword'
+  $field_instances['node-application_2-field_referral_2_other_keyword'] = array(
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
@@ -2237,7 +2582,7 @@ function application_v2_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_referral_other_keyword',
+    'field_name' => 'field_referral_2_other_keyword',
     'label' => 'Other',
     'required' => 0,
     'settings' => array(
@@ -2288,49 +2633,6 @@ function application_v2_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_buttons',
       'weight' => 61,
-    ),
-  );
-
-  // Exported field_instance: 'node-application_2-field_status'
-  $field_instances['node-application_2-field_status'] = array(
-    'bundle' => 'application_2',
-    'default_value' => array(
-      0 => array(
-        'tid' => 4,
-      ),
-    ),
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'taxonomy',
-        'settings' => array(
-          'field_formatter_class' => '',
-        ),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 78,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_status',
-    'label' => 'Status',
-    'required' => 1,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 0,
     ),
   );
 
@@ -2477,7 +2779,7 @@ function application_v2_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_uncomfortable_cont',
     'label' => 'If you checked any of the above scenarios, please elaborate on why.',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
       'course_enrollment' => FALSE,
       'text_processing' => 0,
@@ -2558,7 +2860,7 @@ function application_v2_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_yes',
     'label' => ' Great! Please explain briefly how you will make time for your weekly 4-hour shift, given your other time commitments.',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
       'course_enrollment' => FALSE,
       'text_processing' => 0,
@@ -2572,6 +2874,466 @@ function application_v2_field_default_field_instances() {
       ),
       'type' => 'text_textarea',
       'weight' => 62,
+    ),
+  );
+
+  // Exported field_instance: 'node-example_conversation-example_conversation'
+  $field_instances['node-example_conversation-example_conversation'] = array(
+    'bundle' => 'example_conversation',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'example_conversation',
+        'settings' => array(),
+        'type' => 'example_conversation',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'example_conversation',
+    'label' => 'Example Conversation',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'type' => 'text_long',
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance: 'node-example_conversation-plus_count'
+  $field_instances['node-example_conversation-plus_count'] = array(
+    'bundle' => 'example_conversation',
+    'default_value' => array(
+      0 => array(
+        'value' => 5,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 3,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'plus_count',
+    'label' => 'Plus submission requirement',
+    'required' => TRUE,
+    'settings' => array(
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'type' => 'number_integer',
+    'widget' => array(
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance: 'node-example_conversation-pluses'
+  $field_instances['node-example_conversation-pluses'] = array(
+    'bundle' => 'example_conversation',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 1,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'pluses',
+    'label' => 'Pluses',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'type' => 'text',
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 1,
+    ),
+  );
+
+  // Exported field_instance: 'node-example_conversation-wish_count'
+  $field_instances['node-example_conversation-wish_count'] = array(
+    'bundle' => 'example_conversation',
+    'default_value' => array(
+      0 => array(
+        'value' => 5,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 4,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'wish_count',
+    'label' => 'Wish submission requirement',
+    'required' => TRUE,
+    'settings' => array(
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'type' => 'number_integer',
+    'widget' => array(
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'node-example_conversation-wishes'
+  $field_instances['node-example_conversation-wishes'] = array(
+    'bundle' => 'example_conversation',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 2,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'wishes',
+    'label' => 'Wishes',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'type' => 'text',
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'node-lesson-lesson_audio'
+  $field_instances['node-lesson-lesson_audio'] = array(
+    'bundle' => 'lesson',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'lesson',
+        'settings' => array(),
+        'type' => 'html5audio',
+        'weight' => 1,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'lesson_audio',
+    'label' => 'Lesson audio',
+    'required' => TRUE,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'mp3',
+      'max_filesize' => '128MB',
+      'user_register_form' => FALSE,
+    ),
+    'type' => 'file',
+    'widget' => array(
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => -3,
+    ),
+  );
+
+  // Exported field_instance: 'node-lesson-lesson_images'
+  $field_instances['node-lesson-lesson_images'] = array(
+    'bundle' => 'lesson',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'lesson',
+        'settings' => array(),
+        'type' => 'html5audio',
+        'weight' => 2,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'lesson_images',
+    'label' => 'Lesson images',
+    'required' => FALSE,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'jpg jpeg png gif',
+      'max_filesize' => '128MB',
+      'user_register_form' => FALSE,
+    ),
+    'type' => 'file',
+    'widget' => array(
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => -2,
+    ),
+  );
+
+  // Exported field_instance: 'node-lesson-lesson_transcript'
+  $field_instances['node-lesson-lesson_transcript'] = array(
+    'bundle' => 'lesson',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'lesson',
+        'settings' => array(),
+        'type' => 'lesson_transcript',
+        'weight' => 3,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'lesson_transcript',
+    'label' => 'Lesson Transcript',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'type' => 'text_long',
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => -1,
+    ),
+  );
+
+  // Exported field_instance: 'node-lesson-slide'
+  $field_instances['node-lesson-slide'] = array(
+    'bundle' => 'lesson',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'lesson',
+        'settings' => array(),
+        'type' => 'lesson_slides',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'slide',
+    'label' => 'Slide content',
+    'required' => TRUE,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'type' => 'text_long',
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => -4,
+    ),
+  );
+
+  // Exported field_instance: 'node-quiz-body'
+  $field_instances['node-quiz-body'] = array(
+    'bundle' => 'quiz',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(
+          'trim_length' => 600,
+        ),
+        'type' => 'text_summary_or_trimmed',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'body',
+    'label' => 'Body',
+    'required' => FALSE,
+    'settings' => array(
+      'display_summary' => TRUE,
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 20,
+        'summary_rows' => 5,
+      ),
+      'type' => 'text_textarea_with_summary',
+      'weight' => 1,
+    ),
+  );
+
+  // Exported field_instance: 'node-test-body'
+  $field_instances['node-test-body'] = array(
+    'bundle' => 'test',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(
+          'trim_length' => 600,
+        ),
+        'type' => 'text_summary_or_trimmed',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'body',
+    'label' => 'Body',
+    'required' => FALSE,
+    'settings' => array(
+      'display_summary' => TRUE,
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 20,
+        'summary_rows' => 5,
+      ),
+      'type' => 'text_textarea_with_summary',
+      'weight' => -4,
     ),
   );
 
@@ -2774,9 +3536,12 @@ function application_v2_field_default_field_instances() {
   t('Becoming extremely involved in a good book or movie is somewhat rare for me.');
   t('Before criticizing somebody, I try to imagine how I would feel if I were in their place. ');
   t('Being in a tense emotional situation scares me.');
+  t('Body');
+  t('Comment');
   t('Do they feel like you are ready to take on this difficult but meaningful work?');
   t('Do you agree to commit to being a volunteer for one year, completing a recurring weekly four-hour shift, if accepted.');
   t('Do you have a US SSN and agree to undergo a background check? ');
+  t('Example Conversation');
   t('Have you been charged with a misdemeanor for a violent crime or sex offense?');
   t('Have you ever been convicted of or charged with a felony?');
   t('Have you ever provided crisis intervention, counseling, or therapy, either as a volunteer or as paid staff?');
@@ -2804,6 +3569,9 @@ function application_v2_field_default_field_instances() {
   t('In emergency situations, I feel apprehensive and ill-at-ease.');
   t('Last Name');
   t('Legal First Name');
+  t('Lesson Transcript');
+  t('Lesson audio');
+  t('Lesson images');
   t('Many active servicemembers and veterans use our textline, and we gladly welcome volunteers who have had experience serving in the Air Force, Army or Navy, either full-time or in the reserves. We would love to know if you identify as:
 ');
   t('Mobile Number');
@@ -2812,7 +3580,10 @@ function application_v2_field_default_field_instances() {
   t('Please check each box to confirm you will be able to fulfill the following technology requirements of volunteering.');
   t('Please let us know if you are: ');
   t('Please list the issues that may be triggering for you so we can offer you extra support');
+  t('Plus submission requirement');
+  t('Pluses');
   t('Preferred Name');
+  t('Slide content');
   t('Sometimes I don\'t feel very sorry for other people when they are having problems.');
   t('Status');
   t('Such as abuse, stalking, solicitation of a child, or child pornography');
@@ -2839,6 +3610,8 @@ function application_v2_field_default_field_instances() {
   t('Which of the following best describes your current occupation?');
   t('Who?');
   t('Will volunteering at CTL help to fulfill a community service or class requirement at your school or for your program?');
+  t('Wish submission requirement');
+  t('Wishes');
 
   return $field_instances;
 }

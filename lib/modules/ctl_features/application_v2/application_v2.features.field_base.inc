@@ -10,6 +10,68 @@
 function application_v2_field_default_field_bases() {
   $field_bases = array();
 
+  // Exported field_base: 'body'
+  $field_bases['body'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(
+      0 => 'node',
+    ),
+    'field_name' => 'body',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'text_with_summary',
+  );
+
+  // Exported field_base: 'comment_body'
+  $field_bases['comment_body'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(
+      0 => 'comment',
+    ),
+    'field_name' => 'comment_body',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'text_long',
+  );
+
+  // Exported field_base: 'example_conversation'
+  $field_bases['example_conversation'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'example_conversation',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'label' => 'Example conversation',
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'text_long',
+  );
+
   // Exported field_base: 'field_address'
   $field_bases['field_address'] = array(
     'active' => 1,
@@ -1668,13 +1730,13 @@ function application_v2_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_referral'
-  $field_bases['field_referral'] = array(
+  // Exported field_base: 'field_referral_2'
+  $field_bases['field_referral_2'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_referral',
+    'field_name' => 'field_referral_2',
     'field_permissions' => array(
       'type' => 1,
     ),
@@ -1701,13 +1763,13 @@ function application_v2_field_default_field_bases() {
     'type' => 'list_text',
   );
 
-  // Exported field_base: 'field_referral_celeb'
-  $field_bases['field_referral_celeb'] = array(
+  // Exported field_base: 'field_referral_2_celeb'
+  $field_bases['field_referral_2_celeb'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_referral_celeb',
+    'field_name' => 'field_referral_2_celeb',
     'field_permissions' => array(
       'type' => 0,
     ),
@@ -1725,13 +1787,13 @@ function application_v2_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_referral_news'
-  $field_bases['field_referral_news'] = array(
+  // Exported field_base: 'field_referral_2_news'
+  $field_bases['field_referral_2_news'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_referral_news',
+    'field_name' => 'field_referral_2_news',
     'field_permissions' => array(
       'type' => 0,
     ),
@@ -1749,13 +1811,13 @@ function application_v2_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_referral_other'
-  $field_bases['field_referral_other'] = array(
+  // Exported field_base: 'field_referral_2_other'
+  $field_bases['field_referral_2_other'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_referral_other',
+    'field_name' => 'field_referral_2_other',
     'field_permissions' => array(
       'type' => 1,
     ),
@@ -1773,13 +1835,13 @@ function application_v2_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_referral_other_keyword'
-  $field_bases['field_referral_other_keyword'] = array(
+  // Exported field_base: 'field_referral_2_other_keyword'
+  $field_bases['field_referral_2_other_keyword'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_referral_other_keyword',
+    'field_name' => 'field_referral_2_other_keyword',
     'field_permissions' => array(
       'type' => 0,
     ),
@@ -1847,35 +1909,6 @@ function application_v2_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_boolean',
-  );
-
-  // Exported field_base: 'field_status'
-  $field_bases['field_status'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_status',
-    'field_permissions' => array(
-      'type' => 2,
-    ),
-    'indexes' => array(
-      'tid' => array(
-        0 => 'tid',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'taxonomy',
-    'settings' => array(
-      'allowed_values' => array(
-        0 => array(
-          'vocabulary' => 'application_status',
-          'parent' => 0,
-        ),
-      ),
-    ),
-    'translatable' => 0,
-    'type' => 'taxonomy_term_reference',
   );
 
   // Exported field_base: 'field_triggers'
@@ -2030,6 +2063,170 @@ function application_v2_field_default_field_bases() {
     'settings' => array(),
     'translatable' => 0,
     'type' => 'text_long',
+  );
+
+  // Exported field_base: 'lesson_audio'
+  $field_bases['lesson_audio'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'lesson_audio',
+    'indexes' => array(
+      'fid' => array(
+        0 => 'fid',
+      ),
+    ),
+    'label' => 'Audio',
+    'locked' => 0,
+    'module' => 'file',
+    'settings' => array(
+      'display_default' => 0,
+      'display_field' => 0,
+      'uri_scheme' => 'public',
+    ),
+    'translatable' => 0,
+    'type' => 'file',
+  );
+
+  // Exported field_base: 'lesson_images'
+  $field_bases['lesson_images'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'lesson_images',
+    'indexes' => array(
+      'fid' => array(
+        0 => 'fid',
+      ),
+    ),
+    'label' => 'Images',
+    'locked' => 0,
+    'module' => 'file',
+    'settings' => array(
+      'display_default' => 0,
+      'display_field' => 0,
+      'uri_scheme' => 'public',
+    ),
+    'translatable' => 0,
+    'type' => 'file',
+  );
+
+  // Exported field_base: 'lesson_transcript'
+  $field_bases['lesson_transcript'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'lesson_transcript',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'label' => 'Transcript',
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'text_long',
+  );
+
+  // Exported field_base: 'plus_count'
+  $field_bases['plus_count'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'plus_count',
+    'indexes' => array(),
+    'label' => 'Plus submission requirement',
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
+  // Exported field_base: 'pluses'
+  $field_bases['pluses'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'pluses',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'label' => 'Pluses',
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
+  // Exported field_base: 'slide'
+  $field_bases['slide'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'slide',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'label' => 'Slide',
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'text_long',
+  );
+
+  // Exported field_base: 'wish_count'
+  $field_bases['wish_count'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'wish_count',
+    'indexes' => array(),
+    'label' => 'Wish submission requirement',
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
+  // Exported field_base: 'wishes'
+  $field_bases['wishes'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'wishes',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'label' => 'Wishes',
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
   );
 
   return $field_bases;

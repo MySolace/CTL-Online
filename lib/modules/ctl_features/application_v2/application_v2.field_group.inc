@@ -48,7 +48,7 @@ function application_v2_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_additional|node|application|form';
+  $field_group->identifier = 'group_additional|node|application_2|form';
   $field_group->group_name = 'group_additional';
   $field_group->entity_type = 'node';
   $field_group->bundle = 'application_2';
@@ -75,12 +75,12 @@ function application_v2_field_group_info() {
       ),
     ),
   );
-  $export['group_additional|node|application|form'] = $field_group;
+  $export['group_additional|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_counseling|node|application|form';
+  $field_group->identifier = 'group_counseling|node|application_2|form';
   $field_group->group_name = 'group_counseling';
   $field_group->entity_type = 'node';
   $field_group->bundle = 'application_2';
@@ -110,12 +110,12 @@ function application_v2_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_counseling|node|application|form'] = $field_group;
+  $export['group_counseling|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_empathytest|node|application|form';
+  $field_group->identifier = 'group_empathytest|node|application_2|form';
   $field_group->group_name = 'group_empathytest';
   $field_group->entity_type = 'node';
   $field_group->bundle = 'application_2';
@@ -170,12 +170,12 @@ function application_v2_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_empathytest|node|application|form'] = $field_group;
+  $export['group_empathytest|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_empathy|node|application|form';
+  $field_group->identifier = 'group_empathy|node|application_2|form';
   $field_group->group_name = 'group_empathy';
   $field_group->entity_type = 'node';
   $field_group->bundle = 'application_2';
@@ -200,12 +200,12 @@ function application_v2_field_group_info() {
       'formatter' => 'no-start',
     ),
   );
-  $export['group_empathy|node|application|form'] = $field_group;
+  $export['group_empathy|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_expectations|node|application|form';
+  $field_group->identifier = 'group_expectations|node|application_2|form';
   $field_group->group_name = 'group_expectations';
   $field_group->entity_type = 'node';
   $field_group->bundle = 'application_2';
@@ -237,12 +237,12 @@ function application_v2_field_group_info() {
       'formatter' => 'no-start',
     ),
   );
-  $export['group_expectations|node|application|form'] = $field_group;
+  $export['group_expectations|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_more_info|node|application|form';
+  $field_group->identifier = 'group_more_info|node|application_2|form';
   $field_group->group_name = 'group_more_info';
   $field_group->entity_type = 'node';
   $field_group->bundle = 'application_2';
@@ -268,12 +268,12 @@ function application_v2_field_group_info() {
       ),
     ),
   );
-  $export['group_more_info|node|application|form'] = $field_group;
+  $export['group_more_info|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_mp|node|application|form';
+  $field_group->identifier = 'group_mp|node|application_2|form';
   $field_group->group_name = 'group_mp';
   $field_group->entity_type = 'node';
   $field_group->bundle = 'application_2';
@@ -291,25 +291,25 @@ function application_v2_field_group_info() {
     ),
     'format_type' => 'multipage-group',
     'format_settings' => array(
+      'formatter' => '',
       'label' => 'CTL Application',
       'instance_settings' => array(
-        'nonjs_multistep' => '0',
-        'ajaxify' => '0',
-        'multipage_jumplist_block' => 1,
+        'nonjs_multistep' => 0,
+        'ajaxify' => 0,
         'classes' => 'group-mp field-group-multipage-group',
-        'page_header' => '1',
-        'page_counter' => '1',
-        'move_button' => '0',
-        'move_additional' => '1',
+        'page_header' => 1,
+        'page_counter' => 1,
+        'move_button' => 0,
+        'move_additional' => 1,
       ),
     ),
   );
-  $export['group_mp|node|application|form'] = $field_group;
+  $export['group_mp|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_time|node|application|form';
+  $field_group->identifier = 'group_time|node|application_2|form';
   $field_group->group_name = 'group_time';
   $field_group->entity_type = 'node';
   $field_group->bundle = 'application_2';
@@ -338,12 +338,12 @@ function application_v2_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_time|node|application|form'] = $field_group;
+  $export['group_time|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_uncomfortable|node|application|form';
+  $field_group->identifier = 'group_uncomfortable|node|application_2|form';
   $field_group->group_name = 'group_uncomfortable';
   $field_group->entity_type = 'node';
   $field_group->bundle = 'application_2';
@@ -372,12 +372,12 @@ function application_v2_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_uncomfortable|node|application|form'] = $field_group;
+  $export['group_uncomfortable|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_you|node|application|form';
+  $field_group->identifier = 'group_you|node|application_2|form';
   $field_group->group_name = 'group_you';
   $field_group->entity_type = 'node';
   $field_group->bundle = 'application_2';
@@ -391,11 +391,11 @@ function application_v2_field_group_info() {
       1 => 'field_used_crisis_support',
       2 => 'field_crisis_services_2',
       3 => 'field_referal_friend',
-      4 => 'field_referral_news',
-      5 => 'field_referral_other',
-      6 => 'field_referral',
-      7 => 'field_referral_celeb',
-      8 => 'field_referral_other_keyword',
+      4 => 'field_referral_2_news',
+      5 => 'field_referral_2_other',
+      6 => 'field_referral_2',
+      7 => 'field_referral_2_celeb',
+      8 => 'field_referral_2_other_keyword',
     ),
     'format_type' => 'multipage',
     'format_settings' => array(
@@ -408,7 +408,7 @@ function application_v2_field_group_info() {
       'formatter' => 'no-start',
     ),
   );
-  $export['group_you|node|application|form'] = $field_group;
+  $export['group_you|node|application_2|form'] = $field_group;
 
   return $export;
 }

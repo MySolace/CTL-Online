@@ -14,7 +14,6 @@ function application_v2_user_default_permissions() {
   $permissions['create application_2 content'] = array(
     'name' => 'create application_2 content',
     'roles' => array(
-      'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
     ),
     'module' => 'node',
@@ -24,8 +23,6 @@ function application_v2_user_default_permissions() {
   $permissions['delete any application_2 content'] = array(
     'name' => 'delete any application_2 content',
     'roles' => array(
-      'anonymous user' => 'anonymous user',
-      'authenticated user' => 'authenticated user',
     ),
     'module' => 'node',
   );
@@ -34,8 +31,6 @@ function application_v2_user_default_permissions() {
   $permissions['delete own application_2 content'] = array(
     'name' => 'delete own application_2 content',
     'roles' => array(
-      'anonymous user' => 'anonymous user',
-      'authenticated user' => 'authenticated user',
     ),
     'module' => 'node',
   );
@@ -44,8 +39,7 @@ function application_v2_user_default_permissions() {
   $permissions['edit any application_2 content'] = array(
     'name' => 'edit any application_2 content',
     'roles' => array(
-      'anonymous user' => 'anonymous user',
-      'authenticated user' => 'authenticated user',
+
     ),
     'module' => 'node',
   );
@@ -54,7 +48,6 @@ function application_v2_user_default_permissions() {
   $permissions['edit own application_2 content'] = array(
     'name' => 'edit own application_2 content',
     'roles' => array(
-      'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
     ),
     'module' => 'node',
