@@ -17,9 +17,9 @@ libraries[twilio][download][type] = "get"
 libraries[twilio][download][url] = "https://github.com/twilio/twilio-php/archive/master.zip"
 libraries[twilio][directory_name] = "twilio"
 
-libraries[tcpdf][download][type] = "get"
-libraries[tcpdf][download][url] = "https://github.com/tecnickcom/TCPDF/archive/master.zip"
-libraries[tcpdf][directory_name] = "tcpdf"
+#libraries[tcpdf][download][type] = "get"
+#libraries[tcpdf][download][url] = "https://github.com/tecnickcom/TCPDF/archive/master.zip"
+#libraries[tcpdf][directory_name] = "tcpdf"
 
 ; Modules
 projects[addressfield][version] = "1.0"
