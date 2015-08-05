@@ -12,16 +12,18 @@ function ctl_graduation_mail($key, &$message, $params) {
   $graduate_user       = user_load($graduate_uid);
   $graduate_first_name = $graduate_user->field_first_name[LANGUAGE_NONE][0]['safe_value'];
   $graduate_last_name  = $graduate_user->field_last_name[LANGUAGE_NONE][0]['safe_value'];
+  $graduate_name       = "$graduate_first_name $graduate_last_name";
 
   $trainer_uid        = $graduate_user->field_trainer[LANGUAGE_NONE][0]['target_id'];
   $trainer_user       = user_load($trainer_uid);
   $trainer_first_name = $trainer_user->field_first_name[LANGUAGE_NONE][0]['safe_value'];
   $trainer_last_name  = $trainer_user->field_last_name[LANGUAGE_NONE][0]['safe_value'];
+  $trainer_name       = "$trainer_first_name $trainer_last_name";
 
   $email_message = theme('graduation_message', array(
-    'graduate_name' => "$graduate_first_name $graduate_last_name",
+    'graduate_name' => $graduate_name,
     'graduate_uid'  => $graduate_uid,
-    'trainer_name'  => "$trainer_first_name $trainer_last_name",
+    'trainer_name'  => $trainer_name,
   ));
 
   $options = array(

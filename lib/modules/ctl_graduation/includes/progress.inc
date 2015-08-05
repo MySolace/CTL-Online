@@ -31,8 +31,7 @@ function _ctl_graduation_courses_completed($uid) {
  * Trainee progress page.
  */
 function _ctl_graduation_progress_page($user) {
-  // if (in_array('Graduate', $user->roles)) {
-  if (FALSE) {
+  if (in_array('Graduate', $user->roles)) {
     $content['course_progress'] = array(
       '#type'   => 'markup',
       '#markup' => '<p>This person has already graduated.</p>',

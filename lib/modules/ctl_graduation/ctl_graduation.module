@@ -17,6 +17,19 @@ function ctl_graduation_menu() {
 
 
 /**
+ * Implements hook_permission().
+ */
+function ctl_graduation_permission() {
+  return array(
+    'view graduates' => array(
+      'title' => t('View graduates'),
+      'description' => t('View the list of graduates'),
+    ),
+  );
+}
+
+
+/**
  * Implements hook_theme().
  */
 function ctl_graduation_theme($existing, $type, $theme, $path) {

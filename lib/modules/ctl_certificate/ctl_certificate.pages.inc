@@ -8,12 +8,12 @@
 function _ctl_certificate_get_instance($params = array(), $class = array(), $config = array()) {
   $default_params = array(
     'orientation' => 'P',
-    'unit' => 'mm',
-    'format' => 'A4',
-    'unicode' => TRUE,
-    'encoding' => 'UTF-8',
-    'diskcache' => FALSE,
-    'pdfa' => FALSE,
+    'unit'        => 'mm',
+    'format'      => 'A4',
+    'unicode'     => TRUE,
+    'encoding'    => 'UTF-8',
+    'diskcache'   => FALSE,
+    'pdfa'        => FALSE,
   );
 
   $params = array_merge($default_params, $params);
@@ -56,11 +56,8 @@ function _ctl_certificate_get_instance($params = array(), $class = array(), $con
 }
 
 
-/**
- * Page callback for downloading example pdf files.
- */
 function _ctl_certificate_generate($uid) {
-  $pdf = _ctl_certificate_pdf();
+  $pdf = _ctl_certificate_pdf($uid);
   if (!$pdf) {
     return t('An error occured.');
   }
@@ -80,13 +77,23 @@ function _ctl_certificate_generate($uid) {
 }
 
 
-/**
- * Generates a PDF file using the TCPDF module.
- *
- * @return string
- *   Binary string of the generated pdf.
- */
-function _ctl_certificate_pdf() {
+function _ctl_certificate_pdf($uid) {
+  $graduate_user       = user_load($uid);
+  $graduate_first_name = $graduate_user->field_first_name[LANGUAGE_NONE][0]['safe_value'];
+  $graduate_last_name  = $graduate_user->field_last_name[LANGUAGE_NONE][0]['safe_value'];
+  $graduate_name       = "$graduate_first_name $graduate_last_name";
+
+  // Find out the graduate's graduation date.
+  $query = db_select('ctl_graduation_progress', 'gp');
+  $query->addField('gp', 'graduation_timestamp');
+  $result = $query
+    ->condition('uid', $uid)
+    ->execute()
+    ->fetchAssoc();
+  $graduation_date = format_date($result['graduation_timestamp'], 'custom', 'F j, Y');
+
+
+  // $certificate~>
 
   // $path = libraries_get_path('tcpdf');
   // if (($path) && (file_exists($path . '/tcpdf_import.php'))) {
@@ -182,8 +189,8 @@ function _ctl_certificate_pdf() {
 
   // Get the content we want to convert into pdf.
   $html = theme('ctl_certificate', array(
-    'graduate_name' => 'graduate name',
-    'certification_date' => 'date of certification',
+    'graduate_name' => $graduate_name,
+    'certification_date' => $graduation_date,
   ));
 
   // $class = array(

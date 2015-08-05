@@ -14,13 +14,23 @@ function ctl_certificate_menu() {
     'description'      => 'The CTL certificate for graduates.',
     'page callback'    => '_ctl_certificate_generate',
     'page arguments'   => array(1),
-
-    'access callback'  => TRUE,
-    // 'access arguments' => array('view certificate'),
-
+    'access arguments' => array('view certificate'),
     'file'             => 'ctl_certificate.pages.inc',
   );
   return $items;
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function ctl_certificate_permission() {
+  return array(
+    'view certificate' => array(
+      'title' => t('View certificate'),
+      'description' => t('View the graduation certificate'),
+    ),
+  );
 }
 
 
@@ -41,17 +51,4 @@ function ctl_certificate_theme($existing, $type, $theme, $path) {
     );
   }
   return $themes;
-}
-
-
-/**
- * Implements hook_permission().
- */
-function ctl_certificate_permission() {
-  return array(
-    'view certificate' => array(
-      'title' => t('View certificate'),
-      'description' => t('View the certificate'),
-    ),
-  );
 }
