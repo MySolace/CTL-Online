@@ -31,6 +31,12 @@ function ctl_graduation_schema() {
         'size'     => 'tiny',
         'default'  => 0,
       ),
+      'passed_final_evaluation' => array(
+        'type'     => 'int',
+        'not null' => TRUE,
+        'size'     => 'tiny',
+        'default'  => 0,
+      ),
       'graduation_timestamp' => array(
         'type'     => 'int',
         'not null' => TRUE,

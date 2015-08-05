@@ -40,17 +40,25 @@ function ctl_graduation_permission() {
 }
 
 
+// function ctl_graduation_preprocess(&$vars, $hook) {
+//   if (!empty($vars['theme_hook_suggestions'])) {
+//     drupal_set_message(t('Hook - @hook', array('@hook' => $hook)));
+//     drupal_set_message(var_export($vars['theme_hook_suggestions'], TRUE));
+//   }
+// }
+
+
 /**
  * Implements hook_theme().
  */
 function ctl_graduation_theme($existing, $type, $theme, $path) {
   if ($type === 'module') {
-    $themes['block__certificate'] = array(
-      'template' => 'templates/block--certificate',
-    );
-    $themes['html__certificate'] = array(
-      'template' => 'templates/html--certificate',
-    );
+    // $themes['block__certificate'] = array(
+    //   'template' => 'templates/block--certificate',
+    // );
+    // $themes['html__certificate'] = array(
+    //   'template' => 'templates/html--certificate',
+    // );
     $themes['page__certificate'] = array(
       'template' => 'templates/page--certificate',
       'variables' => array(
