@@ -599,11 +599,11 @@ function application_v2_submission_handler($node) {
     $author->status = 0;
     user_save($author);
     drupal_set_message(t('We have received your application. Look for an email from us soon!'), 'info');
+    drupal_goto('application-submitted');
   } else {
     drupal_mail('application_v2', 'submitted', $author->mail, user_preferred_language($author), $params);
+    drupal_goto('apply');
   }
-
-  drupal_goto('apply');
 }
 
 function application_v2_update_role($account, $role_name) {
