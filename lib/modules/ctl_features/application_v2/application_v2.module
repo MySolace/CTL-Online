@@ -1,0 +1,637 @@
+<?php
+/**
+ * @file
+ * Code for the application_v2 feature.
+ */
+
+include_once 'application_v2.features.inc';
+
+define('APP_V2_CONTENT_TYPE', 'application_2');
+define('APP_V2_REFERENCE_TYPE', 'recommendation');
+
+
+/**
+ * Implements hook_menu().
+ */
+function application_v2_menu() {
+  $items = array();
+
+  $items['admin/config/application'] = array(
+    'title' => t('Application settings'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('application_v2_admin'),
+    'access arguments' => array('administer application settings'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['application'] = array(
+    'title' => t('Application'),
+    'page callback' => 'application_v2_application',
+    'access callback' => TRUE,
+  );
+
+  $items['application/unsubscribe/%/%'] = array(
+    'title' => t('Unsubscribe from application reminders.'),
+    'page callback' => 'application_v2_unsubscribe',
+    'access callback' => TRUE,
+    'page arguments' => array(2, 3),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_node_access().
+ */
+function application_v2_node_access($node, $op, $account) {
+  if (is_object($node) && $node->type == APP_V2_CONTENT_TYPE) {
+    if ($node->status == 1) {
+      if (!user_access('access user profiles') || !user_is_logged_in()) {
+        return NODE_ACCESS_DENY;
+      }
+    }
+  }
+}
+
+function application_v2_unsubscribe($uid, $token) {
+  $account = user_load($uid);
+  if ($account) {
+    $valid_token = _application_v2_email_token($account);
+
+    if ($token == $valid_token) {
+      application_v2_update_role($account, 'Incomplete');
+      $account->status = 0;
+      user_save($account);
+    }
+  }
+
+  return array(
+    '#markup' => t('You have been unsubscribed.'),
+  );
+}
+
+function application_v2_unsubscribe_link($account) {
+  $uid = $account->uid;
+  $token = _application_v2_email_token($account);
+
+  return l('Unsubscribe from these reminders', "application/unsubscribe/$uid/$token");
+}
+
+function _application_v2_email_token($account) {
+  return substr(md5($account->created), -8);
+}
+
+function application_v2_application() {
+  if (!user_is_logged_in()) {
+    drupal_goto('user/register', array('query' => array('destination' => 'application')));
+    return;
+  }
+
+  drupal_get_messages('status');
+  $existing = application_v2_load();
+
+  module_load_include('inc', 'node', 'node.pages');
+  $form = array();
+
+  // If they already started one
+  if ($existing) {
+    drupal_set_title('Finish your application.');
+    // If it's submitted
+    if ($existing->status == NODE_PUBLISHED) {
+      $form = array(
+        'submitted' => array(
+          '#type' => 'markup',
+          '#markup' => t('<p>You have already submitted an application. View your !app_status.', array(
+            '!app_status' => l('Application status', 'apply'),
+          )),
+        ),
+      );
+    } else { // else
+      $form = drupal_get_form(APP_V2_CONTENT_TYPE . '_node_form', $existing);
+    }
+  } else {
+    $form = node_add(APP_V2_CONTENT_TYPE);
+    drupal_set_title('Start your application.');
+  }
+
+  return $form;
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function application_v2_permission() {
+  return array(
+    'administer application settings' => array(
+      'title' => t('Administer application settings'),
+      'description' => t('Edit the settings for the application'),
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_cron().
+ */
+function application_v2_cron() {
+  return;
+  $run_at = variable_get('app_v2_cron_time');
+
+  $now = date('Hi');
+  $today = date('z');
+
+  $last_run = variable_get('app_v2_last_run');
+  $last_run = ($last_run == 365) ? -1 : $last_run;
+
+  if ($run_at > $now && $last_run < $today) {
+    // INCOMPLETE APPS
+    $incomplete = db_query('
+      SELECT
+        n.nid,
+        n.uid
+      FROM
+        {node} n
+        JOIN {users} u
+        JOIN {users_roles} r ON u.uid=r.uid
+        JOIN {role} role ON r.rid=role.rid
+        LEFT JOIN {webform_submissions} w ON n.uid=w.uid
+      WHERE
+        n.status = :status
+        AND n.type = :type
+        AND role.name NOT IN (:role_exclude)
+      GROUP BY n.nid
+      HAVING count(w.sid) < 2
+    ', array(
+      ':status' => NODE_PUBLISHED,
+      ':type' => APP_V2_CONTENT_TYPE,
+      ':role_exclude' => array('Incomplete'),
+    ));
+
+    $nids = array();
+
+    while ($row = $incomplete->fetchAssoc()) {
+      $nids[$row['uid']] = $row['nid'];
+    }
+
+    $nodes = node_load_multiple($nids);
+    $users = user_load_multiple(array_keys($nids));
+
+    foreach ($nodes as $node) {
+      $params = array();
+      $author = $users[$node->uid];
+      //drupal_mail('application_v2', 'reminder', $author, user_preferred_language($author), $params);
+    }
+
+
+    // PENDING RECS
+    // load up the submissions
+    $needs_recs = db_query('
+      SELECT
+        w.uid
+      FROM
+        {webform_submissions} w
+        JOIN {users} u
+        JOIN {users_roles} r ON u.uid=r.uid
+        JOIN {role} role ON r.rid=role.rid
+        LEFT JOIN field_data_field_reference f ON f.field_reference_target_id=w.uid
+      WHERE
+        role.name NOT IN (:role_exclude)
+      GROUP BY w.uid
+      HAVING count(f.field_reference_target_id) < 2
+    ', array(
+      ':role_exclude' => array('Incomplete'),
+    ));
+
+    while ($row = $needs_recs->fetchAssoc()) {
+      $uids[] = $row['uid'];
+    }
+
+    $users = user_load_multiple($uids);
+
+    foreach ($users as $account) {
+      $params = array();
+      //drupal_mail('application_v2', 'references', $account, user_preferred_language($account), $params);
+    }
+  }
+}
+
+/**
+ * Admin settings form.
+ */
+function application_v2_admin() {
+  $form = array();
+  $emails = array(
+    'started' => t('1. After starting the application (filled out user reg form)'),
+    'submitted' => t('2. After submitting the (complete) application email'),
+    'rejection' => t('3. If they fail an exclusion question'),
+    //'acceptance' => t('NOT USED YET'),
+    'reminder' => t('4. Reminder to finish application'),
+    'references' => t('5. References have not yet submitted'),
+    //'reference_recvd' => t('Reference received'),
+  );
+
+  $form['app_v2_cron_time'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Email send time (EST)'),
+    '#default_value' => variable_get('app_v2_cron_time', '0730'),
+    '#size' => 4,
+    '#required' => TRUE,
+  );
+
+  $form['app_v2_references_request_form'] = array(
+    '#type' => 'textfield',
+    '#title' => t('NID of the reference request form'),
+    '#default_value' => variable_get('app_v2_references_request_form'),
+    '#size' => 4,
+    '#required' => TRUE,
+  );
+
+  $form['app_v2_exclusions'] = array(
+    '#theme' => 'table',
+    '#tree' => TRUE,
+    '#suffix' => t('Reset a value to "- Select -" to remove it from this list.'),
+    '#rows' => array(),
+    '#header' => array('Field name', 'Value', 'Count number of properties instead of checking value.'),
+  );
+
+  $options = field_info_instances('node', APP_V2_CONTENT_TYPE);
+  $options = array_keys($options);
+  $options = array_combine($options, $options);
+
+  $exclusions = variable_get('app_v2_exclusions', array());
+  $exclusions[] = array(
+    'field' => '',
+    'value' => '',
+    'count' => FALSE,
+  );
+
+  foreach ($exclusions as $key => $map) {
+    $form['app_v2_exclusions'][$key]['field'] = array(
+      '#type' => 'select',
+      '#options' => array('' => '- Select -') + $options,
+      '#default_value' => $map['field'],
+    );
+
+    $form['app_v2_exclusions'][$key]['value'] = array(
+      '#type' => 'textfield',
+      '#default_value' => $map['value'],
+    );
+
+    $form['app_v2_exclusions'][$key]['count'] = array(
+      '#type' => 'checkbox',
+      '#default_value' => $map['count'],
+    );
+
+    $form['app_v2_exclusions']['#rows'][] = array(
+      array(
+        'data' => &$form['app_v2_exclusions'][$key]['field'],
+      ), array(
+        'data' => &$form['app_v2_exclusions'][$key]['value'],
+      ), array(
+        'data' => &$form['app_v2_exclusions'][$key]['count'],
+      ),
+    );
+  }
+
+
+  /* TODO
+  $form['tokens'] = array(
+    '#theme' => 'token_tree_link',
+    '#token_types' => array('node'),
+    '#global_types' => TRUE,
+    '#click_insert' => TRUE,
+  );
+  */
+
+  $form['app_v2_next_due_date'] = array(
+    '#title' => t('Next application due date'),
+    '#type' => 'date_select',
+    '#required' => TRUE,
+    '#default_value' => variable_get('app_v2_next_due_date'),
+    '#date_format' => 'Y-m-d',
+    '#date_year_range' => '0:+1',
+    '#date_label_position' => 'none',
+  );
+
+  $form['app_v2_next_acceptance'] = array(
+    '#title' => t('Next cohort acceptance date'),
+    '#type' => 'date_select',
+    '#required' => TRUE,
+    '#default_value' => variable_get('app_v2_next_acceptance'),
+    '#date_format' => 'Y-m-d',
+    '#date_year_range' => '0:+1',
+    '#date_label_position' => 'none',
+  );
+
+  $form['app_v2_next_cohort'] = array(
+    '#title' => t('Next cohort start date'),
+    '#type' => 'date_select',
+    '#required' => TRUE,
+    '#default_value' => variable_get('app_v2_next_cohort'),
+    '#date_format' => 'Y-m-d',
+    '#date_year_range' => '0:+1',
+    '#date_label_position' => 'none',
+  );
+
+  foreach ($emails as $key => $email) {
+    $t = 'app_v2_email_' . $key;
+    $form[$t.'_subject'] = array(
+      '#type' => 'textfield',
+      '#title' => $email . ' Subject',
+      '#default_value' => variable_get($t.'_subject'),
+    );
+
+    $form[$t] = array(
+      '#type' => 'textarea',
+      '#title' => $email,
+      '#default_value' => variable_get($t),
+    );
+  }
+
+  $form['#submit'][] = 'application_v2_admin_submit';
+
+  return system_settings_form($form);
+}
+
+function application_v2_admin_submit($form, &$form_state) {
+  $form_state['values']['app_v2_cron_time'] = str_pad($form_state['values']['app_v2_cron_time'], 4, 0, STR_PAD_LEFT);
+
+  foreach ($form_state['values']['app_v2_exclusions'] as $key => $map) {
+    if (empty($map['field'])) {
+      unset($form_state['values']['app_v2_exclusions'][$key]);
+    }
+  }
+}
+
+/**
+ * Implements hook_token_info().
+ */
+function application_v2_token_info() {
+  $site = array(
+    'next_due_date' => array(
+      'name' => t('Next application due date'),
+      'description' => t('The next due date for applications.'),
+    ),
+    'next_cohort_date' => array(
+      'name' => t('Next cohort start date'),
+      'description' => t('The date of the next cohort starting.'),
+    ),
+    'next_acceptance_date' => array(
+      'name' => t('Next cohort acceptance date'),
+      'description' => t('The date of the next cohort acceptance date.'),
+    ),
+  );
+
+  return array(
+    'tokens' => array(
+      'site' => $site,
+    ),
+  );
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function application_v2_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+
+  if ($type == 'site') {
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+
+        case 'next_due_date':
+          $replacements[$original] = variable_get('app_v2_next_due_date');
+          break;
+
+        case 'next_cohort_date':
+          $replacements[$original] = variable_get('app_v2_next_cohort');
+          break;
+
+        case 'next_acceptance_date':
+          $replacements[$original] = variable_get('app_v2_next_acceptance');
+          break;
+      }
+    }
+  } else if ($type == 'user') {
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'preferred-name':
+          $account = $data['user'];
+
+          $preferred = trim($data['user']->field_preferred_name[LANGUAGE_NONE][0]['value']);
+          $first = trim($data['user']->field_preferred_name[LANGUAGE_NONE][0]['value']);
+
+          $replacements[$original] = (empty($preferred)) ? $first : $preferred;
+          break;
+      }
+    }
+  }
+
+  return $replacements;
+}
+
+/**
+ * Implements hook_mail().
+ */
+function application_v2_mail($key, &$message, $params) {
+  if (isset($params['node']) && !isset($params['user'])) {
+    $params['user'] = user_load($params['node']->uid);
+  }
+
+  switch($key) {
+    case 'rejection':
+      $message['subject'] = token_replace(variable_get('app_v2_email_'.$key.'_subject'), $params);
+      $body = token_replace(variable_get('app_v2_email_'.$key), $params);
+      $body = str_replace('[exclusions]', $params['exclusions'], $body);
+      $message['body'][] = $body;
+      break;
+    default:
+      $message['subject'] = token_replace(variable_get('app_v2_email_'.$key.'_subject'), $params);
+      $message['body'][] = token_replace(variable_get('app_v2_email_'.$key), $params);
+      break;
+  }
+
+  if (isset($params['user'])) {
+    $message['body'][] = "\n\n";
+    $message['body'][] = application_v2_unsubscribe_link($params['user']);
+  }
+}
+
+/**
+ * Load nodes submitted by a user.
+ */
+function application_v2_load($account = NULL) {
+  global $user;
+
+  if (is_null($account)) {
+    $account = $user;
+  }
+
+  $nodes = db_select('node', 'n')
+    ->fields('n')
+    ->condition('uid', $account->uid)
+    ->condition('type', APP_V2_CONTENT_TYPE)
+    ->execute()
+    ->fetchAssoc();
+
+  if ($nodes) {
+    return node_load(reset($nodes));
+  } else {
+    return $nodes;
+  }
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function application_v2_node_insert($node) {
+  if ($node->type == APP_V2_CONTENT_TYPE) {
+    $author = user_load($node->uid);
+    application_v2_update_role($author, 'Applicant');
+
+    if ($node->status == NODE_PUBLISHED) {
+      application_v2_submission_handler($node);
+    } else {
+      drupal_set_message('Your application has been saved.', 'status');
+    }
+  } else if ($node->type == APP_V2_REFERENCE_TYPE) {
+    $applicant = user_load($node->field_reference[LANGUAGE_NONE][0]['target_id']);
+    if (in_array('Submitted', $applicant->roles)) {
+      application_v2_update_role($applicant, 'Applied');
+
+      $params = array('user' => $applicant);
+      drupal_mail('application_v2', 'reference_recvd', $applicant->mail, user_preferred_language($applicant), $params);
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function application_v2_form_alter(&$form, &$form_state, &$form_id) {
+  if ($form_id == APP_V2_CONTENT_TYPE . '_node_form') {
+    array_walk($form, function (&$item, $key) {
+      if (strpos($key, 'field_') === 0) {
+        $item[LANGUAGE_NONE]['#field_prefix'] = '<div class="description">' . $item[LANGUAGE_NONE]['#description'] . '</div>';
+        $item[LANGUAGE_NONE]['#description'] = '';
+      }
+    });
+  }
+}
+
+/**
+ * Implements hook_user_insert().
+ */
+function application_v2_user_insert(&$edit, $account, $category) {
+  $params = array('user' => $account);
+  drupal_mail('application_v2', 'started', $account->mail, user_preferred_language($account), $params);
+}
+
+/**
+ * Implements hook_user().
+ */
+function application_v2_user($op, &$edit, &$user, $category=null) {
+  if ($op == 'insert') {
+    $roles = user_roles(TRUE);
+    $rid = array_search('Lead', $roles);
+
+    $edit['roles'][$rid] = $roles[$rid];
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function application_v2_node_update($node) {
+  if ($node->type !== APP_V2_CONTENT_TYPE) {
+    return;
+  }
+
+  global $user;
+
+  if ($node->uid != $user->uid) {
+    return;
+  }
+
+  if ($node->status == NODE_PUBLISHED) {
+    application_v2_submission_handler($node);
+    drupal_set_message('Your application has been submitted.', 'status');
+  } else {
+    drupal_set_message('Your application has been saved but is not yet submitted.', 'status');
+  }
+
+  drupal_goto('apply');
+}
+
+function application_v2_submission_handler($node) {
+  $exclusions = array();
+  $exclusion_qs = variable_get('app_v2_exclusions', array());
+
+  foreach ($exclusion_qs as $exclusion) {
+    $exclude = FALSE;
+
+    if ($exclusion['count']) {
+      $exclude = count($node->{$exclusion['field']}[LANGUAGE_NONE]) < $exclusion['value'];
+    } else {
+      $exclude = $node->{$exclusion['field']}[LANGUAGE_NONE][0]['value'] == $exclusion['value'];
+    }
+
+    if ($exclude) {
+      $info = field_info_instance('node', $exclusion['field'], APP_V2_CONTENT_TYPE);
+      $exclusions[] = $info['label'];
+    }
+  }
+
+  $author = user_load($node->uid);
+  if (application_v2_has_recommendation($author)) {
+    application_v2_update_role($author, 'Applied');
+  } else {
+    application_v2_update_role($author, 'Submitted');
+  }
+
+  $params = array('node' => $node);
+
+  if (!empty($exclusions)) {
+    $exclusions = array_unique($exclusions);
+    $params['exclusions'] = '  - ' . implode("\n  - ", $exclusions);
+    drupal_mail('application_v2', 'rejection', $author->mail, user_preferred_language($author), $params);
+    $author->status = 0;
+    user_save($author);
+    drupal_set_message(t('We have received your application. Look for an email from us soon!'), 'info');
+    drupal_goto('application-submitted');
+  } else {
+    drupal_mail('application_v2', 'submitted', $author->mail, user_preferred_language($author), $params);
+    drupal_goto('apply');
+  }
+}
+
+function application_v2_update_role($account, $role_name) {
+  $roles = drupal_static(__FUNCTION__);
+
+  if (!isset($roles)) {
+    $roles = user_roles(TRUE);
+  }
+
+  $rid = array_search($role_name, $roles);
+
+  $account->roles = array(
+    $rid => $roles[$rid],
+  );
+
+  user_save($account);
+}
+
+function application_v2_has_recommendation($account) {
+  $q = db_query('
+    SELECT count(*)
+    FROM field_data_field_reference r
+    WHERE r.field_reference_target_id = :uid
+    AND r.bundle = :bundle
+  ', array(
+    ':uid' => $account->uid,
+    ':bundle' => APP_V2_REFERENCE_TYPE,
+  ));
+
+  return $q->fetchField();
+}
