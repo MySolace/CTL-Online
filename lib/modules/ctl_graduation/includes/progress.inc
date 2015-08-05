@@ -65,7 +65,9 @@ function ctl_graduation_form($form, &$form_state, $uid) {
     ->execute()
     ->fetchAssoc();
 
-  $additional_requirements_defaults = array_keys(array_filter($result));
+  $completed_tasks = array_filter($result);
+  $remaining_tasks = array_diff($result, $completed_tasks);
+  $defaults        = array_keys($completed_tasks);
 
   $form['additional_requirements'] = array(
     '#type'  => 'checkboxes',
@@ -75,7 +77,7 @@ function ctl_graduation_form($form, &$form_state, $uid) {
       'did_observation_shift' => t('This trainee has completed 1 observation shift.'),
       'did_roleplays'         => t('This trainee has completed 5 roleplays.'),
     ),
-    '#default_value' => $additional_requirements_defaults,
+    '#default_value' => $defaults,
   );
 
   $form['uid'] = array(
@@ -89,12 +91,14 @@ function ctl_graduation_form($form, &$form_state, $uid) {
     '#submit' => array('_ctl_graduation_form_submit_update'),
   );
 
-  $form['graduate'] = array(
-    '#type'     => 'submit',
-    '#value'    => 'Graduate',
-    '#validate' => array('_ctl_graduation_form_validate_graduate'),
-    '#submit'   => array('_ctl_graduation_form_submit_graduate'),
-  );
+  if (_ctl_graduation_courses_completed($uid) && empty($remaining_tasks)) {
+    $form['graduate'] = array(
+      '#type'     => 'submit',
+      '#value'    => 'Graduate',
+      '#validate' => array('_ctl_graduation_form_validate_graduate'),
+      '#submit'   => array('_ctl_graduation_form_submit_graduate'),
+    );
+  }
 
   return $form;
 }
@@ -143,39 +147,23 @@ function _ctl_graduation_form_validate_graduate($form, &$form_state) {
  * Updates the trainee's roles and sends them a graduation email.
  */
 function _ctl_graduation_form_submit_graduate($form, &$form_state) {
-  $result = db_select('ctl_graduation_progress', 'gp')
-    ->fields('gp')
-    ->execute()
-    ->fetchAll();
-  drupal_set_message(var_export($result, TRUE));
-
-
   $form_values = $form_state['values'];
   $uid = $form_values['uid'];
-  $graduation_timestamp = time();
 
   // Upsert trainee info.
   db_merge('ctl_graduation_progress')
     ->key(array('uid' => $uid))
     ->fields(array(
-      'graduation_timestamp' => $graduation_timestamp,
+      'graduation_timestamp' => time(),
     ))
     ->execute();
 
+  // The trainee now becomes a graduate.
 
-  $result = db_select('ctl_graduation_progress', 'gp')
-    ->fields('gp')
-    ->execute()
-    ->fetchAll();
-  drupal_set_message(var_export($result, TRUE));
-
-
-  // The graduate is no longer a trainee.
   $cur_role = 'Trainee';
   $role = user_role_load_by_name($cur_role);
   user_multiple_role_edit(array($uid), 'remove_role', $role->rid);
 
-  // Assign new roles.
   $next_roles = array('Graduate', 'Crisis Counselor I');
   foreach ($next_roles as $next_role) {
     $role = user_role_load_by_name($next_role);
