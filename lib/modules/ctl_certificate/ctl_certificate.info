@@ -3,4 +3,5 @@ description = "Generates a certificate for graduates."
 package = "Crisis Text Line"
 core = "7.x"
 
-dependencies[] = tcpdf
+; dependencies[] = libraries
+; dependencies[] = tcpdf

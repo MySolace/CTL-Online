@@ -1,8 +1,59 @@
 <?php
 /**
  * @file
- * Contains page callbacks and related functions of TCPDF module.
+ * Contains page callbacks and related functions.
  */
+
+
+function _ctl_certificate_get_instance($params = array(), $class = array(), $config = array()) {
+  $default_params = array(
+    'orientation' => 'P',
+    'unit' => 'mm',
+    'format' => 'A4',
+    'unicode' => TRUE,
+    'encoding' => 'UTF-8',
+    'diskcache' => FALSE,
+    'pdfa' => FALSE,
+  );
+
+  $params = array_merge($default_params, $params);
+
+  if (!isset($class['class'])) {
+    $class = array(
+      'class' => 'TCPDFDrupal',
+      'filetype' => 'inc',
+      'filename' =>  'tcpdf.class',
+      'module' => 'tcpdf',
+    );
+  }
+
+    if (!isset($config['filename'])) {
+    $config = array(
+      'filetype' => 'inc',
+      'filename' =>  'tcpdf.config',
+      'module' => 'tcpdf',
+    );
+  }
+
+  if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
+    define('K_TCPDF_EXTERNAL_CONFIG', TRUE);
+  }
+
+  module_load_include($config['filetype'], $config['module'], $config['filename']);
+
+  $path = libraries_get_path('tcpdf');
+  if (($path) && (file_exists($path . '/tcpdf_import.php'))) {
+    require_once($path . '/tcpdf_import.php');
+  }
+  else {
+    drupal_set_message(t('TCPDF library not found!'), 'error');
+    return FALSE;
+  }
+
+  module_load_include($class['filetype'], $class['module'], $class['filename']);
+
+  return new $class['class']($params['orientation'], $params['unit'], $params['format'], $params['unicode'], $params['encoding'], $params['diskcache'], $params['pdfa']);
+}
 
 
 /**
@@ -16,9 +67,12 @@ function _ctl_certificate_generate($uid) {
 
   // // Tell the browser that this is not an HTML file to show,
   // // but a PDF file to download.
-  header('Content-Type: application/pdf');
   header('Content-Length: ' . strlen($pdf));
+  header('Content-Type: application/pdf');
   // header('Content-Disposition: attachment; filename="ctl-certificate.pdf"');
+  header("Content-Disposition: inline; filename=ctl-certificate.pdf");
+  header('Expires: 0');
+  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 
   print $pdf;
 
@@ -34,14 +88,14 @@ function _ctl_certificate_generate($uid) {
  */
 function _ctl_certificate_pdf() {
 
-  $path = libraries_get_path('tcpdf');
-  if (($path) && (file_exists($path . '/tcpdf_import.php'))) {
-    require_once($path . '/tcpdf_import.php');
-  }
-  else {
-    drupal_set_message(t('TCPDF library not found!'), 'error');
-    return FALSE;
-  }
+  // $path = libraries_get_path('tcpdf');
+  // if (($path) && (file_exists($path . '/tcpdf_import.php'))) {
+  //   require_once($path . '/tcpdf_import.php');
+  // }
+  // else {
+  //   drupal_set_message(t('TCPDF library not found!'), 'error');
+  //   return FALSE;
+  // }
 
   // $pdf = new TCPDF_IMPORT();
   // $pdf->importPDF(DRUPAL_ROOT . base_path() . drupal_get_path('module', 'ctl_certificate') . '/ctl-certificate-template.pdf');
@@ -59,10 +113,10 @@ function _ctl_certificate_pdf() {
   $params = array();
 
   $class = array(
-    // 'class'    => 'TCPDF_IMPORT',
-    // 'filetype' => 'inc',
-    // 'filename' => 'tcpdf.class',
-    // 'module'   => 'tcpdf',
+    'class'    => 'TCPDFDrupal',
+    'filetype' => 'inc',
+    'filename' => 'includes/tcpdf.class',
+    'module'   => 'ctl_certificate',
   );
 
   // $class = array(
@@ -72,37 +126,46 @@ function _ctl_certificate_pdf() {
   //   'module'   => 'tcpdf',
   // );
 
-  $pdf = tcpdf_get_instance($params, $class);
+  // $pdf = tcpdf_get_instance($params, $class);
+
+  $pdf = _ctl_certificate_get_instance($params, $class);
+
+  // $pdf = tcpdf_get_instance();
 
   // watchdog('ctl_certificate', var_export($pdf, TRUE));
 
   $pdf->SetPrintHeader(FALSE);
   $pdf->SetPrintFooter(FALSE);
 
-  // // $img_file  = base_path() . drupal_get_path('module', 'ctl_certificate') . '/images/ctl-certificate-template.png';
-  $img_file  = 'http://placebear.com/200/300';
-  $x         = 0;
-  $y         = 0;
-  $width     = 200;
-  $height    = 0;
-  $type      = '';
-  $link      = '';
-  $align     = '';
-  $resize    = TRUE;
-  $dpi       = 300;
-  $palign    = '';
-  $ismask    = FALSE;
-  $imgmask   = FALSE;
-  $border    = 0;
-  $fitbox    = FALSE;
-  $hidden    = FALSE;
-  $fitonpage = TRUE;
-  $alt       = FALSE;
-  $altimgs   = array();
+  $pdf->importPDF(DRUPAL_ROOT . base_path() . drupal_get_path('module', 'ctl_certificate') . '/pdfs/ctl-certificate-template.pdf');
+  // $pdf->importPDF(base_path() . drupal_get_path('module', 'ctl_certificate') . '/pdfs/ctl-certificate-template.pdf');
+  // $pdf->importPDF(drupal_get_path('module', 'ctl_certificate') . '/pdfs/ctl-certificate-template.pdf');
+  // $pdf->importPDF('pdfs/ctl-certificate-template.pdf');
 
-  $pdf->Image($img_file, $x, $y, $width, $height, $type, $link, $align,
-    $resize, $dpi, $palign, $ismask, $imgmask, $border, $fitbox, $hidden,
-    $fitonpage, $alt, $altimgs);
+  // // // $img_file  = base_path() . drupal_get_path('module', 'ctl_certificate') . '/images/ctl-certificate-template.png';
+  // $img_file  = 'http://placebear.com/200/300';
+  // $x         = 0;
+  // $y         = 0;
+  // $width     = 200;
+  // $height    = 0;
+  // $type      = '';
+  // $link      = '';
+  // $align     = '';
+  // $resize    = TRUE;
+  // $dpi       = 300;
+  // $palign    = '';
+  // $ismask    = FALSE;
+  // $imgmask   = FALSE;
+  // $border    = 0;
+  // $fitbox    = FALSE;
+  // $hidden    = FALSE;
+  // $fitonpage = TRUE;
+  // $alt       = FALSE;
+  // $altimgs   = array();
+
+  // $pdf->Image($img_file, $x, $y, $width, $height, $type, $link, $align,
+  //   $resize, $dpi, $palign, $ismask, $imgmask, $border, $fitbox, $hidden,
+  //   $fitonpage, $alt, $altimgs);
 
   $filename = '';
   $dest = 'S';

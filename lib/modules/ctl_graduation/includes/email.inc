@@ -44,10 +44,7 @@ function _ctl_graduation_button_mail_send($form_values) {
   $user     = user_load($uid);
   $language = user_preferred_language($user);
   $from     = 'volunteers@crisistextline.org';
-
-  // $to       = $user->mail;
-  $to       = 'ramartin.net@gmail.com';
-
+  $to       = $user->mail;
   $send     = TRUE;
   $result   = drupal_mail($module, $key, $to, $language, $params, $from, $send);
   return (isset($result['result']) && $result['result']);

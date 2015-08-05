@@ -3,10 +3,10 @@
 /**
  * Implements hook_menu().
  */
-function ctl_graduation_button_menu() {
+function ctl_graduation_menu() {
   $items['user/%user/progress'] = array(
     'title'            => 'Progress',
-    'page callback'    => '_ctl_graduation_button_progress_page',
+    'page callback'    => '_ctl_graduation_progress_page',
     'page arguments'   => array(1),
     'access arguments' => array('access all course reports'),
     'type'             => MENU_LOCAL_TASK,
@@ -19,7 +19,7 @@ function ctl_graduation_button_menu() {
 /**
  * Implements hook_theme().
  */
-function ctl_graduation_button_theme($existing, $type, $theme, $path) {
+function ctl_graduation_theme($existing, $type, $theme, $path) {
   if ($type === 'module') {
     $themes = array(
       'graduation_message' => array(
