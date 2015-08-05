@@ -17,10 +17,6 @@ libraries[twilio][download][type] = "get"
 libraries[twilio][download][url] = "https://github.com/twilio/twilio-php/archive/master.zip"
 libraries[twilio][directory_name] = "twilio"
 
-#libraries[tcpdf][download][type] = "get"
-#libraries[tcpdf][download][url] = "https://github.com/tecnickcom/TCPDF/archive/master.zip"
-#libraries[tcpdf][directory_name] = "tcpdf"
-
 ; Modules
 projects[addressfield][version] = "1.0"
 projects[admin_menu][version] = "3.0-rc5"
@@ -73,7 +69,6 @@ projects[rules][version] = "2.9"
 projects[rules][patch][] = https://www.drupal.org/files/rules-site-property-metadata-fix-1423234-15.patch
 
 projects[rules_conditional][version] = "1.0-beta2"
-projects[tcpdf][version] = "1.0-beta1"
 projects[token][version] = "1.6"
 projects[twilio][version] = "1.10"
 projects[uuid][version] = "1.0-alpha6"
