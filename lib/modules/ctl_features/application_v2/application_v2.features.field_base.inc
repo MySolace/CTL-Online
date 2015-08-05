@@ -148,13 +148,13 @@ function application_v2_field_default_field_bases() {
     'type' => 'list_boolean',
   );
 
-  // Exported field_base: 'field_commitment'
-  $field_bases['field_commitment'] = array(
+  // Exported field_base: 'field_commitment_2'
+  $field_bases['field_commitment_2'] = array(
     'active' => 1,
     'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_commitment',
+    'field_name' => 'field_commitment_2',
     'field_permissions' => array(
       'type' => 0,
     ),
@@ -1962,13 +1962,13 @@ function application_v2_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_uncomfortable'
-  $field_bases['field_uncomfortable'] = array(
+  // Exported field_base: 'field_uncomfortable_2'
+  $field_bases['field_uncomfortable_2'] = array(
     'active' => 1,
     'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_uncomfortable',
+    'field_name' => 'field_uncomfortable_2',
     'field_permissions' => array(
       'type' => 0,
     ),
@@ -1993,13 +1993,13 @@ function application_v2_field_default_field_bases() {
     'type' => 'list_text',
   );
 
-  // Exported field_base: 'field_uncomfortable_cont'
-  $field_bases['field_uncomfortable_cont'] = array(
+  // Exported field_base: 'field_uncomfortable_2_cont'
+  $field_bases['field_uncomfortable_2_cont'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_uncomfortable_cont',
+    'field_name' => 'field_uncomfortable_2_cont',
     'field_permissions' => array(
       'type' => 0,
     ),

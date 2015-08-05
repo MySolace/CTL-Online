@@ -27,7 +27,7 @@ function application_v2_menu() {
   $items['application'] = array(
     'title' => t('Application'),
     'page callback' => 'application_v2_application',
-    'access arguments' => array('create application_2 content'),
+    'access callback' => TRUE,
   );
 
   $items['application/unsubscribe/%/%'] = array(

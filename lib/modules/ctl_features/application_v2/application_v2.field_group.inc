@@ -215,7 +215,7 @@ function application_v2_field_group_info() {
     'label' => 'Counselor Expectations',
     'weight' => '7',
     'children' => array(
-      0 => 'field_commitment',
+      0 => 'field_commitment_2',
       1 => 'field_english',
       2 => 'field_felony',
       3 => 'field_felony_violent_sex',
@@ -353,8 +353,8 @@ function application_v2_field_group_info() {
     'label' => 'uncomfortable',
     'weight' => '19',
     'children' => array(
-      0 => 'field_uncomfortable',
-      1 => 'field_uncomfortable_cont',
+      0 => 'field_uncomfortable_2',
+      1 => 'field_uncomfortable_2_cont',
     ),
     'format_type' => 'div',
     'format_settings' => array(
