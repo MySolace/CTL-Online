@@ -544,9 +544,13 @@ function application_v2_user($op, &$edit, &$user, $category=null) {
  * Implements hook_node_update().
  */
 function application_v2_node_update($node) {
+  if ($node->type !== APP_V2_CONTENT_TYPE) {
+    return;
+  }
+
   global $user;
 
-  if ($node->author->uid != $user->uid) {
+  if ($node->uid != $user->uid) {
     return;
   }
 
