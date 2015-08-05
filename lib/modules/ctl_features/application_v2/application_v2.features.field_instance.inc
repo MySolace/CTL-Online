@@ -418,8 +418,8 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-application_2-field_commitment'
-  $field_instances['node-application_2-field_commitment'] = array(
+  // Exported field_instance: 'node-application_2-field_commitment_2'
+  $field_instances['node-application_2-field_commitment_2'] = array(
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
@@ -442,7 +442,7 @@ function application_v2_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_commitment',
+    'field_name' => 'field_commitment_2',
     'label' => 'Please check each box to confirm you will be able to fulfill the following technology requirements of volunteering.',
     'required' => 1,
     'settings' => array(
@@ -2715,8 +2715,8 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-application_2-field_uncomfortable'
-  $field_instances['node-application_2-field_uncomfortable'] = array(
+  // Exported field_instance: 'node-application_2-field_uncomfortable_2'
+  $field_instances['node-application_2-field_uncomfortable_2'] = array(
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
@@ -2739,7 +2739,7 @@ function application_v2_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_uncomfortable',
+    'field_name' => 'field_uncomfortable_2',
     'label' => 'After receiving proper training and resources, would you NOT be willing to...',
     'required' => 0,
     'settings' => array(
@@ -2755,8 +2755,8 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-application_2-field_uncomfortable_cont'
-  $field_instances['node-application_2-field_uncomfortable_cont'] = array(
+  // Exported field_instance: 'node-application_2-field_uncomfortable_2_cont'
+  $field_instances['node-application_2-field_uncomfortable_2_cont'] = array(
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
@@ -2777,7 +2777,7 @@ function application_v2_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_uncomfortable_cont',
+    'field_name' => 'field_uncomfortable_2_cont',
     'label' => 'If you checked any of the above scenarios, please elaborate on why.',
     'required' => 0,
     'settings' => array(

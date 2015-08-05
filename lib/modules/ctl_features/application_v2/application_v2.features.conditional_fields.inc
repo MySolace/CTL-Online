@@ -1840,8 +1840,8 @@ function application_v2_conditional_fields_default_fields() {
   $items["node:application_2:16"] = array(
     'entity' => 'node',
     'bundle' => 'application_2',
-    'dependent' => 'field_uncomfortable_cont',
-    'dependee' => 'field_uncomfortable',
+    'dependent' => 'field_uncomfortable_2_cont',
+    'dependee' => 'field_uncomfortable_2',
     'options' => array(
       'state' => 'visible',
       'condition' => 'value',
