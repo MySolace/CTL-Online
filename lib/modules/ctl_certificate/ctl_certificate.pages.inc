@@ -42,6 +42,13 @@ function _ctl_certificate_get_instance($params = array(), $class = array(), $con
   module_load_include($config['filetype'], $config['module'], $config['filename']);
 
   $path = libraries_get_path('tcpdf');
+  if (($path) && (file_exists($path . '/tcpdf.php'))) {
+    require_once($path . '/tcpdf.php');
+  }
+  else {
+    drupal_set_message(t('TCPDF library not found!'), 'error');
+    return FALSE;
+  }
   if (($path) && (file_exists($path . '/tcpdf_import.php'))) {
     require_once($path . '/tcpdf_import.php');
   }
@@ -135,16 +142,16 @@ function _ctl_certificate_pdf($uid) {
 
   // $pdf = tcpdf_get_instance($params, $class);
 
-  $pdf = _ctl_certificate_get_instance($params, $class);
+  // $pdf = _ctl_certificate_get_instance($params, $class);
 
-  // $pdf = tcpdf_get_instance();
+  $pdf = tcpdf_get_instance();
 
   // watchdog('ctl_certificate', var_export($pdf, TRUE));
 
   $pdf->SetPrintHeader(FALSE);
   $pdf->SetPrintFooter(FALSE);
 
-  $pdf->importPDF(DRUPAL_ROOT . base_path() . drupal_get_path('module', 'ctl_certificate') . '/pdfs/ctl-certificate-template.pdf');
+  // $pdf->importPDF(DRUPAL_ROOT . base_path() . drupal_get_path('module', 'ctl_certificate') . '/pdfs/ctl-certificate-template.pdf');
   // $pdf->importPDF(base_path() . drupal_get_path('module', 'ctl_certificate') . '/pdfs/ctl-certificate-template.pdf');
   // $pdf->importPDF(drupal_get_path('module', 'ctl_certificate') . '/pdfs/ctl-certificate-template.pdf');
   // $pdf->importPDF('pdfs/ctl-certificate-template.pdf');
@@ -174,9 +181,9 @@ function _ctl_certificate_pdf($uid) {
   //   $resize, $dpi, $palign, $ismask, $imgmask, $border, $fitbox, $hidden,
   //   $fitonpage, $alt, $altimgs);
 
-  $filename = '';
-  $dest = 'S';
-  return $pdf->Output($filename, $dest);
+  // $filename = '';
+  // $dest = 'S';
+  // return $pdf->Output($filename, $dest);
 
 
 
@@ -189,8 +196,9 @@ function _ctl_certificate_pdf($uid) {
 
   // Get the content we want to convert into pdf.
   $html = theme('ctl_certificate', array(
-    'graduate_name' => $graduate_name,
-    'certification_date' => $graduation_date,
+    'certificate_image' => 'http://placebear.com/200/300',
+    'graaduation_date'  => $graduation_date,
+    'graduate_name'     => $graduate_name,
   ));
 
   // $class = array(
@@ -212,35 +220,35 @@ function _ctl_certificate_pdf($uid) {
   //   'pdfa'        => FALSE,
   // ));
 
-  // $tcpdf->SetPrintHeader(FALSE);
-  // $tcpdf->SetPrintFooter(FALSE);
+  $tcpdf->SetPrintHeader(FALSE);
+  $tcpdf->SetPrintFooter(FALSE);
 
-  $tcpdf->AddPage('L', array(200, 300));
+  $tcpdf->AddPage('P', array(200, 300));
 
-  // // $img_file  = base_path() . drupal_get_path('module', 'ctl_certificate') . '/images/ctl-certificate-template.png';
-  $img_file  = 'http://placebear.com/200/300';
-  $x         = 0;
-  $y         = 0;
-  $width     = 200;
-  $height    = 0;
-  $type      = '';
-  $link      = '';
-  $align     = '';
-  $resize    = TRUE;
-  $dpi       = 300;
-  $palign    = '';
-  $ismask    = FALSE;
-  $imgmask   = FALSE;
-  $border    = 0;
-  $fitbox    = FALSE;
-  $hidden    = FALSE;
-  $fitonpage = TRUE;
-  $alt       = FALSE;
-  $altimgs   = array();
+  // // // $img_file  = base_path() . drupal_get_path('module', 'ctl_certificate') . '/images/ctl-certificate-template.png';
+  // $img_file  = 'http://placebear.com/200/300';
+  // $x         = 0;
+  // $y         = 0;
+  // $width     = 200;
+  // $height    = 0;
+  // $type      = '';
+  // $link      = '';
+  // $align     = '';
+  // $resize    = TRUE;
+  // $dpi       = 300;
+  // $palign    = '';
+  // $ismask    = FALSE;
+  // $imgmask   = FALSE;
+  // $border    = 0;
+  // $fitbox    = FALSE;
+  // $hidden    = FALSE;
+  // $fitonpage = TRUE;
+  // $alt       = FALSE;
+  // $altimgs   = array();
 
-  $tcpdf->Image($img_file, $x, $y, $width, $height, $type, $link, $align,
-    $resize, $dpi, $palign, $ismask, $imgmask, $border, $fitbox, $hidden,
-    $fitonpage, $alt, $altimgs);
+  // $tcpdf->Image($img_file, $x, $y, $width, $height, $type, $link, $align,
+  //   $resize, $dpi, $palign, $ismask, $imgmask, $border, $fitbox, $hidden,
+  //   $fitonpage, $alt, $altimgs);
 
   // $tcpdf->DrupalInitialize();
 
@@ -307,7 +315,7 @@ function _ctl_certificate_pdf($uid) {
 
   // $tcpdf->writeHTML('<img src="http://placebear.com/200/300" />');
 
-  // $tcpdf->writeHTML($html);
+  $tcpdf->writeHTML($html);
 
 // TCPDF::Text (   $x,
 //   $y,

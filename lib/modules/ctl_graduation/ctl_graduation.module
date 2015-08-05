@@ -4,6 +4,17 @@
  * Implements hook_menu().
  */
 function ctl_graduation_menu() {
+  $items['user/%user/certificate'] = array(
+    'title'            => 'Certificate',
+    'page callback'    => '_ctl_graduation_certificate_page',
+    'page arguments'   => array(1),
+
+    'access callback' => TRUE,
+    // 'access arguments' => array('access all course reports'),
+
+    'type'             => MENU_CALLBACK,
+    'file'             => 'includes/certificate.inc',
+  );
   $items['user/%user/progress'] = array(
     'title'            => 'Progress',
     'page callback'    => '_ctl_graduation_progress_page',
@@ -34,16 +45,42 @@ function ctl_graduation_permission() {
  */
 function ctl_graduation_theme($existing, $type, $theme, $path) {
   if ($type === 'module') {
-    $themes = array(
-      'graduation_message' => array(
-        'template' => 'templates/graduation_message',
-        'variables' => array(
-          'graduate_name' => NULL,
-          'graduate_uid'  => NULL,
-          'trainer_name'  => NULL,
-        ),
+    $themes['block__certificate'] = array(
+      'template' => 'templates/block--certificate',
+    );
+    $themes['html__certificate'] = array(
+      'template' => 'templates/html--certificate',
+    );
+    $themes['page__certificate'] = array(
+      'template' => 'templates/page--certificate',
+      'variables' => array(
+        'certificate_image' => NULL,
+        'graduate_name'     => NULL,
+        'graduation_date'   => NULL,
+      ),
+    );
+    $themes['graduation_message'] = array(
+      'template' => 'templates/graduation_message',
+      'variables' => array(
+        'graduate_name' => NULL,
+        'graduate_uid'  => NULL,
+        'trainer_name'  => NULL,
       ),
     );
   }
   return $themes;
 }
+
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+// function ctl_graduation_theme_registry_alter(&$theme_registry) {
+//   drupal_set_message(var_export(array_keys($theme_registry), TRUE));
+
+//   $theme_registry['search_results']['theme paths'] = array(0 => drupal_get_path('module', 'mymodule') . '/templates');
+//   $theme_registry['search_results']['theme path'] = drupal_get_path('module', 'mymodule') . '/templates';
+//   $theme_registry['search_results']['path'] = drupal_get_path('module', 'mymodule') . '/templates';
+//   // tell the theme system to use 'search-results.tpl.php' as the template file. Note that you do not include 'tpl.php'
+//   $theme_registry['search_results']['template'] = 'search-results';
+// }
