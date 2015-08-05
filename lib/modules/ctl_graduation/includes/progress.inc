@@ -12,6 +12,7 @@ function _ctl_graduation_courses_completed($uid) {
   $query->leftJoin('course_report', 'cr', 'cn.nid = cr.nid');
   $query->addField('cr', 'nid');
   $result = $query
+    ->condition('cr.uid', $uid)
     ->condition(
       db_or()
         // This is of course means the course is incomplete.
