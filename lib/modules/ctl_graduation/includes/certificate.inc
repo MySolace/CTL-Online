@@ -20,7 +20,7 @@ function _ctl_graduation_certificate_page($user) {
   $content['certificate'] = array(
     '#type' => 'markup',
     '#markup' => theme('page__certificate', array(
-      'certificate_image' => base_path() . drupal_get_path('module', 'ctl_certificate') . '/images/ctl-certificate-template.png',
+      'certificate_image' => base_path() . drupal_get_path('module', 'ctl_graduation') . '/images/ctl-certificate-template.png',
       'graduate_name'     => $graduate_name,
       'graduation_date'   => $graduation_date,
     )),

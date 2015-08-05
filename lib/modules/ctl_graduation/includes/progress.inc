@@ -59,23 +59,31 @@ function ctl_graduation_form($form, &$form_state, $uid) {
   $query->addField('gp', 'did_live_sessions');
   $query->addField('gp', 'did_observation_shift');
   $query->addField('gp', 'did_roleplays');
+  $query->addField('gp', 'passed_final_evaluation');
   $result = $query
     ->condition('uid', $uid)
     ->execute()
     ->fetchAssoc();
 
-  $completed_tasks = array_filter($result);
-  $remaining_tasks = array_diff($result, $completed_tasks);
-  $defaults        = array_keys($completed_tasks);
+  if ($result !== FALSE) {
+    $completed_tasks = array_filter($result);
+    $remaining_tasks = array_diff($result, $completed_tasks);
+    $defaults        = array_keys($completed_tasks);
+  }
+  else {
+    $remaining_tasks = array(TRUE);       // Slightly hackish.
+    $defaults = array();
+  }
 
   $form['additional_requirements'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Additional requirements'),
     '#default_value' => $defaults,
       '#options' => array(
-      'did_live_sessions'     => t('This trainee has attended all live sessions.'),
-      'did_observation_shift' => t('This trainee has completed 1 observation shift.'),
-      'did_roleplays'         => t('This trainee has completed 5 roleplays.'),
+      'did_live_sessions'       => t('This trainee has attended the required live sessions.'),
+      'did_observation_shift'   => t('This trainee has completed the required observation shift.'),
+      'did_roleplays'           => t('This trainee has completed the required roleplays.'),
+      'passed_final_evaluation' => t('This trainee has passed the final evaluation.'),
     ),
   );
 
@@ -113,14 +121,16 @@ function _ctl_graduation_form_submit_update($form, &$form_state) {
   $did_live_sessions       = intval(!empty($additional_requirements['did_live_sessions']));
   $did_observation_shift   = intval(!empty($additional_requirements['did_observation_shift']));
   $did_roleplays           = intval(!empty($additional_requirements['did_roleplays']));
+  $passed_final_evaluation = intval(!empty($additional_requirements['passed_final_evaluation']));
 
   // Upsert trainee info.
   db_merge('ctl_graduation_progress')
     ->key(array('uid' => $uid))
     ->fields(array(
-      'did_live_sessions'     => $did_live_sessions,
-      'did_observation_shift' => $did_observation_shift,
-      'did_roleplays'         => $did_roleplays,
+      'did_live_sessions'       => $did_live_sessions,
+      'did_observation_shift'   => $did_observation_shift,
+      'did_roleplays'           => $did_roleplays,
+      'passed_final_evaluation' => $passed_final_evaluation,
     ))
     ->execute();
 

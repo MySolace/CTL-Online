@@ -9,10 +9,7 @@ function ctl_graduation_menu() {
     'description'      => 'The CTL certificate for graduates.',
     'page callback'    => '_ctl_graduation_certificate_page',
     'page arguments'   => array(1),
-
-    'access callback' => TRUE,
-    // 'access arguments' => array('view certificate'),
-
+    'access arguments' => array('view certificate'),
     'type'             => MENU_CALLBACK,
     'file'             => 'includes/certificate.inc',
   );

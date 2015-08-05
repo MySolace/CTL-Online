@@ -1,7 +1,0 @@
-name = "CTL Certificate"
-description = "Generates a certificate for graduates."
-package = "Crisis Text Line"
-core = "7.x"
-
-; dependencies[] = libraries
-; dependencies[] = tcpdf
