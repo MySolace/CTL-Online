@@ -5,6 +5,10 @@
  */
 function ctl_features_node_access($node, $op, $account) {
     if (is_object($node) && $node->type == 'application') {
+        if (!user_is_logged_in()) {
+            return NODE_ACCESS_DENY;
+        }
+
         if ($node->status == 1) {
             if ($op != 'create' && !user_access('access user profiles')) {
                 return NODE_ACCESS_DENY;
@@ -17,7 +21,7 @@ function ctl_features_node_access($node, $op, $account) {
  * Implements hook_form_alter().
  */
 function ctl_features_form_alter(&$form, &$form_state, $form_id) {
-    if ($form_id == 'application_node_form') {
+    if ($form_id == 'application_node_form' || $form_id == 'application_2_node_form') {
         $form['actions']['draft'] = array(
             '#type' => 'submit',
             '#value' => t('Save as Draft'),
