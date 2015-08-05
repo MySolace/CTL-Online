@@ -33,3 +33,9 @@ projects[schedule_recurring][type] = "module"
 projects[schedule_recurring][subdir] = "ctl"
 projects[schedule_recurring][download][type] = local
 projects[schedule_recurring][download][source] = './lib/modules/schedule_recurring'
+
+; Graduation button
+projects[schedule_recurring][type] = "module"
+projects[schedule_recurring][subdir] = "ctl"
+projects[schedule_recurring][download][type] = local
+projects[schedule_recurring][download][source] = './lib/modules/ctl_graduation'

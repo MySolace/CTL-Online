@@ -81,3 +81,4 @@ dependencies[] = ctl_office_hours
 dependencies[] = lesson
 dependencies[] = example_conversation
 dependencies[] = application_v2
+dependencies[] = ctl_graduation
