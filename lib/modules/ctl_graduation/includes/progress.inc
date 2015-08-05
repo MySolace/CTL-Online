@@ -65,11 +65,7 @@ function ctl_graduation_form($form, &$form_state, $uid) {
     ->execute()
     ->fetchAssoc();
 
-  drupal_set_message(var_export($result, TRUE));
-
   $additional_requirements_defaults = array_keys(array_filter($result));
-
-  drupal_set_message(var_export($additional_requirements_defaults, TRUE));
 
   $form['additional_requirements'] = array(
     '#type'  => 'checkboxes',
@@ -108,27 +104,12 @@ function ctl_graduation_form($form, &$form_state, $uid) {
  * Records the trainer's updates on the trainee's progress.
  */
 function _ctl_graduation_form_submit_update($form, &$form_state) {
-  drupal_set_message('_ctl_graduation_form_submit_update');
-
-  $result = db_select('ctl_graduation_progress', 'gp')
-    ->fields('gp')
-    ->execute()
-    ->fetchAll();
-  drupal_set_message(var_export($result, TRUE));
-
   $form_values             = $form_state['values'];
   $uid                     = $form_values['uid'];
   $additional_requirements = $form_values['additional_requirements'];
   $did_live_sessions       = intval(!empty($additional_requirements['did_live_sessions']));
   $did_observation_shift   = intval(!empty($additional_requirements['did_observation_shift']));
   $did_roleplays           = intval(!empty($additional_requirements['did_roleplays']));
-
-
-
-  drupal_set_message(var_export($did_live_sessions, TRUE));
-  drupal_set_message(var_export($did_observation_shift, TRUE));
-  drupal_set_message(var_export($did_roleplays, TRUE));
-
 
   // Upsert trainee info.
   db_merge('ctl_graduation_progress')
@@ -140,16 +121,7 @@ function _ctl_graduation_form_submit_update($form, &$form_state) {
     ))
     ->execute();
 
-  $result = db_select('ctl_graduation_progress', 'gp')
-    ->fields('gp')
-    ->execute()
-    ->fetchAll();
-  drupal_set_message(var_export($result, TRUE));
-
-
-  // db_delete('ctl_graduation_progress')
-  //   ->condition('uid', $uid)
-  //   ->execute();
+  drupal_set_message(t("The trainee's progress has been updated."));
 }
 
 
@@ -171,9 +143,32 @@ function _ctl_graduation_form_validate_graduate($form, &$form_state) {
  * Updates the trainee's roles and sends them a graduation email.
  */
 function _ctl_graduation_form_submit_graduate($form, &$form_state) {
-  $form_values = $form_state['values'];
+  $result = db_select('ctl_graduation_progress', 'gp')
+    ->fields('gp')
+    ->execute()
+    ->fetchAll();
+  drupal_set_message(var_export($result, TRUE));
 
+
+  $form_values = $form_state['values'];
   $uid = $form_values['uid'];
+  $graduation_timestamp = time();
+
+  // Upsert trainee info.
+  db_merge('ctl_graduation_progress')
+    ->key(array('uid' => $uid))
+    ->fields(array(
+      'graduation_timestamp' => $graduation_timestamp,
+    ))
+    ->execute();
+
+
+  $result = db_select('ctl_graduation_progress', 'gp')
+    ->fields('gp')
+    ->execute()
+    ->fetchAll();
+  drupal_set_message(var_export($result, TRUE));
+
 
   // The graduate is no longer a trainee.
   $cur_role = 'Trainee';
@@ -186,9 +181,6 @@ function _ctl_graduation_form_submit_graduate($form, &$form_state) {
     $role = user_role_load_by_name($next_role);
     user_multiple_role_edit(array($uid), 'add_role', $role->rid);
   }
-
-  // drupal_write_record('ctl_graduation_progress', $record);
-  // drupal_write_record('ctl_graduation_progress', $record, 'uid');
 
   drupal_set_message(t('This trainee has now been graduated!'));
 

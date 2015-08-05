@@ -3,7 +3,7 @@
 /**
  * Implements hook_mail().
  */
-function ctl_graduation_button_mail($key, &$message, $params) {
+function ctl_graduation_mail($key, &$message, $params) {
   if ($key !== 'graduate') {
     return;
   }
@@ -36,8 +36,8 @@ function ctl_graduation_button_mail($key, &$message, $params) {
 /**
  * Notifies the trainee that they have graduated.
  */
-function _ctl_graduation_button_mail_send($form_values) {
-  $module   = 'ctl_graduation_button';
+function _ctl_graduation_mail_send($form_values) {
+  $module   = 'ctl_graduation';
   $key      = 'graduate';
   $params   = $form_values;
   $uid      = $form_values['uid'];
