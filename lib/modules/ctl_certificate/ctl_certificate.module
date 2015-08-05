@@ -33,7 +33,7 @@ function ctl_certificate_theme($existing, $type, $theme, $path) {
       'ctl_certificate' => array(
         'template' => 'ctl_certificate',
         'variables' => array(
-          'certificate_image'  => theme('image', array('path' => drupal_get_path('module', 'ctl_certificate') . '/images/ctl-certificate-template.png')),
+          'certificate_image'  => base_path() . drupal_get_path('module', 'ctl_certificate') . '/images/ctl-certificate-template.png',
           'graduate_name'      => NULL,
           'certification_date' => NULL,
         ),

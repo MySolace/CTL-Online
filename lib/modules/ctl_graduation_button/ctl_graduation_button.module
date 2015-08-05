@@ -14,3 +14,23 @@ function ctl_graduation_button_menu() {
   );
   return $items;
 }
+
+
+/**
+ * Implements hook_theme().
+ */
+function ctl_graduation_button_theme($existing, $type, $theme, $path) {
+  if ($type === 'module') {
+    $themes = array(
+      'graduation_message' => array(
+        'template' => 'templates/graduation_message',
+        'variables' => array(
+          'graduate_name' => NULL,
+          'graduate_uid'  => NULL,
+          'trainer_name'  => NULL,
+        ),
+      ),
+    );
+  }
+  return $themes;
+}
