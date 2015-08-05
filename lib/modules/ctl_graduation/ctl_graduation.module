@@ -6,11 +6,12 @@
 function ctl_graduation_menu() {
   $items['user/%user/certificate'] = array(
     'title'            => 'Certificate',
+    'description'      => 'The CTL certificate for graduates.',
     'page callback'    => '_ctl_graduation_certificate_page',
     'page arguments'   => array(1),
 
     'access callback' => TRUE,
-    // 'access arguments' => array('access all course reports'),
+    // 'access arguments' => array('view certificate'),
 
     'type'             => MENU_CALLBACK,
     'file'             => 'includes/certificate.inc',
@@ -32,6 +33,10 @@ function ctl_graduation_menu() {
  */
 function ctl_graduation_permission() {
   return array(
+    'view certificate' => array(
+      'title' => t('View certificate'),
+      'description' => t('View the graduation certificate'),
+    ),
     'view graduates' => array(
       'title' => t('View graduates'),
       'description' => t('View the list of graduates'),
