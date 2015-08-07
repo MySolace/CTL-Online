@@ -64,7 +64,7 @@ projects[privatemsg][version] = "1.4"
 projects[quiz][version] = "5.0-alpha9"
 projects[realname][version] = "1.2"
 projects[redirect][version] = "1.0-rc1"
-
+projects[required_by_role][version] = "1.7"
 projects[rules][version] = "2.9"
 projects[rules][patch][] = https://www.drupal.org/files/rules-site-property-metadata-fix-1423234-15.patch
 
