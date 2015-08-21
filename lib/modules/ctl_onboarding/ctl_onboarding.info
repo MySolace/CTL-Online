@@ -1,0 +1,4 @@
+name = "CTL Onboarding"
+description = "Allows accepted applicants to register for training sessions."
+package = "Crisis Text Line"
+core = "7.x"

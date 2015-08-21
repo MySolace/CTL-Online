@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function ctl_onboarding_menu() {
+  $items['training-session-registration'] = array(
+    'title'            => 'Training Session Registration',
+    'page callback'    => '_ctl_onboarding_registration_page',
+    // 'page arguments'   => array(1),
+
+    'access callback' => TRUE,
+    // 'access arguments' => array('access all course reports'),
+
+    'type'             => MENU_CALLBACK,
+    'file'             => 'includes/registration.inc',
+  );
+  return $items;
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+// function ctl_onboarding_permission() {
+//   return array(
+//     'view certificate' => array(
+//       'title' => t('View certificate'),
+//       'description' => t('View the graduation certificate'),
+//     ),
+//     'view graduates' => array(
+//       'title' => t('View graduates'),
+//       'description' => t('View the list of graduates'),
+//     ),
+//   );
+// }
+
+
+// function _ctl_onboarding_radio($variables) {
+//   $element = $variables['element'];
+//   $element['#attributes']['type'] = 'radio';
+//   element_set_attributes($element, array('id', 'name', '#return_value' => 'value'));
+
+//   if (isset($element['#return_value']) && $element['#value'] !== FALSE && $element['#value'] == $element['#return_value']) {
+//     $element['#attributes']['checked'] = 'checked';
+//   }
+//   _form_set_class($element, array('form-radio'));
+
+//   return '9726549756923476592347659328476592347865<input' . drupal_attributes($element['#attributes']) . ' />';
+// }
+
+
+/**
+ * Implements hook_theme().
+ */
+function ctl_onboarding_theme($existing, $type, $theme, $path) {
+  if ($type === 'module') {
+    $themes['ctl_onboarding_form_table'] = array(
+      'render element' => 'form',
+    );
+  }
+  return $themes;
+}
+
+
+// /**
+//  * Implementation of hook_theme.
+//  */
+// function formtable_theme() {
+//   return array(
+//     'formtable_form_table' => array(
+//       // The renderable element is the form.
+//       'render element' => 'form',
+//     ),
+//   );
+// }
