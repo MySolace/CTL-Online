@@ -103,6 +103,19 @@ function ctl_sms_user_update(&$edit, $account, $category) {
 }
 
 /**
+ * Implements hook_user_insert().
+ */
+function ctl_sms_user_insert(&$edit, $account, $category) {
+    if (isset($edit['field_phone_number']) &&
+        isset($edit['field_phone_number'][LANGUAGE_NONE]) &&
+        isset($edit['field_phone_number'][LANGUAGE_NONE][0])
+    ) {
+        $number = $edit['field_phone_number'][LANGUAGE_NONE][0]['value'];
+        _ctl_sms_save_number($number, $account->uid, FALSE);
+    }
+}
+
+/**
  * Convert string to int
  */
 function ctl_sms_convert($num) {
