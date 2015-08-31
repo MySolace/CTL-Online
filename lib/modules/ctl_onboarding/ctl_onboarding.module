@@ -20,8 +20,209 @@ function ctl_onboarding_menu() {
 
 
 /**
- * Implements hook_permission().
+ * Implements hook_theme().
  */
+function ctl_onboarding_theme($existing, $type, $theme, $path) {
+  return array(
+    // 'ctl_onboarding_table' => array(
+    //   'render element' => 'element',
+    // ),
+
+
+    // 'ctl_onboarding_radio' => array(
+    //   'render element' => 'element',
+    // ),
+    'ctl_onboarding_radios' => array(
+      'render element' => 'element',
+    ),
+  );
+}
+
+
+// /**
+//  *
+//  */
+// function _ctl_onboarding_table_process($element) {
+//   // $element['c'] = array();
+
+//   for ($i = 0; $i < 3; $i++){
+//     $element['slot'][] = array(
+//       '#type' => 'radio',
+//       '#title' => t('slot ' . $i),
+//       '#default_value' => $i,
+//     );
+//   }
+
+//   // $element['slot'][0] = array(
+//   //   '#type'          => 'radio',
+//   //   '#title'         => t('slot default'),
+//   //   '#default_value' => 'default',
+//   // );
+
+//   // $element['slot'][1] = array(
+//   //   '#type'          => 'radio',
+//   //   '#title'         => t('slot 1'),
+//   //   '#default_value' => '1',
+//   // );
+
+//   // if (isset($element['#default_value']['s'])) {
+//   //   $element['s']['#default_value'] = $element['#default_value']['s'];
+//   // }
+
+//   // //
+//   // // Populate the table.
+//   // //
+//   // $slots_rows = array('#tree' => TRUE);
+//   // for ($i = 0, $l = count($training_session_slots); $i < $l; ++$i) {
+//   //   $slots_row = array();
+//   //   $slots = $training_session_slots[$i];
+//   //   foreach ($slots as $k => $v) {
+//   //     if ($v) {
+//   //       $slots_row[$k] = array(
+//   //         '#type'  => 'radio',
+//   //         '#title' => t($v),
+//   //         '#name'  => 'training_session_slot',
+//   //         '#value' => $k,
+//   //       );
+//   //     }
+//   //     else {
+//   //       $slots_row[$k] = '';
+//   //     }
+//   //   }
+//   //   $slots_rows['r' . $i] = $slots_row;
+//   // }
+
+//   return $element;
+// }
+
+
+// /**
+//  * Themes the training session registation table.
+//  */
+// function theme_ctl_onboarding_table($variables) {
+//   $element = $variables['element'];
+
+//   $output = '';
+
+//   // $rows = array(
+//   //   array(
+//   //     'm'  => drupal_render($element['c'][0]['c']),
+//   //     'tu' => drupal_render($element['c'][1]['c']),
+//   //     'w'  => drupal_render($element['c'][2]['c']),
+//   //     'th' => drupal_render($element['c'][3]['c']),
+//   //     'f'  => drupal_render($element['c'][4]['c']),
+//   //     'sa' => drupal_render($element['c'][5]['c']),
+//   //     'su' => drupal_render($element['c'][6]['c']),
+//   //   ),
+//   // );
+
+//   // $output .= theme('table', array(
+//   //   'header' => $element['#header'],
+//   //   'rows' => $rows,
+//   // ));
+
+//   $options = $element['#options'];
+//   // for ($i = 0, $l = count($options); $i < $l; ++$i) {
+//   //   drupal_set_message(var_export($options[$i], TRUE));
+//   // }
+//   foreach ($options as $k => $v) {
+//     drupal_set_message(var_export($k, TRUE));
+//     // $output .= theme('radio', array(
+//     //   'element' => array(
+//     //     '#required' => FALSE,
+//     //     // '#return_value' => 1,
+//     //     '#value' => $v,
+//     //     '#title' => 'a',
+//     //     '#description' => 'b',
+//     //   ),
+//     // ));
+//   }
+
+//   return $output;
+// }
+
+
+function theme_ctl_onboarding_radios($variables) {
+  $element = $variables['element'];
+
+  $cell = array();
+
+  foreach ($element['#options'] as $start_time => $duration) {
+    $cell[$start_time] = drupal_render($element[$start_time]);
+  }
+
+  $rows = array(
+    array(
+      NULL,
+      $cell['tu-800'],
+      $cell['w-800'],
+      $cell['th-800'],
+      NULL,
+      $cell['sa-800'],
+      $cell['su-800'],
+    ),
+    array(
+      NULL,
+      NULL,
+      $cell['w-900'],
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+    ),
+    array(
+      NULL,
+      $cell['tu-1000'],
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+    ),
+    array(
+      $cell['m-1800'],
+      $cell['tu-1800'],
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+      NULL,
+    ),
+    array(
+      $cell['m-2100'],
+      NULL,
+      NULL,
+      $cell['th-2100'],
+      NULL,
+      $cell['sa-2100'],
+      $cell['su-2100'],
+    ),
+    array(
+      NULL,
+      NULL,
+      $cell['w-2200'],
+      NULL,
+      NULL,
+      NULL,
+      $cell['su-2200'],
+    ),
+  );
+
+  $table = theme('table', array(
+    'header' => $element['#header'],
+    'rows' => $rows,
+  ));
+
+  return $table;
+
+  // return '<table><tr><td>' . (!empty($element['#children']) ? $element['#children'] : '') . '</td></tr></table>';
+  // return $element['#children'];
+}
+
+
+// /**
+//  * Implements hook_permission().
+//  */
 // function ctl_onboarding_permission() {
 //   return array(
 //     'view certificate' => array(
@@ -31,46 +232,6 @@ function ctl_onboarding_menu() {
 //     'view graduates' => array(
 //       'title' => t('View graduates'),
 //       'description' => t('View the list of graduates'),
-//     ),
-//   );
-// }
-
-
-// function _ctl_onboarding_radio($variables) {
-//   $element = $variables['element'];
-//   $element['#attributes']['type'] = 'radio';
-//   element_set_attributes($element, array('id', 'name', '#return_value' => 'value'));
-
-//   if (isset($element['#return_value']) && $element['#value'] !== FALSE && $element['#value'] == $element['#return_value']) {
-//     $element['#attributes']['checked'] = 'checked';
-//   }
-//   _form_set_class($element, array('form-radio'));
-
-//   return '9726549756923476592347659328476592347865<input' . drupal_attributes($element['#attributes']) . ' />';
-// }
-
-
-/**
- * Implements hook_theme().
- */
-function ctl_onboarding_theme($existing, $type, $theme, $path) {
-  if ($type === 'module') {
-    $themes['ctl_onboarding_form_table'] = array(
-      'render element' => 'form',
-    );
-  }
-  return $themes;
-}
-
-
-// /**
-//  * Implementation of hook_theme.
-//  */
-// function formtable_theme() {
-//   return array(
-//     'formtable_form_table' => array(
-//       // The renderable element is the form.
-//       'render element' => 'form',
 //     ),
 //   );
 // }

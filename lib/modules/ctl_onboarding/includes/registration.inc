@@ -13,30 +13,27 @@ function _ctl_onboarding_registration_page() {
  * Implements hook_form().
  */
 function ctl_onboarding_form($form, &$form_state) {
-  if (isset($form_state['storage']) && isset($form_state['storage']['confirm_defer']) && $form_state['storage']['confirm_defer']) {
-    $question    = 'Are you sure?';
-    $path        = 'training-session-registration';
-    $description = 'Defer !!!';
-    $yes         = 'Continue';
-    $no          = 'Start again';
-    $name        = 'qqqqqqqqqqqqqq';
-    return confirm_form($form, $question, $path, $description, $yes, $no, $name);
+  if (isset($form_state['storage'])) {
+    $storage = $form_state['storage'];
+    if (isset($storage['confirm_defer']) && $storage['confirm_defer']) {
+      $question    = 'Are you sure?';
+      $path        = 'training-session-registration';
+      $description = 'Defer !!!';
+      $yes         = 'Continue';
+      $no          = 'Start again';
+      $name        = 'qqqqqqqqqqqqqq';
+      return confirm_form($form, $question, $path, $description, $yes, $no, $name);
+    }
+    if (isset($storage['confirm_decline']) && $storage['confirm_decline']) {
+      $question    = 'Are you sure?';
+      $path        = 'training-session-registration';
+      $description = 's;ghj;dlghjldg;jh;lfkdjg';
+      $yes         = 'Continue';
+      $no          = 'Start again';
+      $name        = 'gdhdfghfg';
+      return confirm_form($form, $question, $path, $description, $yes, $no, $name);
+    }
   }
-
-  if (isset($form_state['storage']) && isset($form_state['storage']['confirm_decline']) && $form_state['storage']['confirm_decline']) {
-    $question    = 'Are you sure?';
-    $path        = 'training-session-registration';
-    $description = 's;ghj;dlghjldg;jh;lfkdjg';
-    $yes         = 'Continue';
-    $no          = 'Start again';
-    $name        = 'gdhdfghfg';
-    return confirm_form($form, $question, $path, $description, $yes, $no, $name);
-  }
-
-  $form['instructions'] = array(
-    '#type'   => 'markup',
-    '#markup' => '<p>Choose a training session to register for.</p>',
-  );
 
 
   // TODO:
@@ -67,86 +64,142 @@ function ctl_onboarding_form($form, &$form_state) {
   );
 
 
-  $form['test'] = array(
-    '#type'   => 'markup',
-    '#markup' => '<input type="text" name="test" value="test" />',
-  );
+  // //
+  // // Populate the table.
+  // //
+  // $slots_rows = array('#tree' => TRUE);
+  // for ($i = 0, $l = count($training_session_slots); $i < $l; ++$i) {
+  //   $slots_row = array();
+  //   $slots = $training_session_slots[$i];
+  //   foreach ($slots as $k => $v) {
+  //     if ($v) {
+  //       $slots_row[$k] = array(
+  //         '#type'  => 'radio',
+  //         '#title' => t($v),
+  //         '#name'  => 'training_session_slot',
+  //         '#value' => $k,
+  //       );
+  //     }
+  //     else {
+  //       $slots_row[$k] = '';
+  //     }
+  //   }
+  //   $slots_rows['r' . $i] = $slots_row;
+  // }
 
+  // $form['training_session_table'] = array(
+  //   // '#type' => 'radios',
+  //   '#theme' => 'ctl_onboarding_table',
+  //   // '#theme' => 'ctl_onboarding_table_radios',
+  //   // '#default_value' => $defaults,
+  //   '#header' => array(
+  //     t('Monday'),
+  //     t('Tuesday'),
+  //     t('Wednesday'),
+  //     t('Thursday'),
+  //     t('Friday'),
+  //     t('Saturday'),
+  //     t('Sunday'),
+  //   ),
+  //   '#tree' => TRUE,
+  //   'rows' => $slots_rows,
+  //   // '#options' => $slots_rows,
+  //   // '#return_value' => 'fghyudytjtyj',
+  // );
+
+
+  // $options = array(
+  //   1800 => 2,
+  //   2100 => 1,
+  // );
+
+  // $form['fourth_down'] = array(
+  //   '#type'    => 'radios',
+  //   '#options' => $options,
+  // );
+
+  // $form['test'] = array(
+  //   '#type'    => 'ctl_onboarding_table',
+  //   '#options' => $options,
+  // );
+
+
+  // $form['optional_field'] = array(
+  //   '#type' => 'gitbucket',
+  //   '#title' => t('Your least favorite repository'),
+  //   '#default_value' => variable_get('optional_field', array()),
+  // );
+
+  // // All sessions are 4 hours.  Start times are in military time.
+  // $training_session_slots = array(
+  //   'monday'    => array(1800, 2100),
+  //   'tuesday'   => array(800, 1000, 1800),
+  //   'wednesday' => array(800, 900, 2200),
+  //   'thursday'  => array(800, 2100),
+  //   'friday'    => array(),
+  //   'saturday'  => array(800, 2100),
+  //   'sunday'    => array(800, 2100, 2200),
+  // );
+
+  // $training_session_slots = array(
+  //   'monday' => array(
+  //     1800 => 2,
+  //     2100 => 1,
+  //   ),
+  //   'tuesday' => array(
+  //     800  => 2,
+  //     1000 => 2,
+  //     1800 => 2,
+  //   ),
+  //   'wednesday' => array(
+  //     800  => 2,
+  //     900  => 1,
+  //     2200 => 2,
+  //   ),
+  //   'thursday' => array(
+  //     800  => 2,
+  //     2100 => 2,
+  //   ),
+  //   'friday' => array(
+  //   ),
+  //   'saturday' => array(
+  //     800  => 2,
+  //     2100 => 1,
+  //   ),
+  //   'sunday' => array(
+  //     800  => 2,
+  //     2100 => 1,
+  //     2200 => 2,
+  //   ),
+  // );
 
   $training_session_slots = array(
-    array(
-      NULL,
-      'tu0810' => '8am-10am',
-      'w0810'  => '8am-10am',
-      'th0810' => '8am-10am',
-      NULL,
-      'sa0810' => '8am-10am',
-      'su0810' => '8am-10am',
-    ),
-    array(
-      NULL,
-      'tu1012' => '10am-12pm',
-      NULL,
-      NULL,
-      NULL,
-      NULL,
-      NULL,
-    ),
-    array(
-      'm0608'  => '6pm-8pm',
-      'tu0608' => '6pm-8pm',
-      NULL,
-      NULL,
-      NULL,
-      NULL,
-      NULL,
-    ),
-    array(
-      'm0910'  => '9pm-10pm',
-      NULL,
-      'w0910'  => '9pm-10pm',
-      'th0910' => '9pm-10pm',
-      NULL,
-      'sa0910' => '9pm-10pm',
-      'su0910' => '9pm-10pm',
-    ),
-    array(
-      NULL,
-      NULL,
-      'w1012'  => '10pm-12am',
-      NULL,
-      NULL,
-      NULL,
-      'su1012' => '10pm-12am',
-    ),
+    'm-1800'  => '6pm-10pm',
+    'm-2100'  => '9pm-1am',
+    'tu-800'  => '8am-12pm',
+    'tu-1000' => '10am-2pm',
+    'tu-1800' => '6pm-10pm',
+    'w-800'   => '8am-12pm',
+    'w-900'   => '9am-1pm',
+    'w-2200'  => '10pm-2am',
+    'th-800'  => '8am-12pm',
+    'th-2100' => '9pm-1am',
+    'sa-800'  => '8am-12pm',
+    'sa-2100' => '9pm-1am',
+    'su-800'  => '8am-12pm',
+    'su-2100' => '9pm-1am',
+    'su-2200' => '10pm-2am',
   );
 
-  //
-  // Populate the table.
-  //
-  $slots_rows = array('#tree' => TRUE);
-  for ($i = 0, $l = count($training_session_slots); $i < $l; ++$i) {
-    $slots_row = array();
-    $slots = $training_session_slots[$i];
-    foreach ($slots as $k => $v) {
-      if ($v) {
-        $slots_row[$k] = array(
-          '#type'  => 'radio',
-          '#title' => t($v),
-          '#name'  => 'training_session_slot',
-          '#value' => $k,
-        );
-      }
-      else {
-        $slots_row[$k] = '';
-      }
-    }
-    $slots_rows['r' . $i] = $slots_row;
-  }
+  $form['instructions'] = array(
+    '#type'   => 'markup',
+    '#markup' => '<p>Choose a training session to register for.</p>',
+  );
 
-  $form['training_session_table'] = array(
-    '#theme' => 'ctl_onboarding_form_table',
-    // '#default_value' => $defaults,
+  $form['training_session_slot'] = array(
+    '#type'    => 'radios',
+    '#options' => $training_session_slots,
+    '#theme'   => array('ctl_onboarding_radios'),
     '#header' => array(
       t('Monday'),
       t('Tuesday'),
@@ -156,32 +209,66 @@ function ctl_onboarding_form($form, &$form_state) {
       t('Saturday'),
       t('Sunday'),
     ),
-    '#tree' => TRUE,
-    'rows' => $slots_rows,
   );
 
-  // $form['training_session_radios'] = array(
+  // $form['style'] = array(
   //   '#type' => 'radios',
+  //   '#title' => t('Select your style option'),
   //   '#options' => array(
-  //     'm0608'  => t('Monday: 6:00pm-8:00pm'),
-  //     'm0910'  => t('Monday: 9:00pm-10:00pm'),
-  //     'tu0810' => t('Tuesday: 8:00am-10:00am'),
-  //     'tu1012' => t('Tuesday: 10:00am-12:00pm'),
-  //     'tu0608' => t('Tuesday: 6:00pm-8:00pm'),
-  //     'w0810'  => t('Wednesday: 8:00am-10:00am'),
-  //     'w0910'  => t('Wednesday: 9:00pm-10:00pm'),
-  //     'w1012'  => t('Wednesday: 10:00pm-12:00am'),
-  //     'th0810' => t('Thursday: 8:00am-10:00am'),
-  //     'th0910' => t('Thursday: 9:00pm-10:00pm'),
-  //     'sa0810' => t('Saturday: 8:00am-10:00am'),
-  //     'sa0910' => t('Saturday: 9:00pm-10:00pm'),
-  //     'su0810' => t('Sunday: 8:00am-10:00am'),
-  //     'su0910' => t('Sunday: 9:00pm-10:00pm'),
-  //     'su1012' => t('Sunday: 10:00pm-12:00am'),
+  //     1 => 'a',
+  //     2 => 'b',
+  //     3 => 'c',
   //   ),
+  //   '#default_value' => NULL,
+  //   // '#required' => TRUE,
+  //   '#after_build' => array(
+  //     '_ctl_onboarding_options_after_build'
+  //   )
   // );
 
-  $defaults = array();
+  // $form['f1'][0]['a1'] = array(
+  //   '#type' => 'radio', // Notice no s here; 'radio' not 'radios'
+  //   '#name' => 'fruit', // This will ensure the radios are in the same group
+  //   '#title' => 'apple',
+  //   '#attributes' => array(
+  //     'name' => 'fruit',
+  //        'value' => 'apple', // I know this is bad but it's the only way I could get setting a value to work
+  //        // 'class' => 'class_here' // This will add class_here to the default wrapper
+  //    ),
+  //   // '#prefix' => '<div class="some-class">',
+  //   // '#suffix' => '</div>'
+  // );
+
+  // $form['f1'][2]['a2'] = array(
+  //   '#type' => 'radio',
+  //   '#name' => 'fruit', // Same name
+  //   '#title' => 'orange',
+  //   '#attributes' => array(
+  //     'name' => 'fruit',
+  //     'value' => 'orange', // Different value
+  //     // 'class' => 'class_here'
+  //   ),
+  //   // '#prefix' => '<div class="some-class">',
+  //   // '#suffix' => '</div>'
+  // );
+
+  // for ($i = 0; $i < 10; $i++){
+  //   $form['c' . $i] = array(
+  //     '#type' => 'radio',
+  //     '#name' => 'c',
+  //     // '#value' => $i,
+  //     // '#return_value' => $i,
+  //     '#title' => t('slot ' . $i),
+  //     '#attributes' => array(
+  //       'value' => 'c' . $i,
+  //       // 'class' => 'class_here',
+  //     ),
+  //   );
+  // }
+
+
+
+  // $defaults = array();
 
   // Policies: Registration occurs between [X] date and [X] date. After that, we are only able to accomodate 2 schedule changes.
   // Training will occur for 6 weeks. Note that weeks 4 and 5 will be 4 hours long sessions for live observations.
@@ -217,35 +304,6 @@ function ctl_onboarding_form($form, &$form_state) {
 
 
 /**
- * Creates our custom table.
- *
- * Based on:
- * http://e9p.net/theming-drupal-7-form-elements-table
- */
-function theme_ctl_onboarding_form_table(&$variables) {
-  $form   = $variables['form'];
-  $rows   = $form['rows'];
-  $header = $form['#header'];
-
-  $content = array(
-    '#theme'  => 'table',
-    '#header' => $header,
-    '#rows'   => array(),
-  );
-
-  foreach (element_children($rows) as $row_index) {
-    $row = array();
-    foreach (element_children($rows[$row_index]) as $col_index) {
-      $row[] = drupal_render($rows[$row_index][$col_index]);
-    }
-    $content['#rows'][] = $row;
-  }
-
-  return drupal_render($content);
-}
-
-
-/**
  *
  */
 function _ctl_onboarding_form_validate_register($form, &$form_state) {
@@ -265,37 +323,14 @@ function _ctl_onboarding_form_validate_register($form, &$form_state) {
  *
  */
 function _ctl_onboarding_form_submit_register($form, &$form_state) {
-  drupal_set_message(t("register"));
+  // drupal_set_message(t("register"));
 
   $form_values = $form_state['values'];
-  $slot = $form_values['training_session_slot'];
+  // $slot = $form_values['training_session_slot'];
 
-  drupal_set_message($slot);
+  // drupal_set_message($slot);
 
   drupal_set_message(var_export($form_values, TRUE));
-
-  // $form_values = $form_state['values'];
-  // $uid = $form_values['uid'];
-
-  // // Upsert trainee info.
-  // db_merge('ctl_graduation_progress')
-  //   ->key(array('uid' => $uid))
-  //   ->fields(array(
-  //     'graduation_timestamp' => time(),
-  //   ))
-  //   ->execute();
-
-  // // The trainee now becomes a graduate.
-
-  // $cur_role = 'Trainee';
-  // $role = user_role_load_by_name($cur_role);
-  // user_multiple_role_edit(array($uid), 'remove_role', $role->rid);
-
-  // $next_roles = array('Graduate', 'Crisis Counselor I');
-  // foreach ($next_roles as $next_role) {
-  //   $role = user_role_load_by_name($next_role);
-  //   user_multiple_role_edit(array($uid), 'add_role', $role->rid);
-  // }
 }
 
 
