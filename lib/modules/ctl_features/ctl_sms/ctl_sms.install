@@ -9,3 +9,7 @@ function ctl_sms_install() {
         } catch (Exception $e) {}
     }
 }
+
+function ctl_sms_update_7101() {
+    ctl_sms_install();
+}
