@@ -63,30 +63,6 @@ function ctl_onboarding_form($form, &$form_state) {
       '</style>',
   );
 
-
-  // //
-  // // Populate the table.
-  // //
-  // $slots_rows = array('#tree' => TRUE);
-  // for ($i = 0, $l = count($training_session_slots); $i < $l; ++$i) {
-  //   $slots_row = array();
-  //   $slots = $training_session_slots[$i];
-  //   foreach ($slots as $k => $v) {
-  //     if ($v) {
-  //       $slots_row[$k] = array(
-  //         '#type'  => 'radio',
-  //         '#title' => t($v),
-  //         '#name'  => 'training_session_slot',
-  //         '#value' => $k,
-  //       );
-  //     }
-  //     else {
-  //       $slots_row[$k] = '';
-  //     }
-  //   }
-  //   $slots_rows['r' . $i] = $slots_row;
-  // }
-
   // $form['training_session_table'] = array(
   //   // '#type' => 'radios',
   //   '#theme' => 'ctl_onboarding_table',

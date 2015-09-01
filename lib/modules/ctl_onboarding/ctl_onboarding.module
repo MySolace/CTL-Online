@@ -24,122 +24,11 @@ function ctl_onboarding_menu() {
  */
 function ctl_onboarding_theme($existing, $type, $theme, $path) {
   return array(
-    // 'ctl_onboarding_table' => array(
-    //   'render element' => 'element',
-    // ),
-
-
-    // 'ctl_onboarding_radio' => array(
-    //   'render element' => 'element',
-    // ),
     'ctl_onboarding_radios' => array(
       'render element' => 'element',
     ),
   );
 }
-
-
-// /**
-//  *
-//  */
-// function _ctl_onboarding_table_process($element) {
-//   // $element['c'] = array();
-
-//   for ($i = 0; $i < 3; $i++){
-//     $element['slot'][] = array(
-//       '#type' => 'radio',
-//       '#title' => t('slot ' . $i),
-//       '#default_value' => $i,
-//     );
-//   }
-
-//   // $element['slot'][0] = array(
-//   //   '#type'          => 'radio',
-//   //   '#title'         => t('slot default'),
-//   //   '#default_value' => 'default',
-//   // );
-
-//   // $element['slot'][1] = array(
-//   //   '#type'          => 'radio',
-//   //   '#title'         => t('slot 1'),
-//   //   '#default_value' => '1',
-//   // );
-
-//   // if (isset($element['#default_value']['s'])) {
-//   //   $element['s']['#default_value'] = $element['#default_value']['s'];
-//   // }
-
-//   // //
-//   // // Populate the table.
-//   // //
-//   // $slots_rows = array('#tree' => TRUE);
-//   // for ($i = 0, $l = count($training_session_slots); $i < $l; ++$i) {
-//   //   $slots_row = array();
-//   //   $slots = $training_session_slots[$i];
-//   //   foreach ($slots as $k => $v) {
-//   //     if ($v) {
-//   //       $slots_row[$k] = array(
-//   //         '#type'  => 'radio',
-//   //         '#title' => t($v),
-//   //         '#name'  => 'training_session_slot',
-//   //         '#value' => $k,
-//   //       );
-//   //     }
-//   //     else {
-//   //       $slots_row[$k] = '';
-//   //     }
-//   //   }
-//   //   $slots_rows['r' . $i] = $slots_row;
-//   // }
-
-//   return $element;
-// }
-
-
-// /**
-//  * Themes the training session registation table.
-//  */
-// function theme_ctl_onboarding_table($variables) {
-//   $element = $variables['element'];
-
-//   $output = '';
-
-//   // $rows = array(
-//   //   array(
-//   //     'm'  => drupal_render($element['c'][0]['c']),
-//   //     'tu' => drupal_render($element['c'][1]['c']),
-//   //     'w'  => drupal_render($element['c'][2]['c']),
-//   //     'th' => drupal_render($element['c'][3]['c']),
-//   //     'f'  => drupal_render($element['c'][4]['c']),
-//   //     'sa' => drupal_render($element['c'][5]['c']),
-//   //     'su' => drupal_render($element['c'][6]['c']),
-//   //   ),
-//   // );
-
-//   // $output .= theme('table', array(
-//   //   'header' => $element['#header'],
-//   //   'rows' => $rows,
-//   // ));
-
-//   $options = $element['#options'];
-//   // for ($i = 0, $l = count($options); $i < $l; ++$i) {
-//   //   drupal_set_message(var_export($options[$i], TRUE));
-//   // }
-//   foreach ($options as $k => $v) {
-//     drupal_set_message(var_export($k, TRUE));
-//     // $output .= theme('radio', array(
-//     //   'element' => array(
-//     //     '#required' => FALSE,
-//     //     // '#return_value' => 1,
-//     //     '#value' => $v,
-//     //     '#title' => 'a',
-//     //     '#description' => 'b',
-//     //   ),
-//     // ));
-//   }
-
-//   return $output;
-// }
 
 
 function theme_ctl_onboarding_radios($variables) {
@@ -214,9 +103,6 @@ function theme_ctl_onboarding_radios($variables) {
   ));
 
   return $table;
-
-  // return '<table><tr><td>' . (!empty($element['#children']) ? $element['#children'] : '') . '</td></tr></table>';
-  // return $element['#children'];
 }
 
 
