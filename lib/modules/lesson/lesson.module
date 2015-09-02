@@ -22,9 +22,9 @@ function lesson_menu() {
 function lesson_ajax_audio_progress($nid) {
   global $user;
 
-  $progress = $_REQUEST['progress'];
+  $progress = floatval($_REQUEST['progress']);
 
-  if (floatval($progress) >= .99) {
+  if ($progress >= 0.99) {
     $progress = 1;
   }
 
@@ -37,7 +37,9 @@ function lesson_ajax_audio_progress($nid) {
     ));
   }
 
-  $e->progress = $progress;
+  if (isset($e->progress) && floatval($e->progress) < $progress) {
+    $e->progress = $progress;
+  }
 
   entity_save('audio_progress', $e);
 
