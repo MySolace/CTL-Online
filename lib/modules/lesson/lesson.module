@@ -37,7 +37,7 @@ function lesson_ajax_audio_progress($nid) {
     ));
   }
 
-  if (isset($e->progress) && floatval($e->progress) < $progress) {
+  if (floatval($e->progress) < $progress) {
     $e->progress = $progress;
   }
 
