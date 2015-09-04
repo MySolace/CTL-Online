@@ -141,10 +141,20 @@ function application_v2_cron() {
   $now = date('Hi');
   $today = date('z');
 
+  $dow = date('w');
+  $due_date = date_create_from_format('Y-m-d', variable_get('app_v2_next_due_date'));
+  $due_dow = date_format($due_date, 'w');
+
+  $email_day = ($due_dow - 1 < 0) ? 6 : $due_dow - 1;
+
   $last_run = variable_get('app_v2_last_run');
+  // Yes. Every four years we don't send an email on Jan 1. Oh well.
   $last_run = ($last_run == 365) ? -1 : $last_run;
 
-  if ($run_at > $now && $last_run < $today) {
+  $role = user_role_load_by_name('Incomplete');
+  $rid = $role->rid;
+
+  if ($email_day == $dow && $last_run < $today && $run_at < $now) {
     // INCOMPLETE APPS
     $incomplete = db_query('
       SELECT
@@ -154,18 +164,16 @@ function application_v2_cron() {
         {node} n
         JOIN {users} u
         JOIN {users_roles} r ON u.uid=r.uid
-        JOIN {role} role ON r.rid=role.rid
-        LEFT JOIN {webform_submissions} w ON n.uid=w.uid
+        LEFT JOIN {webform_submissions} w ON n.uid=w.uid AND w.nid=:nid
       WHERE
-        n.status = :status
-        AND n.type = :type
+        n.type = :type
         AND role.name NOT IN (:role_exclude)
       GROUP BY n.nid
       HAVING count(w.sid) < 2
     ', array(
-      ':status' => NODE_PUBLISHED,
       ':type' => APP_V2_CONTENT_TYPE,
-      ':role_exclude' => array('Incomplete'),
+      ':form' => variable_get('app_v2_references_request_form'),
+      ':role_exclude' => array($rid),
     ));
 
     $nids = array();
@@ -180,7 +188,7 @@ function application_v2_cron() {
     foreach ($nodes as $node) {
       $params = array();
       $author = $users[$node->uid];
-      //drupal_mail('application_v2', 'reminder', $author, user_preferred_language($author), $params);
+      drupal_mail('application_v2', 'reminder', $author, user_preferred_language($author), $params);
     }
 
 
@@ -191,16 +199,21 @@ function application_v2_cron() {
         w.uid
       FROM
         {webform_submissions} w
-        JOIN {users} u
+        JOIN {users} u ON w.uid=u.uid
         JOIN {users_roles} r ON u.uid=r.uid
-        JOIN {role} role ON r.rid=role.rid
+        JOIN node n ON n.uid=w.uid
         LEFT JOIN field_data_field_reference f ON f.field_reference_target_id=w.uid
       WHERE
-        role.name NOT IN (:role_exclude)
+        role.rid NOT IN (:role_exclude)
+        AND w.nid=:form
+        AND n.type = :type
       GROUP BY w.uid
-      HAVING count(f.field_reference_target_id) < 2
+      HAVING count(f.field_reference_target_id) < :ref_count
     ', array(
-      ':role_exclude' => array('Incomplete'),
+      ':role_exclude' => array($rid),
+      ':form' => variable_get('app_v2_references_request_form'),
+      ':type' => APP_V2_CONTENT_TYPE,
+      ':ref_count' => variable_get('app_v2_reference_request_number', 1),
     ));
 
     while ($row = $needs_recs->fetchAssoc()) {
@@ -211,9 +224,11 @@ function application_v2_cron() {
 
     foreach ($users as $account) {
       $params = array();
-      //drupal_mail('application_v2', 'references', $account, user_preferred_language($account), $params);
+      drupal_mail('application_v2', 'references', $account, user_preferred_language($account), $params);
     }
   }
+
+  variable_set('app_v2_last_run', $today);
 }
 
 /**
@@ -244,6 +259,14 @@ function application_v2_admin() {
     '#title' => t('NID of the reference request form'),
     '#default_value' => variable_get('app_v2_references_request_form'),
     '#size' => 4,
+    '#required' => TRUE,
+  );
+
+  $form['app_v2_reference_request_number'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Number of required reference submissions before an app is considered complete.'),
+    '#default_value' => variable_get('app_v2_reference_request_number', 1),
+    '#size' => 2,
     '#required' => TRUE,
   );
 
