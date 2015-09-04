@@ -225,9 +225,9 @@ function application_v2_cron() {
       $params = array();
       drupal_mail('application_v2', 'references', $account, user_preferred_language($account), $params);
     }
-  }
 
-  variable_set('app_v2_last_run', $today);
+    variable_set('app_v2_last_run', $today);
+  }
 }
 
 /**
