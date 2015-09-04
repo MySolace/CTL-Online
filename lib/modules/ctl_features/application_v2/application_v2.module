@@ -135,7 +135,6 @@ function application_v2_permission() {
  * Implements hook_cron().
  */
 function application_v2_cron() {
-  return;
   $run_at = variable_get('app_v2_cron_time');
 
   $now = date('Hi');
