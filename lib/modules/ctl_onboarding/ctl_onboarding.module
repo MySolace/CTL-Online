@@ -4,7 +4,7 @@
  * Implements hook_menu().
  */
 function ctl_onboarding_menu() {
-  $items['training-session-registration'] = array(
+  $items['registration'] = array(
     'title'            => 'Training Session Registration',
     'page callback'    => '_ctl_onboarding_registration_page',
     // 'page arguments'   => array(1),
@@ -15,6 +15,19 @@ function ctl_onboarding_menu() {
     'type'             => MENU_CALLBACK,
     'file'             => 'includes/registration.inc',
   );
+
+  $items['admin/config/ctl-onboarding'] = array(
+    'title'            => 'CTL Onboarding Configuration',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('_ctl_onboarding_settings_form'),
+
+    'access callback' => TRUE,
+    // 'access arguments' => array('administer users'),
+
+    'type'             => MENU_NORMAL_ITEM,
+    'file'             => 'includes/admin.inc',
+  );
+
   return $items;
 }
 
@@ -24,82 +37,49 @@ function ctl_onboarding_menu() {
  */
 function ctl_onboarding_theme($existing, $type, $theme, $path) {
   return array(
-    'ctl_onboarding_radios' => array(
+    'ctl_onboarding_table' => array(
       'render element' => 'element',
     ),
   );
 }
 
 
-function theme_ctl_onboarding_radios($variables) {
-  $element = $variables['element'];
-
-  $cell = array();
-
-  foreach ($element['#options'] as $start_time => $duration) {
-    $cell[$start_time] = drupal_render($element[$start_time]);
-  }
-
-  $rows = array(
-    array(
-      NULL,
-      $cell['tu-800'],
-      $cell['w-800'],
-      $cell['th-800'],
-      NULL,
-      $cell['sa-800'],
-      $cell['su-800'],
-    ),
-    array(
-      NULL,
-      NULL,
-      $cell['w-900'],
-      NULL,
-      NULL,
-      NULL,
-      NULL,
-    ),
-    array(
-      NULL,
-      $cell['tu-1000'],
-      NULL,
-      NULL,
-      NULL,
-      NULL,
-      NULL,
-    ),
-    array(
-      $cell['m-1800'],
-      $cell['tu-1800'],
-      NULL,
-      NULL,
-      NULL,
-      NULL,
-      NULL,
-    ),
-    array(
-      $cell['m-2100'],
-      NULL,
-      NULL,
-      $cell['th-2100'],
-      NULL,
-      $cell['sa-2100'],
-      $cell['su-2100'],
-    ),
-    array(
-      NULL,
-      NULL,
-      $cell['w-2200'],
-      NULL,
-      NULL,
-      NULL,
-      $cell['su-2200'],
-    ),
+function theme_ctl_onboarding_table($variables) {
+  $element     = $variables['element'];
+  $slots       = $element['#options'];
+  $showing_all = isset($element['#showing_all']) ? $element['#showing_all'] : FALSE;
+  $header = array(
+    t('Monday'),
+    t('Tuesday'),
+    t('Wednesday'),
+    t('Thursday'),
+    t('Friday'),
+    t('Saturday'),
+    t('Sunday'),
   );
 
+  $days = array('m', 'tu', 'w', 'th', 'f', 'sa', 'su');
+  $first_start_hour = 800;
+  $last_start_hour = 1900;
+  $rows = array();
+
+  // Setup the table.
+  for ($hour = $first_start_hour; $hour <= $last_start_hour; $hour += 100) {
+    $row = array();
+    for ($i = 0, $l = count($days); $i < $l; ++$i) {
+      $slot_id = $days[$i] . '-' . $hour;
+      $row[] = ($showing_all || $element[$slot_id]['#title']) ? drupal_render($element[$slot_id]) : NULL;
+    }
+    // Only add rows if they are not completely empty.
+    $x = array_filter($row, function ($x) { return isset($x); });
+    if (!empty($x)) {
+      $rows[$hour] = $row;
+    }
+  }
+
   $table = theme('table', array(
-    'header' => $element['#header'],
-    'rows' => $rows,
+    'header' => $header,
+    'rows'   => $rows,
   ));
 
   return $table;
