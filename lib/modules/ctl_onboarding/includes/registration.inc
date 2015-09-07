@@ -57,12 +57,10 @@ function ctl_onboarding_form($form, &$form_state) {
     '#type'   => 'markup',
     '#markup' => '<p>Choose a training session to register for.</p>',
   );
-
   $form['policies'] = array(
     '#type'   => 'markup',
     '#markup' => '<p>Policies: Registration occurs between [X] date and [X] date. After that, we are only able to accomodate 2 schedule changes.  Training will occur for 6 weeks.</p>',
   );
-
   $form['training_slot'] = array(
     '#type'    => 'radios',
     '#options' => variable_get('ctl_onboarding_slots'),
@@ -80,14 +78,12 @@ function ctl_onboarding_form($form, &$form_state) {
     '#validate' => array('_ctl_onboarding_form_validate_register'),
     '#submit'   => array('_ctl_onboarding_form_submit_register'),
   );
-
   $form['defer'] = array(
     '#type'     => 'submit',
     '#value'    => 'Defer',
     '#validate' => array('_ctl_onboarding_form_validate_defer'),
     '#submit'   => array('_ctl_onboarding_form_submit_defer'),
   );
-
   $form['decline'] = array(
     '#type'     => 'submit',
     '#value'    => 'Decline',
