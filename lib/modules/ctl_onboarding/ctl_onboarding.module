@@ -6,8 +6,8 @@
 function ctl_onboarding_menu() {
   $items['registration'] = array(
     'title'            => 'Training Session Registration',
-    'page callback'    => '_ctl_onboarding_registration_page',
-    // 'page arguments'   => array(1),
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('ctl_onboarding_form'),
 
     'access callback' => TRUE,
     // 'access arguments' => array('access all course reports'),
@@ -27,6 +27,20 @@ function ctl_onboarding_menu() {
     'type'             => MENU_NORMAL_ITEM,
     'file'             => 'includes/admin.inc',
   );
+
+
+  $items['registration-test'] = array(
+    'title'            => 'Registration Test',
+    'page callback'    => '_ctl_onboarding_registration_test',
+    // 'page arguments'   => array('_ctl_onboarding_settings_form'),
+
+    'access callback' => TRUE,
+    // 'access arguments' => array('administer users'),
+
+    'type'             => MENU_NORMAL_ITEM,
+    'file'             => 'includes/group.inc',
+  );
+
 
   return $items;
 }
@@ -71,8 +85,8 @@ function theme_ctl_onboarding_table($variables) {
       $row[] = ($showing_all || $element[$slot_id]['#title']) ? drupal_render($element[$slot_id]) : NULL;
     }
     // Only add rows if they are not completely empty.
-    $x = array_filter($row, function ($x) { return isset($x); });
-    if (!empty($x)) {
+    $r = array_filter($row, function ($x) { return isset($x); });
+    if (!empty($r)) {
       $rows[$hour] = $row;
     }
   }
@@ -101,3 +115,23 @@ function theme_ctl_onboarding_table($variables) {
 //     ),
 //   );
 // }
+
+
+/**
+ * Displays times in 12-hour clock style.
+ * @param  int $hour    24-hour clock time.
+ * @return string       12-hour clock time for display.
+ */
+function _ctl_onboarding_format_hour_display($hour) {
+  $hour_display = '';
+  if ($hour >= 1200) {
+    if ($hour > 1200) {
+      $hour -= 1200;
+    }
+    $hour_display = ($hour / 100) . 'pm';
+  }
+  else {
+    $hour_display = ($hour / 100) . 'am';
+  }
+  return $hour_display;
+}

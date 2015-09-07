@@ -1,14 +1,6 @@
 <?php
 
 /**
- * Shows the training session registration page.
- */
-function _ctl_onboarding_registration_page() {
-  return drupal_get_form('ctl_onboarding_form');
-}
-
-
-/**
  * Implements hook_form().
  */
 function ctl_onboarding_form($form, &$form_state) {
@@ -71,7 +63,7 @@ function ctl_onboarding_form($form, &$form_state) {
     '#markup' => '<p>Policies: Registration occurs between [X] date and [X] date. After that, we are only able to accomodate 2 schedule changes.  Training will occur for 6 weeks.</p>',
   );
 
-  $form['training_session_slot'] = array(
+  $form['training_slot'] = array(
     '#type'    => 'radios',
     '#options' => variable_get('ctl_onboarding_slots'),
     '#theme'   => array('ctl_onboarding_table'),
@@ -130,7 +122,7 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
   // drupal_set_message(t("register"));
 
   $form_values = $form_state['values'];
-  // $slot = $form_values['training_session_slot'];
+  // $slot = $form_values['training_slot'];
 
   // drupal_set_message($slot);
 
