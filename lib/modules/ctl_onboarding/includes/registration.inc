@@ -129,12 +129,22 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
   // dsm($values);
   // dsm($user->uid);
 
-  $exists = db_query('SELECT * FROM {ctl_onboarding_slot} WHERE slot_code LIKE "f-800" LIMIT 1')->rowCount();
-  // if($exists->rowCount() > 0){
-  //   drupal_set_message("exists");
-  // }
-
-  dsm($exists);
+  // $exists = db_query('SELECT * FROM {ctl_onboarding_slot} WHERE slot_code = "f-800" LIMIT 1;')->rowCount();
+  $count = db_query('SELECT * FROM {ctl_onboarding_slot} WHERE slot_code = :val LIMIT 1;', array(':val' => 'f-800'))->rowCount();
+  $slot_exists = $count > 0;
+  if ($slot_exists) {
+    db_insert('ctl_onboarding_slot')
+      ->fields(array(
+        'cohort_id'       => $cohort_id,
+        'slot_code'       => $slot_code,
+        'max_trainers'    => 2,
+        'num_registrants' => 0,
+      ))
+      ->execute();
+  }
+  else {
+    dsm("exists");
+  }
 
   // if time slot db entry doesn't exist
   //   create the entry
