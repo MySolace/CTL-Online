@@ -53,25 +53,31 @@ function ctl_onboarding_form($form, &$form_state) {
   //     '</style>',
   // );
 
+  $registration_period = intval(variable_get('ctl_onboarding_registration_period', CTL_ONBOARDING_REGISTRATION_CLOSED));
+  if ($registration_period === CTL_ONBOARDING_REGISTRATION_CLOSED) {
+    $form['registration_closed'] = array(
+      '#type'   => 'markup',
+      '#markup' => "<p>The registration period is closed.</p>",
+    );
+    return $form;
+  }
+
+  $registration_start_date  = variable_get('ctl_onboarding_registration_start_date', '[X]');
+  $registration_finish_date = variable_get('ctl_onboarding_registration_finish_date', '[X]');
+
   $form['instructions'] = array(
     '#type'   => 'markup',
-    '#markup' => '<p>Choose a training session to register for.</p>',
+    '#markup' => "<p>Register for a training session.</p>",
   );
   $form['policies'] = array(
     '#type'   => 'markup',
-    '#markup' => '<p>Policies: Registration occurs between [X] date and [X] date. After that, we are only able to accomodate 2 schedule changes.  Training will occur for 6 weeks.</p>',
+    '#markup' => "<p>Policies: Registration occurs between $registration_start_date date and $registration_finish_date date. After that, we are only able to accomodate 2 schedule changes.  Training will occur for 6 weeks.</p>",
   );
   $form['training_slot'] = array(
     '#type'    => 'radios',
     '#options' => variable_get('ctl_onboarding_slots'),
     '#theme'   => array('ctl_onboarding_table'),
   );
-
-  // $form['uid'] = array(
-  //   '#type'  => 'hidden',
-  //   '#value' => $uid,
-  // );
-
   $form['register'] = array(
     '#type'     => 'submit',
     '#value'    => 'Register',
@@ -79,16 +85,14 @@ function ctl_onboarding_form($form, &$form_state) {
     '#submit'   => array('_ctl_onboarding_form_submit_register'),
   );
   $form['defer'] = array(
-    '#type'     => 'submit',
-    '#value'    => 'Defer',
-    '#validate' => array('_ctl_onboarding_form_validate_defer'),
-    '#submit'   => array('_ctl_onboarding_form_submit_defer'),
+    '#type'   => 'submit',
+    '#value'  => 'Defer',
+    '#submit' => array('_ctl_onboarding_form_submit_defer'),
   );
   $form['decline'] = array(
-    '#type'     => 'submit',
-    '#value'    => 'Decline',
-    '#validate' => array('_ctl_onboarding_form_validate_decline'),
-    '#submit'   => array('_ctl_onboarding_form_submit_decline'),
+    '#type'   => 'submit',
+    '#value'  => 'Decline',
+    '#submit' => array('_ctl_onboarding_form_submit_decline'),
   );
 
   return $form;
@@ -101,9 +105,9 @@ function ctl_onboarding_form($form, &$form_state) {
 function _ctl_onboarding_form_validate_register($form, &$form_state) {
   // drupal_set_message(t("hi"));
 
-  // $form_values = $form_state['values'];
-  // $unmet_requirements = array(_ctl_graduation_courses_completed($form_values['uid']))
-  //                     + $form_values['additional_requirements'];
+  // $values = $form_state['values'];
+  // $unmet_requirements = array(_ctl_graduation_courses_completed($values['uid']))
+  //                     + $values['additional_requirements'];
   // $unmet_requirements = array_filter($unmet_requirements, function ($v) { return empty($v); });
   // if (!empty($unmet_requirements)) {
   //   form_set_error('additional_requirements', t('The trainee must pass all the requirements.'));
@@ -115,19 +119,30 @@ function _ctl_onboarding_form_validate_register($form, &$form_state) {
  *
  */
 function _ctl_onboarding_form_submit_register($form, &$form_state) {
-  // drupal_set_message(t("register"));
+  global $user;
 
-  $form_values = $form_state['values'];
-  // $slot = $form_values['training_slot'];
+  $values = $form_state['values'];
+  // $slot = $values['training_slot'];
 
   // drupal_set_message($slot);
 
-  drupal_set_message(var_export($form_values, TRUE));
-}
+  // dsm($values);
+  // dsm($user->uid);
 
+  $exists = db_query('SELECT * FROM {ctl_onboarding_slot} WHERE slot_code LIKE "f-800" LIMIT 1')->rowCount();
+  // if($exists->rowCount() > 0){
+  //   drupal_set_message("exists");
+  // }
 
-function _ctl_onboarding_form_validate_defer($form, &$form_state) {
-  // drupal_set_message(t("hi"));
+  dsm($exists);
+
+  // if time slot db entry doesn't exist
+  //   create the entry
+  // else
+  //   assert time slot is not full
+  // increment the registrant count for the time slot entry
+  // add registrant to the ctl_onboarding_registrant table
+
 }
 
 
@@ -138,11 +153,6 @@ function _ctl_onboarding_form_submit_defer($form, &$form_state) {
   $form_state['storage']['confirm_defer'] = TRUE;
 
   // drupal_set_message(var_export($form_state['clicked_button'], TRUE));
-}
-
-
-function _ctl_onboarding_form_validate_decline($form, &$form_state) {
-  // drupal_set_message(t("hi"));
 }
 
 

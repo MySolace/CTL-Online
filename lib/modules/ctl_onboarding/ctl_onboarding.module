@@ -1,5 +1,18 @@
 <?php
 
+define('CTL_ONBOARDING_REGISTRATION_CLOSED', 0);
+define('CTL_ONBOARDING_REGISTRATION_OPEN', 1);
+
+define('CTL_ONBOARDING_STATUS_PENDING', 0);
+define('CTL_ONBOARDING_STATUS_ACCEPTED', 1);
+define('CTL_ONBOARDING_STATUS_WAIT_LISTED', 2);
+define('CTL_ONBOARDING_STATUS_DROPPED_FAILED_BACKGROUND_CHECK', 3);
+define('CTL_ONBOARDING_STATUS_DROPPED_CANCELED_BY_REGISTRANT', 4);
+define('CTL_ONBOARDING_STATUS_DROPPED_OTHER', 5);
+
+require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
+
+
 /**
  * Implements hook_menu().
  */
@@ -16,8 +29,19 @@ function ctl_onboarding_menu() {
     'file'             => 'includes/registration.inc',
   );
 
-  $items['admin/config/ctl-onboarding'] = array(
-    'title'            => 'CTL Onboarding Configuration',
+  $items['admin/config/ctl'] = array(
+    'title'            => 'Crisis Text Line',
+    'description'      => 'Configure CTL settings.',
+    'position'         => 'right',
+    'weight'           => -100,
+    'page callback'    => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file'             => 'system.admin.inc',
+    'file path'        => drupal_get_path('module', 'system'),
+  );
+
+  $items['admin/config/ctl/ctl-onboarding'] = array(
+    'title'            => 'CTL Onboarding',
     'page callback'    => 'drupal_get_form',
     'page arguments'   => array('_ctl_onboarding_settings_form'),
 
@@ -53,50 +77,9 @@ function ctl_onboarding_theme($existing, $type, $theme, $path) {
   return array(
     'ctl_onboarding_table' => array(
       'render element' => 'element',
+      'file'           => 'includes/theme.inc',
     ),
   );
-}
-
-
-function theme_ctl_onboarding_table($variables) {
-  $element     = $variables['element'];
-  $slots       = $element['#options'];
-  $showing_all = isset($element['#showing_all']) ? $element['#showing_all'] : FALSE;
-  $header = array(
-    t('Monday'),
-    t('Tuesday'),
-    t('Wednesday'),
-    t('Thursday'),
-    t('Friday'),
-    t('Saturday'),
-    t('Sunday'),
-  );
-
-  $days = array('m', 'tu', 'w', 'th', 'f', 'sa', 'su');
-  $first_start_hour = 800;
-  $last_start_hour = 1900;
-  $rows = array();
-
-  // Setup the table.
-  for ($hour = $first_start_hour; $hour <= $last_start_hour; $hour += 100) {
-    $row = array();
-    for ($i = 0, $l = count($days); $i < $l; ++$i) {
-      $slot_id = $days[$i] . '-' . $hour;
-      $row[] = ($showing_all || $element[$slot_id]['#title']) ? drupal_render($element[$slot_id]) : NULL;
-    }
-    // Only add rows if they are not completely empty.
-    $r = array_filter($row, function ($x) { return isset($x); });
-    if (!empty($r)) {
-      $rows[$hour] = $row;
-    }
-  }
-
-  $table = theme('table', array(
-    'header' => $header,
-    'rows'   => $rows,
-  ));
-
-  return $table;
 }
 
 
@@ -115,23 +98,3 @@ function theme_ctl_onboarding_table($variables) {
 //     ),
 //   );
 // }
-
-
-/**
- * Displays times in 12-hour clock style.
- * @param  int $hour    24-hour clock time.
- * @return string       12-hour clock time for display.
- */
-function _ctl_onboarding_format_hour_display($hour) {
-  $hour_display = '';
-  if ($hour >= 1200) {
-    if ($hour > 1200) {
-      $hour -= 1200;
-    }
-    $hour_display = ($hour / 100) . 'pm';
-  }
-  else {
-    $hour_display = ($hour / 100) . 'am';
-  }
-  return $hour_display;
-}
