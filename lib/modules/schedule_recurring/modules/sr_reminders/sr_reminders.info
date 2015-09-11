@@ -3,3 +3,4 @@ description = "Reminders for recurring shifts"
 name = "Schedule Recurring Reminders"
 
 dependencies[] = schedule_recurring
+dependencies[] = twilio
