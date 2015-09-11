@@ -5,6 +5,10 @@
  */
 function ctl_features_node_access($node, $op, $account) {
     if (is_object($node) && $node->type == 'application') {
+        if (!user_is_logged_in()) {
+            return NODE_ACCESS_DENY;
+        }
+
         if ($node->status == 1) {
             if ($op != 'create' && !user_access('access user profiles')) {
                 return NODE_ACCESS_DENY;
@@ -13,11 +17,86 @@ function ctl_features_node_access($node, $op, $account) {
     }
 }
 
+function ctl_features_cron() {
+    $last_run = variable_get('ctl_features_last_run', -1);
+
+    // Run daily
+    if ($last_run < date('z') || $last_run == 365) {
+        // Run at 7am
+        if (date('G') >= 7) {
+            ctl_features_update_roles();
+            variable_set('ctl_features_last_run', date('z'));
+        }
+    }
+}
+
+function ctl_features_update_roles() {
+    $api_key = variable_get('ctl_features_api_key');
+
+    $roles = array(
+        1 => 'Crisis Counselor I',
+        2 => 'Crisis Counselor II',
+        3 => 'Crisis Counselor III',
+    );
+
+    $q = db_select('users', 'u');
+    $q->join('users_roles', 'ur', 'ur.uid=u.uid');
+    $q->join('role', 'r', 'r.rid=ur.rid');
+    $q->condition('r.name', $roles, 'IN');
+    $q->fields('u', array('uid', 'mail'));
+    $q->fields('r', array('name', 'rid'));
+
+    $r = $q->execute();
+
+    while ($account = $r->fetchAssoc()) {
+        $mail = $account['mail'];
+        $url = "https://app.crisistextline.org/ajax/user/level?api_key=$api_key&email=$mail";
+        $new_rank = intval(ctl_features_curl($url));
+
+        $old_rank = array_search($account['name'], $roles);
+        if ($new_rank > $old_rank) {
+            $user = user_load($account['uid']);
+            unset($user->roles[$account['rid']]);
+
+            $new_role_name = $roles[$new_rank];
+            $new_role_rid = ctl_features_get_rid($new_role_name);
+
+            $user->roles[$new_role_rid] = $new_role_name;
+
+            user_save($user);
+        }
+    }
+}
+
+function ctl_features_get_rid($role_name) {
+    $roles = drupal_static(__FUNCTION__);
+
+    if (!isset($roles)) {
+        $q = db_select('role', 'r')
+            ->fields('r')
+            ->execute();
+
+        $roles = $q->fetchAllAssoc('name');
+    }
+
+    return $roles[$role_name]->rid;
+}
+
+function ctl_features_curl($url) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    $data = curl_exec($ch);
+    curl_close($ch);
+
+    return $data;
+}
+
 /**
  * Implements hook_form_alter().
  */
 function ctl_features_form_alter(&$form, &$form_state, $form_id) {
-    if ($form_id == 'application_node_form') {
+    if ($form_id == 'application_node_form' || $form_id == 'application_2_node_form') {
         $form['actions']['draft'] = array(
             '#type' => 'submit',
             '#value' => t('Save as Draft'),
