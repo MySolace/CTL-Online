@@ -22,6 +22,7 @@ projects[addressfield][version] = "1.0"
 projects[admin_menu][version] = "3.0-rc5"
 projects[auto_nodetitle][version] = "1.0"
 projects[bbb][version] = "1.x-dev"
+projects[bbb][patch][] = https://www.drupal.org/files/issues/bbb-format-username-2566735-1.patch
 projects[better_exposed_filters][version] = "3.0"
 projects[computed_field][version] = "1.0"
 projects[conditional_fields][version] = "3.x-dev"
