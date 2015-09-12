@@ -126,25 +126,36 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
 
   // drupal_set_message($slot);
 
-  // dsm($values);
+  dsm($values);
   // dsm($user->uid);
 
-  // $exists = db_query('SELECT * FROM {ctl_onboarding_slot} WHERE slot_code = "f-800" LIMIT 1;')->rowCount();
-  $count = db_query('SELECT * FROM {ctl_onboarding_slot} WHERE slot_code = :val LIMIT 1;', array(':val' => 'f-800'))->rowCount();
-  $slot_exists = $count > 0;
-  if ($slot_exists) {
-    db_insert('ctl_onboarding_slot')
-      ->fields(array(
-        'cohort_id'       => $cohort_id,
-        'slot_code'       => $slot_code,
-        'max_trainers'    => 2,
-        'num_registrants' => 0,
-      ))
-      ->execute();
-  }
-  else {
-    dsm("exists");
-  }
+  // // $exists = db_query('SELECT * FROM {ctl_onboarding_slot} WHERE slot_code = "f-800" LIMIT 1;')->rowCount();
+  // $count = db_query('SELECT * FROM {ctl_onboarding_slot} WHERE slot_code = :val LIMIT 1;', array(':val' => 'f-800'))->rowCount();
+  // $slot_exists = $count > 0;
+  // if ($slot_exists) {
+  //   db_insert('ctl_onboarding_slot')
+  //     ->fields(array(
+  //       'cohort_id'       => $cohort_id,
+  //       'slot_code'       => $slot_code,
+  //       'max_trainers'    => 2,
+  //       'num_registrants' => 0,
+  //     ))
+  //     ->execute();
+  // }
+  // else {
+  //   $trainees_per_trainer = variable_get('ctl_onboarding_trainees_per_trainer', CTL_ONBOARDING_DEFAULT_TRAINEES_PER_TRAINER);
+
+  //   // $max_trainers = ...;
+  //   // $num_registrants = ...;
+  //   // if ($num_registrants < $trainees_per_trainer * $max_trainers) {
+  //   //   ++$num_registrants;
+  //   //   // variable_set();
+  //   //   // add registrant to the ctl_onboarding_registrant table
+  //   // }
+  //   // else {
+  //   //   // show "time slot full" error message
+  //   // }
+  // }
 
   // if time slot db entry doesn't exist
   //   create the entry

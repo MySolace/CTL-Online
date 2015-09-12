@@ -1,16 +1,14 @@
 <?php
 
 function _ctl_onboarding_settings_form() {
-  $days             = array('m', 'tu', 'w', 'th', 'f', 'sa', 'su');
-  $first_start_hour = 800;
-  $last_start_hour  = 1900;
-  $slots            = array();
+  $days  = array('m', 'tu', 'w', 'th', 'f', 'sa', 'su');
+  $slots = array();
 
   // Setup the selectable time slots.
   for ($i = 0, $l = count($days); $i < $l; ++$i) {
-    for ($hour = $first_start_hour; $hour <= $last_start_hour; $hour += 100) {
+    for ($hour = CTL_ONBOARDING_FIRST_START_HOUR; $hour <= CTL_ONBOARDING_LAST_START_HOUR; $hour += CTL_ONBOARDING_ONE_HOUR) {
       $start_hour_display  = _ctl_onboarding_format_hour_display($hour);
-      $finish_hour_display = _ctl_onboarding_format_hour_display($hour + 400);
+      $finish_hour_display = _ctl_onboarding_format_hour_display($hour + CTL_ONBOARDING_SESSION_DURATION);
 
       $slots[$days[$i] . '-' . $hour] = $start_hour_display . ' - ' . $finish_hour_display;
     }
@@ -19,11 +17,12 @@ function _ctl_onboarding_settings_form() {
   $form['ctl_onboarding_registration_period'] = array(
     '#type'          => 'select',
     '#title'         => t('Registration period'),
-    '#default_value' => variable_get('ctl_onboarding_registration_period', 0),
-    '#options'       => array(
-      CTL_ONBOARDING_REGISTRATION_CLOSED => t('Closed'),
-      CTL_ONBOARDING_REGISTRATION_OPEN => t('Open')),
+    '#default_value' => variable_get('ctl_onboarding_registration_period', CTL_ONBOARDING_REGISTRATION_CLOSED),
     '#required'      => TRUE,
+    '#options' => array(
+      CTL_ONBOARDING_REGISTRATION_CLOSED => t('Closed'),
+      CTL_ONBOARDING_REGISTRATION_OPEN   => t('Open'),
+    ),
   );
   $form['ctl_onboarding_cohort_id'] = array(
     '#type'          => 'textfield',
@@ -42,6 +41,14 @@ function _ctl_onboarding_settings_form() {
     '#title'         => t('End of sign-up'),
     '#default_value' => variable_get('ctl_onboarding_cohort_registration_finish_date'),
   );
+  $form['ctl_onboarding_trainees_per_trainer'] = array(
+    '#type'          => 'checkboxes',
+    '#title'         => t('Choose time slots to have available for registration'),
+    '#options'       => $slots,
+    '#default_value' => variable_get('ctl_onboarding_trainees_per_trainer', CTL_ONBOARDING_DEFAULT_TRAINEES_PER_TRAINER),
+    '#theme'         => array('ctl_onboarding_table'),
+    '#showing_all'   => TRUE,
+  );
   $form['ctl_onboarding_slots'] = array(
     '#type'          => 'checkboxes',
     '#title'         => t('Choose time slots to have available for registration'),
@@ -51,6 +58,7 @@ function _ctl_onboarding_settings_form() {
     '#showing_all'   => TRUE,
   );
 
+  // We'll need to do additional setup.
   $form['#submit'][] = '_ctl_onboarding_settings_submit_extra';
 
   return system_settings_form($form);
