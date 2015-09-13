@@ -19,7 +19,7 @@ function ctl_onboarding_uninstall() {
   variable_del('ctl_onboarding_cohort_id');
   variable_del('ctl_onboarding_cohort_registration_start_date');
   variable_del('ctl_onboarding_cohort_registration_finish_date');
-  variable_del('ctl_onboarding_trainees_per_trainer');
+  variable_del('ctl_onboarding_trainer_capacity');
   variable_del('ctl_onboarding_slots');
 }
 
@@ -31,7 +31,7 @@ function ctl_onboarding_schema() {
   $schema['ctl_onboarding_cohort'] = array(
     'description' => 'The user who is able to register for training sessions.',
     'fields' => array(
-      'id' => array(
+      'cohort_id' => array(
         'type'        => 'int',
         'description' => 'The cohort ID.',
         'not null'    => TRUE,
@@ -66,7 +66,7 @@ function ctl_onboarding_schema() {
         'unsigned'    => TRUE,
       ),
     ),
-    'primary key' => array('id'),
+    'primary key' => array('cohort_id'),
   );
   $schema['ctl_onboarding_slot'] = array(
     'description' => 'The time slot to register for.',
@@ -109,11 +109,17 @@ function ctl_onboarding_schema() {
         'not null'    => TRUE,
         'unsigned'    => TRUE,
       ),
-      'slot_id' => array(
+      'cohort_id' => array(
         'type'        => 'int',
-        'description' => 'The slot ID.',
+        'description' => 'The cohort ID.',
         'not null'    => TRUE,
         'unsigned'    => TRUE,
+      ),
+      'slot_code' => array(
+        'type'        => 'varchar',
+        'description' => 'The slot code.',
+        'length'      => 7,
+        'not null'    => TRUE,
       ),
       'status' => array(
         'type'        => 'int',

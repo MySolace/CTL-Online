@@ -1,5 +1,8 @@
 <?php
 
+require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/slot.inc';
+
+
 /**
  * Implements hook_form().
  */
@@ -119,76 +122,12 @@ function _ctl_onboarding_form_validate_register($form, &$form_state) {
  *
  */
 function _ctl_onboarding_form_submit_register($form, &$form_state) {
+  $values    = $form_state['values'];
+  $slot_code = $values['training_slot'];
+
   global $user;
 
-  $values = $form_state['values'];
-  $slot   = $values['training_slot'];
-
-  // drupal_set_message($slot);
-
-  if (is_null($slot)) {
-    form_set_error('training_slot', t('A time slot must be chosen!'));
-    return;
-  }
-
-  // $count = db_query('SELECT slot_code FROM {ctl_onboarding_slot} WHERE slot_code = :slot LIMIT 1;', array(':slot' => $slot))->rowCount();
-  // dsm($count);
-
-  $query = db_select('ctl_onboarding_slot', 's');
-  $query->addField('s', 'cohort_id');
-  $query->addField('s', 'slot_code');
-  $query->addField('s', 'max_trainers');
-  $query->addField('s', 'num_registrants');
-  $result = $query
-    ->condition('s.slot_code', $slot)
-    ->execute()
-    ->fetchAll();
-
-  dsm($result);
-
-  // $slot_exists = $count > 0;
-
-  // if ($slot_exists) {
-
-
-  //   db_insert('ctl_onboarding_registrant')
-  //     ->fields(array(
-
-
-  //       'cohort_id'       => $cohort_id,
-  //       'slot_code'       => $slot_code,
-  //       'max_trainers'    => 2,
-  //       'num_registrants' => 0,
-
-
-  //     ))
-  //     ->execute();
-
-
-  // }
-  // else {
-  //   $trainees_per_trainer = variable_get('ctl_onboarding_trainees_per_trainer', CTL_ONBOARDING_DEFAULT_TRAINEES_PER_TRAINER);
-
-  //   // $max_trainers = ...;
-  //   // $num_registrants = ...;
-  //   // if ($num_registrants < $trainees_per_trainer * $max_trainers) {
-  //   //   ++$num_registrants;
-  //   //   // variable_set();
-  //   //   // add registrant to the ctl_onboarding_registrant table
-  //   // }
-  //   // else {
-  //   //   // show "time slot full" error message
-  //   // }
-  // }
-
-
-  // if time slot db entry doesn't exist
-  //   error out
-  // else
-  //   assert time slot is not full
-  // increment the registrant count for the time slot entry
-  // add registrant to the ctl_onboarding_registrant table
-
+  _ctl_onboarding_slot_register($slot_code, $user->uid);
 }
 
 

@@ -41,13 +41,11 @@ function _ctl_onboarding_settings_form() {
     '#title'         => t('End of sign-up'),
     '#default_value' => variable_get('ctl_onboarding_cohort_registration_finish_date'),
   );
-  $form['ctl_onboarding_trainees_per_trainer'] = array(
-    '#type'          => 'checkboxes',
-    '#title'         => t('Choose time slots to have available for registration'),
-    '#options'       => $slots,
-    '#default_value' => variable_get('ctl_onboarding_trainees_per_trainer', CTL_ONBOARDING_DEFAULT_TRAINEES_PER_TRAINER),
-    '#theme'         => array('ctl_onboarding_table'),
-    '#showing_all'   => TRUE,
+  $form['ctl_onboarding_trainer_capacity'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Number of trainees per session a trainer can handle'),
+    '#default_value' => variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY),
+    '#required'      => TRUE,
   );
   $form['ctl_onboarding_slots'] = array(
     '#type'          => 'checkboxes',
@@ -66,17 +64,12 @@ function _ctl_onboarding_settings_form() {
 
 
 function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
+  $values    = $form_state['values'];
+  $slots     = $values['ctl_onboarding_slots'];
   $cohort_id = intval(variable_get('ctl_onboarding_cohort_id'));
 
-  $values = $form_state['values'];
-
-  $slots = $values['ctl_onboarding_slots'];
   foreach ($slots as $slot_code) {
     if ($slot_code) {
-      // $slot_values = explode('-', $slot_code);
-      // $day_code    = $slot_values[0];
-      // $time_slot   = $slot_values[1];
-
       // Upsert time slot info.
       db_merge('ctl_onboarding_slot')
         ->key(array(
