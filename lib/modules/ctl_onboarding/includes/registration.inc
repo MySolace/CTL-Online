@@ -8,7 +8,7 @@ function ctl_onboarding_form($form, &$form_state) {
     $storage = $form_state['storage'];
     if (isset($storage['confirm_defer']) && $storage['confirm_defer']) {
       $question    = 'Are you sure?';
-      $path        = 'training-session-registration';
+      $path        = 'registration';
       $description = 'Defer !!!';
       $yes         = 'Continue';
       $no          = 'Start again';
@@ -17,7 +17,7 @@ function ctl_onboarding_form($form, &$form_state) {
     }
     if (isset($storage['confirm_decline']) && $storage['confirm_decline']) {
       $question    = 'Are you sure?';
-      $path        = 'training-session-registration';
+      $path        = 'registration';
       $description = 's;ghj;dlghjldg;jh;lfkdjg';
       $yes         = 'Continue';
       $no          = 'Start again';
@@ -122,25 +122,49 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
   global $user;
 
   $values = $form_state['values'];
-  // $slot = $values['training_slot'];
+  $slot   = $values['training_slot'];
 
   // drupal_set_message($slot);
 
-  dsm($values);
-  // dsm($user->uid);
+  if (is_null($slot)) {
+    form_set_error('training_slot', t('A time slot must be chosen!'));
+    return;
+  }
 
-  // // $exists = db_query('SELECT * FROM {ctl_onboarding_slot} WHERE slot_code = "f-800" LIMIT 1;')->rowCount();
-  // $count = db_query('SELECT * FROM {ctl_onboarding_slot} WHERE slot_code = :val LIMIT 1;', array(':val' => 'f-800'))->rowCount();
+  // $count = db_query('SELECT slot_code FROM {ctl_onboarding_slot} WHERE slot_code = :slot LIMIT 1;', array(':slot' => $slot))->rowCount();
+  // dsm($count);
+
+  $query = db_select('ctl_onboarding_slot', 's');
+  $query->addField('s', 'cohort_id');
+  $query->addField('s', 'slot_code');
+  $query->addField('s', 'max_trainers');
+  $query->addField('s', 'num_registrants');
+  $result = $query
+    ->condition('s.slot_code', $slot)
+    ->execute()
+    ->fetchAll();
+
+  dsm($result);
+
   // $slot_exists = $count > 0;
+
   // if ($slot_exists) {
-  //   db_insert('ctl_onboarding_slot')
+
+
+  //   db_insert('ctl_onboarding_registrant')
   //     ->fields(array(
+
+
   //       'cohort_id'       => $cohort_id,
   //       'slot_code'       => $slot_code,
   //       'max_trainers'    => 2,
   //       'num_registrants' => 0,
+
+
   //     ))
   //     ->execute();
+
+
   // }
   // else {
   //   $trainees_per_trainer = variable_get('ctl_onboarding_trainees_per_trainer', CTL_ONBOARDING_DEFAULT_TRAINEES_PER_TRAINER);
@@ -157,8 +181,9 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
   //   // }
   // }
 
+
   // if time slot db entry doesn't exist
-  //   create the entry
+  //   error out
   // else
   //   assert time slot is not full
   // increment the registrant count for the time slot entry
