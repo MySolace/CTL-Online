@@ -24,6 +24,12 @@ function _ctl_onboarding_settings_form() {
       CTL_ONBOARDING_REGISTRATION_OPEN   => t('Open'),
     ),
   );
+  $form['ctl_onboarding_creating_teams'] = array(
+    '#type'          => 'checkbox',
+    '#title'         => 'Create teams upon saving this settings screen',
+    '#default_value' => FALSE,
+    '#description'   => 'Note: You can use this to recreate teams if they already exist.  With great power comes great repsonsibility!',
+  );
   $form['ctl_onboarding_cohort_id'] = array(
     '#type'          => 'textfield',
     '#title'         => t('Cohort #'),
@@ -64,9 +70,16 @@ function _ctl_onboarding_settings_form() {
 
 
 function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
-  $values    = $form_state['values'];
-  $slots     = $values['ctl_onboarding_slots'];
-  $cohort_id = $values['ctl_onboarding_cohort_id'];
+  $values         = $form_state['values'];
+  $slots          = $values['ctl_onboarding_slots'];
+  $cohort_id      = $values['ctl_onboarding_cohort_id'];
+  $creating_teams = $values['ctl_onboarding_creating_teams'];
+
+
+  if ($creating_teams) {
+    dsm('creating teams');
+  }
+
 
   foreach ($slots as $slot_code) {
     if ($slot_code) {
