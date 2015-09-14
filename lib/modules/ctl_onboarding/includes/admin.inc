@@ -66,7 +66,7 @@ function _ctl_onboarding_settings_form() {
 function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
   $values    = $form_state['values'];
   $slots     = $values['ctl_onboarding_slots'];
-  $cohort_id = intval(variable_get('ctl_onboarding_cohort_id'));
+  $cohort_id = $values['ctl_onboarding_cohort_id'];
 
   foreach ($slots as $slot_code) {
     if ($slot_code) {
