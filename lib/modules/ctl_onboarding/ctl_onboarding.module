@@ -29,10 +29,7 @@ function ctl_onboarding_menu() {
     'title'            => 'Training Session Registration',
     'page callback'    => 'drupal_get_form',
     'page arguments'   => array('ctl_onboarding_form'),
-
-    'access callback' => TRUE,
-    // 'access arguments' => array('access all course reports'),
-
+    'access arguments' => array('register for training'),
     'type'             => MENU_CALLBACK,
     'file'             => 'includes/registration.inc',
   );
@@ -52,10 +49,7 @@ function ctl_onboarding_menu() {
     'title'            => 'CTL Onboarding',
     'page callback'    => 'drupal_get_form',
     'page arguments'   => array('_ctl_onboarding_settings_form'),
-
-    'access callback' => TRUE,
-    // 'access arguments' => array('administer users'),
-
+    'access arguments' => array('administer onboarding'),
     'type'             => MENU_NORMAL_ITEM,
     'file'             => 'includes/admin.inc',
   );
@@ -79,6 +73,23 @@ function ctl_onboarding_menu() {
 
 
 /**
+ * Implements hook_permission().
+ */
+function ctl_onboarding_permission() {
+  return array(
+    'administer onboarding' => array(
+      'title'       => t('Administer onboarding'),
+      'description' => t('Manage cohort training session registration.'),
+    ),
+    'register for training' => array(
+      'title'       => t('Register for training'),
+      'description' => t('Allow users to sign up for a training session.'),
+    ),
+  );
+}
+
+
+/**
  * Implements hook_theme().
  */
 function ctl_onboarding_theme($existing, $type, $theme, $path) {
@@ -89,20 +100,3 @@ function ctl_onboarding_theme($existing, $type, $theme, $path) {
     ),
   );
 }
-
-
-// /**
-//  * Implements hook_permission().
-//  */
-// function ctl_onboarding_permission() {
-//   return array(
-//     'view certificate' => array(
-//       'title' => t('View certificate'),
-//       'description' => t('View the graduation certificate'),
-//     ),
-//     'view graduates' => array(
-//       'title' => t('View graduates'),
-//       'description' => t('View the list of graduates'),
-//     ),
-//   );
-// }

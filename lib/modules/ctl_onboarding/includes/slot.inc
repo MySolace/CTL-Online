@@ -13,6 +13,7 @@ function _ctl_onboarding_slot_save_registrant($cohort_id, $slot_code, $uid) {
 
       'status' => CTL_ONBOARDING_STATUS_ACCEPTED,
     ));
+
   try {
     $query->execute();
   }
@@ -27,6 +28,8 @@ function _ctl_onboarding_slot_save_registrant($cohort_id, $slot_code, $uid) {
     }
     return FALSE;
   }
+
+  drupal_set_message(t('Your registration has been submitted!'));
   return TRUE;
 }
 
