@@ -1,0 +1,22 @@
+<?php
+
+function sr_reminders_install() {
+  $q = new EntityFieldQuery();
+
+  $users = $q
+    ->entityCondition('entity_type', 'user')
+    ->fieldCondition('field_shifts', 'start', NULL, 'IS NOT NULL')
+    ->execute();
+
+  $uids = array_keys($users['user']);
+  $users = user_load_multiple($uids);
+
+  $message = t('Hey! We\'re going to start reminding you about your CTL shift from this #. Edit your preferences here: http://crisistext.org/reminders');
+
+  foreach ($users as $account) {
+    $account->data['sr_reminder'] = 3;
+    user_save($account);
+
+    twilio_send($account->twilio_user['number'], $message, $account->twilio_user['country']);
+  }
+}
