@@ -1,5 +1,8 @@
 <?php
 
+require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/team.inc';
+
+
 function _ctl_onboarding_settings_form() {
   $days  = array('m', 'tu', 'w', 'th', 'f', 'sa', 'su');
   $slots = array();
@@ -71,16 +74,20 @@ function _ctl_onboarding_settings_form() {
 
 function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
   $values         = $form_state['values'];
-  $slots          = $values['ctl_onboarding_slots'];
-  $cohort_id      = $values['ctl_onboarding_cohort_id'];
+  $cohort_id      = intval($values['ctl_onboarding_cohort_id']);
   $creating_teams = $values['ctl_onboarding_creating_teams'];
 
-
   if ($creating_teams) {
-    dsm('creating teams');
+    _ctl_onboarding_create_teams($cohort_id);
+    return;
   }
 
+  $slots = $values['ctl_onboarding_slots'];
+  _ctl_onboarding_set_slots($cohort_id, $slots);
+}
 
+
+function _ctl_onboarding_set_slots($cohort_id, $slots) {
   foreach ($slots as $slot_code) {
     if ($slot_code) {
       // Upsert time slot info.
@@ -115,9 +122,3 @@ function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
   //   ))
   //   ->execute();
 }
-
-// function _myelement_value($element, $input = FALSE, $form_state = array()) {
-//   if ($input === FALSE) {
-//     return isset($element['#default_value']) ? $element['#default_value'] : 0;
-//   }
-// }

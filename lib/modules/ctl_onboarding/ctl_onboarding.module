@@ -33,7 +33,6 @@ function ctl_onboarding_menu() {
     'type'             => MENU_CALLBACK,
     'file'             => 'includes/registration.inc',
   );
-
   $items['admin/config/ctl'] = array(
     'title'            => 'Crisis Text Line',
     'description'      => 'Configure CTL settings.',
@@ -44,7 +43,6 @@ function ctl_onboarding_menu() {
     'file'             => 'system.admin.inc',
     'file path'        => drupal_get_path('module', 'system'),
   );
-
   $items['admin/config/ctl/ctl-onboarding'] = array(
     'title'            => 'CTL Onboarding',
     'page callback'    => 'drupal_get_form',
@@ -53,21 +51,6 @@ function ctl_onboarding_menu() {
     'type'             => MENU_NORMAL_ITEM,
     'file'             => 'includes/admin.inc',
   );
-
-
-  $items['registration-test'] = array(
-    'title'            => 'Registration Test',
-    'page callback'    => '_ctl_onboarding_registration_test',
-    // 'page arguments'   => array('_ctl_onboarding_settings_form'),
-
-    'access callback' => TRUE,
-    // 'access arguments' => array('administer users'),
-
-    'type'             => MENU_NORMAL_ITEM,
-    'file'             => 'includes/group.inc',
-  );
-
-
   return $items;
 }
 
