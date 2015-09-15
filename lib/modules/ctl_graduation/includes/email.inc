@@ -26,12 +26,12 @@ function ctl_graduation_mail($key, &$message, $params) {
     $trainer_name = 'Patty Morrissey';
   }
 
-
   $email_message = theme('graduation_message', array(
     'graduate_name' => $graduate_name,
     'graduate_uid'  => $graduate_uid,
     'trainer_name'  => $trainer_name,
   ));
+  $email_message = token_replace($email_message);
 
   $options = array(
     'langcode' => $message['language']->language,
