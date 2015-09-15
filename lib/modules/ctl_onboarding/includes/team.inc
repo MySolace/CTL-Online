@@ -31,8 +31,17 @@ function _ctl_onboarding_setup_teams($cohort_id) {
 
   shuffle($registrants);
 
-  // From the registrats' info we can determine what teams need to be created.
+  // TODO
+  // - i believe some decent optimization is possible in the following loop
+  //   - namely, setting up "processing groups" so that retreads through
+  //     $registrants become less needed
+  //     - see [[1]]
+
+  // TODO
+  // - perhaps augment $slots instead of using $slot_infos
   $slot_infos = array();
+
+  // From the registrats' info we can determine what teams need to be created.
   foreach ($registrants as $registrant) {
     $slot_code = $registrant->slot_code;
 
@@ -65,8 +74,8 @@ function _ctl_onboarding_setup_teams($cohort_id) {
     // If the current team is full then form a new one if possible.
     // TODO
     // - for the future make sure team creation factors in registrant
-    // statuses (e.g. no team needs to be formed if its members would
-    // all have been dropped)
+    //   statuses (e.g. no team needs to be formed if its members would
+    //   all have been dropped)
     if (count($cur_team) >= $info['max_trainees_per_team']) {
       if (count($info['teams']) < $info['num_trainers']) {
         $info['teams'][]  = array();
@@ -89,21 +98,23 @@ function _ctl_onboarding_setup_teams($cohort_id) {
   }
 
   // Create the new organic groups.
-  foreach ($slot_infos as $slot_info) {
+  foreach ($slot_infos as $slot_code => $slot_info) {
 
 
     // Delete previously existing teams.  This ensures that team
     // rosters are up to date with what registrants we have.
 
-    $num_trainers = ...;
 
-    for ($i = 0, $l = count($num_trainers); $i < $l; ++$i) {
+    // Create the organic groups.
+    for ($i = 0, $l = $slot_info['num_trainers']; $i < $l; ++$i) {
       $node = _ctl_onboarding_create_team_node($cohort_id, $slot_code, $i + 1);
-
-      // for () {
-      //   _ctl_onboarding_add_team_member($node->nid, $registrant->uid);
-      // }
-
+      // TODO
+      // - [[1]]
+      foreach ($registrants as $registrant) {
+        if ($registrant->slot_code === $slot_code) {
+          _ctl_onboarding_add_team_member($node->nid, $registrant->uid);
+        }
+      }
     }
   }
 }
