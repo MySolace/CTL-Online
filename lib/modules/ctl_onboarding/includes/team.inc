@@ -39,7 +39,7 @@ function _ctl_onboarding_setup_teams($cohort_id) {
   // - there may be some optimizations if we use array references more
 
   // From the registrats' info we can determine what teams need to be created.
-  foreach ($registrants as $registrant) {
+  foreach ($registrants as &$registrant) {
     $slot_code = $registrant->slot_code;
 
     // Setup time slot info if it doesn't exist yet.
@@ -49,15 +49,17 @@ function _ctl_onboarding_setup_teams($cohort_id) {
           break;
         }
       }
+
       // Determine how trainees should be spread across teams.
       $num_trainers          = $slot->num_trainers;
       $num_registrants       = $slot->num_registrants;
       $max_trainees_per_team = intval(ceil($num_registrants / $num_trainers));
+
       $slot_infos[$slot_code] = array(
         'num_trainers'          => $num_trainers,
         'max_trainees_per_team' => $max_trainees_per_team,
         'cur_team'              => 0,
-        'teams'                 => array(),
+        'teams'                 => array(array()),
       );
     }
 
@@ -67,8 +69,8 @@ function _ctl_onboarding_setup_teams($cohort_id) {
     // If the current team is full then form a new one if possible.
     // TODO
     // - for the future make sure team creation factors in registrant
-    //   statuses (e.g. no team needs to be formed if its members would
-    //   all have been dropped)
+    //   statuses (e.g. no team needs to be formed if all its potential
+    //   members are ineligible for whatever reason)
     if (count($cur_team) >= $info['max_trainees_per_team']) {
       if (count($info['teams']) < $info['num_trainers']) {
         $info['teams'][]  = array();
@@ -82,8 +84,10 @@ function _ctl_onboarding_setup_teams($cohort_id) {
 
     // Add the accepted user to the team.
     $status = intval($registrant->status);
+
     if ($status === CTL_ONBOARDING_STATUS_ACCEPTED) {
-      $cur_team[] = $registrant->uid;
+      $cur_team[]         = $registrant->uid;
+      $registrant->status = CTL_ONBOARDING_STATUS_ASSIGNED;
     }
 
     $info['teams'][$info['cur_team']] = $cur_team;
@@ -101,11 +105,8 @@ function _ctl_onboarding_setup_teams($cohort_id) {
     $teams = $slot_info['teams'];
     foreach ($teams as $k => $team) {
       $node = _ctl_onboarding_create_team_node($cohort_id, $slot_code, $k + 1);
-      foreach ($team as &$registrant) {
-        if ($registrant->slot_code === $slot_code && $registrant->status === CTL_ONBOARDING_STATUS_ACCEPTED) {
-          _ctl_onboarding_add_team_member($node->nid, $registrant->uid);
-          $registrant->status = CTL_ONBOARDING_STATUS_ASSIGNED;
-        }
+      foreach ($team as $uid) {
+        _ctl_onboarding_add_team_member($node->nid, $uid);
       }
     }
   }
