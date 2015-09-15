@@ -93,6 +93,9 @@ function _ctl_onboarding_set_slots($cohort_id, $slot_codes) {
     // dsm($slot_code);
 
     if ($slot_code) {
+      // TODO
+      // - account for the case where registration is reopened from being previously closed
+
       // Upsert time slot info.
       db_merge('ctl_onboarding_slot')
         ->key(array(

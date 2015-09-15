@@ -32,12 +32,6 @@ function _ctl_onboarding_setup_teams($cohort_id) {
   shuffle($registrants);
 
   // TODO
-  // - i believe some decent optimization is possible in the following loop
-  //   - namely, setting up "processing groups" so that retreads through
-  //     $registrants become less needed
-  //     - see [[1]]
-
-  // TODO
   // - perhaps augment $slots instead of using $slot_infos
   $slot_infos = array();
 
@@ -52,10 +46,6 @@ function _ctl_onboarding_setup_teams($cohort_id) {
           break;
         }
       }
-
-      dsm('$slot');
-      dsm($slot);
-
       // Determine how trainees should be spread across teams.
       $num_trainers          = $slot->num_trainers;
       $num_registrants       = $slot->num_registrants;
@@ -99,23 +89,29 @@ function _ctl_onboarding_setup_teams($cohort_id) {
 
   // Create the new organic groups.
   foreach ($slot_infos as $slot_code => $slot_info) {
-
-
+    // TODO
+    // - do this
     // Delete previously existing teams.  This ensures that team
     // rosters are up to date with what registrants we have.
 
-
-    // Create the organic groups.
-    for ($i = 0, $l = $slot_info['num_trainers']; $i < $l; ++$i) {
-      $node = _ctl_onboarding_create_team_node($cohort_id, $slot_code, $i + 1);
-      // TODO
-      // - [[1]]
-      foreach ($registrants as $registrant) {
+    $teams = $slot_info['teams'];
+    foreach ($teams as $k => $team) {
+      $node = _ctl_onboarding_create_team_node($cohort_id, $slot_code, $k + 1);
+      foreach ($team as $registrant) {
         if ($registrant->slot_code === $slot_code) {
           _ctl_onboarding_add_team_member($node->nid, $registrant->uid);
         }
       }
     }
+
+    // for ($i = 0, $l = $slot_info['num_trainers']; $i < $l; ++$i) {
+    //   $node = _ctl_onboarding_create_team_node($cohort_id, $slot_code, $i + 1);
+    //   foreach ($registrants as $registrant) {
+    //     if ($registrant->slot_code === $slot_code && $registrant->status === CTL_ONBOARDING_STATUS_ACCEPTED) {
+    //       _ctl_onboarding_add_team_member($node->nid, $registrant->uid);
+    //     }
+    //   }
+    // }
   }
 }
 
@@ -127,7 +123,7 @@ function _ctl_onboarding_create_team_node($cohort_id, $slot_code, $team_number) 
 
   node_object_prepare($node);
 
-  $node->title = "Training Team - Cohort: $cohort_id, Slot: $slot_code";
+  $node->title = "Training Team - Cohort: $cohort_id, Slot: $slot_code, Team: $team_number";
 
   $team_description = 'Training Team';
   $node->body[LANGUAGE_NONE][0]['value']   = $team_description;

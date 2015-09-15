@@ -56,6 +56,9 @@ function ctl_onboarding_form($form, &$form_state) {
   //     '</style>',
   // );
 
+  // TODO
+  // - add visual indicators for statuses
+
   $registration_period = intval(variable_get('ctl_onboarding_registration_period', CTL_ONBOARDING_REGISTRATION_CLOSED));
   if ($registration_period === CTL_ONBOARDING_REGISTRATION_CLOSED) {
     $form['registration_closed'] = array(
