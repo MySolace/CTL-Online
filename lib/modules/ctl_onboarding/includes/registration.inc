@@ -10,21 +10,21 @@ function ctl_onboarding_form($form, &$form_state) {
   if (isset($form_state['storage'])) {
     $storage = $form_state['storage'];
     if (isset($storage['confirm_defer']) && $storage['confirm_defer']) {
-      $question    = 'Are you sure?';
+      $question    = 'Are you sure you want to defer?';
       $path        = 'registration';
-      $description = 'Defer !!!';
-      $yes         = 'Continue';
-      $no          = 'Start again';
-      $name        = 'qqqqqqqqqqqqqq';
+      $description = 'If you defer you can come back and sign up for training at a later date.';
+      $yes         = 'Yes, I wish to defer';
+      $no          = 'No, I do not wish to defer';
+      $name        = 'defer';
       return confirm_form($form, $question, $path, $description, $yes, $no, $name);
     }
     if (isset($storage['confirm_decline']) && $storage['confirm_decline']) {
-      $question    = 'Are you sure?';
+      $question    = 'Are you sure you want to decline?';
       $path        = 'registration';
-      $description = 's;ghj;dlghjldg;jh;lfkdjg';
-      $yes         = 'Continue';
-      $no          = 'Start again';
-      $name        = 'gdhdfghfg';
+      $description = 'If you decline you will not be able to sign up for training later.';
+      $yes         = 'Yes, I wish to decline';
+      $no          = 'No, I do not wish to decline';
+      $name        = 'decline';
       return confirm_form($form, $question, $path, $description, $yes, $no, $name);
     }
   }
@@ -135,8 +135,6 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
 
 
 function _ctl_onboarding_form_submit_defer($form, &$form_state) {
-  drupal_set_message(t("defer"));
-
   $form_state['rebuild'] = TRUE;
   $form_state['storage']['confirm_defer'] = TRUE;
 
@@ -145,8 +143,6 @@ function _ctl_onboarding_form_submit_defer($form, &$form_state) {
 
 
 function _ctl_onboarding_form_submit_decline($form, &$form_state) {
-  drupal_set_message(t("decline"));
-
   // drupal_set_message(var_export($form_state['clicked_button'], TRUE));
 
   // $form_state['rebuild'] = TRUE;

@@ -61,6 +61,8 @@ function _ctl_onboarding_setup_teams($cohort_id) {
         'cur_team'              => 0,
         'teams'                 => array(array()),
       );
+
+      // $cur_team = array();
     }
 
     $info     = $slot_infos[$slot_code];
@@ -77,14 +79,18 @@ function _ctl_onboarding_setup_teams($cohort_id) {
         $info['cur_team'] = count($info['teams']) - 1;
         $cur_team         = $info['teams'][$info['cur_team']];
       }
+      else {
+        // TODO
+        // - figure out how to specilly handle the "filled to capacity"
+        //   case if at all
+      }
     }
 
     // TODO
-    // - when the time is right account for different statuses
+    // - when the time is right account for more different statuses
 
     // Add the accepted user to the team.
     $status = intval($registrant->status);
-
     if ($status === CTL_ONBOARDING_STATUS_ACCEPTED) {
       $cur_team[]         = $registrant->uid;
       $registrant->status = CTL_ONBOARDING_STATUS_ASSIGNED;
