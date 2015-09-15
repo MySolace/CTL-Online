@@ -83,9 +83,9 @@ function ctl_onboarding_schema() {
         'length'      => 7,
         'not null'    => TRUE,
       ),
-      'max_trainers' => array(
+      'num_trainers' => array(
         'type'        => 'int',
-        'description' => 'The maximum number of trainers available.',
+        'description' => 'The number of trainers available.',
         'default'     => 0,
         'not null'    => TRUE,
         'unsigned'    => TRUE,

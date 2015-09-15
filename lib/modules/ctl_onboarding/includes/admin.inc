@@ -78,7 +78,7 @@ function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
   $creating_teams = $values['ctl_onboarding_creating_teams'];
 
   if ($creating_teams) {
-    _ctl_onboarding_create_teams($cohort_id);
+    _ctl_onboarding_setup_teams($cohort_id);
     return;
   }
 
@@ -97,7 +97,7 @@ function _ctl_onboarding_set_slots($cohort_id, $slots) {
           'slot_code' => $slot_code,
         ))
         ->fields(array(
-          'max_trainers'    => 2,
+          'num_trainers'    => 2,
           'num_registrants' => 0,
         ))
         ->execute();
