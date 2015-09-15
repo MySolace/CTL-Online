@@ -89,6 +89,9 @@ function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
 
 function _ctl_onboarding_set_slots($cohort_id, $slot_codes) {
   foreach ($slot_codes as $slot_code) {
+
+    // dsm($slot_code);
+
     if ($slot_code) {
       // Upsert time slot info.
       db_merge('ctl_onboarding_slot')
@@ -110,15 +113,4 @@ function _ctl_onboarding_set_slots($cohort_id, $slot_codes) {
       // }
     }
   }
-
-  // // Upsert trainee info.
-  // db_merge('ctl_graduation_progress')
-  //   ->key(array('uid' => $uid))
-  //   ->fields(array(
-  //     'did_live_sessions'       => $did_live_sessions,
-  //     'did_observation_shift'   => $did_observation_shift,
-  //     'did_roleplays'           => $did_roleplays,
-  //     'passed_final_evaluation' => $passed_final_evaluation,
-  //   ))
-  //   ->execute();
 }

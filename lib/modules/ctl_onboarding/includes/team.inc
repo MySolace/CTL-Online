@@ -127,7 +127,7 @@ function _ctl_onboarding_create_team_node($cohort_id, $slot_code, $team_number) 
 
   node_object_prepare($node);
 
-  $node->title = "Training Team:  Cohort $cohort_id - Slot $slot_code";
+  $node->title = "Training Team - Cohort: $cohort_id, Slot: $slot_code";
 
   $team_description = 'Training Team';
   $node->body[LANGUAGE_NONE][0]['value']   = $team_description;
