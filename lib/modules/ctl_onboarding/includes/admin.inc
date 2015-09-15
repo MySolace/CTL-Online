@@ -4,8 +4,8 @@ require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '
 
 
 function _ctl_onboarding_settings_form() {
-  $days  = array('m', 'tu', 'w', 'th', 'f', 'sa', 'su');
-  $slots = array();
+  $days       = array('m', 'tu', 'w', 'th', 'f', 'sa', 'su');
+  $slot_codes = array();
 
   // Setup the selectable time slots.
   for ($i = 0, $l = count($days); $i < $l; ++$i) {
@@ -13,7 +13,7 @@ function _ctl_onboarding_settings_form() {
       $start_hour_display  = _ctl_onboarding_format_hour_display($hour);
       $finish_hour_display = _ctl_onboarding_format_hour_display($hour + CTL_ONBOARDING_SESSION_DURATION);
 
-      $slots[$days[$i] . '-' . $hour] = $start_hour_display . ' - ' . $finish_hour_display;
+      $slot_codes[$days[$i] . '-' . $hour] = $start_hour_display . ' - ' . $finish_hour_display;
     }
   }
 
@@ -56,11 +56,11 @@ function _ctl_onboarding_settings_form() {
     '#default_value' => variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY),
     '#required'      => TRUE,
   );
-  $form['ctl_onboarding_slots'] = array(
+  $form['ctl_onboarding_slot_codes'] = array(
     '#type'          => 'checkboxes',
     '#title'         => t('Choose time slots to have available for registration'),
-    '#options'       => $slots,
-    '#default_value' => variable_get('ctl_onboarding_slots'),
+    '#options'       => $slot_codes,
+    '#default_value' => variable_get('ctl_onboarding_slot_codes'),
     '#theme'         => array('ctl_onboarding_table'),
     '#showing_all'   => TRUE,
   );
@@ -82,13 +82,13 @@ function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
     return;
   }
 
-  $slots = $values['ctl_onboarding_slots'];
-  _ctl_onboarding_set_slots($cohort_id, $slots);
+  $slot_codes = $values['ctl_onboarding_slot_codes'];
+  _ctl_onboarding_set_slots($cohort_id, $slot_codes);
 }
 
 
-function _ctl_onboarding_set_slots($cohort_id, $slots) {
-  foreach ($slots as $slot_code) {
+function _ctl_onboarding_set_slots($cohort_id, $slot_codes) {
+  foreach ($slot_codes as $slot_code) {
     if ($slot_code) {
       // Upsert time slot info.
       db_merge('ctl_onboarding_slot')

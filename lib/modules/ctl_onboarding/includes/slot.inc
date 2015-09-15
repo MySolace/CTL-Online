@@ -46,7 +46,7 @@ function _ctl_onboarding_slot_register($slot_code, $uid) {
   $cohort_id = intval(variable_get('ctl_onboarding_cohort_id'));
 
   $query = db_select('ctl_onboarding_slot', 's');
-  $query->addField('s', 'max_trainers');
+  $query->addField('s', 'num_trainers');
   $query->addField('s', 'num_registrants');
   $result = $query
     ->condition('s.cohort_id', $cohort_id)
@@ -60,11 +60,11 @@ function _ctl_onboarding_slot_register($slot_code, $uid) {
   }
 
   $slot             = $result[0];
-  $max_trainers     = $slot->max_trainers;
+  $num_trainers     = $slot->num_trainers;
   $num_registrants  = $slot->num_registrants;
   $trainer_capacity = variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY);
 
-  if ($num_registrants >= $trainer_capacity * $max_trainers) {
+  if ($num_registrants >= $trainer_capacity * $num_trainers) {
     drupal_set_message(t('Sorry, registration for this time slot is full!  Please select another time slot'), 'error');
     // TODO
     // - future work for wait listing would happen here

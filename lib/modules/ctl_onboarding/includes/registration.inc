@@ -78,7 +78,7 @@ function ctl_onboarding_form($form, &$form_state) {
   );
   $form['training_slot'] = array(
     '#type'    => 'radios',
-    '#options' => variable_get('ctl_onboarding_slots'),
+    '#options' => variable_get('ctl_onboarding_slot_codes'),
     '#theme'   => array('ctl_onboarding_table'),
   );
   $form['register'] = array(
