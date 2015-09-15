@@ -32,12 +32,12 @@ function _ctl_onboarding_setup_teams($cohort_id) {
   shuffle($registrants);
 
   // From the registrats' info we can determine what teams need to be created.
-  $slot_info = array();
+  $slot_infos = array();
   foreach ($registrants as $registrant) {
     $slot_code = $registrant->slot_code;
 
     // Setup time slot info if it doesn't exist yet.
-    if (!isset($slot_info[$slot_code])) {
+    if (!isset($slot_infos[$slot_code])) {
       foreach ($slots as $slot) {
         if ($slot->slot_code === $slot_code) {
           break;
@@ -51,7 +51,7 @@ function _ctl_onboarding_setup_teams($cohort_id) {
       $num_trainers          = $slot->num_trainers;
       $num_registrants       = $slot->num_registrants;
       $max_trainees_per_team = intval(ceil($num_registrants / $num_trainers));
-      $slot_info[$slot_code] = array(
+      $slot_infos[$slot_code] = array(
         'num_trainers'          => $num_trainers,
         'max_trainees_per_team' => $max_trainees_per_team,
         'cur_team'              => 0,
@@ -59,58 +59,45 @@ function _ctl_onboarding_setup_teams($cohort_id) {
       );
     }
 
-    $info     = $slot_info[$slot_code];
+    $info     = $slot_infos[$slot_code];
     $cur_team = $info['teams'][$info['cur_team']];
-    if (empty($cur_team)) {
 
+    // If the current team is full then form a new one if possible.
+    // TODO
+    // - for the future make sure team creation factors in registrant
+    // statuses (e.g. no team needs to be formed if its members would
+    // all have been dropped)
+    if (count($cur_team) >= $info['max_trainees_per_team']) {
+      if (count($info['teams']) < $info['num_trainers']) {
+        $info['teams'][]  = array();
+        $info['cur_team'] = count($info['teams']) - 1;
+        $cur_team         = $info['teams'][$info['cur_team']];
+      }
     }
-    else if (count($cur_team) >= $info['max_trainees_per_team']) {
-
-    }
-
-    // $slot_info[$slot_code]['teams'][$cur_team][trainee];
-
-    // Distribute users into the new teams.
-
-    $status = intval($registrant->status);
 
     // TODO
     // - when the time is right account for different statuses
 
-    // Add accepted the users to the team.
+    // Add the accepted user to the team.
+    $status = intval($registrant->status);
     if ($status === CTL_ONBOARDING_STATUS_ACCEPTED) {
-
-      // $slot_code = $registrant->slot_code;
-
-
+      $cur_team[] = $registrant->uid;
     }
+
+    $info['teams'][$info['cur_team']] = $cur_team;
+    $slot_infos[$slot_code]           = $info;
   }
 
-
-
-
-  // dsm($slots);
-
-  foreach ($slots as $slot) {
-    $slot_code       = $slot->slot_code;
-
-
-    // calculate user/team number balance
-
-
-
+  // Create the new organic groups.
+  foreach ($slot_infos as $slot_info) {
 
 
     // Delete previously existing teams.  This ensures that team
     // rosters are up to date with what registrants we have.
 
-
-
-
-    // Create new teams.
+    $num_trainers = ...;
 
     for ($i = 0, $l = count($num_trainers); $i < $l; ++$i) {
-
       $node = _ctl_onboarding_create_team_node($cohort_id, $slot_code, $i + 1);
 
       // for () {
@@ -118,8 +105,6 @@ function _ctl_onboarding_setup_teams($cohort_id) {
       // }
 
     }
-
-
   }
 }
 
