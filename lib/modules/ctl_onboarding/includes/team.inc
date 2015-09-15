@@ -32,12 +32,60 @@ function _ctl_onboarding_setup_teams($cohort_id) {
   shuffle($registrants);
 
   // From the registrats' info we can determine what teams need to be created.
-  // TODO
-  // - when the time is right account for different statuses
-  $slot_codes = array();
+  $slot_info = array();
   foreach ($registrants as $registrant) {
-    $slot_codes[] = $registrant->slot_code;
+    $slot_code = $registrant->slot_code;
+
+    // Setup time slot info if it doesn't exist yet.
+    if (!isset($slot_info[$slot_code])) {
+      foreach ($slots as $slot) {
+        if ($slot->slot_code === $slot_code) {
+          break;
+        }
+      }
+
+      dsm('$slot');
+      dsm($slot);
+
+      // Determine how trainees should be spread across teams.
+      $num_trainers          = $slot->num_trainers;
+      $num_registrants       = $slot->num_registrants;
+      $max_trainees_per_team = intval(ceil($num_registrants / $num_trainers));
+      $slot_info[$slot_code] = array(
+        'num_trainers'          => $num_trainers,
+        'max_trainees_per_team' => $max_trainees_per_team,
+        'cur_team'              => 0,
+        'teams'                 => array(),
+      );
+    }
+
+    $info     = $slot_info[$slot_code];
+    $cur_team = $info['teams'][$info['cur_team']];
+    if (empty($cur_team)) {
+
+    }
+    else if (count($cur_team) >= $info['max_trainees_per_team']) {
+
+    }
+
+    // $slot_info[$slot_code]['teams'][$cur_team][trainee];
+
+    // Distribute users into the new teams.
+
+    $status = intval($registrant->status);
+
+    // TODO
+    // - when the time is right account for different statuses
+
+    // Add accepted the users to the team.
+    if ($status === CTL_ONBOARDING_STATUS_ACCEPTED) {
+
+      // $slot_code = $registrant->slot_code;
+
+
+    }
   }
+
 
 
 
@@ -45,8 +93,6 @@ function _ctl_onboarding_setup_teams($cohort_id) {
 
   foreach ($slots as $slot) {
     $slot_code       = $slot->slot_code;
-    $num_trainers    = $slot->num_trainers;
-    $num_registrants = $slot->num_registrants;
 
 
     // calculate user/team number balance
@@ -67,35 +113,13 @@ function _ctl_onboarding_setup_teams($cohort_id) {
 
       $node = _ctl_onboarding_create_team_node($cohort_id, $slot_code, $i + 1);
 
-
+      // for () {
+      //   _ctl_onboarding_add_team_member($node->nid, $registrant->uid);
+      // }
 
     }
 
 
-
-
-
-
-
-
-    // Distribute users into the new teams.
-    foreach ($registrants as $registrant) {
-      $status = intval($registrant->status);
-
-      // TODO
-      // - handle more statuses
-
-      // Add accepted the users to the team.
-      if ($status === CTL_ONBOARDING_STATUS_ACCEPTED) {
-
-        // $slot_code = $registrant->slot_code;
-
-
-        _ctl_onboarding_add_team_member($node->nid, $registrant->uid);
-
-
-      }
-    }
   }
 }
 
