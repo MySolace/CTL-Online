@@ -35,6 +35,9 @@ function _ctl_onboarding_setup_teams($cohort_id) {
   // - perhaps augment $slots instead of using $slot_infos
   $slot_infos = array();
 
+  // TODO
+  // - there may be some optimizations if we use array references more
+
   // From the registrats' info we can determine what teams need to be created.
   foreach ($registrants as $registrant) {
     $slot_code = $registrant->slot_code;
@@ -94,24 +97,17 @@ function _ctl_onboarding_setup_teams($cohort_id) {
     // Delete previously existing teams.  This ensures that team
     // rosters are up to date with what registrants we have.
 
+    // Create the organic groups for the teams.
     $teams = $slot_info['teams'];
     foreach ($teams as $k => $team) {
       $node = _ctl_onboarding_create_team_node($cohort_id, $slot_code, $k + 1);
-      foreach ($team as $registrant) {
-        if ($registrant->slot_code === $slot_code) {
+      foreach ($team as &$registrant) {
+        if ($registrant->slot_code === $slot_code && $registrant->status === CTL_ONBOARDING_STATUS_ACCEPTED) {
           _ctl_onboarding_add_team_member($node->nid, $registrant->uid);
+          $registrant->status = CTL_ONBOARDING_STATUS_ASSIGNED;
         }
       }
     }
-
-    // for ($i = 0, $l = $slot_info['num_trainers']; $i < $l; ++$i) {
-    //   $node = _ctl_onboarding_create_team_node($cohort_id, $slot_code, $i + 1);
-    //   foreach ($registrants as $registrant) {
-    //     if ($registrant->slot_code === $slot_code && $registrant->status === CTL_ONBOARDING_STATUS_ACCEPTED) {
-    //       _ctl_onboarding_add_team_member($node->nid, $registrant->uid);
-    //     }
-    //   }
-    // }
   }
 }
 

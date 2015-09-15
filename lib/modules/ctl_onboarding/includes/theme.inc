@@ -17,10 +17,10 @@ function theme_ctl_onboarding_table($variables) {
     t('Sunday'),
   );
 
-  $days = array('m', 'tu', 'w', 'th', 'f', 'sa', 'su');
+  $days             = array('m', 'tu', 'w', 'th', 'f', 'sa', 'su');
   $first_start_hour = 800;
-  $last_start_hour = 1900;
-  $rows = array();
+  $last_start_hour  = 1900;
+  $rows             = array();
 
   // Setup the table.
   for ($hour = $first_start_hour; $hour <= $last_start_hour; $hour += 100) {
