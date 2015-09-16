@@ -168,6 +168,10 @@ function _ctl_onboarding_set_team_trainer($uid) {
 
   // add trainer to group
 
+  // make the trainer the group admin
+
+  // update the group members' "Trainer" field
+
 }
 
 
