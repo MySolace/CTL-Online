@@ -64,8 +64,6 @@ function _ctl_onboarding_setup_teams($cohort_id) {
         'cur_team'              => 0,
         'teams'                 => array(array()),
       );
-
-      // $cur_team = array();
     }
 
     $info     = $slot_infos[$slot_code];
@@ -156,6 +154,20 @@ function _ctl_onboarding_create_team_node($cohort_id, $slot_code, $team_number) 
   node_save($node);
 
   return $node;
+}
+
+
+/**
+ * Assigns a trainer to a team and makes them the leader.
+ * @param  int $uid    The user ID for the trainer to assign.
+ */
+function _ctl_onboarding_set_team_trainer($uid) {
+  $user = user_load($uid);
+  _ctl_onboarding_add_group_user($node->nid, $user);
+
+
+  // add trainer to group
+
 }
 
 

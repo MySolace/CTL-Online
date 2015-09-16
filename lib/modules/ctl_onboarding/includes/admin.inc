@@ -34,11 +34,12 @@ function _ctl_onboarding_settings_form() {
     '#description'   => 'Note: You can use this to recreate teams if they already exist.  With great power comes great repsonsibility!',
   );
   $form['ctl_onboarding_cohort_id'] = array(
-    '#type'          => 'textfield',
+    '#type'          => 'select',
     '#title'         => t('Cohort #'),
     '#default_value' => variable_get('ctl_onboarding_cohort_id'),
-    // '#element_validate' => array('_ctl_onboarding_cohort_id_validate'),
     '#required'      => TRUE,
+    // We have the same range of choices as the cohort user field.
+    '#options' => range(1, 20),
   );
   $form['ctl_onboarding_registration_start_date'] = array(
     '#type'          => 'date',
