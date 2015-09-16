@@ -1,5 +1,8 @@
 <?php
 
+require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
+
+
 function _ctl_onboarding_setup_teams($cohort_id) {
   // Gather the registrants for the cohort.
   $query = db_select('ctl_onboarding_registrant', 'r');
@@ -112,7 +115,14 @@ function _ctl_onboarding_setup_teams($cohort_id) {
     foreach ($teams as $k => $team) {
       $node = _ctl_onboarding_create_team_node($cohort_id, $slot_code, $k + 1);
       foreach ($team as $uid) {
-        _ctl_onboarding_add_team_member($node->nid, $uid);
+        _ctl_onboarding_set_user_role($uid, CTL_ONBOARDING_ROLE_TRAINEE);
+
+        // Assign the cohort number to the user.
+        $user = user_load($uid);
+        $user->field_cohort[LANGUAGE_NONE][0]['value'] = $cohort_id;
+        user_save($user);
+
+        _ctl_onboarding_add_group_user($node->nid, $user);
       }
     }
   }
@@ -149,11 +159,25 @@ function _ctl_onboarding_create_team_node($cohort_id, $slot_code, $team_number) 
 }
 
 
-function _ctl_onboarding_add_team_member($nid, $uid) {
-  $user = user_load($uid);
-  og_group('node', $nid, array(
-    'entity type'     => 'user',
-    'entity'          => $user,
-    'membership type' => OG_MEMBERSHIP_TYPE_DEFAULT,
-  ));
+/**
+ * Ensures that a user has only a one role out of a set of related roles.
+ * @param int    $uid          The user ID.
+ * @param string $role_name    The name of the role to set.
+ */
+function _ctl_onboarding_set_user_role($uid, $role_name) {
+  // Remove all the roles we don't want the user to have.
+  $role_names = array(
+    CTL_ONBOARDING_ROLE_ACCEPTED,
+    CTL_ONBOARDING_ROLE_INVITED,
+    CTL_ONBOARDING_ROLE_DEFERRED,
+    CTL_ONBOARDING_ROLE_DECLINED,
+    CTL_ONBOARDING_ROLE_TRAINEE,
+  );
+  foreach ($role_names as $cur_role_name) {
+    if ($cur_role_name !== $role_name) {
+      _ctl_onboarding_remove_user_role($uid, $cur_role_name);
+    }
+  }
+  // Assign the user the role we want them to have.
+  _ctl_onboarding_add_user_roles($uid, array($role_name));
 }

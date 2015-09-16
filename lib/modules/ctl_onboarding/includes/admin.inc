@@ -76,12 +76,10 @@ function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
   $values         = $form_state['values'];
   $cohort_id      = intval($values['ctl_onboarding_cohort_id']);
   $creating_teams = $values['ctl_onboarding_creating_teams'];
-
   if ($creating_teams) {
     _ctl_onboarding_setup_teams($cohort_id);
     return;
   }
-
   $slot_codes = $values['ctl_onboarding_slot_codes'];
   _ctl_onboarding_set_slots($cohort_id, $slot_codes);
 }

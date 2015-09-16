@@ -1,5 +1,11 @@
 <?php
 
+define('CTL_ONBOARDING_ROLE_ACCEPTED', 'Accepted');
+define('CTL_ONBOARDING_ROLE_INVITED', 'Invited');
+define('CTL_ONBOARDING_ROLE_DEFERRED', 'Deferred');
+define('CTL_ONBOARDING_ROLE_DECLINED', 'Dropout');
+define('CTL_ONBOARDING_ROLE_TRAINEE', 'Trainee');
+
 define('CTL_ONBOARDING_REGISTRATION_CLOSED', 0);
 define('CTL_ONBOARDING_REGISTRATION_OPEN', 1);
 
@@ -17,7 +23,7 @@ define('CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY', 35);
 define('CTL_ONBOARDING_FIRST_START_HOUR', 800);
 define('CTL_ONBOARDING_LAST_START_HOUR', 1900);
 define('CTL_ONBOARDING_ONE_HOUR', 100);
-define('CTL_ONBOARDING_SESSION_DURATION', 1900);
+define('CTL_ONBOARDING_SESSION_DURATION', 400);
 
 require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
 
