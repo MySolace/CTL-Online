@@ -52,10 +52,11 @@ function _ctl_onboarding_settings_form() {
     '#default_value' => variable_get('ctl_onboarding_registration_finish_date'),
   );
   $form['ctl_onboarding_trainer_capacity'] = array(
-    '#type'          => 'textfield',
-    '#title'         => t('Number of trainees per session a trainer can handle'),
-    '#default_value' => variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY),
-    '#required'      => TRUE,
+    '#type'             => 'textfield',
+    '#title'            => t('Number of trainees per session a trainer can handle'),
+    '#default_value'    => variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY),
+    '#element_validate' => array('element_validate_number'),
+    '#required'         => TRUE,
   );
   $form['ctl_onboarding_slot_codes'] = array(
     '#type'          => 'checkboxes',
