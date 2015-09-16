@@ -3,6 +3,38 @@
 require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
 
 
+/**
+* Implements hook_block_info().
+*/
+function ctl_onboarding_block_info() {
+  $blocks['ctl_onboarding_'] = array(
+    'info' => t('YOUR BLOCK NAME'),
+  );
+  return $blocks;
+}
+
+
+/**
+* Implements hook_block_view().
+*/
+function ctl_onboarding_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'YOUR_BLOCK_ABC':
+      $block['subject'] = '';
+      $block['content'] = _ctl_onboarding_block_content();
+      break;
+  }
+  return $block;
+}
+
+
+function _ctl_onboarding_block_content() {
+  $output = t('Hello world');
+  return $output;
+}
+
+
 function _ctl_onboarding_setup_teams($cohort_id) {
   // Gather the registrants for the cohort.
   $query = db_select('ctl_onboarding_registrant', 'r');
@@ -158,15 +190,15 @@ function _ctl_onboarding_create_team_node($cohort_id, $slot_code, $team_number) 
 
 
 /**
- * Assigns a trainer to a team and makes them the leader.
+ * Assigns a trainer to a team and makes them the group admin.
  * @param  int $uid    The user ID for the trainer to assign.
  */
-function _ctl_onboarding_set_team_trainer($uid) {
-  $user = user_load($uid);
-  _ctl_onboarding_add_group_user($node->nid, $user);
+function _ctl_onboarding_set_team_trainer($trainer_uid) {
+  // Add the trainer to group.
+  $trainer_user = user_load($trainer_uid);
+  _ctl_onboarding_add_group_user($node->nid, $trainer_user);
 
 
-  // add trainer to group
 
   // make the trainer the group admin
 
