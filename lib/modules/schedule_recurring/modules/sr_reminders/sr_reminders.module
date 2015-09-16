@@ -1,0 +1,159 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function sr_reminders_menu() {
+  $items = array();
+
+  $items['schedule/reminders'] = array(
+    'title' => t('Shift reminder settings'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('sr_reminders_form'),
+    'access arguments' => array('sign up for shifts'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements
+ */
+function sr_reminders_form($form, $form_state) {
+  global $user;
+
+  $on = isset($user->data['sr_reminder']);
+  $time = ($on) ? $user->data['sr_reminder'] : 3;
+
+  $form = array();
+
+  // text me
+  $form['toggle'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Text me reminders before my shift.'),
+    '#default_value' => $on,
+  );
+
+  $form['hours'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Reminder'),
+    '#field_prefix' => t('Remind me '),
+    '#field_suffix' => t('hours before my scheduled shift.'),
+    '#size' => 3,
+    '#element_validate' => array('element_validate_integer_positive'),
+    '#default_value' => $time,
+    '#states' => array(
+      'visible' => array(
+        ':input[name="toggle"]' => array('checked' => TRUE),
+      ),
+    ),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Save',
+  );
+
+  return $form;
+}
+
+function sr_reminders_form_submit($form, &$form_state) {
+  global $user;
+
+  if ($form_state['values']['toggle'] === 0) {
+    unset($user->data['sr_reminder']);
+  } else {
+    $user->data['sr_reminder'] = intval($form_state['values']['hours']);
+  }
+
+  user_save($user);
+}
+
+/**
+ * Implements hook_cron().
+ */
+function sr_reminders_cron() {
+  // Only run at the top of every hour
+  $last_run = variable_get('sr_reminders_last_run', -1);
+
+  if ($last_run == date('G')) {
+    return;
+  }
+
+  variable_set('sr_reminders_last_run', date('G'));
+
+  // load up all users who have shifts and who have reminders set
+  $day = date('w');
+  $now = date('G');
+  $now = ($now == '0') ? $now : $now . '00';
+
+  $q = db_select('users', 'u');
+
+  $q->fields('u', array('uid'));
+  $q->condition('u.data', '%sr_reminder%', 'LIKE');
+
+  $res = $q->execute()->fetchAllAssoc('uid');
+
+  $users = user_load_multiple(array_keys($res));
+
+  foreach ($users as $user) {
+    $reminder = $user->data['sr_reminder'];
+
+    if ($shifts = field_get_items('user', $user, 'field_shifts')) {
+      foreach ($shifts as $shift) {
+        $alert_time = intval($shift['start']) - $reminder * 100;
+        $alert_day = intval($shift['day']);
+
+        while ($alert_time < 0) {
+          $alert_time = 2400 + $alert_time;
+          $alert_day = ($alert_day == 0) ? 6 : $alert_day - 1;
+        }
+
+        if ($alert_time == $now && $alert_day == $day) {
+          $text = variable_get('schedule_recurring_shift_reminder');
+
+          if (strpos($text, '%shift') !== FALSE) {
+            $text_day = '';
+
+            if ($day == $shift['day']) {
+              $text_day = 'today';
+            } else if ($day+1 == $shift['day'] || ($day+1 == 7 && $shift['day'] == 0)) {
+              $text_day = 'tomorrow';
+            } else {
+              $temp = _schedule_recurring_days(FALSE);
+              $text_day = strtolower($temp[intval($shift['day'])]);
+            }
+            $temp = _schedule_recurring_times();
+            $text_time = $temp[intval($shift['start'])];
+
+            $replace = $text_day . ' at ' . $text_time;
+
+            $text = str_replace('%shift', $replace, $text);
+          }
+
+          if (strpos($text, '%hours') !== FALSE) {
+            $hours = (($reminder) == 1) ? '1 hour' : $reminder . ' hours';
+            $text = str_replace('%hours', $hours, $text);
+          }
+
+          twilio_send($user->twilio_user['number'], $text, $user->twilio_user['country']);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function sr_reminders_form_schedule_recurring_admin_alter(&$form, &$form_state) {
+  $form['schedule_recurring_shift_reminder'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Shift reminder'),
+    '#rows' => 1,
+    '#description' => t('Text to send for shift reminders. %shift will be replaced with "today at 3" or "tomorrow at 4". %hours will be replaced with "3 hours" or "1 hour" for use in "3 hours until your shift"'),
+    '#default_value' => variable_get('schedule_recurring_shift_reminder', ''),
+  );
+}
+

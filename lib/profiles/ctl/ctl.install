@@ -25,7 +25,7 @@ function ctl_configure() {
     ->condition('name', array('adminimal', 'ctl'), 'IN')
     ->execute();
 
-  variable_set('admin_theme', 'ctl_theme');
+  variable_set('admin_theme', 'adminimal');
   variable_set('theme_default', 'ctl_theme');
 }
 
