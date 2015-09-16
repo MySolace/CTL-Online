@@ -42,25 +42,11 @@ function ctl_graduation_permission() {
 }
 
 
-// function ctl_graduation_preprocess(&$vars, $hook) {
-//   if (!empty($vars['theme_hook_suggestions'])) {
-//     drupal_set_message(t('Hook - @hook', array('@hook' => $hook)));
-//     drupal_set_message(var_export($vars['theme_hook_suggestions'], TRUE));
-//   }
-// }
-
-
 /**
  * Implements hook_theme().
  */
 function ctl_graduation_theme($existing, $type, $theme, $path) {
   if ($type === 'module') {
-    // $themes['block__certificate'] = array(
-    //   'template' => 'templates/block--certificate',
-    // );
-    // $themes['html__certificate'] = array(
-    //   'template' => 'templates/html--certificate',
-    // );
     $themes['page__certificate'] = array(
       'template' => 'templates/page--certificate',
       'variables' => array(
@@ -80,17 +66,3 @@ function ctl_graduation_theme($existing, $type, $theme, $path) {
   }
   return $themes;
 }
-
-
-/**
- * Implements hook_theme_registry_alter().
- */
-// function ctl_graduation_theme_registry_alter(&$theme_registry) {
-//   drupal_set_message(var_export(array_keys($theme_registry), TRUE));
-
-//   $theme_registry['search_results']['theme paths'] = array(0 => drupal_get_path('module', 'mymodule') . '/templates');
-//   $theme_registry['search_results']['theme path'] = drupal_get_path('module', 'mymodule') . '/templates';
-//   $theme_registry['search_results']['path'] = drupal_get_path('module', 'mymodule') . '/templates';
-//   // tell the theme system to use 'search-results.tpl.php' as the template file. Note that you do not include 'tpl.php'
-//   $theme_registry['search_results']['template'] = 'search-results';
-// }

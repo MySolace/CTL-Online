@@ -14,17 +14,24 @@ function ctl_graduation_mail($key, &$message, $params) {
   $graduate_last_name  = $graduate_user->field_last_name[LANGUAGE_NONE][0]['safe_value'];
   $graduate_name       = "$graduate_first_name $graduate_last_name";
 
-  $trainer_uid        = $graduate_user->field_trainer[LANGUAGE_NONE][0]['target_id'];
-  $trainer_user       = user_load($trainer_uid);
-  $trainer_first_name = $trainer_user->field_first_name[LANGUAGE_NONE][0]['safe_value'];
-  $trainer_last_name  = $trainer_user->field_last_name[LANGUAGE_NONE][0]['safe_value'];
-  $trainer_name       = "$trainer_first_name $trainer_last_name";
+  $trainer_uid = $graduate_user->field_trainer[LANGUAGE_NONE][0]['target_id'];
+  $trainer_user = user_load($trainer_uid);
+  if ($trainer_user) {
+    // $trainer_name = format_username($user);
+    $trainer_first_name = $trainer_user->field_first_name[LANGUAGE_NONE][0]['safe_value'];
+    $trainer_last_name  = $trainer_user->field_last_name[LANGUAGE_NONE][0]['safe_value'];
+    $trainer_name = "$trainer_first_name $trainer_last_name";
+  }
+  else {
+    $trainer_name = 'Patty Morrissey';
+  }
 
   $email_message = theme('graduation_message', array(
     'graduate_name' => $graduate_name,
     'graduate_uid'  => $graduate_uid,
     'trainer_name'  => $trainer_name,
   ));
+  $email_message = token_replace($email_message);
 
   $options = array(
     'langcode' => $message['language']->language,

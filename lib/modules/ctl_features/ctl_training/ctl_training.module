@@ -69,6 +69,7 @@ function _ctl_training_get_trainees() {
 
     $q = new EntityFieldQuery('entity_type', 'user');
     $q->fieldCondition('field_trainer', 'target_id', $user->uid, '=');
+    $q->fieldOrderBy('field_first_name', 'value');
     $res = $q->execute();
 
     if (isset($res['user'])) {
