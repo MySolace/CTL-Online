@@ -71,13 +71,23 @@ function ctl_onboarding_form($form, &$form_state) {
   $registration_start_date  = variable_get('ctl_onboarding_registration_start_date', '[X]');
   $registration_finish_date = variable_get('ctl_onboarding_registration_finish_date', '[X]');
 
+  $year  = $registration_start_date['year'];
+  $month = $registration_start_date['month'];
+  $day   = $registration_start_date['day'];
+  $registration_start_date = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
+
+  $year  = $registration_finish_date['year'];
+  $month = $registration_finish_date['month'];
+  $day   = $registration_finish_date['day'];
+  $registration_finish_date = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
+
   $form['instructions'] = array(
     '#type'   => 'markup',
     '#markup' => "<p>Register for a training session.</p>",
   );
   $form['policies'] = array(
     '#type'   => 'markup',
-    '#markup' => "<p>Policies: Registration occurs between $registration_start_date date and $registration_finish_date date. After that, we are only able to accomodate 2 schedule changes.  Training will occur for 6 weeks.</p>",
+    '#markup' => "<p>Policies: Registration occurs between $registration_start_date and $registration_finish_date. After that, we are only able to accomodate 2 schedule changes.  Training will occur for 6 weeks.</p>",
   );
   $form['training_slot'] = array(
     '#type'    => 'radios',

@@ -40,15 +40,15 @@ function _ctl_onboarding_settings_form() {
     // '#element_validate' => array('_ctl_onboarding_cohort_id_validate'),
     '#required'      => TRUE,
   );
-  $form['ctl_onboarding_cohort_registration_start_date'] = array(
+  $form['ctl_onboarding_registration_start_date'] = array(
     '#type'          => 'date',
     '#title'         => t('Start of sign-up'),
-    '#default_value' => variable_get('ctl_onboarding_cohort_registration_start_date'),
+    '#default_value' => variable_get('ctl_onboarding_registration_start_date'),
   );
-  $form['ctl_onboarding_cohort_registration_finish_date'] = array(
+  $form['ctl_onboarding_registration_finish_date'] = array(
     '#type'          => 'date',
     '#title'         => t('End of sign-up'),
-    '#default_value' => variable_get('ctl_onboarding_cohort_registration_finish_date'),
+    '#default_value' => variable_get('ctl_onboarding_registration_finish_date'),
   );
   $form['ctl_onboarding_trainer_capacity'] = array(
     '#type'          => 'textfield',
