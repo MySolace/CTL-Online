@@ -147,8 +147,11 @@ function _ctl_graduation_form_submit_update($form, &$form_state) {
  */
 function _ctl_graduation_form_validate_graduate($form, &$form_state) {
   $form_values = $form_state['values'];
-  $unmet_requirements = array(_ctl_graduation_courses_completed($form_values['uid']))
-                      + $form_values['additional_requirements'];
+  // TODO
+  // - restore this line when the time is right
+  // $unmet_requirements = array(_ctl_graduation_courses_completed($form_values['uid']))
+  //                     + $form_values['additional_requirements'];
+  $unmet_requirements = $form_values['additional_requirements'];
   $unmet_requirements = array_filter($unmet_requirements, function ($v) { return empty($v); });
   if (!empty($unmet_requirements)) {
     form_set_error('additional_requirements', t('The trainee must pass all the requirements.'));
