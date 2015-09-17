@@ -99,7 +99,10 @@ function ctl_graduation_form($form, &$form_state, $uid) {
     '#submit' => array('_ctl_graduation_form_submit_update'),
   );
 
-  if (_ctl_graduation_courses_completed($uid) && empty($remaining_tasks)) {
+  // TODO
+  // - restore this line when the time is right
+  // if (_ctl_graduation_courses_completed($uid) && empty($remaining_tasks)) {
+  if (empty($remaining_tasks)) {
     $form['graduate'] = array(
       '#type'     => 'submit',
       '#value'    => 'Graduate',
