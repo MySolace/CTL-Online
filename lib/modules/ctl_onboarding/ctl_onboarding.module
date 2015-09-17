@@ -19,6 +19,8 @@ define('CTL_ONBOARDING_STATUS_DROPPED_OTHER', 6);
 
 define('CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY', 35);
 
+define('CTL_ONBOARDING_MAX_TRAINERS_PER_SLOT', 10);
+
 // Hours are defined in 24-hour clock time (a.k.a. military time).
 define('CTL_ONBOARDING_FIRST_START_HOUR', 800);
 define('CTL_ONBOARDING_LAST_START_HOUR', 1900);
@@ -85,6 +87,11 @@ function ctl_onboarding_permission() {
 function ctl_onboarding_theme($existing, $type, $theme, $path) {
   return array(
     'ctl_onboarding_table' => array(
+      'render element' => 'element',
+      'file'           => 'includes/theme.inc',
+    ),
+
+    'ctl_onboarding_table_2' => array(
       'render element' => 'element',
       'file'           => 'includes/theme.inc',
     ),

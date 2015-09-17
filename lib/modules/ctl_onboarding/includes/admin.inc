@@ -52,11 +52,11 @@ function _ctl_onboarding_settings_form() {
     '#default_value' => variable_get('ctl_onboarding_registration_finish_date'),
   );
   $form['ctl_onboarding_trainer_capacity'] = array(
-    '#type'             => 'textfield',
-    '#title'            => t('Number of trainees per session a trainer can handle'),
-    '#default_value'    => variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY),
-    '#element_validate' => array('element_validate_number'),
-    '#required'         => TRUE,
+    '#type'          => 'select',
+    '#title'         => t('Number of trainees per team'),
+    '#default_value' => variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY),
+    '#options'       => range(20, 50, 5),
+    '#required'      => TRUE,
   );
   $form['ctl_onboarding_slot_codes'] = array(
     '#type'          => 'checkboxes',
@@ -67,6 +67,23 @@ function _ctl_onboarding_settings_form() {
     '#showing_all'   => TRUE,
   );
 
+
+  $form['ctl_onboarding_slot_codes_2'] = array(
+    '#type'          => 'checkboxes',
+    '#title'         => t('Choose time slots to have available for registration'),
+    '#options'       => $slot_codes,
+    '#default_value' => variable_get('ctl_onboarding_slot_codes'),
+    '#theme'         => array('ctl_onboarding_table_2'),
+    '#tree'          => TRUE,
+    '#showing_all'   => TRUE,
+  );
+  // $form['ctl_onboarding_slot_codes_2']['a'] = array(
+  //   '#type'    => 'textfield',
+  //   '#title'   => t('n'),
+  //   '#options' => range(20, 50, 5),
+  // );
+
+
   // We'll need to do additional setup.
   $form['#submit'][] = '_ctl_onboarding_settings_submit_extra';
 
@@ -76,6 +93,9 @@ function _ctl_onboarding_settings_form() {
 
 function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
   $values         = $form_state['values'];
+
+  dsm($values);
+
   $cohort_id      = intval($values['ctl_onboarding_cohort_id']);
   $creating_teams = $values['ctl_onboarding_creating_teams'];
   if ($creating_teams) {

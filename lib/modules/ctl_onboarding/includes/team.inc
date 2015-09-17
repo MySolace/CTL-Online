@@ -198,7 +198,34 @@ function _ctl_onboarding_set_team_trainer($trainer_uid) {
   $trainer_user = user_load($trainer_uid);
   _ctl_onboarding_add_group_user($node->nid, $trainer_user);
 
+  // OG_ADMINISTRATOR_ROLE
+  // user_role_load_by_name() ?
 
+  // og_roles()
+
+  og_role_grant('node', $nid, $trainer_uid, $rid);
+
+  // function og_group($group_type, $gid, $values = array(), $save_created = TRUE) {
+  // function og_role_grant($group_type, $gid, $uid, $rid) {
+
+  // og_group('node', $nid, array(
+  //   'entity type'     => 'user',
+  //   'entity'          => $user,
+  //   'membership type' => OG_MEMBERSHIP_TYPE_DEFAULT,
+  // ));
+
+
+  // OG_ADMINISTRATOR_ROLE
+
+  // og_get_user_roles()
+  // og_role_grant()
+  // og_role_revoke()
+
+  // og_get_groups_by_user()
+  // og_get_entity_groups()
+
+  // og_ungroup()
+  // og_group()
 
   // make the trainer the group admin
 
@@ -221,11 +248,13 @@ function _ctl_onboarding_set_user_role($uid, $role_name) {
     CTL_ONBOARDING_ROLE_DECLINED,
     CTL_ONBOARDING_ROLE_TRAINEE,
   );
-  foreach ($role_names as $cur_role_name) {
-    if ($cur_role_name !== $role_name) {
-      _ctl_onboarding_remove_user_role($uid, $cur_role_name);
+  foreach ($role_names as $k => $v) {
+    if ($v === $role_name) {
+      unset($role_names[$k]);
+      break;
     }
   }
+  _ctl_onboarding_remove_user_roles($uid, $role_names);
   // Assign the user the role we want them to have.
   _ctl_onboarding_add_user_roles($uid, array($role_name));
 }
