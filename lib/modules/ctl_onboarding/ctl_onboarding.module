@@ -5,6 +5,7 @@ define('CTL_ONBOARDING_ROLE_INVITED', 'Invited');
 define('CTL_ONBOARDING_ROLE_DEFERRED', 'Deferred');
 define('CTL_ONBOARDING_ROLE_DECLINED', 'Dropout');
 define('CTL_ONBOARDING_ROLE_TRAINEE', 'Trainee');
+define('CTL_ONBOARDING_ROLE_TRAINER', 'Trainer');
 
 define('CTL_ONBOARDING_REGISTRATION_CLOSED', 0);
 define('CTL_ONBOARDING_REGISTRATION_OPEN', 1);
@@ -34,14 +35,6 @@ require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '
  * Implements hook_menu().
  */
 function ctl_onboarding_menu() {
-  $items['registration'] = array(
-    'title'            => 'Training Session Registration',
-    'page callback'    => 'drupal_get_form',
-    'page arguments'   => array('ctl_onboarding_form'),
-    'access arguments' => array('register for training'),
-    'type'             => MENU_CALLBACK,
-    'file'             => 'includes/registration.inc',
-  );
   $items['admin/config/ctl'] = array(
     'title'            => 'Crisis Text Line',
     'description'      => 'Configure CTL settings.',
@@ -60,7 +53,29 @@ function ctl_onboarding_menu() {
     'type'             => MENU_NORMAL_ITEM,
     'file'             => 'includes/admin.inc',
   );
+  $items['node/%node/trainer'] = array(
+    'title'            => 'Trainer Selection',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('_ctl_onboarding_trainer_selection_form', 1),
+    'access callback'  => array('_ctl_onboarding_trainer_selection_access_check'),
+    'access arguments' => array(1),
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'includes/trainer.inc',
+  );
+  $items['registration'] = array(
+    'title'            => 'Training Session Registration',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('ctl_onboarding_form'),
+    'access arguments' => array('register for training'),
+    'type'             => MENU_CALLBACK,
+    'file'             => 'includes/registration.inc',
+  );
   return $items;
+}
+
+
+function _ctl_onboarding_trainer_selection_access_check($node) {
+  return $node->type === 'training_team';
 }
 
 

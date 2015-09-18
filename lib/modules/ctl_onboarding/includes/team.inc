@@ -217,11 +217,16 @@ function _ctl_onboarding_set_team_trainer($trainer_uid) {
   // ));
 
 
+  // // Get all the member uids of the group.
+  // $uids = og_get_group_members_properties($node, array(), 'members', 'node');
+
   // OG_ADMINISTRATOR_ROLE
 
   // og_get_user_roles()
   // og_role_grant()
   // og_role_revoke()
+
+  // og_role_load()
 
   // og_get_groups_by_user()
   // og_get_entity_groups()
