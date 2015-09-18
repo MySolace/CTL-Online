@@ -120,7 +120,12 @@ function _ctl_onboarding_setup_teams($cohort_id) {
         $user->field_cohort[LANGUAGE_NONE][0]['value'] = $cohort_id;
         user_save($user);
 
-        _ctl_onboarding_add_group_user($node->nid, $user);
+        // Add the user to the group.
+        og_group('node', $node->nid, array(
+          'entity type'     => 'user',
+          'entity'          => $user,
+          'membership type' => OG_MEMBERSHIP_TYPE_DEFAULT,
+        ));
       }
     }
   }
@@ -158,61 +163,11 @@ function _ctl_onboarding_create_team_node($cohort_id, $slot_code, $team_number) 
 
 
 /**
- * Assigns a trainer to a team and makes them the group admin.
- * @param  int $uid    The user ID for the trainer to assign.
- */
-function _ctl_onboarding_set_team_trainer($trainer_uid) {
-  // Add the trainer to group.
-  $trainer_user = user_load($trainer_uid);
-  _ctl_onboarding_add_group_user($node->nid, $trainer_user);
-
-  // OG_ADMINISTRATOR_ROLE
-  // user_role_load_by_name() ?
-
-  // og_roles()
-
-  og_role_grant('node', $nid, $trainer_uid, $rid);
-
-  // function og_group($group_type, $gid, $values = array(), $save_created = TRUE) {
-  // function og_role_grant($group_type, $gid, $uid, $rid) {
-
-  // og_group('node', $nid, array(
-  //   'entity type'     => 'user',
-  //   'entity'          => $user,
-  //   'membership type' => OG_MEMBERSHIP_TYPE_DEFAULT,
-  // ));
-
-
-  // // Get all the member uids of the group.
-  // $uids = og_get_group_members_properties($node, array(), 'members', 'node');
-
-  // OG_ADMINISTRATOR_ROLE
-
-  // og_get_user_roles()
-  // og_role_grant()
-  // og_role_revoke()
-
-  // og_role_load()
-
-  // og_get_groups_by_user()
-  // og_get_entity_groups()
-
-  // og_ungroup()
-  // og_group()
-
-  // make the trainer the group admin
-
-  // update the group members' "Trainer" field
-
-}
-
-
-/**
  * Ensures that a user has only a one role out of a set of related roles.
- * @param int    $uid          The user ID.
- * @param string $role_name    The name of the role to set.
+ * @param int    $uid               The user ID.
+ * @param string $next_role_name    The name of the role to set.
  */
-function _ctl_onboarding_set_user_role($uid, $role_name) {
+function _ctl_onboarding_set_user_role($uid, $next_role_name) {
   // Remove all the roles we don't want the user to have.
   $role_names = array(
     CTL_ONBOARDING_ROLE_ACCEPTED,
@@ -222,12 +177,17 @@ function _ctl_onboarding_set_user_role($uid, $role_name) {
     CTL_ONBOARDING_ROLE_TRAINEE,
   );
   foreach ($role_names as $k => $v) {
-    if ($v === $role_name) {
+    if ($v === $next_role_name) {
       unset($role_names[$k]);
       break;
     }
   }
-  _ctl_onboarding_remove_user_roles($uid, $role_names);
+  // Unassign roles from the user.
+  foreach ($role_names as $role_name) {
+    $role = user_role_load_by_name($role_name);
+    user_multiple_role_edit(array($uid), 'remove_role', $role->rid);
+  }
   // Assign the user the role we want them to have.
-  _ctl_onboarding_add_user_roles($uid, array($role_name));
+  $role = user_role_load_by_name($next_role_name);
+  user_multiple_role_edit(array($uid), 'add_role', $role->rid);
 }
