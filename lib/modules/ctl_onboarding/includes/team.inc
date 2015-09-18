@@ -3,40 +3,6 @@
 require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
 
 
-// /**
-// * Implements hook_block_info().
-// */
-// function ctl_onboarding_block_info() {
-//   $blocks['ctl_onboarding_group_admin_selector'] = array(
-//     'info' => t('CTL Onboarding - Choose the Group Admin'),
-//   );
-//   return $blocks;
-// }
-
-
-// /**
-// * Implements hook_block_view().
-// */
-// function ctl_onboarding_block_view($delta = '') {
-//   $block = array();
-//   switch ($delta) {
-//     case 'ctl_onboarding_group_admin_selector':
-//       $block['subject'] = 'Choose the group admin';
-//       $block['content'] = _ctl_onboarding_block_content();
-//       break;
-//   }
-//   return $block;
-// }
-
-
-// function _ctl_onboarding_block_content() {
-//   // $output = t('Hello world');
-//   // return drupal_get_form();
-// }
-
-
-
-
 function _ctl_onboarding_setup_teams($cohort_id) {
   // Gather the registrants for the cohort.
   $query = db_select('ctl_onboarding_registrant', 'r');

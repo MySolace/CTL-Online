@@ -94,7 +94,7 @@ function _ctl_onboarding_settings_form() {
 function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
   $values         = $form_state['values'];
 
-  dsm($values);
+  // dsm($values);
 
   $cohort_id      = intval($values['ctl_onboarding_cohort_id']);
   $creating_teams = $values['ctl_onboarding_creating_teams'];
