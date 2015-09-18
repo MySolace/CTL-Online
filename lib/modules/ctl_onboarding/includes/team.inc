@@ -104,7 +104,7 @@ function _ctl_onboarding_setup_teams($cohort_id) {
   // Create the new organic groups.
   foreach ($slot_infos as $slot_code => $slot_info) {
     // TODO
-    // - do this
+    // - do this (?)
     // Delete previously existing teams.  This ensures that team
     // rosters are up to date with what registrants we have.
 

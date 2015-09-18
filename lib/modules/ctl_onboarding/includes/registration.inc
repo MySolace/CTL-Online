@@ -68,6 +68,7 @@ function ctl_onboarding_form($form, &$form_state) {
     return $form;
   }
 
+  $cohort_id                = intval(variable_get('ctl_onboarding_cohort_id'));
   $registration_start_date  = variable_get('ctl_onboarding_registration_start_date', '[X]');
   $registration_finish_date = variable_get('ctl_onboarding_registration_finish_date', '[X]');
 
@@ -83,7 +84,7 @@ function ctl_onboarding_form($form, &$form_state) {
 
   $form['instructions'] = array(
     '#type'   => 'markup',
-    '#markup' => "<p>Register for a training session.</p>",
+    '#markup' => "<p>Register for a training session for cohort $cohort_id.</p>",
   );
   $form['policies'] = array(
     '#type'   => 'markup',

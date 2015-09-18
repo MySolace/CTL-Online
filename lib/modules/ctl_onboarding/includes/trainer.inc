@@ -61,22 +61,6 @@ function _ctl_onboarding_trainer_selection_form_submit($form, &$form_state) {
     _ctl_onboarding_set_team_trainer($nid, $trainer_uid, $prev_trainer_uid);
   // }
 
-  // Get all the members of the group.
-  $uids  = og_get_group_members_properties($node, array(), 'members', 'node');
-  $users = user_load_multiple($uids);
-
-  // Assign/Reassign the newly-selected trainer to the group members.
-  foreach ($users as $user) {
-    // The trainer cannot be their own trainer.
-    if ($user->uid !== $trainer_uid) {
-      $user->field_trainer = array(
-        LANGUAGE_NONE => array(
-          array('target_id' => $trainer_uid),
-        ),
-      );
-      user_save($user);
-    }
-  }
 
   drupal_set_message('The trainer has been assigned!');
 }
@@ -102,11 +86,9 @@ function _ctl_onboarding_set_team_trainer($nid, $trainer_uid, $prev_trainer_uid)
     return;
   }
 
-  return;
-
   // Remove the previous trainer.
   if ($prev_trainer_uid !== NULL) {
-    og_role_revoke('node', $nid, $prev_trainer_uid, $rid);
+    og_role_revoke('node', $nid, $prev_trainer_uid, $admin_rid);
     og_ungroup('node', $nid, 'user', $prev_trainer_uid);
 
   }
@@ -118,14 +100,25 @@ function _ctl_onboarding_set_team_trainer($nid, $trainer_uid, $prev_trainer_uid)
     'entity'          => $trainer_user,
     'membership type' => OG_MEMBERSHIP_TYPE_DEFAULT,
   ));
-  og_role_grant('node', $nid, $trainer_uid, $rid);
+  og_role_grant('node', $nid, $trainer_uid, $admin_rid);
 
+  // Get all the members of the group.
+  $node  = node_load($nid);
+  $uids  = og_get_group_members_properties($node, array(), 'members', 'node');
+  $users = user_load_multiple($uids);
 
-  // og_group('node', $nid, array(
-  //   'entity type'     => 'user',
-  //   'entity'          => $user,
-  //   'membership type' => OG_MEMBERSHIP_TYPE_DEFAULT,
-  // ));
+  // Assign/reassign the newly-selected trainer to the group members.
+  foreach ($users as $user) {
+    // The trainer cannot be their own trainer.
+    if ($user->uid !== $trainer_uid) {
+      $user->field_trainer = array(
+        LANGUAGE_NONE => array(
+          array('target_id' => $trainer_uid),
+        ),
+      );
+      user_save($user);
+    }
+  }
 
 
   // // Get all the member uids of the group.
@@ -141,9 +134,5 @@ function _ctl_onboarding_set_team_trainer($nid, $trainer_uid, $prev_trainer_uid)
 
   // og_get_groups_by_user()
   // og_get_entity_groups()
-
-  // make the trainer the group admin
-
-  // update the group members' "Trainer" field
 
 }
