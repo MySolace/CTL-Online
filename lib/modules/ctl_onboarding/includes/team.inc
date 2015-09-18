@@ -83,7 +83,9 @@ function _ctl_onboarding_setup_teams($cohort_id) {
       else {
         // TODO
         // - figure out how to specilly handle the "filled to capacity"
-        //   case if at all
+        //   case if at all given that _ctl_onboarding_slot_register()
+        //   in slot.inc already prevents overflow registrations
+        //   has a time slot full
       }
     }
 
