@@ -1,5 +1,6 @@
 <?php
 
+require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/background-check.inc';
 require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/slot.inc';
 
 
@@ -28,33 +29,6 @@ function ctl_onboarding_form($form, &$form_state) {
       return confirm_form($form, $question, $path, $description, $yes, $no, $name);
     }
   }
-
-  // // TODO:
-  // // - Temp code!  Clean this up !
-  // // - Fixgure out where #46c7ff comes from.
-  // $form['styles'] = array(
-  //   '#type' => 'markup',
-  //   '#markup' =>
-  //     '<style>' .
-  //       'table td {' .
-  //         'padding: 0' .
-  //       '}' .
-  //       '.form-type-radio label {' .
-  //         'padding: 10px !important;' .
-  //       '}' .
-  //       '.form-type-radio label:hover {' .
-  //         'background-color: #0FF;' .
-  //       '}' .
-  //       '.form-type-radio label:before {' .
-  //         'display: none;' .
-  //       '}' .
-  //       'input[type=radio]:checked+.radio:before,' .
-  //       '.form-type-radio input[type=radio]:checked+label {' .
-  //         'background-color: #46c7ff;' .
-  //         'color: #FFF;' .
-  //       '}' .
-  //     '</style>',
-  // );
 
   // TODO
   // - add visual indicators for statuses
@@ -112,6 +86,10 @@ function ctl_onboarding_form($form, &$form_state) {
     '#submit' => array('_ctl_onboarding_form_submit_decline'),
   );
 
+  $form['#attached']['css'] = array(
+    drupal_get_path('module', 'ctl_onboarding') . '/scripts/ctl_onboarding.css',
+  );
+
   return $form;
 }
 
@@ -141,6 +119,7 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
 
   global $user;
 
+  _ctl_onboarding_do_background_check($user);
   _ctl_onboarding_slot_register($slot_code, $user->uid);
 }
 

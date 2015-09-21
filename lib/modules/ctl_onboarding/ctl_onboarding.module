@@ -45,7 +45,7 @@ function ctl_onboarding_menu() {
     'file'             => 'system.admin.inc',
     'file path'        => drupal_get_path('module', 'system'),
   );
-  $items['admin/config/ctl/ctl-onboarding'] = array(
+  $items['admin/config/ctl/onboarding'] = array(
     'title'            => 'CTL Onboarding',
     'page callback'    => 'drupal_get_form',
     'page arguments'   => array('_ctl_onboarding_settings_form'),
@@ -102,11 +102,6 @@ function ctl_onboarding_permission() {
 function ctl_onboarding_theme($existing, $type, $theme, $path) {
   return array(
     'ctl_onboarding_table' => array(
-      'render element' => 'element',
-      'file'           => 'includes/theme.inc',
-    ),
-
-    'ctl_onboarding_table_2' => array(
       'render element' => 'element',
       'file'           => 'includes/theme.inc',
     ),

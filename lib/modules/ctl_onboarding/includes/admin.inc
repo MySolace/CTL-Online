@@ -12,7 +12,6 @@ function _ctl_onboarding_settings_form() {
     for ($hour = CTL_ONBOARDING_FIRST_START_HOUR; $hour <= CTL_ONBOARDING_LAST_START_HOUR; $hour += CTL_ONBOARDING_ONE_HOUR) {
       $start_hour_display  = _ctl_onboarding_format_hour_display($hour);
       $finish_hour_display = _ctl_onboarding_format_hour_display($hour + CTL_ONBOARDING_SESSION_DURATION);
-
       $slot_codes[$days[$i] . '-' . $hour] = $start_hour_display . ' - ' . $finish_hour_display;
     }
   }
@@ -68,21 +67,62 @@ function _ctl_onboarding_settings_form() {
   );
 
 
-  $form['ctl_onboarding_slot_codes_2'] = array(
-    '#type'          => 'checkboxes',
-    '#title'         => t('Choose time slots to have available for registration'),
-    '#options'       => $slot_codes,
-    '#default_value' => variable_get('ctl_onboarding_slot_codes'),
-    '#theme'         => array('ctl_onboarding_table_2'),
-    '#tree'          => TRUE,
-    '#showing_all'   => TRUE,
+  $z = variable_get('ctl_onboarding_slot_codes_3', array());
+  $form['ctl_onboarding_slot_codes_3'] = array(
+    '#tree' => TRUE,
   );
-  // $form['ctl_onboarding_slot_codes_2']['a'] = array(
-  //   '#type'    => 'textfield',
-  //   '#title'   => t('n'),
-  //   '#options' => range(20, 50, 5),
-  // );
+  $form['ctl_onboarding_slot_codes_3']['m-800'] = array(
+    '#type'          => 'select',
+    '#title'         => t('8am - 12pm'),
+    '#default_value' => $z['m-800'],
+    '#options'       => range(0, 10),
+  );
 
+
+
+  $form['ctl_onboarding_email_settings'] = array(
+    '#type'        => 'fieldset',
+    '#title'       => 'Email settings',
+    '#collapsed'   => TRUE,
+    '#collapsible' => TRUE,
+    '#tree'        => TRUE,
+  );
+  $email_settings = variable_get('ctl_onboarding_email_settings');
+  $form['ctl_onboarding_email_settings']['subject_for_registered'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('"Registered" email subject'),
+    '#default_value' => $email_settings['subject_for_registered'],
+  );
+  $form['ctl_onboarding_email_settings']['body_for_registered'] = array(
+    '#type'          => 'textarea',
+    '#title'         => t('"Registered" email body'),
+    '#default_value' => $email_settings['body_for_registered'],
+  );
+
+
+  // // $x = token_replace($email_settings['subject_for_registered']);
+  // $x = token_replace($email_settings['body_for_registered']);
+  // dsm($x);
+
+  // $form['my_module_config_node'] = array(
+  //   '#type' => 'fieldset',
+  //   '#title' => 'Node type configuration',
+  //   '#tree' => TRUE, //  $label) {
+  //   $form['my_module_config_node'][$type] = array(
+  //     '#type' => 'select',
+  //     '#options' => $opts,
+  //     '#title' => t('Select value for %type', array('%type' => $label)),
+  //     '#default_value' => !empty($values[$type]) ? $values[$type] : 5,
+  //   );
+  // }
+
+
+  $form['#attached']['css'] = array(
+    drupal_get_path('module', 'ctl_onboarding') . '/scripts/ctl_onboarding.css',
+  );
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'ctl_onboarding') . '/scripts/ctl_onboarding.js',
+  );
 
   // We'll need to do additional setup.
   $form['#submit'][] = '_ctl_onboarding_settings_submit_extra';
