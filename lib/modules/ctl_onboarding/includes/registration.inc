@@ -64,11 +64,23 @@ function ctl_onboarding_form($form, &$form_state) {
     '#type'   => 'markup',
     '#markup' => "<p>Policies: Registration occurs between $registration_start_date and $registration_finish_date. After that, we are only able to accomodate 2 schedule changes.  Training will occur for 6 weeks.</p>",
   );
+
+  $slot_trainers = variable_get('ctl_onboarding_slot_trainers');
+  $slots = array();
+  foreach ($slot_trainers as $slot_code => $v) {
+    if ($v > 0) {
+      $times               = explode('-', $slot_code);
+      $start_hour_display  = _ctl_onboarding_format_hour_display($times[1]);
+      $finish_hour_display = _ctl_onboarding_format_hour_display($times[1] + CTL_ONBOARDING_SESSION_DURATION);
+      $slots[$slot_code]   = $start_hour_display . ' - ' . $finish_hour_display;
+    }
+  }
   $form['training_slot'] = array(
     '#type'    => 'radios',
-    '#options' => variable_get('ctl_onboarding_slot_codes'),
+    '#options' => $slots,
     '#theme'   => array('ctl_onboarding_table'),
   );
+
   $form['register'] = array(
     '#type'     => 'submit',
     '#value'    => 'Register',
@@ -116,6 +128,9 @@ function _ctl_onboarding_form_validate_register($form, &$form_state) {
 function _ctl_onboarding_form_submit_register($form, &$form_state) {
   $values    = $form_state['values'];
   $slot_code = $values['training_slot'];
+
+  dsm($slot_code);
+  return;
 
   global $user;
 

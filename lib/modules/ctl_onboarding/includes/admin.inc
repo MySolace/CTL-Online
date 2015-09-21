@@ -4,18 +4,6 @@ require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '
 
 
 function _ctl_onboarding_settings_form() {
-  $days       = array('m', 'tu', 'w', 'th', 'f', 'sa', 'su');
-  $slot_codes = array();
-
-  // Setup the selectable time slots.
-  for ($i = 0, $l = count($days); $i < $l; ++$i) {
-    for ($hour = CTL_ONBOARDING_FIRST_START_HOUR; $hour <= CTL_ONBOARDING_LAST_START_HOUR; $hour += CTL_ONBOARDING_ONE_HOUR) {
-      $start_hour_display  = _ctl_onboarding_format_hour_display($hour);
-      $finish_hour_display = _ctl_onboarding_format_hour_display($hour + CTL_ONBOARDING_SESSION_DURATION);
-      $slot_codes[$days[$i] . '-' . $hour] = $start_hour_display . ' - ' . $finish_hour_display;
-    }
-  }
-
   $form['ctl_onboarding_registration_period'] = array(
     '#type'          => 'select',
     '#title'         => t('Registration period'),
@@ -57,29 +45,45 @@ function _ctl_onboarding_settings_form() {
     '#options'       => range(20, 50, 5),
     '#required'      => TRUE,
   );
-  $form['ctl_onboarding_slot_codes'] = array(
-    '#type'          => 'checkboxes',
-    '#title'         => t('Choose time slots to have available for registration'),
-    '#options'       => $slot_codes,
-    '#default_value' => variable_get('ctl_onboarding_slot_codes'),
-    '#theme'         => array('ctl_onboarding_table'),
-    '#showing_all'   => TRUE,
+
+  // Setup the selectable time slots.
+  $days       = array('m', 'tu', 'w', 'th', 'f', 'sa', 'su');
+  $slot_codes = array();
+  for ($i = 0, $l = count($days); $i < $l; ++$i) {
+    for ($hour = CTL_ONBOARDING_FIRST_START_HOUR; $hour <= CTL_ONBOARDING_LAST_START_HOUR; $hour += CTL_ONBOARDING_ONE_HOUR) {
+      $start_hour_display  = _ctl_onboarding_format_hour_display($hour);
+      $finish_hour_display = _ctl_onboarding_format_hour_display($hour + CTL_ONBOARDING_SESSION_DURATION);
+      $slot_codes[$days[$i] . '-' . $hour] = $start_hour_display . ' - ' . $finish_hour_display;
+    }
+  }
+
+  // $form['ctl_onboarding_slot_codes'] = array(
+  //   '#type'          => 'checkboxes',
+  //   '#title'         => t('Choose time slots to have available for registration'),
+  //   '#options'       => $slot_codes,
+  //   '#default_value' => variable_get('ctl_onboarding_slot_codes'),
+  //   '#theme'         => array('ctl_onboarding_table'),
+  //   '#showing_all'   => TRUE,
+  // );
+
+
+  $slot_trainers = variable_get('ctl_onboarding_slot_trainers');
+  $form['ctl_onboarding_slot_trainers'] = array(
+    '#tree'        => TRUE,
+    '#theme'       => array('ctl_onboarding_table'),
+    '#showing_all' => TRUE,
   );
+  foreach ($slot_codes as $slot_code => $slot_display) {
+    $form['ctl_onboarding_slot_trainers'][$slot_code] = array(
+      '#type'          => 'select',
+      '#title'         => $slot_display,
+      '#default_value' => isset($slot_trainers[$slot_code]) ? $slot_trainers[$slot_code] : NULL,
+      '#options'       => range(0, 10),
+    );
+  }
 
 
-  $z = variable_get('ctl_onboarding_slot_codes_3', array());
-  $form['ctl_onboarding_slot_codes_3'] = array(
-    '#tree' => TRUE,
-  );
-  $form['ctl_onboarding_slot_codes_3']['m-800'] = array(
-    '#type'          => 'select',
-    '#title'         => t('8am - 12pm'),
-    '#default_value' => $z['m-800'],
-    '#options'       => range(0, 10),
-  );
-
-
-
+  $email_settings = variable_get('ctl_onboarding_email_settings');
   $form['ctl_onboarding_email_settings'] = array(
     '#type'        => 'fieldset',
     '#title'       => 'Email settings',
@@ -87,16 +91,15 @@ function _ctl_onboarding_settings_form() {
     '#collapsible' => TRUE,
     '#tree'        => TRUE,
   );
-  $email_settings = variable_get('ctl_onboarding_email_settings');
   $form['ctl_onboarding_email_settings']['subject_for_registered'] = array(
     '#type'          => 'textfield',
     '#title'         => t('"Registered" email subject'),
-    '#default_value' => $email_settings['subject_for_registered'],
+    '#default_value' => isset($email_settings['subject_for_registered']) ? $email_settings['subject_for_registered'] : NULL,
   );
   $form['ctl_onboarding_email_settings']['body_for_registered'] = array(
     '#type'          => 'textarea',
     '#title'         => t('"Registered" email body'),
-    '#default_value' => $email_settings['body_for_registered'],
+    '#default_value' => isset($email_settings['body_for_registered']) ? $email_settings['body_for_registered'] : NULL,
   );
 
 
@@ -133,25 +136,20 @@ function _ctl_onboarding_settings_form() {
 
 function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
   $values         = $form_state['values'];
-
-  // dsm($values);
-
   $cohort_id      = intval($values['ctl_onboarding_cohort_id']);
   $creating_teams = $values['ctl_onboarding_creating_teams'];
   if ($creating_teams) {
     _ctl_onboarding_setup_teams($cohort_id);
     return;
   }
-  $slot_codes = $values['ctl_onboarding_slot_codes'];
-  _ctl_onboarding_set_slots($cohort_id, $slot_codes);
+  $slot_codes    = $values['ctl_onboarding_slot_codes'];
+  $slot_trainers = $values['ctl_onboarding_slot_trainers'];
+  _ctl_onboarding_set_slots($cohort_id, $slot_codes, $slot_trainers);
 }
 
 
-function _ctl_onboarding_set_slots($cohort_id, $slot_codes) {
+function _ctl_onboarding_set_slots($cohort_id, $slot_codes, $slot_trainers) {
   foreach ($slot_codes as $slot_code) {
-
-    // dsm($slot_code);
-
     if ($slot_code) {
       // TODO
       // - account for the case where registration is reopened from being previously closed
@@ -163,7 +161,7 @@ function _ctl_onboarding_set_slots($cohort_id, $slot_codes) {
           'slot_code' => $slot_code,
         ))
         ->fields(array(
-          'num_trainers'    => 2,
+          'num_trainers'    => isset($slot_trainers[$slot_code]) ? intval($slot_trainers[$slot_code]) : 0,
           'num_registrants' => 0,
         ))
         ->execute();
