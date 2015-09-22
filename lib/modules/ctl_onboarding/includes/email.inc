@@ -10,6 +10,10 @@ function ctl_onboarding_mail($key, &$message, $params) {
     return;
   }
 
+  // // $x = token_replace($email_settings['subject_for_registered']);
+  // $x = token_replace($email_settings['body_for_registered']);
+  // dsm($x);
+
   // $graduate_uid        = $params['uid'];
   // $graduate_user       = user_load($graduate_uid);
   // $graduate_first_name = $graduate_user->field_first_name[LANGUAGE_NONE][0]['safe_value'];

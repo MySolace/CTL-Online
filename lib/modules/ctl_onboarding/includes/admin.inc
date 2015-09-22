@@ -57,16 +57,6 @@ function _ctl_onboarding_settings_form() {
     }
   }
 
-  // $form['ctl_onboarding_slot_codes'] = array(
-  //   '#type'          => 'checkboxes',
-  //   '#title'         => t('Choose time slots to have available for registration'),
-  //   '#options'       => $slot_codes,
-  //   '#default_value' => variable_get('ctl_onboarding_slot_codes'),
-  //   '#theme'         => array('ctl_onboarding_table'),
-  //   '#showing_all'   => TRUE,
-  // );
-
-
   $slot_trainers = variable_get('ctl_onboarding_slot_trainers');
   $form['ctl_onboarding_slot_trainers'] = array(
     '#tree'        => TRUE,
@@ -77,11 +67,10 @@ function _ctl_onboarding_settings_form() {
     $form['ctl_onboarding_slot_trainers'][$slot_code] = array(
       '#type'          => 'select',
       '#title'         => $slot_display,
-      '#default_value' => isset($slot_trainers[$slot_code]) ? $slot_trainers[$slot_code] : NULL,
+      '#default_value' => isset($slot_trainers[$slot_code]) ? $slot_trainers[$slot_code] : 0,
       '#options'       => range(0, 10),
     );
   }
-
 
   $email_settings = variable_get('ctl_onboarding_email_settings');
   $form['ctl_onboarding_email_settings'] = array(
@@ -101,24 +90,6 @@ function _ctl_onboarding_settings_form() {
     '#title'         => t('"Registered" email body'),
     '#default_value' => isset($email_settings['body_for_registered']) ? $email_settings['body_for_registered'] : NULL,
   );
-
-
-  // // $x = token_replace($email_settings['subject_for_registered']);
-  // $x = token_replace($email_settings['body_for_registered']);
-  // dsm($x);
-
-  // $form['my_module_config_node'] = array(
-  //   '#type' => 'fieldset',
-  //   '#title' => 'Node type configuration',
-  //   '#tree' => TRUE, //  $label) {
-  //   $form['my_module_config_node'][$type] = array(
-  //     '#type' => 'select',
-  //     '#options' => $opts,
-  //     '#title' => t('Select value for %type', array('%type' => $label)),
-  //     '#default_value' => !empty($values[$type]) ? $values[$type] : 5,
-  //   );
-  // }
-
 
   $form['#attached']['css'] = array(
     drupal_get_path('module', 'ctl_onboarding') . '/scripts/ctl_onboarding.css',

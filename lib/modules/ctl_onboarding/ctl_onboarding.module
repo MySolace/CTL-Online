@@ -31,6 +31,14 @@ define('CTL_ONBOARDING_SESSION_DURATION', 400);
 require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
 
 
+// /**
+//  * Implements hook_cron().
+//  */
+// function ctl_onboarding_cron() {
+//   _ctl_onboarding_do_background_check();
+// }
+
+
 /**
  * Implements hook_menu().
  */

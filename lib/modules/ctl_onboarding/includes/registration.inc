@@ -132,6 +132,7 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
   dsm($slot_code);
   return;
 
+
   global $user;
 
   _ctl_onboarding_do_background_check($user);

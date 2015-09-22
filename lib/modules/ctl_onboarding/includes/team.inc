@@ -178,16 +178,11 @@ function _ctl_onboarding_set_user_role($uid, $next_role_name) {
     CTL_ONBOARDING_ROLE_DECLINED,
     CTL_ONBOARDING_ROLE_TRAINEE,
   );
-  foreach ($role_names as $k => $v) {
-    if ($v === $next_role_name) {
-      unset($role_names[$k]);
-      break;
-    }
-  }
-  // Unassign roles from the user.
   foreach ($role_names as $role_name) {
-    $role = user_role_load_by_name($role_name);
-    user_multiple_role_edit(array($uid), 'remove_role', $role->rid);
+    if ($role_name !== $next_role_name) {
+      $role = user_role_load_by_name($role_name);
+      user_multiple_role_edit(array($uid), 'remove_role', $role->rid);
+    }
   }
   // Assign the user the role we want them to have.
   $role = user_role_load_by_name($next_role_name);
