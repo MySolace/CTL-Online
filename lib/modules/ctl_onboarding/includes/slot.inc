@@ -29,6 +29,9 @@ function _ctl_onboarding_slot_save_registrant($cohort_id, $slot_code, $uid) {
     return FALSE;
   }
 
+  // Initiate a background check.
+  _ctl_onboarding_do_background_check($uid);
+
   drupal_set_message(t('Your registration has been submitted!'));
   return TRUE;
 }

@@ -72,10 +72,10 @@ function _ctl_onboarding_settings_form() {
     );
   }
 
-  $email_settings = variable_get('ctl_onboarding_email_settings');
+  $email = variable_get('ctl_onboarding_email_settings');
   $form['ctl_onboarding_email_settings'] = array(
     '#type'        => 'fieldset',
-    '#title'       => 'Email settings',
+    '#title'       => 'Email',
     '#collapsed'   => TRUE,
     '#collapsible' => TRUE,
     '#tree'        => TRUE,
@@ -83,12 +83,56 @@ function _ctl_onboarding_settings_form() {
   $form['ctl_onboarding_email_settings']['subject_for_registered'] = array(
     '#type'          => 'textfield',
     '#title'         => t('"Registered" email subject'),
-    '#default_value' => isset($email_settings['subject_for_registered']) ? $email_settings['subject_for_registered'] : NULL,
+    '#default_value' => isset($email['subject_for_registered']) ? $email['subject_for_registered'] : NULL,
   );
   $form['ctl_onboarding_email_settings']['body_for_registered'] = array(
     '#type'          => 'textarea',
     '#title'         => t('"Registered" email body'),
-    '#default_value' => isset($email_settings['body_for_registered']) ? $email_settings['body_for_registered'] : NULL,
+    '#default_value' => isset($email['body_for_registered']) ? $email['body_for_registered'] : NULL,
+  );
+
+  $goodhire = variable_get('ctl_onboarding_goodhire');
+  $form['ctl_onboarding_goodhire'] = array(
+    '#type'        => 'fieldset',
+    '#title'       => 'GoodHire',
+    '#collapsed'   => TRUE,
+    '#collapsible' => TRUE,
+    '#tree'        => TRUE,
+  );
+  $form['ctl_onboarding_goodhire']['endpoint'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('API Endpoint'),
+    '#default_value' => isset($goodhire['endpoint']) ? $goodhire['endpoint'] : NULL,
+  );
+  $form['ctl_onboarding_goodhire']['username'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Username'),
+    '#default_value' => isset($goodhire['username']) ? $goodhire['username'] : NULL,
+  );
+  $form['ctl_onboarding_goodhire']['password'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Password'),
+    '#default_value' => isset($goodhire['password']) ? $goodhire['password'] : NULL,
+  );
+  $form['ctl_onboarding_goodhire']['company_id'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Company ID'),
+    '#default_value' => isset($goodhire['company_id']) ? $goodhire['company_id'] : NULL,
+  );
+  $form['ctl_onboarding_goodhire']['requestor_id'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Requestor ID'),
+    '#default_value' => isset($goodhire['requestor_id']) ? $goodhire['requestor_id'] : NULL,
+  );
+  $form['ctl_onboarding_goodhire']['testing'] = array(
+    '#type'          => 'checkbox',
+    '#title'         => t('Test mode'),
+    '#default_value' => isset($goodhire['testing']) ? $goodhire['testing'] : FALSE,
+  );
+  $form['ctl_onboarding_goodhire']['test_email'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Test email'),
+    '#default_value' => isset($goodhire['test_email']) ? $goodhire['test_email'] : NULL,
   );
 
   $form['#attached']['css'] = array(
