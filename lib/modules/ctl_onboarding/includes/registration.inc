@@ -17,6 +17,9 @@ function ctl_onboarding_form($form, &$form_state) {
       $yes         = 'Yes, I wish to defer';
       $no          = 'No, I do not wish to defer';
       $name        = 'defer';
+
+      // do role change if confirmed
+
       return confirm_form($form, $question, $path, $description, $yes, $no, $name);
     }
     if (isset($storage['confirm_decline']) && $storage['confirm_decline']) {
@@ -26,6 +29,9 @@ function ctl_onboarding_form($form, &$form_state) {
       $yes         = 'Yes, I wish to decline';
       $no          = 'No, I do not wish to decline';
       $name        = 'decline';
+
+      // do role change if confirmed
+
       return confirm_form($form, $question, $path, $description, $yes, $no, $name);
     }
   }

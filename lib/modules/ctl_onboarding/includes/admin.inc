@@ -90,6 +90,16 @@ function _ctl_onboarding_settings_form() {
     '#title'         => t('"Registered" email body'),
     '#default_value' => isset($email['body_for_registered']) ? $email['body_for_registered'] : NULL,
   );
+  $form['ctl_onboarding_email_settings']['subject_for_deferred'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('"Registered" email subject'),
+    '#default_value' => isset($email['subject_for_deferred']) ? $email['subject_for_deferred'] : NULL,
+  );
+  $form['ctl_onboarding_email_settings']['body_for_declined'] = array(
+    '#type'          => 'textarea',
+    '#title'         => t('"Registered" email body'),
+    '#default_value' => isset($email['body_for_declined']) ? $email['body_for_declined'] : NULL,
+  );
 
   $goodhire = variable_get('ctl_onboarding_goodhire');
   $form['ctl_onboarding_goodhire'] = array(

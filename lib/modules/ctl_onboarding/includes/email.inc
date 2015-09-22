@@ -3,12 +3,15 @@
 /**
  * Implements hook_mail().
  */
+// TODO
 function ctl_onboarding_mail($key, &$message, $params) {
   $statuses = array('registered', 'deferred', 'declined');
 
   if (!in_array($key, $statuses)) {
     return;
   }
+
+  return;
 
   // // $x = token_replace($email_settings['subject_for_registered']);
   // $x = token_replace($email_settings['body_for_registered']);
