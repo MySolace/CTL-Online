@@ -78,6 +78,31 @@ function ctl_onboarding_menu() {
     'type'             => MENU_CALLBACK,
     'file'             => 'includes/registration.inc',
   );
+
+
+  $items['registration-email-test'] = array(
+    'title'           => 'Registration Email Test',
+    'page callback'   => '_ctl_onboarding_registration_email_test',
+    'access callback' => TRUE,
+    'type'            => MENU_CALLBACK,
+    'file'            => 'includes/email.inc',
+  );
+  $items['deferred-email-test'] = array(
+    'title'           => 'Deferred Email Test',
+    'page callback'   => '_ctl_onboarding_deferred_email_test',
+    'access callback' => TRUE,
+    'type'            => MENU_CALLBACK,
+    'file'            => 'includes/email.inc',
+  );
+  $items['declined-email-test'] = array(
+    'title'           => 'Declined Email Test',
+    'page callback'   => '_ctl_onboarding_declined_email_test',
+    'access callback' => TRUE,
+    'type'            => MENU_CALLBACK,
+    'file'            => 'includes/email.inc',
+  );
+
+
   return $items;
 }
 

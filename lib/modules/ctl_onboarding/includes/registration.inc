@@ -38,12 +38,6 @@ function ctl_onboarding_form($form, &$form_state) {
     }
   }
 
-
-  $e = variable_get('ctl_onboarding_email');
-  $e = check_markup($e['body_for_registered'], 'markdown');
-  dsm($e);
-
-
   // TODO
   // - add visual indicators for statuses
 

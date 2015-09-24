@@ -267,3 +267,40 @@ function ctl_onboarding_mail($key, &$message, $params) {
 //     drupal_set_message(t('There was a problem sending the new graduate the graduation email.'), 'error');
 //   }
 // }
+
+
+
+
+
+
+function _ctl_onboarding_registration_email_test() {
+  $email_output = '';
+
+  $e = variable_get('ctl_onboarding_email');
+
+  $email_output = check_markup($e['body_for_registered'], 'markdown');
+
+  return $email_output;
+}
+
+
+function _ctl_onboarding_deferred_email_test() {
+  $email_output = '';
+
+  $e = variable_get('ctl_onboarding_email');
+
+  $email_output = check_markup($e['body_for_deferred'], 'markdown');
+
+  return $email_output;
+}
+
+
+function _ctl_onboarding_declined_email_test() {
+  $email_output = '';
+
+  $e = variable_get('ctl_onboarding_email');
+
+  $email_output = check_markup($e['body_for_declined'], 'markdown');
+
+  return $email_output;
+}
