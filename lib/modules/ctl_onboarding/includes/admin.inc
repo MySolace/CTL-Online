@@ -112,7 +112,6 @@ function _ctl_onboarding_settings_form() {
     '#default_value' => isset($pages_text['declined-confirmation-message']) ? $pages_text['declined-confirmation-message'] : NULL,
   );
 
-
   $email = variable_get('ctl_onboarding_email');
   $form['ctl_onboarding_email'] = array(
     '#type'        => 'fieldset',

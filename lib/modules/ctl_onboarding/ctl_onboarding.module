@@ -81,26 +81,28 @@ function ctl_onboarding_menu() {
   );
 
 
+  // TODO
+  // - fior testing only
   $items['registration-email-test'] = array(
-    'title'           => 'Registration Email Test',
-    'page callback'   => '_ctl_onboarding_registration_email_test',
-    'access callback' => TRUE,
-    'type'            => MENU_CALLBACK,
-    'file'            => 'includes/email.inc',
+    'title'            => 'Registration Email Test',
+    'page callback'    => '_ctl_onboarding_registration_email_test',
+    'access arguments' => array('administer onboarding'),
+    'type'             => MENU_CALLBACK,
+    'file'             => 'includes/email.inc',
   );
   $items['deferred-email-test'] = array(
-    'title'           => 'Deferred Email Test',
-    'page callback'   => '_ctl_onboarding_deferred_email_test',
-    'access callback' => TRUE,
-    'type'            => MENU_CALLBACK,
-    'file'            => 'includes/email.inc',
+    'title'            => 'Deferred Email Test',
+    'page callback'    => '_ctl_onboarding_deferred_email_test',
+    'access arguments' => array('administer onboarding'),
+    'type'             => MENU_CALLBACK,
+    'file'             => 'includes/email.inc',
   );
   $items['declined-email-test'] = array(
-    'title'           => 'Declined Email Test',
-    'page callback'   => '_ctl_onboarding_declined_email_test',
-    'access callback' => TRUE,
-    'type'            => MENU_CALLBACK,
-    'file'            => 'includes/email.inc',
+    'title'            => 'Declined Email Test',
+    'page callback'    => '_ctl_onboarding_declined_email_test',
+    'access arguments' => array('administer onboarding'),
+    'type'             => MENU_CALLBACK,
+    'file'             => 'includes/email.inc',
   );
 
 
