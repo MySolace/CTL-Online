@@ -20,13 +20,14 @@ function _ctl_onboarding_settings_form() {
     '#default_value' => FALSE,
     '#description'   => 'Note: You can use this to recreate teams if they already exist.  With great power comes great repsonsibility!',
   );
+  // We have the same range of choices as the cohort user field.
   $form['ctl_onboarding_cohort_id'] = array(
     '#type'          => 'select',
     '#title'         => t('Cohort #'),
     '#default_value' => variable_get('ctl_onboarding_cohort_id'),
+    '#empty_value'   => 0,
+    '#options'       => range(0, 20),
     '#required'      => TRUE,
-    // We have the same range of choices as the cohort user field.
-    '#options' => range(1, 20),
   );
   $form['ctl_onboarding_registration_start_date'] = array(
     '#type'          => 'date',
@@ -89,6 +90,26 @@ function _ctl_onboarding_settings_form() {
     '#type'          => 'textarea',
     '#title'         => t('Registration page while registration is closed'),
     '#default_value' => isset($pages_text['registration-closed']) ? $pages_text['registration-closed'] : NULL,
+  );
+  $form['ctl_onboarding_pages_text']['deferred-confirmation-title'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Confirmation page title for deferring'),
+    '#default_value' => isset($pages_text['deferred-confirmation-title']) ? $pages_text['deferred-confirmation-title'] : NULL,
+  );
+  $form['ctl_onboarding_pages_text']['deferred-confirmation-message'] = array(
+    '#type'          => 'textarea',
+    '#title'         => t('Confirmation message for deferring'),
+    '#default_value' => isset($pages_text['deferred-confirmation-message']) ? $pages_text['deferred-confirmation-message'] : NULL,
+  );
+  $form['ctl_onboarding_pages_text']['declined-confirmation-title'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Confirmation page title for declining'),
+    '#default_value' => isset($pages_text['declined-confirmation-title']) ? $pages_text['declined-confirmation-title'] : NULL,
+  );
+  $form['ctl_onboarding_pages_text']['declined-confirmation-message'] = array(
+    '#type'          => 'textarea',
+    '#title'         => t('Confirmation message for declining'),
+    '#default_value' => isset($pages_text['declined-confirmation-message']) ? $pages_text['declined-confirmation-message'] : NULL,
   );
 
 
@@ -198,18 +219,13 @@ function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
     _ctl_onboarding_setup_teams($cohort_id);
     return;
   }
-
-  // TODO
-  // - address abscence of 'ctl_onboarding_slot_codes'
-
-  $slot_codes    = $values['ctl_onboarding_slot_codes'];
   $slot_trainers = $values['ctl_onboarding_slot_trainers'];
-  _ctl_onboarding_set_slots($cohort_id, $slot_codes, $slot_trainers);
+  _ctl_onboarding_set_slots($cohort_id, $slot_trainers);
 }
 
 
-function _ctl_onboarding_set_slots($cohort_id, $slot_codes, $slot_trainers) {
-  foreach ($slot_codes as $slot_code) {
+function _ctl_onboarding_set_slots($cohort_id, $slot_trainers) {
+  foreach ($slot_trainers as $slot_code => $num_trainers) {
     if ($slot_code) {
       // TODO
       // - account for the case where registration is reopened from being previously closed
@@ -221,7 +237,7 @@ function _ctl_onboarding_set_slots($cohort_id, $slot_codes, $slot_trainers) {
           'slot_code' => $slot_code,
         ))
         ->fields(array(
-          'num_trainers'    => isset($slot_trainers[$slot_code]) ? intval($slot_trainers[$slot_code]) : 0,
+          'num_trainers'    => $num_trainers,
           'num_registrants' => 0,
         ))
         ->execute();

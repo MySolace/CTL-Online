@@ -8,12 +8,18 @@ require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '
  * Implements hook_form().
  */
 function ctl_onboarding_form($form, &$form_state) {
+  $pages_text = variable_get('ctl_onboarding_pages_text');
+
   if (isset($form_state['storage'])) {
     $storage = $form_state['storage'];
     if (isset($storage['confirm_defer']) && $storage['confirm_defer']) {
-      $question    = 'Are you sure you want to defer?';
+      $question    = isset($pages_text['deferred-confirmation-title'])
+                   ? token_replace($pages_text['deferred-confirmation-title'])
+                   : 'Are you sure you want to defer?';
+      $description = isset($pages_text['deferred-confirmation-message'])
+                   ? token_replace($pages_text['deferred-confirmation-message'])
+                   : 'If you defer you can come back and sign up for training at a later date.';
       $path        = 'registration';
-      $description = 'If you defer you can come back and sign up for training at a later date.';
       $yes         = 'Yes, I wish to defer';
       $no          = 'No, I do not wish to defer';
       $name        = 'defer';
@@ -24,9 +30,14 @@ function ctl_onboarding_form($form, &$form_state) {
       return confirm_form($form, $question, $path, $description, $yes, $no, $name);
     }
     if (isset($storage['confirm_decline']) && $storage['confirm_decline']) {
-      $question    = 'Are you sure you want to decline?';
+      // $question    = '';
+      $question    = isset($pages_text['declined-confirmation-title'])
+                   ? token_replace($pages_text['declined-confirmation-title'])
+                   : 'Are you sure you want to decline?';
+      $description = isset($pages_text['declined-confirmation-message'])
+                   ? token_replace($pages_text['declined-confirmation-message'])
+                   : 'If you decline you will not be able to sign up for training later.';
       $path        = 'registration';
-      $description = 'If you decline you will not be able to sign up for training later.';
       $yes         = 'Yes, I wish to decline';
       $no          = 'No, I do not wish to decline';
       $name        = 'decline';
@@ -40,8 +51,6 @@ function ctl_onboarding_form($form, &$form_state) {
 
   // TODO
   // - add visual indicators for statuses
-
-  $pages_text = variable_get('ctl_onboarding_pages_text');
 
   $registration_period = intval(variable_get('ctl_onboarding_registration_period', CTL_ONBOARDING_REGISTRATION_CLOSED));
   if ($registration_period === CTL_ONBOARDING_REGISTRATION_CLOSED) {
@@ -101,9 +110,7 @@ function ctl_onboarding_form($form, &$form_state) {
 }
 
 
-/**
- *
- */
+// TODO later ?
 function _ctl_onboarding_form_validate_register($form, &$form_state) {
   // drupal_set_message(t("hi"));
 
@@ -131,10 +138,11 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
 
   // TODO
   // _ctl_onboarding_do_background_check($full_user);
-  // _ctl_onboarding_slot_register($slot_code, $user->uid);
+  _ctl_onboarding_slot_register($slot_code, $user->uid);
 }
 
 
+// TODO
 function _ctl_onboarding_form_submit_defer($form, &$form_state) {
   $form_state['rebuild'] = TRUE;
   $form_state['storage']['confirm_defer'] = TRUE;
@@ -143,6 +151,7 @@ function _ctl_onboarding_form_submit_defer($form, &$form_state) {
 }
 
 
+// TODO
 function _ctl_onboarding_form_submit_decline($form, &$form_state) {
   // drupal_set_message(var_export($form_state['clicked_button'], TRUE));
 

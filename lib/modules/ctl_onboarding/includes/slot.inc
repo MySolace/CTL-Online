@@ -6,11 +6,9 @@ function _ctl_onboarding_slot_save_registrant($cohort_id, $slot_code, $uid) {
       'uid'       => $uid,
       'cohort_id' => $cohort_id,
       'slot_code' => $slot_code,
-
-      // TODO
+      // TODO later
       // - potential future work for more advanced sign-up strategies would happen here
       // 'status'    => CTL_ONBOARDING_STATUS_PENDING,
-
       'status' => CTL_ONBOARDING_STATUS_ACCEPTED,
     ));
 
@@ -24,13 +22,15 @@ function _ctl_onboarding_slot_save_registrant($cohort_id, $slot_code, $uid) {
       drupal_set_message(t('You have already signed up for this time slot!'), 'error');
     }
     else {
-      drupal_set_message(t('Error: %message', array('%message' => $e->getMessage())), 'error');
+      drupal_set_message(t('Slot error: %message', array('%message' => $e->getMessage())), 'error');
     }
     return FALSE;
   }
 
+  $user = user_load($uid);
+
   // Initiate a background check.
-  _ctl_onboarding_do_background_check($uid);
+  _ctl_onboarding_do_background_check($user);
 
   drupal_set_message(t('Your registration has been submitted!'));
   return TRUE;
@@ -63,13 +63,13 @@ function _ctl_onboarding_slot_register($slot_code, $uid) {
   }
 
   $slot             = $result[0];
-  $num_trainers     = $slot->num_trainers;
-  $num_registrants  = $slot->num_registrants;
-  $trainer_capacity = variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY);
+  $num_trainers     = intval($slot->num_trainers);
+  $num_registrants  = intval($slot->num_registrants);
+  $trainer_capacity = intval(variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY));
 
   if ($num_registrants >= $trainer_capacity * $num_trainers) {
-    drupal_set_message(t('Sorry, registration for this time slot is full!  Please select another time slot'), 'error');
-    // TODO
+    drupal_set_message(t('Sorry, registration for this time slot is full!  Please select another time slot.'), 'error');
+    // TODO later
     // - future work for wait listing would happen here
     return;
   }
@@ -95,14 +95,14 @@ function _ctl_onboarding_slot_register($slot_code, $uid) {
     // This will determine if they're still eligible to register.
     foreach ($result as $registrant) {
       switch ($registrant->status) {
-        // // TODO
+        // // TODO later
         // // - the "pending" status has future potential usage
         // // The user could waiting to hear about multiple time slots.
         // case CTL_ONBOARDING_STATUS_PENDING:
         //   if ($registrant->slot_code === $slot_code) {
         //   }
 
-        // TODO
+        // TODO later
         // - this is for future work related to wait listing
         // A user should be allowed to sign up for an alternate time
         // slot from the one they're wait listed on.

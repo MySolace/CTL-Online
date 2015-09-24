@@ -31,6 +31,7 @@ define('CTL_ONBOARDING_SESSION_DURATION', 400);
 require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
 
 
+// TODO later ?
 // /**
 //  * Implements hook_cron().
 //  */
@@ -146,8 +147,6 @@ function ctl_onboarding_theme($existing, $type, $theme, $path) {
  * Implements hook_token_info().
  */
 function ctl_onboarding_token_info() {
-  // $info = array();
-
   $info['types']['ronboarding'] = array(
     'name'        => t('CTL Onboarding'),
     'description' => t('The token type for CTL Onboarding tokens.'),
