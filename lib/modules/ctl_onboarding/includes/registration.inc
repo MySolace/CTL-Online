@@ -105,19 +105,24 @@ function ctl_onboarding_form($form, &$form_state) {
 
 // Used by the confirmation forms.
 function ctl_onboarding_form_submit($form, &$form_state) {
-  $values = $form_state['values'];
-  // TODO
-  // - send defer and decline emails
-  dsm($values['defer'] === 1);
-  dsm($values['decline'] === 1);
+  $values    = $form_state['values'];
+  $deferring = $values['defer'];
+  $declining = $values['decline'];
 
-  // TODO
-  // global $user;
-  // _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DEFERRED);
-
-  // TODO
-  // global $user;
-  // _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DECLINED);
+  if ($deferring) {
+    global $user;
+    _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DEFERRED);
+    // TODO
+    // - send defer email
+    drupal_set_message(t('You have confirmed your deferral.'));
+  }
+  elseif ($declining) {
+    global $user;
+    _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DECLINED);
+    // TODO
+    // - send decline email
+    drupal_set_message(t('You have confirmed your decline.'));
+  }
 }
 
 
