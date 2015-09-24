@@ -39,3 +39,9 @@ projects[ctl_graduation][type] = "module"
 projects[ctl_graduation][subdir] = "ctl"
 projects[ctl_graduation][download][type] = local
 projects[ctl_graduation][download][source] = './lib/modules/ctl_graduation'
+
+; Onboarding
+projects[ctl_onboarding][type] = "module"
+projects[ctl_onboarding][subdir] = "ctl"
+projects[ctl_onboarding][download][type] = local
+projects[ctl_onboarding][download][source] = './lib/modules/ctl_onboarding'
