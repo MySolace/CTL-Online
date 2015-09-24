@@ -72,32 +72,42 @@ function _ctl_onboarding_settings_form() {
     );
   }
 
-  $email = variable_get('ctl_onboarding_email_settings');
-  $form['ctl_onboarding_email_settings'] = array(
+  $email = variable_get('ctl_onboarding_email');
+  $form['ctl_onboarding_email'] = array(
     '#type'        => 'fieldset',
     '#title'       => 'Email',
     '#collapsed'   => TRUE,
     '#collapsible' => TRUE,
     '#tree'        => TRUE,
   );
-  $form['ctl_onboarding_email_settings']['subject_for_registered'] = array(
+  $form['ctl_onboarding_email']['subject_for_registered'] = array(
     '#type'          => 'textfield',
     '#title'         => t('"Registered" email subject'),
     '#default_value' => isset($email['subject_for_registered']) ? $email['subject_for_registered'] : NULL,
   );
-  $form['ctl_onboarding_email_settings']['body_for_registered'] = array(
+  $form['ctl_onboarding_email']['body_for_registered'] = array(
     '#type'          => 'textarea',
     '#title'         => t('"Registered" email body'),
     '#default_value' => isset($email['body_for_registered']) ? $email['body_for_registered'] : NULL,
   );
-  $form['ctl_onboarding_email_settings']['subject_for_deferred'] = array(
+  $form['ctl_onboarding_email']['subject_for_deferred'] = array(
     '#type'          => 'textfield',
-    '#title'         => t('"Registered" email subject'),
+    '#title'         => t('"Deferred" email subject'),
     '#default_value' => isset($email['subject_for_deferred']) ? $email['subject_for_deferred'] : NULL,
   );
-  $form['ctl_onboarding_email_settings']['body_for_declined'] = array(
+  $form['ctl_onboarding_email']['body_for_deferred'] = array(
     '#type'          => 'textarea',
-    '#title'         => t('"Registered" email body'),
+    '#title'         => t('"Deferred" email body'),
+    '#default_value' => isset($email['body_for_deferred']) ? $email['body_for_deferred'] : NULL,
+  );
+  $form['ctl_onboarding_email']['subject_for_declined'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('"Declined" email subject'),
+    '#default_value' => isset($email['subject_for_declined']) ? $email['subject_for_declined'] : NULL,
+  );
+  $form['ctl_onboarding_email']['body_for_declined'] = array(
+    '#type'          => 'textarea',
+    '#title'         => t('"Declined" email body'),
     '#default_value' => isset($email['body_for_declined']) ? $email['body_for_declined'] : NULL,
   );
 
@@ -112,6 +122,7 @@ function _ctl_onboarding_settings_form() {
   $form['ctl_onboarding_goodhire']['endpoint'] = array(
     '#type'          => 'textfield',
     '#title'         => t('API Endpoint'),
+    '#description'   => t('NOTE:  Do not include the "https://" part.'),
     '#default_value' => isset($goodhire['endpoint']) ? $goodhire['endpoint'] : NULL,
   );
   $form['ctl_onboarding_goodhire']['username'] = array(
@@ -167,6 +178,10 @@ function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
     _ctl_onboarding_setup_teams($cohort_id);
     return;
   }
+
+  // TODO
+  // - address abscence of 'ctl_onboarding_slot_codes'
+
   $slot_codes    = $values['ctl_onboarding_slot_codes'];
   $slot_trainers = $values['ctl_onboarding_slot_trainers'];
   _ctl_onboarding_set_slots($cohort_id, $slot_codes, $slot_trainers);

@@ -18,6 +18,7 @@ function ctl_onboarding_form($form, &$form_state) {
       $no          = 'No, I do not wish to defer';
       $name        = 'defer';
 
+      // TODO
       // do role change if confirmed
 
       return confirm_form($form, $question, $path, $description, $yes, $no, $name);
@@ -30,11 +31,18 @@ function ctl_onboarding_form($form, &$form_state) {
       $no          = 'No, I do not wish to decline';
       $name        = 'decline';
 
+      // TODO
       // do role change if confirmed
 
       return confirm_form($form, $question, $path, $description, $yes, $no, $name);
     }
   }
+
+
+  $e = variable_get('ctl_onboarding_email');
+  $e = check_markup($e['body_for_registered'], 'markdown');
+  dsm($e);
+
 
   // TODO
   // - add visual indicators for statuses
@@ -137,8 +145,12 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
 
   global $user;
 
-  _ctl_onboarding_do_background_check($user);
-  _ctl_onboarding_slot_register($slot_code, $user->uid);
+  // Make sure we have custom profile fields by reloading the user explicitly.
+  $full_user = user_load($user->uid);
+
+  // TODO
+  // _ctl_onboarding_do_background_check($full_user);
+  // _ctl_onboarding_slot_register($slot_code, $user->uid);
 }
 
 
