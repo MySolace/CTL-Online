@@ -1,6 +1,7 @@
 <?php
 
 require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/background-check.inc';
+require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
 require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/slot.inc';
 
 
@@ -23,10 +24,6 @@ function ctl_onboarding_form($form, &$form_state) {
       $yes         = 'Yes, I wish to defer';
       $no          = 'No, I do not wish to defer';
       $name        = 'defer';
-
-      // TODO
-      // do role change if confirmed
-
       return confirm_form($form, $question, $path, $description, $yes, $no, $name);
     }
     if (isset($storage['confirm_decline']) && $storage['confirm_decline']) {
@@ -41,10 +38,6 @@ function ctl_onboarding_form($form, &$form_state) {
       $yes         = 'Yes, I wish to decline';
       $no          = 'No, I do not wish to decline';
       $name        = 'decline';
-
-      // TODO
-      // do role change if confirmed
-
       return confirm_form($form, $question, $path, $description, $yes, $no, $name);
     }
   }
@@ -107,6 +100,24 @@ function ctl_onboarding_form($form, &$form_state) {
   );
 
   return $form;
+}
+
+
+// Used by the confirmation forms.
+function ctl_onboarding_form_submit($form, &$form_state) {
+  $values = $form_state['values'];
+  // TODO
+  // - send defer and decline emails
+  dsm($values['defer'] === 1);
+  dsm($values['decline'] === 1);
+
+  // TODO
+  // global $user;
+  // _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DEFERRED);
+
+  // TODO
+  // global $user;
+  // _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DECLINED);
 }
 
 
