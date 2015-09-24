@@ -1,0 +1,244 @@
+<?php
+
+define('CTL_ONBOARDING_ROLE_ACCEPTED', 'Accepted');
+define('CTL_ONBOARDING_ROLE_INVITED', 'Invited');
+define('CTL_ONBOARDING_ROLE_DEFERRED', 'Deferred');
+define('CTL_ONBOARDING_ROLE_DECLINED', 'Dropout');
+define('CTL_ONBOARDING_ROLE_TRAINEE', 'Trainee');
+define('CTL_ONBOARDING_ROLE_TRAINER', 'Trainer');
+
+define('CTL_ONBOARDING_REGISTRATION_CLOSED', 0);
+define('CTL_ONBOARDING_REGISTRATION_OPEN', 1);
+
+define('CTL_ONBOARDING_STATUS_PENDING', 0);
+define('CTL_ONBOARDING_STATUS_ACCEPTED', 1);
+define('CTL_ONBOARDING_STATUS_ASSIGNED', 2);
+define('CTL_ONBOARDING_STATUS_WAIT_LISTED', 3);
+define('CTL_ONBOARDING_STATUS_DROPPED_FAILED_BACKGROUND_CHECK', 4);
+define('CTL_ONBOARDING_STATUS_DROPPED_CANCELED_BY_REGISTRANT', 5);
+define('CTL_ONBOARDING_STATUS_DROPPED_OTHER', 6);
+
+define('CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY', 35);
+
+define('CTL_ONBOARDING_MAX_TRAINERS_PER_SLOT', 10);
+
+// Hours are defined in 24-hour clock time (a.k.a. military time).
+define('CTL_ONBOARDING_FIRST_START_HOUR', 800);
+define('CTL_ONBOARDING_LAST_START_HOUR', 1900);
+define('CTL_ONBOARDING_ONE_HOUR', 100);
+define('CTL_ONBOARDING_SESSION_DURATION', 400);
+
+require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
+
+
+// TODO later ?
+// /**
+//  * Implements hook_cron().
+//  */
+// function ctl_onboarding_cron() {
+//   _ctl_onboarding_do_background_check();
+// }
+
+
+/**
+ * Implements hook_menu().
+ */
+function ctl_onboarding_menu() {
+  $items['admin/config/ctl'] = array(
+    'title'            => 'Crisis Text Line',
+    'description'      => 'Configure CTL settings.',
+    'position'         => 'right',
+    'weight'           => -100,
+    'page callback'    => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file'             => 'system.admin.inc',
+    'file path'        => drupal_get_path('module', 'system'),
+  );
+  $items['admin/config/ctl/onboarding'] = array(
+    'title'            => 'CTL Onboarding',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('_ctl_onboarding_settings_form'),
+    'access arguments' => array('administer onboarding'),
+    'type'             => MENU_NORMAL_ITEM,
+    'file'             => 'includes/admin.inc',
+  );
+  $items['node/%node/trainer'] = array(
+    'title'            => 'Trainer Selection',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('_ctl_onboarding_trainer_selection_form', 1),
+    'access callback'  => array('_ctl_onboarding_trainer_selection_access_check'),
+    'access arguments' => array(1),
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'includes/trainer.inc',
+  );
+  $items['registration'] = array(
+    'title'            => 'Training Session Registration',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('ctl_onboarding_form'),
+    'access arguments' => array('register for training'),
+    'type'             => MENU_CALLBACK,
+    'file'             => 'includes/registration.inc',
+  );
+
+
+  // TODO
+  // - fior testing only
+  $items['registration-email-test'] = array(
+    'title'            => 'Registration Email Test',
+    'page callback'    => '_ctl_onboarding_registration_email_test',
+    'access arguments' => array('administer onboarding'),
+    'type'             => MENU_CALLBACK,
+    'file'             => 'includes/email.inc',
+  );
+  $items['deferred-email-test'] = array(
+    'title'            => 'Deferred Email Test',
+    'page callback'    => '_ctl_onboarding_deferred_email_test',
+    'access arguments' => array('administer onboarding'),
+    'type'             => MENU_CALLBACK,
+    'file'             => 'includes/email.inc',
+  );
+  $items['declined-email-test'] = array(
+    'title'            => 'Declined Email Test',
+    'page callback'    => '_ctl_onboarding_declined_email_test',
+    'access arguments' => array('administer onboarding'),
+    'type'             => MENU_CALLBACK,
+    'file'             => 'includes/email.inc',
+  );
+
+
+  return $items;
+}
+
+
+function _ctl_onboarding_trainer_selection_access_check($node) {
+  return $node->type === 'training_team';
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function ctl_onboarding_permission() {
+  return array(
+    'administer onboarding' => array(
+      'title'       => t('Administer onboarding'),
+      'description' => t('Manage cohort training session registration.'),
+    ),
+    'register for training' => array(
+      'title'       => t('Register for training'),
+      'description' => t('Allow users to sign up for a training session.'),
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function ctl_onboarding_theme($existing, $type, $theme, $path) {
+  return array(
+    'ctl_onboarding_table' => array(
+      'render element' => 'element',
+      'file'           => 'includes/theme.inc',
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_token_info().
+ */
+function ctl_onboarding_token_info() {
+  $info['types']['ronboarding'] = array(
+    'name'        => t('CTL Onboarding'),
+    'description' => t('The token type for CTL Onboarding tokens.'),
+  );
+  $info['tokens']['ronboarding']['user-name'] = array(
+    'name'        => t('User Name'),
+    'description' => t('The username of the potential trainee.'),
+  );
+  $info['tokens']['ronboarding']['session-1'] = array(
+    'name'        => t('Session 1'),
+    'description' => t('The date and time for the first session.'),
+  );
+  $info['tokens']['ronboarding']['session-2'] = array(
+    'name'        => t('Session 1'),
+    'description' => t('The date and time for the second session.'),
+  );
+  $info['tokens']['ronboarding']['session-3'] = array(
+    'name'        => t('Session 1'),
+    'description' => t('The date and time for the third session.'),
+  );
+  $info['tokens']['ronboarding']['session-4'] = array(
+    'name'        => t('Session 1'),
+    'description' => t('The date and time for the fourth session.'),
+  );
+  $info['tokens']['ronboarding']['session-5'] = array(
+    'name'        => t('Session 1'),
+    'description' => t('The date and time for the fifth session.'),
+  );
+  return $info;
+}
+
+
+/**
+ * Implements hook_tokens().
+ */
+function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+  if ($type === 'ronboarding') {
+    foreach ($tokens as $name => $original) {
+      $value = NULL;
+      switch ($name) {
+        case 'cohort':
+          $value = intval(variable_get('ctl_onboarding_cohort_id'));
+          break;
+
+        case 'registration-start':
+          $start = variable_get('ctl_onboarding_registration_start_date', '[X]');
+          $year  = $start['year'];
+          $month = $start['month'];
+          $day   = $start['day'];
+          $value = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
+          break;
+
+        case 'registration-finish':
+          $finish = variable_get('ctl_onboarding_registration_finish_date', '[X]');
+          $year   = $finish['year'];
+          $month  = $finish['month'];
+          $day    = $finish['day'];
+          $value  = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
+          break;
+
+        case 'session-1':
+          $value = 'session-1';
+          break;
+
+        case 'session-2':
+          $value = 'session-2';
+          break;
+
+        case 'session-3':
+          $value = 'session-3';
+          break;
+
+        case 'session-4':
+          $value = 'session-4';
+          break;
+
+        case 'session-5':
+          $value = 'session-5';
+          break;
+
+        case 'user-name':
+          $value = isset($data['user-name']) ? $data['user-name'] : '';
+          break;
+      }
+      if ($value) {
+        $replacements[$original] = $value;
+      }
+    }
+  }
+
+  return $replacements;
+}
