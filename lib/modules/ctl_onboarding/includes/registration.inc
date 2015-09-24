@@ -111,6 +111,8 @@ function ctl_onboarding_form_submit($form, &$form_state) {
 
   if ($deferring) {
     global $user;
+    // TODO
+    // - remove all roles from the user before adding the defer role
     _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DEFERRED);
     // TODO
     // - send defer email
@@ -118,6 +120,8 @@ function ctl_onboarding_form_submit($form, &$form_state) {
   }
   elseif ($declining) {
     global $user;
+    // TODO
+    // - remove all roles from the user before adding the dropout role
     _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DECLINED);
     // TODO
     // - send decline email
@@ -149,11 +153,6 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
 
   global $user;
 
-  // Make sure we have custom profile fields by reloading the user explicitly.
-  $full_user = user_load($user->uid);
-
-  // TODO
-  // _ctl_onboarding_do_background_check($full_user);
   _ctl_onboarding_slot_register($slot_code, $user->uid);
 }
 

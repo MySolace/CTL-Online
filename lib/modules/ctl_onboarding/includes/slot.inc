@@ -29,7 +29,8 @@ function _ctl_onboarding_slot_save_registrant($cohort_id, $slot_code, $uid) {
 
   $user = user_load($uid);
 
-  // Initiate a background check.
+  // Make sure we have custom profile fields by reloading the user explicitly
+  // before initiating a background check.
   _ctl_onboarding_do_background_check($user);
 
   drupal_set_message(t('Your registration has been submitted!'));
