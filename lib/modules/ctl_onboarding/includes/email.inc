@@ -274,33 +274,50 @@ function ctl_onboarding_mail($key, &$message, $params) {
 
 
 function _ctl_onboarding_registration_email_test() {
-  $email_output = '';
+  $email = variable_get('ctl_onboarding_email');
+  $email_subject = token_replace($email['subject_for_registered']);
+  $email_message = token_replace($email['body_for_registered']);
 
-  $e = variable_get('ctl_onboarding_email');
+  $content = '';
 
-  $email_output = check_markup($e['body_for_registered'], 'markdown');
+  $content .= '<h5>Subject:</h5>';
+  $content .= $email_subject;
 
-  return $email_output;
+  // TODO
+  // - upgrade local PHP to make using markdown possible:
+  // https://www.drupal.org/project/commonmark
+  // $email_message = commonmark_convert_to_html($email_message);
+
+  $content .= '<h5>Body:</h5>';
+  $content .= $email_message;
+
+  return $content;
 }
 
 
 function _ctl_onboarding_deferred_email_test() {
-  $email_output = '';
+  $email = variable_get('ctl_onboarding_email');
+  $email_subject = token_replace($email['subject_for_deferred']);
+  $email_message = token_replace($email['body_for_deferred']);
 
-  $e = variable_get('ctl_onboarding_email');
+  $content = '<h5>Subject:</h5>';
+  $content .= $email_subject;
+  $content .= '<h5>Body:</h5>';
+  $content .= $email_message;
 
-  $email_output = check_markup($e['body_for_deferred'], 'markdown');
-
-  return $email_output;
+  return $content;
 }
 
 
 function _ctl_onboarding_declined_email_test() {
-  $email_output = '';
+  $email = variable_get('ctl_onboarding_email');
+  $email_subject = token_replace($email['subject_for_declined']);
+  $email_message = token_replace($email['body_for_declined']);
 
-  $e = variable_get('ctl_onboarding_email');
+  $content = '<h5>Subject:</h5>';
+  $content .= $email_subject;
+  $content .= '<h5>Body:</h5>';
+  $content .= $email_message;
 
-  $email_output = check_markup($e['body_for_declined'], 'markdown');
-
-  return $email_output;
+  return $content;
 }

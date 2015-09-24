@@ -140,3 +140,84 @@ function ctl_onboarding_theme($existing, $type, $theme, $path) {
     ),
   );
 }
+
+
+/**
+ * Implements hook_token_info().
+ */
+function ctl_onboarding_token_info() {
+  // $info = array();
+
+  $info['types']['ronboarding'] = array(
+    'name'        => t('CTL Onboarding'),
+    'description' => t('The token type for CTL Onboarding tokens.'),
+  );
+  $info['tokens']['ronboarding']['user-name'] = array(
+    'name'        => t('User Name'),
+    'description' => t('The username of the potential trainee.'),
+  );
+  $info['tokens']['ronboarding']['session-1'] = array(
+    'name'        => t('Session 1'),
+    'description' => t('The date and time for the first session.'),
+  );
+  $info['tokens']['ronboarding']['session-2'] = array(
+    'name'        => t('Session 1'),
+    'description' => t('The date and time for the second session.'),
+  );
+  $info['tokens']['ronboarding']['session-3'] = array(
+    'name'        => t('Session 1'),
+    'description' => t('The date and time for the third session.'),
+  );
+  $info['tokens']['ronboarding']['session-4'] = array(
+    'name'        => t('Session 1'),
+    'description' => t('The date and time for the fourth session.'),
+  );
+  $info['tokens']['ronboarding']['session-5'] = array(
+    'name'        => t('Session 1'),
+    'description' => t('The date and time for the fifth session.'),
+  );
+  return $info;
+}
+
+
+/**
+ * Implements hook_tokens().
+ */
+function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+  if ($type === 'ronboarding') {
+    foreach ($tokens as $name => $original) {
+      $value = NULL;
+      switch ($name) {
+        case 'user-name':
+          $value = 'user-name';
+          break;
+
+        case 'session-1':
+          $value = 'session-1';
+          break;
+
+        case 'session-2':
+          $value = 'session-2';
+          break;
+
+        case 'session-3':
+          $value = 'session-3';
+          break;
+
+        case 'session-4':
+          $value = 'session-4';
+          break;
+
+        case 'session-5':
+          $value = 'session-5';
+          break;
+      }
+      if ($value) {
+        $replacements[$original] = $value;
+      }
+    }
+  }
+
+  return $replacements;
+}
