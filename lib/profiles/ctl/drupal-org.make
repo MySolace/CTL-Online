@@ -63,6 +63,7 @@ projects[nodejs][version] = "1.x-dev"
 projects[node_limit][version] = "1.0-alpha5"
 projects[no_trimmed_preview][version] = "1.0"
 projects[orchid][version] = "2.x-dev"
+projects[orchid][patch][] = https://www.drupal.org/files/issues/orchid-format_username-1869682-1-7.x.patch
 projects[og][version] = "2.7"
 projects[privatemsg][version] = "1.4"
 projects[quiz][version] = "5.0-alpha9"
