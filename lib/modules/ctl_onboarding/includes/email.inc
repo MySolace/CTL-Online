@@ -276,11 +276,11 @@ function ctl_onboarding_mail($key, &$message, $params) {
 function _ctl_onboarding_registration_email_test() {
   $email = variable_get('ctl_onboarding_email');
   $email_subject = token_replace($email['subject_for_registered']);
-  $email_message = token_replace($email['body_for_registered']);
+  $email_message = token_replace($email['body_for_registered'], array(
+    'user-name' => 'dsgfhjdsljghldjshfg',
+  ));
 
-  $content = '';
-
-  $content .= '<h5>Subject:</h5>';
+  $content = '<h5>Subject:</h5>';
   $content .= $email_subject;
 
   // TODO

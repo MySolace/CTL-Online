@@ -21,6 +21,7 @@ function ctl_onboarding_uninstall() {
   variable_del('ctl_onboarding_cohort_registration_finish_date');
   variable_del('ctl_onboarding_trainer_capacity');
   variable_del('ctl_onboarding_slot_trainers');
+  variable_del('ctl_onboarding_pages_text');
   variable_del('ctl_onboarding_email');
   variable_del('ctl_onboarding_goodhire');
 }

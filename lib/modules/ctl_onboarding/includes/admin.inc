@@ -72,6 +72,26 @@ function _ctl_onboarding_settings_form() {
     );
   }
 
+  $pages_text = variable_get('ctl_onboarding_pages_text');
+  $form['ctl_onboarding_pages_text'] = array(
+    '#type'        => 'fieldset',
+    '#title'       => 'Pages text',
+    '#collapsed'   => TRUE,
+    '#collapsible' => TRUE,
+    '#tree'        => TRUE,
+  );
+  $form['ctl_onboarding_pages_text']['registration-open'] = array(
+    '#type'          => 'textarea',
+    '#title'         => t('Registration page while registration is open'),
+    '#default_value' => isset($pages_text['registration-open']) ? $pages_text['registration-open'] : NULL,
+  );
+  $form['ctl_onboarding_pages_text']['registration-closed'] = array(
+    '#type'          => 'textarea',
+    '#title'         => t('Registration page while registration is closed'),
+    '#default_value' => isset($pages_text['registration-closed']) ? $pages_text['registration-closed'] : NULL,
+  );
+
+
   $email = variable_get('ctl_onboarding_email');
   $form['ctl_onboarding_email'] = array(
     '#type'        => 'fieldset',

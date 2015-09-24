@@ -41,36 +41,23 @@ function ctl_onboarding_form($form, &$form_state) {
   // TODO
   // - add visual indicators for statuses
 
+  $pages_text = variable_get('ctl_onboarding_pages_text');
+
   $registration_period = intval(variable_get('ctl_onboarding_registration_period', CTL_ONBOARDING_REGISTRATION_CLOSED));
   if ($registration_period === CTL_ONBOARDING_REGISTRATION_CLOSED) {
+    $registration_closed_text = isset($pages_text['registration-closed']) ? token_replace($pages_text['registration-closed']) : '';
     $form['registration_closed'] = array(
       '#type'   => 'markup',
-      '#markup' => "<p>The registration period is closed.</p>",
+      '#markup' => $registration_closed_text,
     );
     return $form;
   }
 
-  $cohort_id                = intval(variable_get('ctl_onboarding_cohort_id'));
-  $registration_start_date  = variable_get('ctl_onboarding_registration_start_date', '[X]');
-  $registration_finish_date = variable_get('ctl_onboarding_registration_finish_date', '[X]');
+  $registration_open_text = isset($pages_text['registration-open']) ? token_replace($pages_text['registration-open']) : '';
 
-  $year  = $registration_start_date['year'];
-  $month = $registration_start_date['month'];
-  $day   = $registration_start_date['day'];
-  $registration_start_date = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
-
-  $year  = $registration_finish_date['year'];
-  $month = $registration_finish_date['month'];
-  $day   = $registration_finish_date['day'];
-  $registration_finish_date = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
-
-  $form['instructions'] = array(
+  $form['registration'] = array(
     '#type'   => 'markup',
-    '#markup' => "<p>Register for a training session for cohort $cohort_id.</p>",
-  );
-  $form['policies'] = array(
-    '#type'   => 'markup',
-    '#markup' => "<p>Policies: Registration occurs between $registration_start_date and $registration_finish_date. After that, we are only able to accomodate 2 schedule changes.  Training will occur for 6 weeks.</p>",
+    '#markup' => $registration_open_text,
   );
 
   $slot_trainers = variable_get('ctl_onboarding_slot_trainers');

@@ -189,8 +189,24 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
     foreach ($tokens as $name => $original) {
       $value = NULL;
       switch ($name) {
-        case 'user-name':
-          $value = 'user-name';
+        case 'cohort':
+          $value = intval(variable_get('ctl_onboarding_cohort_id'));
+          break;
+
+        case 'registration-start':
+          $start = variable_get('ctl_onboarding_registration_start_date', '[X]');
+          $year  = $start['year'];
+          $month = $start['month'];
+          $day   = $start['day'];
+          $value = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
+          break;
+
+        case 'registration-finish':
+          $finish = variable_get('ctl_onboarding_registration_finish_date', '[X]');
+          $year   = $finish['year'];
+          $month  = $finish['month'];
+          $day    = $finish['day'];
+          $value  = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
           break;
 
         case 'session-1':
@@ -211,6 +227,10 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
 
         case 'session-5':
           $value = 'session-5';
+          break;
+
+        case 'user-name':
+          $value = isset($data['user-name']) ? $data['user-name'] : '';
           break;
       }
       if ($value) {
