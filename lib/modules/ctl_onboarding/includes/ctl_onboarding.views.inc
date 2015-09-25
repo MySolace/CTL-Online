@@ -9,17 +9,17 @@ function ctl_onboarding_views_data() {
     'table' => array(
       'group' => t('CTL Onboarding Registrant'),
 
-      // 'base' => array(
-      //   'field' => 'uid',
-      //   'title' => t('CTL Onboarding Registrant'),
-      //   'help'  => t('This table conatins registrants for training.'),
-      // ),
+      'base' => array(
+        'field' => 'uid',
+        'title' => t('CTL Onboarding Registrant'),
+        'help'  => t('This table conatins registrants for training.'),
+      ),
 
       // This table references the user table. The declaration below creates an
       // 'implicit' relationship to the user table so that when 'user' is the base
       // table the fields are automatically available.
       'join' => array(
-        'user' => array(
+        'users' => array(
           'left_field' => 'uid',
           'field'      => 'uid',
         ),
@@ -29,8 +29,8 @@ function ctl_onboarding_views_data() {
       'title' => t('User ID'),
       'help' => t('The user ID for the registrant.'),
       'relationship' => array(
-        'base'       => 'user',
-        'base_field' => 'name',
+        'base'       => 'users',
+        'base field' => 'name',
         'handler'    => 'views_handler_relationship',
         'label'      => t('Referring relationship to user'),
         'title'      => t('CTL Onboarding Registrant'),
@@ -97,7 +97,7 @@ function ctl_onboarding_views_data() {
  * Implements hook_views_data_alter().
  */
 function ctl_onboarding_views_data_alter(&$data) {
-  $data['user']['ctl_onboarding_registrant'] = array(
+  $data['users']['ctl_onboarding_registrant'] = array(
     'group' => t('CTL Onboarding Registrant'),
     'title' => t('CTL Onboarding Registrant'),
     'help'  => t('The CTL Onboarding Registrant that is associated with the user.'),
