@@ -72,6 +72,14 @@ function ctl_onboarding_form($form, &$form_state) {
       $slots[$slot_code]   = $start_hour_display . ' - ' . $finish_hour_display;
     }
   }
+
+  foreach ($slots as $slot_code => $slot) {
+    $available = _ctl_onboarding_slot_available($slot_code);
+    if ($available !== TRUE) {
+      unset($slots[$slot_code]);
+    }
+  }
+
   $form['training_slot'] = array(
     '#type'    => 'radios',
     '#options' => $slots,

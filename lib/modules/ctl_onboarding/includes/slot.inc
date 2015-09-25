@@ -62,29 +62,10 @@ function _ctl_onboarding_slot_register($slot_code, $uid) {
 
   $cohort_id = intval(variable_get('ctl_onboarding_cohort_id'));
 
-  $query = db_select('ctl_onboarding_slot', 's');
-  $query->addField('s', 'num_trainers');
-  $query->addField('s', 'num_registrants');
-  $result = $query
-    ->condition('s.cohort_id', $cohort_id)
-    ->condition('s.slot_code', $slot_code)
-    ->execute()
-    ->fetchAll();
+  $available = _ctl_onboarding_slot_available($slot_code);
 
-  if (empty($result)) {
-    drupal_set_message(t("Could not find info for the !slot_code time slot!  Please notify a trainer or site administrator.", array('!slot_code' => $slot_code)), 'error');
-    return;
-  }
-
-  $slot             = $result[0];
-  $num_trainers     = intval($slot->num_trainers);
-  $num_registrants  = intval($slot->num_registrants);
-  $trainer_capacity = intval(variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY));
-
-  if ($num_registrants >= $trainer_capacity * $num_trainers) {
-    drupal_set_message(t('Sorry, registration for this time slot is full!  Please select another time slot.'), 'error');
-    // TODO later
-    // - future work for wait listing would happen here
+  if ($available !== TRUE) {
+    drupal_set_message($available, 'error');
     return;
   }
 
@@ -181,4 +162,33 @@ function _ctl_onboarding_slot_register($slot_code, $uid) {
       ->condition('slot_code', $slot_code)
       ->execute();
   }
+}
+
+function _ctl_onboarding_slot_available($slot_code) {
+  $cohort_id = intval(variable_get('ctl_onboarding_cohort_id'));
+
+  $query = db_select('ctl_onboarding_slot', 's');
+  $query->addField('s', 'num_trainers');
+  $query->addField('s', 'num_registrants');
+  $result = $query
+    ->condition('s.cohort_id', $cohort_id)
+    ->condition('s.slot_code', $slot_code)
+    ->execute()
+    ->fetchAll();
+
+  if (empty($result)) {
+    return t("Could not find info for the !slot_code time slot!  Please notify a trainer or site administrator.", array('!slot_code' => $slot_code));
+  }
+
+  $slot             = $result[0];
+  $num_trainers     = intval($slot->num_trainers);
+  $num_registrants  = intval($slot->num_registrants);
+  $trainer_capacity = intval(variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY));
+
+  if ($num_registrants >= $trainer_capacity * $num_trainers) {
+    return t('Sorry, registration for this time slot is full!  Please select another time slot.');;
+  }
+
+  // If we haven't aborted yet, the slot is available.
+  return TRUE;
 }
