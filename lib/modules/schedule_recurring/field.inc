@@ -157,9 +157,11 @@ function schedule_recurring_field_formatter_view($entity_type, $entity, $field, 
 
       break;
     case 'schedule_recurring_shift_raw':
-      $element[0] = array(
-        '#markup' => $item['day'] . ' ' . $item['start'] . '-' . $item['end'],
-      );
+      foreach ($items as $delta => $item) {
+        $element[] = array(
+          '#markup' => $item['day'] . ' ' . $item['start'] . '-' . $item['end'],
+        );
+      }
 
       break;
   }
