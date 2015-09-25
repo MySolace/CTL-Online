@@ -2,7 +2,6 @@
   background-color: #7F7;
 }
 
-
 #-ctl-onboarding-settings-form .tableheader-processed td {
   border-right: 1px solid rgb(225, 226, 220);
 }
@@ -12,51 +11,5 @@
   margin-right: 1em;
 }
 #-ctl-onboarding-settings-form .tableheader-processed select {
-  float: right;
+  float: left;
 }
-
-
-/*
-// TODO:
-// - Temp code!  Clean this up !
-// - Figure out where #46c7ff comes from.
-table td {
-  padding: 0
-}
-.form-type-radio label {
-  padding: 10px !important;
-}
-.form-type-radio label:hover {
-  background-color: #0FF;
-}
-.form-type-radio label:before {
-  display: none;
-}
-input[type=radio]:checked+.radio:before,
-.form-type-radio input[type=radio]:checked+label {
-  background-color: #46c7ff;
-  color: #FFF;
-}
-
-
-// // TODO:
-// // - Temp code!  Clean this up !
-// $form['styles'] = array(
-//   '#type' => 'markup',
-//   '#markup' =>
-//     '<style>' .
-//       '.form-item-ctl-onboarding-slot-codes-2 .form-type-select label {' .
-//         'float: left;' .
-//         'margin-right: 0.5em;' .
-//       '}' .
-//       '.form-item-ctl-onboarding-slot-codes-2 .form-type-select select {' .
-//         'float: left;' .
-//       '}' .
-//       '.form-item-ctl-onboarding-slot-codes-2 table td {' .
-//         'border-right: 1px solid grey;' .
-//       '}' .
-//     '</style>',
-// );
-
-
-*/

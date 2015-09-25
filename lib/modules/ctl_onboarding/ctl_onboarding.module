@@ -28,6 +28,7 @@ define('CTL_ONBOARDING_LAST_START_HOUR', 1900);
 define('CTL_ONBOARDING_ONE_HOUR', 100);
 define('CTL_ONBOARDING_SESSION_DURATION', 400);
 
+require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/email.inc';
 require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
 
 

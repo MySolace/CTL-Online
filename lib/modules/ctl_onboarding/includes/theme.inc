@@ -1,11 +1,7 @@
 <?php
 
 function theme_ctl_onboarding_table($variables) {
-  // TODO
-  // - add visual indicators to communicate time slot state
-
   $element     = $variables['element'];
-  // $slots       = $element['#options'];
   $showing_all = isset($element['#showing_all']) ? $element['#showing_all'] : FALSE;
   $header = array(
     t('Monday'),

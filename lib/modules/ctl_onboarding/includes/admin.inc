@@ -43,11 +43,13 @@ function _ctl_onboarding_settings_form() {
     '#title'         => t('End of sign-up'),
     '#default_value' => variable_get('ctl_onboarding_registration_finish_date'),
   );
+
+  $capacity = range(20, 50, 5);
   $form['ctl_onboarding_trainer_capacity'] = array(
     '#type'          => 'select',
     '#title'         => t('Number of trainees per team'),
     '#default_value' => variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY),
-    '#options'       => range(20, 50, 5),
+    '#options'       => array_combine($capacity, $capacity),
     '#required'      => TRUE,
   );
 

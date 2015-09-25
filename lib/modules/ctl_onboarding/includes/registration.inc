@@ -103,11 +103,11 @@ function ctl_onboarding_form($form, &$form_state) {
 }
 
 
-// Used by the confirmation forms.
+// Used by the "defer" and "decline" confirmation forms.
 function ctl_onboarding_form_submit($form, &$form_state) {
   $values    = $form_state['values'];
-  $deferring = $values['defer'];
-  $declining = $values['decline'];
+  $deferring = isset($values['defer']) ? $values['defer'] : FALSE;
+  $declining = isset($values['decline']) ? $values['decline'] : FALSE;
 
   if ($deferring) {
     global $user;
