@@ -96,7 +96,7 @@ function ctl_onboarding_form($form, &$form_state) {
   );
 
   $form['#attached']['css'] = array(
-    drupal_get_path('module', 'ctl_onboarding') . '/scripts/ctl_onboarding.css',
+    drupal_get_path('module', 'ctl_onboarding') . '/ctl_onboarding.css',
   );
 
   return $form;

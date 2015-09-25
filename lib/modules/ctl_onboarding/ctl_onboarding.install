@@ -120,7 +120,7 @@ function ctl_onboarding_schema() {
       ),
       'slot_code' => array(
         'type'        => 'varchar',
-        'description' => 'The slot code.',
+        'description' => 'The time slot code.',
         'length'      => 7,
         'not null'    => TRUE,
       ),

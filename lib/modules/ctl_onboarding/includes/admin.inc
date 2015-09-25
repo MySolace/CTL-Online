@@ -14,12 +14,16 @@ function _ctl_onboarding_settings_form() {
       CTL_ONBOARDING_REGISTRATION_OPEN   => t('Open'),
     ),
   );
-  $form['ctl_onboarding_creating_teams'] = array(
-    '#type'          => 'checkbox',
-    '#title'         => 'Create teams upon saving this settings screen',
-    '#default_value' => FALSE,
-    '#description'   => 'Note: You can use this to recreate teams if they already exist.  With great power comes great repsonsibility!',
-  );
+
+  // TODO later
+  // - this has been punted for now
+  // $form['ctl_onboarding_creating_teams'] = array(
+  //   '#type'          => 'checkbox',
+  //   '#title'         => 'Create teams upon saving this settings screen',
+  //   '#default_value' => FALSE,
+  //   '#description'   => 'Note: You can use this to recreate teams if they already exist.  With great power comes great repsonsibility!',
+  // );
+
   // We have the same range of choices as the cohort user field.
   $form['ctl_onboarding_cohort_id'] = array(
     '#type'          => 'select',
@@ -197,11 +201,13 @@ function _ctl_onboarding_settings_form() {
   );
 
   $form['#attached']['css'] = array(
-    drupal_get_path('module', 'ctl_onboarding') . '/scripts/ctl_onboarding.css',
+    drupal_get_path('module', 'ctl_onboarding') . '/ctl_onboarding.css',
   );
-  $form['#attached']['js'] = array(
-    drupal_get_path('module', 'ctl_onboarding') . '/scripts/ctl_onboarding.js',
-  );
+
+  // // TODO nice to have
+  // $form['#attached']['js'] = array(
+  //   drupal_get_path('module', 'ctl_onboarding') . '/ctl_onboarding.js',
+  // );
 
   // We'll need to do additional setup.
   $form['#submit'][] = '_ctl_onboarding_settings_submit_extra';
@@ -211,22 +217,28 @@ function _ctl_onboarding_settings_form() {
 
 
 function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
-  $values         = $form_state['values'];
-  $cohort_id      = intval($values['ctl_onboarding_cohort_id']);
-  $creating_teams = $values['ctl_onboarding_creating_teams'];
-  if ($creating_teams) {
-    _ctl_onboarding_setup_teams($cohort_id);
-    return;
-  }
+  $values    = $form_state['values'];
+  $cohort_id = intval($values['ctl_onboarding_cohort_id']);
+
+  // TODO later
+  // - this has been punted for now
+  // $creating_teams = $values['ctl_onboarding_creating_teams'];
+  // if ($creating_teams) {
+  //   _ctl_onboarding_setup_teams($cohort_id);
+  //   return;
+  // }
+
   $slot_trainers = $values['ctl_onboarding_slot_trainers'];
   _ctl_onboarding_set_slots($cohort_id, $slot_trainers);
 }
 
 
 function _ctl_onboarding_set_slots($cohort_id, $slot_trainers) {
+  // TODO
+  // - optimize database usage so that slot info gets stored only if it's being or has been used
   foreach ($slot_trainers as $slot_code => $num_trainers) {
     if ($slot_code) {
-      // TODO
+      // TODO later
       // - account for the case where registration is reopened from being previously closed
 
       // Upsert time slot info.
@@ -242,7 +254,7 @@ function _ctl_onboarding_set_slots($cohort_id, $slot_trainers) {
         ->execute();
     }
     else {
-      //  TODO
+      //  TODO later
 
       // if (slot exists) {
 

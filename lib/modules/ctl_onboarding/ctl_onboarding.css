@@ -3,6 +3,19 @@
 }
 
 
+#-ctl-onboarding-settings-form .tableheader-processed td {
+  border-right: 1px solid rgb(225, 226, 220);
+}
+#-ctl-onboarding-settings-form .tableheader-processed label {
+  float:        left;
+  font-size:    1.2em;
+  margin-right: 1em;
+}
+#-ctl-onboarding-settings-form .tableheader-processed select {
+  float: right;
+}
+
+
 /*
 // TODO:
 // - Temp code!  Clean this up !

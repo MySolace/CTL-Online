@@ -153,9 +153,9 @@ function ctl_onboarding_token_info() {
     'name'        => t('CTL Onboarding'),
     'description' => t('The token type for CTL Onboarding tokens.'),
   );
-  $info['tokens']['ronboarding']['user-name'] = array(
-    'name'        => t('User Name'),
-    'description' => t('The username of the potential trainee.'),
+  $info['tokens']['ronboarding']['cohort'] = array(
+    'name'        => t('Cohort'),
+    'description' => t('The cohort number.'),
   );
   $info['tokens']['ronboarding']['session-1'] = array(
     'name'        => t('Session 1'),
@@ -176,6 +176,10 @@ function ctl_onboarding_token_info() {
   $info['tokens']['ronboarding']['session-5'] = array(
     'name'        => t('Session 1'),
     'description' => t('The date and time for the fifth session.'),
+  );
+  $info['tokens']['ronboarding']['full-name'] = array(
+    'name'        => t('Full Name'),
+    'description' => t('The first and last name of the potential trainee.'),
   );
   return $info;
 }
@@ -230,8 +234,8 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
           $value = 'session-5';
           break;
 
-        case 'user-name':
-          $value = isset($data['user-name']) ? $data['user-name'] : '';
+        case 'full-name':
+          $value = isset($data['full-name']) ? $data['full-name'] : '';
           break;
       }
       if ($value) {
@@ -239,6 +243,16 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
       }
     }
   }
-
   return $replacements;
+}
+
+
+/**
+ * Implements hook_views_api().
+ */
+function ctl_onboarding_views_api() {
+  return array(
+    'api'  => 3,
+    'path' => drupal_get_path('module', 'ctl_onboarding') . '/includes',
+  );
 }

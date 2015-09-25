@@ -34,6 +34,20 @@ function _ctl_onboarding_slot_save_registrant($cohort_id, $slot_code, $uid) {
   _ctl_onboarding_do_background_check($user);
 
   drupal_set_message(t('Your registration has been submitted!'));
+
+  $mail_data = array(
+    'key'  => 'registered',
+    'user' => $user,
+  );
+
+  // Send the a confirmation email for registration.
+  if (_ctl_onboarding_mail_send($mail_data)) {
+    drupal_set_message(t('You should receive a confirmation email shortly.'));
+  }
+  else {
+    drupal_set_message(t('There was a problem sending a confirmation email.'), 'error');
+  }
+
   return TRUE;
 }
 
