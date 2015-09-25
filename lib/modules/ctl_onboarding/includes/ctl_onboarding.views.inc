@@ -8,16 +8,11 @@ function ctl_onboarding_views_data() {
   $data['ctl_onboarding_registrant'] = array(
     'table' => array(
       'group' => t('CTL Onboarding Registrant'),
-
-      'base' => array(
-        'field' => 'uid',
-        'title' => t('CTL Onboarding Registrant'),
-        'help'  => t('This table conatins registrants for training.'),
-      ),
-
-      // This table references the user table. The declaration below creates an
-      // 'implicit' relationship to the user table so that when 'user' is the base
-      // table the fields are automatically available.
+      // 'base' => array(
+      //   'field' => 'uid',
+      //   'title' => t('CTL Onboarding Registrant'),
+      //   'help'  => t('This table conatins registrants for training.'),
+      // ),
       'join' => array(
         'users' => array(
           'left_field' => 'uid',
@@ -27,14 +22,14 @@ function ctl_onboarding_views_data() {
     ),
     'uid' => array(
       'title' => t('User ID'),
-      'help' => t('The user ID for the registrant.'),
+      'help'  => t('The user ID for the registrant.'),
       'relationship' => array(
         'base'       => 'users',
-        'base field' => 'name',
+        'base field' => 'uid',
         'handler'    => 'views_handler_relationship',
         'label'      => t('Referring relationship to user'),
-        'title'      => t('CTL Onboarding Registrant'),
-        // 'help'       => t('More information on this relationship'),
+        'title'      => t('User ID'),
+        'help'       => t('The relationship between registrants and users.'),
       ),
     ),
     'cohort_id' => array(
@@ -93,20 +88,20 @@ function ctl_onboarding_views_data() {
 }
 
 
-/**
- * Implements hook_views_data_alter().
- */
-function ctl_onboarding_views_data_alter(&$data) {
-  $data['users']['ctl_onboarding_registrant'] = array(
-    'group' => t('CTL Onboarding Registrant'),
-    'title' => t('CTL Onboarding Registrant'),
-    'help'  => t('The CTL Onboarding Registrant that is associated with the user.'),
-    'relationship' => array(
-      'handler'            => 'views_handler_relationship',
-      'label'              => t('CTL Onboarding Registrant'),
-      'base'               => 'ctl_onboarding_registrant',
-      'base field'         => 'uid',
-      'relationship field' => 'uid',
-    ),
-  );
-}
+// /**
+//  * Implements hook_views_data_alter().
+//  */
+// function ctl_onboarding_views_data_alter(&$data) {
+//   $data['users']['ctl_onboarding_registrant'] = array(
+//     'group' => t('CTL Onboarding Registrant'),
+//     'title' => t('CTL Onboarding Registrant'),
+//     'help'  => t('The CTL Onboarding Registrant that is associated with the user.'),
+//     'relationship' => array(
+//       'handler'            => 'views_handler_relationship',
+//       'label'              => t('CTL Onboarding Registrant'),
+//       'base'               => 'ctl_onboarding_registrant',
+//       'base field'         => 'uid',
+//       'relationship field' => 'uid',
+//     ),
+//   );
+// }

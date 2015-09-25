@@ -223,6 +223,9 @@ function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
   $cohort_id = intval($values['ctl_onboarding_cohort_id']);
 
   // TODO later
+  // - actually use our ctl_onboarding_cohort database table
+
+  // TODO later
   // - this has been punted for now
   // $creating_teams = $values['ctl_onboarding_creating_teams'];
   // if ($creating_teams) {
@@ -236,31 +239,20 @@ function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
 
 
 function _ctl_onboarding_set_slots($cohort_id, $slot_trainers) {
-  // TODO
-  // - optimize database usage so that slot info gets stored only if it's being or has been used
   foreach ($slot_trainers as $slot_code => $num_trainers) {
-    if ($slot_code) {
-      // TODO later
-      // - account for the case where registration is reopened from being previously closed
+    // TODO later
+    // - account for the case where registration is reopened from being previously closed
 
-      // Upsert time slot info.
-      db_merge('ctl_onboarding_slot')
-        ->key(array(
-          'cohort_id' => $cohort_id,
-          'slot_code' => $slot_code,
-        ))
-        ->fields(array(
-          'num_trainers'    => $num_trainers,
-          'num_registrants' => 0,
-        ))
-        ->execute();
-    }
-    else {
-      //  TODO later
-
-      // if (slot exists) {
-
-      // }
-    }
+    // Upsert time slot info.
+    db_merge('ctl_onboarding_slot')
+      ->key(array(
+        'cohort_id' => $cohort_id,
+        'slot_code' => $slot_code,
+      ))
+      ->fields(array(
+        'num_trainers'    => $num_trainers,
+        'num_registrants' => 0,
+      ))
+      ->execute();
   }
 }
