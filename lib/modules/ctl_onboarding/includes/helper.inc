@@ -20,8 +20,9 @@ function _ctl_onboarding_format_hour_display($hour) {
  * Ensures that a user has only a one role out of a set of related roles.
  * @param int    $uid               The user ID.
  * @param string $next_role_name    The name of the role to set.
+ * @param bool   $exclusive         Remove all other roles.
  */
-function _ctl_onboarding_set_user_role($uid, $next_role_name) {
+function _ctl_onboarding_set_user_role($uid, $next_role_name, $exclusive = FALSE) {
   // Remove all the roles we don't want the user to have.
   $role_names = array(
     CTL_ONBOARDING_ROLE_ACCEPTED,
@@ -30,6 +31,15 @@ function _ctl_onboarding_set_user_role($uid, $next_role_name) {
     CTL_ONBOARDING_ROLE_DECLINED,
     CTL_ONBOARDING_ROLE_TRAINEE,
   );
+
+  // TODO
+  // - check this
+  if ($exclusive) {
+    $user = user_load($uid);
+    $user->roles = array();
+    user_save($user);
+  }
+
   foreach ($role_names as $role_name) {
     if ($role_name !== $next_role_name) {
       $role = user_role_load_by_name($role_name);

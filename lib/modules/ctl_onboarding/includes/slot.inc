@@ -27,10 +27,9 @@ function _ctl_onboarding_slot_save_registrant($cohort_id, $slot_code, $uid) {
     return FALSE;
   }
 
-  $user = user_load($uid);
-
   // Make sure we have custom profile fields by reloading the user explicitly
   // before initiating a background check.
+  $user = user_load($uid);
   _ctl_onboarding_do_background_check($user);
 
   drupal_set_message(t('Your registration has been submitted!'));
@@ -40,7 +39,7 @@ function _ctl_onboarding_slot_save_registrant($cohort_id, $slot_code, $uid) {
     'user' => $user,
   );
 
-  // Send the a confirmation email for registration.
+  // Send the confirmation email for registration.
   if (_ctl_onboarding_mail_send($mail_data)) {
     drupal_set_message(t('You should receive a confirmation email shortly.'));
   }

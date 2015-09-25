@@ -111,21 +111,49 @@ function ctl_onboarding_form_submit($form, &$form_state) {
 
   if ($deferring) {
     global $user;
-    // TODO
-    // - remove all roles from the user before adding the defer role
-    _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DEFERRED);
-    // TODO
-    // - send defer email
-    drupal_set_message(t('You have confirmed your deferral.'));
+
+    // Make sure we have custom profile fields by reloading the user explicitly.
+    $user = user_load($user->uid);
+
+    _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DEFERRED, TRUE);
+
+    drupal_set_message(t('You have chosen to defer.'));
+
+    $mail_data = array(
+      'key'  => 'deferred',
+      'user' => $user,
+    );
+
+    // Send the confirmation email for deferral.
+    if (_ctl_onboarding_mail_send($mail_data)) {
+      drupal_set_message(t('You should receive a confirmation email shortly.'));
+    }
+    else {
+      drupal_set_message(t('There was a problem sending a confirmation email.'), 'error');
+    }
   }
   elseif ($declining) {
     global $user;
-    // TODO
-    // - remove all roles from the user before adding the dropout role
-    _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DECLINED);
-    // TODO
-    // - send decline email
-    drupal_set_message(t('You have confirmed your decline.'));
+
+    // Make sure we have custom profile fields by reloading the user explicitly.
+    $user = user_load($user->uid);
+
+    _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DECLINED, TRUE);
+
+    drupal_set_message(t('You have chosen to decline.'));
+
+    $mail_data = array(
+      'key'  => 'deferred',
+      'user' => $user,
+    );
+
+    // Send the confirmation email for declining.
+    if (_ctl_onboarding_mail_send($mail_data)) {
+      drupal_set_message(t('You should receive a confirmation email shortly.'));
+    }
+    else {
+      drupal_set_message(t('There was a problem sending a confirmation email.'), 'error');
+    }
   }
 }
 
@@ -144,9 +172,6 @@ function _ctl_onboarding_form_validate_register($form, &$form_state) {
 }
 
 
-/**
- *
- */
 function _ctl_onboarding_form_submit_register($form, &$form_state) {
   $values    = $form_state['values'];
   $slot_code = $values['training_slot'];
@@ -157,32 +182,13 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
 }
 
 
-// TODO
 function _ctl_onboarding_form_submit_defer($form, &$form_state) {
   $form_state['rebuild'] = TRUE;
   $form_state['storage']['confirm_defer'] = TRUE;
-
-  // drupal_set_message(var_export($form_state['clicked_button'], TRUE));
 }
 
 
-// TODO
 function _ctl_onboarding_form_submit_decline($form, &$form_state) {
-  // drupal_set_message(var_export($form_state['clicked_button'], TRUE));
-
-  // $form_state['rebuild'] = TRUE;
-
-  // if ($form_state['clicked_button']['#value'] == 'Delete' ) {
   $form_state['rebuild'] = TRUE;
   $form_state['storage']['confirm_decline'] = TRUE;
-  // }
-  // else if ( isset( $form_state['values']['confirm'] ) && $form_state['values']['confirm'] ) {
-  //   $msg = t( "The object has been deleted." );
-  //   drupal_set_message( $msg );
-  // }
-  // else if ($form_state['clicked_button']['#value'] == 'Submit' ) {
-  //   $msg = t( "The object information has been updated." );
-  //   drupal_set_message( $msg );
-  // }
-
 }

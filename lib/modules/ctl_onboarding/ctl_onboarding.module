@@ -81,8 +81,6 @@ function ctl_onboarding_menu() {
   );
 
 
-  // TODO
-  // - fior testing only
   $items['registration-email-test'] = array(
     'title'            => 'Registration Email Test',
     'page callback'    => '_ctl_onboarding_registration_email_test',
@@ -214,22 +212,27 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
           $value  = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
           break;
 
+        // TODO
         case 'session-1':
           $value = 'session-1';
           break;
 
+        // TODO
         case 'session-2':
           $value = 'session-2';
           break;
 
+        // TODO
         case 'session-3':
           $value = 'session-3';
           break;
 
+        // TODO
         case 'session-4':
           $value = 'session-4';
           break;
 
+        // TODO
         case 'session-5':
           $value = 'session-5';
           break;
