@@ -106,6 +106,10 @@ function schedule_recurring_field_formatter_info() {
       'label' => t('Default'),
       'field types' => array('schedule_recurring_shift'),
     ),
+    'schedule_recurring_shift_raw' => array(
+      'label' => t('Raw'),
+      'field types' => array('schedule_recurring_shift'),
+    ),
   );
 }
 
@@ -149,6 +153,12 @@ function schedule_recurring_field_formatter_view($entity_type, $entity, $field, 
         '#theme' => 'table',
         '#header' => $headers,
         '#rows' => $rows,
+      );
+
+      break;
+    case 'schedule_recurring_shift_raw':
+      $element[0] = array(
+        '#markup' => $item['day'] . ' ' . $item['start'] '-' . $item['end'],
       );
 
       break;
