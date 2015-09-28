@@ -8,11 +8,11 @@ function ctl_onboarding_views_data() {
   $data['ctl_onboarding_registrant'] = array(
     'table' => array(
       'group' => t('CTL Onboarding Registrant'),
-      // 'base' => array(
-      //   'field' => 'uid',
-      //   'title' => t('CTL Onboarding Registrant'),
-      //   'help'  => t('This table conatins registrants for training.'),
-      // ),
+      'base' => array(
+        'field' => 'uid',
+        'title' => t('CTL Onboarding Registrant'),
+        'help'  => t('This table conatins registrants for training.'),
+      ),
       'join' => array(
         'users' => array(
           'left_field' => 'uid',
