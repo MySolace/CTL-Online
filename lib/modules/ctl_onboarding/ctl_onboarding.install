@@ -1,0 +1,137 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function ctl_onboarding_install() {
+  $t = get_t();
+  drupal_set_message($t("Settings for the CTL Onboarding module are available at !link",
+    array('!link' => l($t('Administer > Crisis Text Line > CTL Onboarding'), 'admin/config/ctl/ctl-onboarding'))
+  ));
+}
+
+
+/**
+ * Implements hook_uninstall().
+ */
+function ctl_onboarding_uninstall() {
+  variable_del('ctl_onboarding_registration_period');
+  variable_del('ctl_onboarding_cohort_id');
+  variable_del('ctl_onboarding_cohort_registration_start_date');
+  variable_del('ctl_onboarding_cohort_registration_finish_date');
+  variable_del('ctl_onboarding_trainer_capacity');
+  variable_del('ctl_onboarding_slot_trainers');
+  variable_del('ctl_onboarding_pages_text');
+  variable_del('ctl_onboarding_email');
+  variable_del('ctl_onboarding_goodhire');
+}
+
+
+/**
+ * Implements hook_schema().
+ */
+function ctl_onboarding_schema() {
+  $schema['ctl_onboarding_cohort'] = array(
+    'description' => 'The user who is able to register for training sessions.',
+    'fields' => array(
+      'cohort_id' => array(
+        'type'        => 'int',
+        'description' => 'The cohort ID.',
+        'not null'    => TRUE,
+        'unsigned'    => TRUE,
+      ),
+      'registration_start_date' => array(
+        'type'        => 'int',
+        'description' => 'When registration begins.',
+        'default'     => 0,
+        'not null'    => TRUE,
+        'unsigned'    => TRUE,
+      ),
+      'registration_finish_date' => array(
+        'type'        => 'int',
+        'description' => 'When registration ends.',
+        'default'     => 0,
+        'not null'    => TRUE,
+        'unsigned'    => TRUE,
+      ),
+      'training_start_date' => array(
+        'type'        => 'int',
+        'description' => 'When training begins.',
+        'default'     => 0,
+        'not null'    => TRUE,
+        'unsigned'    => TRUE,
+      ),
+      'training_finish_date' => array(
+        'type'        => 'int',
+        'description' => 'When training ends.',
+        'default'     => 0,
+        'not null'    => TRUE,
+        'unsigned'    => TRUE,
+      ),
+    ),
+    'primary key' => array('cohort_id'),
+  );
+  $schema['ctl_onboarding_slot'] = array(
+    'description' => 'The time slot to register for.',
+    'fields' => array(
+      'cohort_id' => array(
+        'type'        => 'int',
+        'description' => 'The cohort ID.',
+        'not null'    => TRUE,
+        'unsigned'    => TRUE,
+      ),
+      'slot_code' => array(
+        'type'        => 'varchar',
+        'description' => 'The slot code.',
+        'length'      => 7,
+        'not null'    => TRUE,
+      ),
+      'num_trainers' => array(
+        'type'        => 'int',
+        'description' => 'The number of trainers available.',
+        'default'     => 0,
+        'not null'    => TRUE,
+        'unsigned'    => TRUE,
+      ),
+      'num_registrants' => array(
+        'type'        => 'int',
+        'description' => 'The number of potential trainees.',
+        'default'     => 0,
+        'not null'    => TRUE,
+        'unsigned'    => TRUE,
+      ),
+    ),
+    'primary key' => array('cohort_id', 'slot_code'),
+  );
+  $schema['ctl_onboarding_registrant'] = array(
+    'description' => 'The user who is able to register for training sessions.',
+    'fields' => array(
+      'uid' => array(
+        'type'        => 'int',
+        'description' => 'The user ID for the registrant.',
+        'not null'    => TRUE,
+        'unsigned'    => TRUE,
+      ),
+      'cohort_id' => array(
+        'type'        => 'int',
+        'description' => 'The cohort ID.',
+        'not null'    => TRUE,
+        'unsigned'    => TRUE,
+      ),
+      'slot_code' => array(
+        'type'        => 'varchar',
+        'description' => 'The time slot code.',
+        'length'      => 7,
+        'not null'    => TRUE,
+      ),
+      'status' => array(
+        'type'        => 'int',
+        'description' => 'The acceptance status of the registrant.',
+        'not null'    => TRUE,
+        'unsigned'    => TRUE,
+      ),
+    ),
+    'primary key' => array('uid'),
+  );
+  return $schema;
+}

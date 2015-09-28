@@ -80,7 +80,7 @@ function ctl_graduation_form($form, &$form_state, $uid) {
     '#type' => 'checkboxes',
     '#title' => t('Additional requirements'),
     '#default_value' => $defaults,
-      '#options' => array(
+    '#options' => array(
       'did_live_sessions'       => t('This trainee has attended the required live sessions.'),
       'did_observation_shift'   => t('This trainee has completed the required observation shift.'),
       'did_roleplays'           => t('This trainee has completed the required roleplays.'),
