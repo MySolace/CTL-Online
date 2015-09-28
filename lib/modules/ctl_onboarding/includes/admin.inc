@@ -14,12 +14,16 @@ function _ctl_onboarding_settings_form() {
       CTL_ONBOARDING_REGISTRATION_OPEN   => t('Open'),
     ),
   );
-  $form['ctl_onboarding_creating_teams'] = array(
-    '#type'          => 'checkbox',
-    '#title'         => 'Create teams upon saving this settings screen',
-    '#default_value' => FALSE,
-    '#description'   => 'Note: You can use this to recreate teams if they already exist.  With great power comes great repsonsibility!',
-  );
+
+  // TODO later
+  // - this has been punted for now
+  // $form['ctl_onboarding_creating_teams'] = array(
+  //   '#type'          => 'checkbox',
+  //   '#title'         => 'Create teams upon saving this settings screen',
+  //   '#default_value' => FALSE,
+  //   '#description'   => 'Note: You can use this to recreate teams if they already exist.  With great power comes great repsonsibility!',
+  // );
+
   // We have the same range of choices as the cohort user field.
   $form['ctl_onboarding_cohort_id'] = array(
     '#type'          => 'select',
@@ -39,11 +43,13 @@ function _ctl_onboarding_settings_form() {
     '#title'         => t('End of sign-up'),
     '#default_value' => variable_get('ctl_onboarding_registration_finish_date'),
   );
+
+  $capacity_range = range(20, 50, 5);
   $form['ctl_onboarding_trainer_capacity'] = array(
     '#type'          => 'select',
     '#title'         => t('Number of trainees per team'),
     '#default_value' => variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY),
-    '#options'       => range(20, 50, 5),
+    '#options'       => array_combine($capacity_range, $capacity_range),
     '#required'      => TRUE,
   );
 
@@ -197,11 +203,13 @@ function _ctl_onboarding_settings_form() {
   );
 
   $form['#attached']['css'] = array(
-    drupal_get_path('module', 'ctl_onboarding') . '/scripts/ctl_onboarding.css',
+    drupal_get_path('module', 'ctl_onboarding') . '/ctl_onboarding.css',
   );
-  $form['#attached']['js'] = array(
-    drupal_get_path('module', 'ctl_onboarding') . '/scripts/ctl_onboarding.js',
-  );
+
+  // // TODO nice to have
+  // $form['#attached']['js'] = array(
+  //   drupal_get_path('module', 'ctl_onboarding') . '/ctl_onboarding.js',
+  // );
 
   // We'll need to do additional setup.
   $form['#submit'][] = '_ctl_onboarding_settings_submit_extra';
@@ -211,13 +219,20 @@ function _ctl_onboarding_settings_form() {
 
 
 function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
-  $values         = $form_state['values'];
-  $cohort_id      = intval($values['ctl_onboarding_cohort_id']);
-  $creating_teams = $values['ctl_onboarding_creating_teams'];
-  if ($creating_teams) {
-    _ctl_onboarding_setup_teams($cohort_id);
-    return;
-  }
+  $values    = $form_state['values'];
+  $cohort_id = intval($values['ctl_onboarding_cohort_id']);
+
+  // TODO later
+  // - actually use our ctl_onboarding_cohort database table
+
+  // TODO later
+  // - this has been punted for now
+  // $creating_teams = $values['ctl_onboarding_creating_teams'];
+  // if ($creating_teams) {
+  //   _ctl_onboarding_setup_teams($cohort_id);
+  //   return;
+  // }
+
   $slot_trainers = $values['ctl_onboarding_slot_trainers'];
   _ctl_onboarding_set_slots($cohort_id, $slot_trainers);
 }
@@ -225,28 +240,19 @@ function _ctl_onboarding_settings_submit_extra($form, &$form_state) {
 
 function _ctl_onboarding_set_slots($cohort_id, $slot_trainers) {
   foreach ($slot_trainers as $slot_code => $num_trainers) {
-    if ($slot_code) {
-      // TODO
-      // - account for the case where registration is reopened from being previously closed
+    // TODO later
+    // - account for the case where registration is reopened from being previously closed
 
-      // Upsert time slot info.
-      db_merge('ctl_onboarding_slot')
-        ->key(array(
-          'cohort_id' => $cohort_id,
-          'slot_code' => $slot_code,
-        ))
-        ->fields(array(
-          'num_trainers'    => $num_trainers,
-          'num_registrants' => 0,
-        ))
-        ->execute();
-    }
-    else {
-      //  TODO
-
-      // if (slot exists) {
-
-      // }
-    }
+    // Upsert time slot info.
+    db_merge('ctl_onboarding_slot')
+      ->key(array(
+        'cohort_id' => $cohort_id,
+        'slot_code' => $slot_code,
+      ))
+      ->fields(array(
+        'num_trainers'    => $num_trainers,
+        'num_registrants' => 0,
+      ))
+      ->execute();
   }
 }

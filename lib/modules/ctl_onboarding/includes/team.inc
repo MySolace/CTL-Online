@@ -3,6 +3,8 @@
 require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
 
 
+// TODO later
+// - we're punting this for now
 function _ctl_onboarding_setup_teams($cohort_id) {
   // Gather the registrants for the cohort.
   $query = db_select('ctl_onboarding_registrant', 'r');
@@ -34,11 +36,11 @@ function _ctl_onboarding_setup_teams($cohort_id) {
 
   shuffle($registrants);
 
-  // TODO
+  // TODO later
   // - perhaps augment $slots instead of using $slot_infos
   $slot_infos = array();
 
-  // TODO
+  // TODO later
   // - there may be some optimizations if we use array references more
 
   // From the registrats' info we can determine what teams need to be created.

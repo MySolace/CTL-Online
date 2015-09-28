@@ -28,6 +28,7 @@ define('CTL_ONBOARDING_LAST_START_HOUR', 1900);
 define('CTL_ONBOARDING_ONE_HOUR', 100);
 define('CTL_ONBOARDING_SESSION_DURATION', 400);
 
+require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/email.inc';
 require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
 
 
@@ -81,8 +82,6 @@ function ctl_onboarding_menu() {
   );
 
 
-  // TODO
-  // - fior testing only
   $items['registration-email-test'] = array(
     'title'            => 'Registration Email Test',
     'page callback'    => '_ctl_onboarding_registration_email_test',
@@ -153,9 +152,9 @@ function ctl_onboarding_token_info() {
     'name'        => t('CTL Onboarding'),
     'description' => t('The token type for CTL Onboarding tokens.'),
   );
-  $info['tokens']['ronboarding']['user-name'] = array(
-    'name'        => t('User Name'),
-    'description' => t('The username of the potential trainee.'),
+  $info['tokens']['ronboarding']['cohort'] = array(
+    'name'        => t('Cohort'),
+    'description' => t('The cohort number.'),
   );
   $info['tokens']['ronboarding']['session-1'] = array(
     'name'        => t('Session 1'),
@@ -176,6 +175,10 @@ function ctl_onboarding_token_info() {
   $info['tokens']['ronboarding']['session-5'] = array(
     'name'        => t('Session 1'),
     'description' => t('The date and time for the fifth session.'),
+  );
+  $info['tokens']['ronboarding']['full-name'] = array(
+    'name'        => t('Full Name'),
+    'description' => t('The first and last name of the potential trainee.'),
   );
   return $info;
 }
@@ -210,28 +213,33 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
           $value  = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
           break;
 
+        // TODO
         case 'session-1':
           $value = 'session-1';
           break;
 
+        // TODO
         case 'session-2':
           $value = 'session-2';
           break;
 
+        // TODO
         case 'session-3':
           $value = 'session-3';
           break;
 
+        // TODO
         case 'session-4':
           $value = 'session-4';
           break;
 
+        // TODO
         case 'session-5':
           $value = 'session-5';
           break;
 
-        case 'user-name':
-          $value = isset($data['user-name']) ? $data['user-name'] : '';
+        case 'full-name':
+          $value = isset($data['full-name']) ? $data['full-name'] : '';
           break;
       }
       if ($value) {
@@ -239,6 +247,16 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
       }
     }
   }
-
   return $replacements;
+}
+
+
+/**
+ * Implements hook_views_api().
+ */
+function ctl_onboarding_views_api() {
+  return array(
+    'api'  => 3,
+    'path' => drupal_get_path('module', 'ctl_onboarding') . '/includes',
+  );
 }
