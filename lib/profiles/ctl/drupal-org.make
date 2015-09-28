@@ -20,7 +20,7 @@ libraries[twilio][directory_name] = "twilio"
 ; Modules
 projects[addressfield][version] = "1.0"
 projects[admin_menu][version] = "3.0-rc5"
-projects[admin_views][version] = "7.x-1.5"
+projects[admin_views][version] = "1.5"
 projects[auto_nodetitle][version] = "1.0"
 projects[bbb][version] = "1.x-dev"
 projects[better_exposed_filters][version] = "3.0"
