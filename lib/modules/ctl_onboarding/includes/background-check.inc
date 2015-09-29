@@ -9,7 +9,7 @@ define('CTL_ONBOARDING_HTTP_CODE_CREATED', 201);
 function _ctl_onboarding_do_background_check($user) {
   $goodhire = variable_get('ctl_onboarding_goodhire');
 
-  if (!empty($goodhire['enabled'])) {
+  if (empty($goodhire['enabled'])) {
     return;
   }
 
