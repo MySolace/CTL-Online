@@ -20,7 +20,7 @@ function ctl_onboarding_mail($key, &$message, $params) {
     $name             = implode(' ', array($first_name, $last_name));
   }
   else {
-    $name = $preferred_name;
+    $name = $preferred_name[0]['value'];
   }
 
   $email = variable_get('ctl_onboarding_email');
@@ -87,7 +87,7 @@ function _ctl_onboarding_registration_email_test() {
   $email = variable_get('ctl_onboarding_email');
   $email_subject = token_replace($email['register']['subject']);
   $email_message = token_replace($email['register']['body'], array(
-    'user-name' => 'dsgfhjdsljghldjshfg',
+    'name' => 'dsgfhjdsljghldjshfg',
   ));
 
   $content = '<h5>Subject:</h5>';
