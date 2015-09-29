@@ -201,6 +201,18 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
   $values    = $form_state['values'];
   $slot_code = $values['training_slot'];
 
+  // Only allow registrations from qualified users.
+  $role = user_role_load_by_name(CTL_ONBOARDING_ROLE_DEFERRED);
+  if (user_has_role($role->rid)) {
+    drupal_set_message(t('You have already deferred so you cannot register.'), 'error');
+    return;
+  }
+  $role = user_role_load_by_name(CTL_ONBOARDING_ROLE_DECLINED);
+  if (user_has_role($role->rid)) {
+    drupal_set_message(t('You have already declined so you cannot register.'), 'error');
+    return;
+  }
+
   global $user;
 
   $registered = _ctl_onboarding_slot_register($slot_code, $user->uid);
