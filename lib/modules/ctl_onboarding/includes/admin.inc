@@ -224,6 +224,11 @@ function _ctl_onboarding_settings_form() {
     '#collapsible' => TRUE,
     '#tree'        => TRUE,
   );
+  $form['ctl_onboarding_goodhire']['enabled'] = array(
+    '#type'          => 'checkbox',
+    '#title'         => t('Enable automatic background check requests'),
+    '#default_value' => isset($goodhire['enabled']) ? $goodhire['enabled'] : FALSE,
+  );
   $form['ctl_onboarding_goodhire']['endpoint'] = array(
     '#type'          => 'textfield',
     '#title'         => t('API Endpoint'),
