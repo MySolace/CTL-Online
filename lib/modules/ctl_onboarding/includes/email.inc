@@ -37,7 +37,7 @@ function ctl_onboarding_mail($key, &$message, $params) {
         ->fetchAll();
 
       if (!empty($result)) {
-        $slot_code = $result[0]['slot_code'];
+        $slot_code = $result[0]->slot_code;
       }
 
       $register_email = isset($email['register']) ? $email['register'] : NULL;

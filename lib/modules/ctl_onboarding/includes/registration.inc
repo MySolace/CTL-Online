@@ -85,8 +85,8 @@ function ctl_onboarding_form($form, &$form_state) {
   }
 
   foreach ($slots as $slot_code => $slot) {
-    $available = _ctl_onboarding_slot_available($slot_code);
-    if ($available !== TRUE) {
+    $slot_status = _ctl_onboarding_slot_status($slot_code);
+    if (!$slot_status['available']) {
       unset($slots[$slot_code]);
     }
   }
@@ -201,10 +201,11 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
 
   global $user;
 
-  _ctl_onboarding_slot_register($slot_code, $user->uid);
-
-  $form_state['rebuild'] = TRUE;
-  $form_state['storage']['affirm_registration'] = TRUE;
+  $registered = _ctl_onboarding_slot_register($slot_code, $user->uid);
+  if ($registered) {
+    $form_state['rebuild'] = TRUE;
+    $form_state['storage']['affirm_registration'] = TRUE;
+  }
 }
 
 
