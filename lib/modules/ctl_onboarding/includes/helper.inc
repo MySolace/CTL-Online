@@ -6,11 +6,15 @@
  * @return string       12-hour clock time for display.
  */
 function _ctl_onboarding_format_hour_display($hour) {
+  $hour %= 2400;
   if ($hour >= 1200) {
     if ($hour > 1200) {
       $hour -= 1200;
     }
     return ($hour / 100) . 'pm';
+  }
+  elseif ($hour === 0) {
+    $hour += 1200;
   }
   return ($hour / 100) . 'am';
 }
