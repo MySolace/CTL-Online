@@ -106,14 +106,9 @@ function _ctl_onboarding_settings_form() {
     '#title'         => t('Message while registration is closed'),
     '#default_value' => isset($register_text['closed_message']) ? $register_text['closed_message'] : NULL,
   );
-  $form['ctl_onboarding_pages_text']['register']['success_title'] = array(
-    '#type'          => 'textfield',
-    '#title'         => t('Registration success page title'),
-    '#default_value' => isset($register_text['success_title']) ? $register_text['success_title'] : NULL,
-  );
   $form['ctl_onboarding_pages_text']['register']['success_message'] = array(
     '#type'          => 'textarea',
-    '#title'         => t('Registration success page message'),
+    '#title'         => t('Message for successful registration'),
     '#default_value' => isset($register_text['success_message']) ? $register_text['success_message'] : NULL,
   );
 

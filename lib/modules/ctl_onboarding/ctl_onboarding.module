@@ -199,12 +199,15 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
 
         // TODO
         case 'slot':
+          // session token
+          // - day of the week - time ET
           $value = 'TODO';
+          // $value  = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
           break;
 
         case 'name':
           // TODO
-          $value = isset($data['full-name']) ? $data['full-name'] : '';
+          $value = isset($data['name']) ? $data['name'] : '';
           break;
       }
       if ($value) {

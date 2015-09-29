@@ -15,11 +15,12 @@ function ctl_onboarding_form($form, &$form_state) {
     $storage = $form_state['storage'];
     if (!empty($storage['affirm_registration'])) {
       $register_text   = isset($pages_text['register']) ? $pages_text['register'] : NULL;
-      $success_title   = isset($register_text['success_title']) ? token_replace($register_text['success_title']) : NULL;
       $success_message = isset($register_text['success_message']) ? token_replace($register_text['success_message']) : NULL;
-      // drupal_set_message(t('You should receive a confirmation email shortly.'));
-      drupal_set_message('register');
-      return '';
+      $form['registration_successful'] = array(
+        '#type'   => 'markup',
+        '#markup' => $success_message,
+      );
+      return $form;
     }
     if (!empty($storage['confirm_defer'])) {
       $defer_text  = isset($pages_text['defer']) ? $pages_text['defer'] : NULL;
@@ -124,8 +125,8 @@ function ctl_onboarding_form($form, &$form_state) {
 // Used by the "defer" and "decline" confirmation forms.
 function ctl_onboarding_form_submit($form, &$form_state) {
   $values    = $form_state['values'];
-  $deferring = isset($values['defer']) ? $values['defer'] : FALSE;
-  $declining = isset($values['decline']) ? $values['decline'] : FALSE;
+  $deferring = !empty($values['defer']);
+  $declining = !empty($values['decline']);
 
   if ($deferring) {
     global $user;
@@ -149,6 +150,8 @@ function ctl_onboarding_form_submit($form, &$form_state) {
     else {
       drupal_set_message(t('There was a problem sending a confirmation email.'), 'error');
     }
+
+    drupal_goto('training-exit-form');
   }
   elseif ($declining) {
     global $user;
@@ -172,6 +175,8 @@ function ctl_onboarding_form_submit($form, &$form_state) {
     else {
       drupal_set_message(t('There was a problem sending a confirmation email.'), 'error');
     }
+
+    drupal_goto('training-exit-form');
   }
 }
 
@@ -196,7 +201,7 @@ function _ctl_onboarding_form_submit_register($form, &$form_state) {
 
   global $user;
 
-  // _ctl_onboarding_slot_register($slot_code, $user->uid);
+  _ctl_onboarding_slot_register($slot_code, $user->uid);
 
   $form_state['rebuild'] = TRUE;
   $form_state['storage']['affirm_registration'] = TRUE;
