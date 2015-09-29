@@ -53,7 +53,7 @@ function ctl_onboarding_form($form, &$form_state) {
     }
   }
 
-  // TODO
+  // TODO later ?
   // - add visual indicators for statuses
 
   $registration_period = intval(variable_get('ctl_onboarding_registration_period', CTL_ONBOARDING_REGISTRATION_CLOSED));
@@ -134,7 +134,7 @@ function ctl_onboarding_form_submit($form, &$form_state) {
     // Make sure we have custom profile fields by reloading the user explicitly.
     $user = user_load($user->uid);
 
-    _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DEFERRED, TRUE);
+    _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DEFERRED);
 
     drupal_set_message(t('You have chosen to defer.'));
 
@@ -159,7 +159,7 @@ function ctl_onboarding_form_submit($form, &$form_state) {
     // Make sure we have custom profile fields by reloading the user explicitly.
     $user = user_load($user->uid);
 
-    _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DECLINED, TRUE);
+    _ctl_onboarding_set_user_role($user->uid, CTL_ONBOARDING_ROLE_DECLINED);
 
     drupal_set_message(t('You have chosen to decline.'));
 
