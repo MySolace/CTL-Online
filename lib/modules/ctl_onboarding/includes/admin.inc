@@ -54,13 +54,13 @@ function _ctl_onboarding_settings_form() {
   );
 
   // Setup the selectable time slots.
-  $days       = array('m', 'tu', 'w', 'th', 'f', 'sa', 'su');
+  $days       = array('su', 'm', 'tu', 'w', 'th', 'f', 'sa');
   $slot_codes = array();
   for ($i = 0, $l = count($days); $i < $l; ++$i) {
     for ($hour = CTL_ONBOARDING_FIRST_START_HOUR; $hour <= CTL_ONBOARDING_LAST_START_HOUR; $hour += CTL_ONBOARDING_ONE_HOUR) {
       $start_hour_display  = _ctl_onboarding_format_hour_display($hour);
       $finish_hour_display = _ctl_onboarding_format_hour_display($hour + CTL_ONBOARDING_SESSION_DURATION);
-      $slot_codes[$days[$i] . '-' . $hour] = $start_hour_display . ' - ' . $finish_hour_display;
+      $slot_codes[$days[$i] . '-' . $hour] = $start_hour_display . ' - ' . $finish_hour_display . ' ET';
     }
   }
 
@@ -87,35 +87,72 @@ function _ctl_onboarding_settings_form() {
     '#collapsible' => TRUE,
     '#tree'        => TRUE,
   );
-  $form['ctl_onboarding_pages_text']['registration-open'] = array(
-    '#type'          => 'textarea',
-    '#title'         => t('Registration page while registration is open'),
-    '#default_value' => isset($pages_text['registration-open']) ? $pages_text['registration-open'] : NULL,
+
+  $register_text = isset($pages_text['register']) ? $pages_text['register'] : NULL;
+  $form['ctl_onboarding_pages_text']['register'] = array(
+    '#type'        => 'fieldset',
+    '#title'       => 'Registration pages',
+    '#collapsed'   => TRUE,
+    '#collapsible' => TRUE,
+    '#tree'        => TRUE,
   );
-  $form['ctl_onboarding_pages_text']['registration-closed'] = array(
+  $form['ctl_onboarding_pages_text']['register']['open_message'] = array(
     '#type'          => 'textarea',
-    '#title'         => t('Registration page while registration is closed'),
-    '#default_value' => isset($pages_text['registration-closed']) ? $pages_text['registration-closed'] : NULL,
+    '#title'         => t('Message while registration is open'),
+    '#default_value' => isset($register_text['open_message']) ? $register_text['open_message'] : NULL,
   );
-  $form['ctl_onboarding_pages_text']['deferred-confirmation-title'] = array(
+  $form['ctl_onboarding_pages_text']['register']['closed_message'] = array(
+    '#type'          => 'textarea',
+    '#title'         => t('Message while registration is closed'),
+    '#default_value' => isset($register_text['closed_message']) ? $register_text['closed_message'] : NULL,
+  );
+  $form['ctl_onboarding_pages_text']['register']['success_title'] = array(
     '#type'          => 'textfield',
-    '#title'         => t('Confirmation page title for deferring'),
-    '#default_value' => isset($pages_text['deferred-confirmation-title']) ? $pages_text['deferred-confirmation-title'] : NULL,
+    '#title'         => t('Registration success page title'),
+    '#default_value' => isset($register_text['success_title']) ? $register_text['success_title'] : NULL,
   );
-  $form['ctl_onboarding_pages_text']['deferred-confirmation-message'] = array(
+  $form['ctl_onboarding_pages_text']['register']['success_message'] = array(
     '#type'          => 'textarea',
-    '#title'         => t('Confirmation message for deferring'),
-    '#default_value' => isset($pages_text['deferred-confirmation-message']) ? $pages_text['deferred-confirmation-message'] : NULL,
+    '#title'         => t('Registration success page message'),
+    '#default_value' => isset($register_text['success_message']) ? $register_text['success_message'] : NULL,
   );
-  $form['ctl_onboarding_pages_text']['declined-confirmation-title'] = array(
+
+  $defer_text = isset($pages_text['defer']) ? $pages_text['defer'] : NULL;
+  $form['ctl_onboarding_pages_text']['defer'] = array(
+    '#type'        => 'fieldset',
+    '#title'       => 'Defer page',
+    '#collapsed'   => TRUE,
+    '#collapsible' => TRUE,
+    '#tree'        => TRUE,
+  );
+  $form['ctl_onboarding_pages_text']['defer']['confirmation_title'] = array(
     '#type'          => 'textfield',
-    '#title'         => t('Confirmation page title for declining'),
-    '#default_value' => isset($pages_text['declined-confirmation-title']) ? $pages_text['declined-confirmation-title'] : NULL,
+    '#title'         => t('Title for confirmation'),
+    '#default_value' => isset($defer_text['confirmation_title']) ? $defer_text['confirmation_title'] : NULL,
   );
-  $form['ctl_onboarding_pages_text']['declined-confirmation-message'] = array(
+  $form['ctl_onboarding_pages_text']['defer']['confirmation_message'] = array(
     '#type'          => 'textarea',
-    '#title'         => t('Confirmation message for declining'),
-    '#default_value' => isset($pages_text['declined-confirmation-message']) ? $pages_text['declined-confirmation-message'] : NULL,
+    '#title'         => t('Message for confirmation'),
+    '#default_value' => isset($defer_text['confirmation_message']) ? $defer_text['confirmation_message'] : NULL,
+  );
+
+  $decline_text = isset($pages_text['decline']) ? $pages_text['decline'] : NULL;
+  $form['ctl_onboarding_pages_text']['decline'] = array(
+    '#type'        => 'fieldset',
+    '#title'       => 'Decline page',
+    '#collapsed'   => TRUE,
+    '#collapsible' => TRUE,
+    '#tree'        => TRUE,
+  );
+  $form['ctl_onboarding_pages_text']['decline']['confirmation_title'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Title for confirmation'),
+    '#default_value' => isset($decline_text['confirmation_title']) ? $decline_text['confirmation_title'] : NULL,
+  );
+  $form['ctl_onboarding_pages_text']['decline']['confirmation_message'] = array(
+    '#type'          => 'textarea',
+    '#title'         => t('Message for confirmation'),
+    '#default_value' => isset($decline_text['confirmation_message']) ? $decline_text['confirmation_message'] : NULL,
   );
 
   $email = variable_get('ctl_onboarding_email');
@@ -126,35 +163,62 @@ function _ctl_onboarding_settings_form() {
     '#collapsible' => TRUE,
     '#tree'        => TRUE,
   );
-  $form['ctl_onboarding_email']['subject_for_registered'] = array(
+
+  $register_email = isset($email['register']) ? $email['register'] : NULL;
+  $form['ctl_onboarding_email']['register'] = array(
+    '#type'        => 'fieldset',
+    '#title'       => '"Register" confirmation',
+    '#collapsed'   => TRUE,
+    '#collapsible' => TRUE,
+    '#tree'        => TRUE,
+  );
+  $form['ctl_onboarding_email']['register']['subject'] = array(
     '#type'          => 'textfield',
-    '#title'         => t('"Registered" email subject'),
-    '#default_value' => isset($email['subject_for_registered']) ? $email['subject_for_registered'] : NULL,
+    '#title'         => t('Subject'),
+    '#default_value' => isset($register_email['subject']) ? $register_email['subject'] : NULL,
   );
-  $form['ctl_onboarding_email']['body_for_registered'] = array(
+  $form['ctl_onboarding_email']['register']['body'] = array(
     '#type'          => 'textarea',
-    '#title'         => t('"Registered" email body'),
-    '#default_value' => isset($email['body_for_registered']) ? $email['body_for_registered'] : NULL,
+    '#title'         => t('Body'),
+    '#default_value' => isset($register_email['body']) ? $register_email['body'] : NULL,
   );
-  $form['ctl_onboarding_email']['subject_for_deferred'] = array(
+
+  $defer_email = isset($email['defer']) ? $email['defer'] : NULL;
+  $form['ctl_onboarding_email']['defer'] = array(
+    '#type'        => 'fieldset',
+    '#title'       => '"Defer" confirmation',
+    '#collapsed'   => TRUE,
+    '#collapsible' => TRUE,
+    '#tree'        => TRUE,
+  );
+  $form['ctl_onboarding_email']['defer']['subject'] = array(
     '#type'          => 'textfield',
-    '#title'         => t('"Deferred" email subject'),
-    '#default_value' => isset($email['subject_for_deferred']) ? $email['subject_for_deferred'] : NULL,
+    '#title'         => t('Subject'),
+    '#default_value' => isset($defer_email['subject']) ? $defer_email['subject'] : NULL,
   );
-  $form['ctl_onboarding_email']['body_for_deferred'] = array(
+  $form['ctl_onboarding_email']['defer']['body'] = array(
     '#type'          => 'textarea',
-    '#title'         => t('"Deferred" email body'),
-    '#default_value' => isset($email['body_for_deferred']) ? $email['body_for_deferred'] : NULL,
+    '#title'         => t('Body'),
+    '#default_value' => isset($defer_email['body']) ? $defer_email['body'] : NULL,
   );
-  $form['ctl_onboarding_email']['subject_for_declined'] = array(
+
+  $decline_text = isset($email['decline']) ? $email['decline'] : NULL;
+  $form['ctl_onboarding_email']['decline'] = array(
+    '#type'        => 'fieldset',
+    '#title'       => '"Decline" confirmation',
+    '#collapsed'   => TRUE,
+    '#collapsible' => TRUE,
+    '#tree'        => TRUE,
+  );
+  $form['ctl_onboarding_email']['decline']['subject'] = array(
     '#type'          => 'textfield',
-    '#title'         => t('"Declined" email subject'),
-    '#default_value' => isset($email['subject_for_declined']) ? $email['subject_for_declined'] : NULL,
+    '#title'         => t('Subject'),
+    '#default_value' => isset($decline_text['subject']) ? $decline_text['subject'] : NULL,
   );
-  $form['ctl_onboarding_email']['body_for_declined'] = array(
+  $form['ctl_onboarding_email']['decline']['body'] = array(
     '#type'          => 'textarea',
-    '#title'         => t('"Declined" email body'),
-    '#default_value' => isset($email['body_for_declined']) ? $email['body_for_declined'] : NULL,
+    '#title'         => t('Body'),
+    '#default_value' => isset($decline_text['body']) ? $decline_text['body'] : NULL,
   );
 
   $goodhire = variable_get('ctl_onboarding_goodhire');
