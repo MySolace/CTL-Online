@@ -9,8 +9,7 @@ define('CTL_ONBOARDING_HTTP_CODE_CREATED', 201);
 function _ctl_onboarding_do_background_check($user) {
   $goodhire = variable_get('ctl_onboarding_goodhire');
 
-  $enabled = isset($goodhire['enabled']) ? $goodhire['enabled'] : FALSE;
-  if (!$enabled) {
+  if (!empty($goodhire['enabled'])) {
     return;
   }
 
@@ -25,8 +24,7 @@ function _ctl_onboarding_do_background_check($user) {
   $first_name       = $field_first_name ? $field_first_name[0]['value'] : '';
   $last_name        = $field_last_name ? $field_last_name[0]['value'] : '';
 
-  $testing = isset($goodhire['testing']) ? $goodhire['testing'] : FALSE;
-  if ($testing) {
+  if (!empty($goodhire['testing'])) {
     $email = isset($goodhire['test_email']) ? $goodhire['test_email'] : '';
   }
   else {
