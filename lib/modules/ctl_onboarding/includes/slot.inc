@@ -32,18 +32,13 @@ function _ctl_onboarding_slot_save_registrant($cohort_id, $slot_code, $uid) {
   $user = user_load($uid);
   _ctl_onboarding_do_background_check($user);
 
-  drupal_set_message(t('Your registration has been submitted!'));
-
   $mail_data = array(
-    'key'  => 'registered',
+    'key'  => 'register',
     'user' => $user,
   );
 
   // Send the confirmation email for registration.
-  if (_ctl_onboarding_mail_send($mail_data)) {
-    drupal_set_message(t('You should receive a confirmation email shortly.'));
-  }
-  else {
+  if (!_ctl_onboarding_mail_send($mail_data)) {
     drupal_set_message(t('There was a problem sending a confirmation email.'), 'error');
   }
 
@@ -57,15 +52,15 @@ function _ctl_onboarding_slot_save_registrant($cohort_id, $slot_code, $uid) {
 function _ctl_onboarding_slot_register($slot_code, $uid) {
   if (is_null($slot_code)) {
     form_set_error('training_slot', t('A time slot must be chosen!'));
-    return;
+    return FALSE;
   }
 
   $cohort_id = intval(variable_get('ctl_onboarding_cohort_id'));
 
-  $available = _ctl_onboarding_slot_available($slot_code);
-  if ($available !== TRUE) {
-    drupal_set_message($available, 'error');
-    return;
+  $slot_status = _ctl_onboarding_slot_status($slot_code);
+  if (!$slot_status['available']) {
+    drupal_set_message($slot_status['error_message'], 'error');
+    return FALSE;
   }
 
   // See if the user has attempted registering already.
@@ -149,22 +144,26 @@ function _ctl_onboarding_slot_register($slot_code, $uid) {
 
   if (!$still_eligible) {
     drupal_set_message($error_msg, 'error');
-    return;
+    return FALSE;
   }
 
   $saved = _ctl_onboarding_slot_save_registrant($cohort_id, $slot_code, $uid);
-  if ($saved) {
-    // One more registrant has signed up.
-    db_update('ctl_onboarding_slot')
-      ->fields(array('num_registrants' => $num_registrants + 1))
-      ->condition('cohort_id', $cohort_id)
-      ->condition('slot_code', $slot_code)
-      ->execute();
+  if (!$saved) {
+    return FALSE;
   }
+
+  // One more registrant has signed up.
+  db_update('ctl_onboarding_slot')
+    ->fields(array('num_registrants' => $slot_status['num_registrants'] + 1))
+    ->condition('cohort_id', $cohort_id)
+    ->condition('slot_code', $slot_code)
+    ->execute();
+
+  return TRUE;
 }
 
 
-function _ctl_onboarding_slot_available($slot_code) {
+function _ctl_onboarding_slot_status($slot_code) {
   $cohort_id = intval(variable_get('ctl_onboarding_cohort_id'));
 
   $query = db_select('ctl_onboarding_slot', 's');
@@ -177,7 +176,10 @@ function _ctl_onboarding_slot_available($slot_code) {
     ->fetchAll();
 
   if (empty($result)) {
-    return t("Could not find info for the !slot_code time slot!  Please notify a trainer or site administrator.", array('!slot_code' => $slot_code));
+    return array(
+      'available'     => FALSE,
+      'error_message' => t("Could not find info for the !slot_code time slot!  Please notify a trainer or site administrator.", array('!slot_code' => $slot_code)),
+    );
   }
 
   $slot             = $result[0];
@@ -186,9 +188,15 @@ function _ctl_onboarding_slot_available($slot_code) {
   $trainer_capacity = intval(variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY));
 
   if ($num_registrants >= $trainer_capacity * $num_trainers) {
-    return t('Sorry, registration for this time slot is full!  Please select another time slot.');
+    return array(
+      'available'     => FALSE,
+      'error_message' => t('Sorry, registration for this time slot is full!  Please select another time slot.'),
+    );
   }
 
   // If we haven't aborted yet, the slot is available.
-  return TRUE;
+  return array(
+    'available'       => TRUE,
+    'num_registrants' => $slot->num_registrants,
+  );
 }
