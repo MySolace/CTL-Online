@@ -4,16 +4,16 @@ function theme_ctl_onboarding_table($variables) {
   $element     = $variables['element'];
   $showing_all = isset($element['#showing_all']) ? $element['#showing_all'] : FALSE;
   $header = array(
+    t('Sunday'),
     t('Monday'),
     t('Tuesday'),
     t('Wednesday'),
     t('Thursday'),
     t('Friday'),
     t('Saturday'),
-    t('Sunday'),
   );
 
-  $days = array('m', 'tu', 'w', 'th', 'f', 'sa', 'su');
+  $days = array('su', 'm', 'tu', 'w', 'th', 'f', 'sa');
   $rows = array();
 
   // Setup the table.

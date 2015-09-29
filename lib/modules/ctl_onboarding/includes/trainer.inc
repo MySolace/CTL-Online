@@ -32,7 +32,11 @@ function _ctl_onboarding_trainer_selection_form($form, &$form_state, $node) {
   $options = array();
   $users   = user_load_multiple($trainer_uids);
   foreach ($users as $user) {
-    $options[$user->uid] = $user->field_first_name[LANGUAGE_NONE][0]['value'] . ' ' . $user->field_last_name[LANGUAGE_NONE][0]['value'];
+    $field_first_name    = field_get_items('user', $user, 'field_first_name');
+    $field_last_name     = field_get_items('user', $user, 'field_last_name');
+    $first_name          = $field_first_name ? $field_first_name[0]['value'] : '';
+    $last_name           = $field_last_name ? $field_last_name[0]['value'] : '';
+    $options[$user->uid] = "$first_name $last_name";;
   }
 
   $form['trainer_uid'] = array(

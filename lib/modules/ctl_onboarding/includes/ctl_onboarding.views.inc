@@ -86,22 +86,3 @@ function ctl_onboarding_views_data() {
   );
   return $data;
 }
-
-
-// /**
-//  * Implements hook_views_data_alter().
-//  */
-// function ctl_onboarding_views_data_alter(&$data) {
-//   $data['users']['ctl_onboarding_registrant'] = array(
-//     'group' => t('CTL Onboarding Registrant'),
-//     'title' => t('CTL Onboarding Registrant'),
-//     'help'  => t('The CTL Onboarding Registrant that is associated with the user.'),
-//     'relationship' => array(
-//       'handler'            => 'views_handler_relationship',
-//       'label'              => t('CTL Onboarding Registrant'),
-//       'base'               => 'ctl_onboarding_registrant',
-//       'base field'         => 'uid',
-//       'relationship field' => 'uid',
-//     ),
-//   );
-// }

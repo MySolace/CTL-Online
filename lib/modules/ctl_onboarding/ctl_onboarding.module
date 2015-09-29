@@ -24,7 +24,7 @@ define('CTL_ONBOARDING_MAX_TRAINERS_PER_SLOT', 10);
 
 // Hours are defined in 24-hour clock time (a.k.a. military time).
 define('CTL_ONBOARDING_FIRST_START_HOUR', 800);
-define('CTL_ONBOARDING_LAST_START_HOUR', 1900);
+define('CTL_ONBOARDING_LAST_START_HOUR', 2000);
 define('CTL_ONBOARDING_ONE_HOUR', 100);
 define('CTL_ONBOARDING_SESSION_DURATION', 400);
 
@@ -156,29 +156,13 @@ function ctl_onboarding_token_info() {
     'name'        => t('Cohort'),
     'description' => t('The cohort number.'),
   );
-  $info['tokens']['ronboarding']['session-1'] = array(
-    'name'        => t('Session 1'),
-    'description' => t('The date and time for the first session.'),
+  $info['tokens']['ronboarding']['slot_code'] = array(
+    'name'        => t('Cohort'),
+    'description' => t('The time slot code.'),
   );
-  $info['tokens']['ronboarding']['session-2'] = array(
-    'name'        => t('Session 1'),
-    'description' => t('The date and time for the second session.'),
-  );
-  $info['tokens']['ronboarding']['session-3'] = array(
-    'name'        => t('Session 1'),
-    'description' => t('The date and time for the third session.'),
-  );
-  $info['tokens']['ronboarding']['session-4'] = array(
-    'name'        => t('Session 1'),
-    'description' => t('The date and time for the fourth session.'),
-  );
-  $info['tokens']['ronboarding']['session-5'] = array(
-    'name'        => t('Session 1'),
-    'description' => t('The date and time for the fifth session.'),
-  );
-  $info['tokens']['ronboarding']['full-name'] = array(
-    'name'        => t('Full Name'),
-    'description' => t('The first and last name of the potential trainee.'),
+  $info['tokens']['ronboarding']['name'] = array(
+    'name'        => t('Name'),
+    'description' => t('Either the preferred name or the first and last name of the potential trainee.'),
   );
   return $info;
 }
@@ -213,33 +197,13 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
           $value  = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
           break;
 
-        // TODO
-        case 'session-1':
-          $value = 'session-1';
+        case 'slot_code':
+          $slot_code = isset($data['slot_code']) ? $data['slot_code'] : '';
+          $value     = _ctl_onboarding_format_slot_code_display($slot_code);
           break;
 
-        // TODO
-        case 'session-2':
-          $value = 'session-2';
-          break;
-
-        // TODO
-        case 'session-3':
-          $value = 'session-3';
-          break;
-
-        // TODO
-        case 'session-4':
-          $value = 'session-4';
-          break;
-
-        // TODO
-        case 'session-5':
-          $value = 'session-5';
-          break;
-
-        case 'full-name':
-          $value = isset($data['full-name']) ? $data['full-name'] : '';
+        case 'name':
+          $value = isset($data['name']) ? $data['name'] : '';
           break;
       }
       if ($value) {

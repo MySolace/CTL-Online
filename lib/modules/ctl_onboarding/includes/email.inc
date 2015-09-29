@@ -3,39 +3,61 @@
 /**
  * Implements hook_mail().
  */
-// TODO
 function ctl_onboarding_mail($key, &$message, $params) {
-  $statuses = array('registered', 'deferred', 'declined');
+  $statuses = array('register', 'defer', 'decline');
   if (!in_array($key, $statuses)) {
     return;
   }
 
-  $user             = $params['user'];
-  $field_first_name = field_get_items('user', $user, 'field_first_name');
-  $field_last_name  = field_get_items('user', $user, 'field_last_name');
-  $first_name       = $field_first_name ? $field_first_name[0]['value'] : '';
-  $last_name        = $field_last_name ? $field_last_name[0]['value'] : '';
-  $full_name        = "$first_name $last_name";
+  $user = $params['user'];
+
+  $preferred_name = field_get_items('user', $user, 'field_preferred_name');
+  if (empty($preferred_name)) {
+    $field_first_name = field_get_items('user', $user, 'field_first_name');
+    $field_last_name  = field_get_items('user', $user, 'field_last_name');
+    $first_name       = $field_first_name ? $field_first_name[0]['value'] : '';
+    $last_name        = $field_last_name ? $field_last_name[0]['value'] : '';
+    $name             = implode(' ', array($first_name, $last_name));
+  }
+  else {
+    $name = $preferred_name;
+  }
 
   $email = variable_get('ctl_onboarding_email');
 
   switch ($key) {
-    case 'registered':
-      $subject      = isset($email['subject_for_registered']) ? $email['subject_for_registered'] : '';
-      $body         = isset($email['body_for_registered']) ? $email['body_for_registered'] : '';
-      $replacements = array('full-name' => $full_name);
+    case 'register':
+      $slot_code = '';
+
+      $query = db_select('ctl_onboarding_registrant', 'r');
+      $query->addField('r', 'slot_code');
+      $result = $query
+        ->condition('r.uid', $user->uid)
+        ->execute()
+        ->fetchAll();
+
+      if (!empty($result)) {
+        $slot_code = $result[0]['slot_code'];
+      }
+
+      $register_email = isset($email['register']) ? $email['register'] : NULL;
+      $subject        = isset($register_email['subject']) ? $register_email['subject'] : '';
+      $body           = isset($register_email['body']) ? $register_email['body'] : '';
+      $replacements   = array('name' => $name, 'slot_code' => $slot_code);
       break;
 
-    case 'deferred':
-      $subject      = isset($email['subject_for_deferred']) ? $email['subject_for_deferred'] : '';
-      $body         = isset($email['body_for_deferred']) ? $email['body_for_deferred'] : '';
-      $replacements = array('full-name' => $full_name);
+    case 'defer':
+      $defer_email  = isset($email['defer']) ? $email['defer'] : NULL;
+      $subject      = isset($defer_email['subject']) ? $defer_email['subject'] : '';
+      $body         = isset($defer_email['body']) ? $defer_email['body'] : '';
+      $replacements = array('name' => $name);
       break;
 
-    case 'declined':
-      $subject      = isset($email['subject_for_declined']) ? $email['subject_for_declined'] : '';
-      $body         = isset($email['body_for_declined']) ? $email['body_for_declined'] : '';
-      $replacements = array('full-name' => $full_name);
+    case 'decline':
+      $decline_email = isset($email['decline']) ? $email['decline'] : NULL;
+      $subject       = isset($decline_email['subject']) ? $decline_email['subject'] : '';
+      $body          = isset($decline_email['body']) ? $decline_email['body'] : '';
+      $replacements  = array('name' => $name);
       break;
   }
 
@@ -57,14 +79,14 @@ function _ctl_onboarding_mail_send($data) {
   $from     = 'volunteers@crisistextline.org';
   $send     = TRUE;
   $result   = drupal_mail($module, $key, $to, $language, $params, $from, $send);
-  return (isset($result['result']) && $result['result']);
+  return !empty($result['result']);
 }
 
 
 function _ctl_onboarding_registration_email_test() {
   $email = variable_get('ctl_onboarding_email');
-  $email_subject = token_replace($email['subject_for_registered']);
-  $email_message = token_replace($email['body_for_registered'], array(
+  $email_subject = token_replace($email['register']['subject']);
+  $email_message = token_replace($email['register']['body'], array(
     'user-name' => 'dsgfhjdsljghldjshfg',
   ));
 
@@ -85,8 +107,8 @@ function _ctl_onboarding_registration_email_test() {
 
 function _ctl_onboarding_deferred_email_test() {
   $email = variable_get('ctl_onboarding_email');
-  $email_subject = token_replace($email['subject_for_deferred']);
-  $email_message = token_replace($email['body_for_deferred']);
+  $email_subject = token_replace($email['defer']['subject']);
+  $email_message = token_replace($email['defer']['body']);
 
   $content = '<h5>Subject:</h5>';
   $content .= $email_subject;
@@ -99,8 +121,8 @@ function _ctl_onboarding_deferred_email_test() {
 
 function _ctl_onboarding_declined_email_test() {
   $email = variable_get('ctl_onboarding_email');
-  $email_subject = token_replace($email['subject_for_declined']);
-  $email_message = token_replace($email['body_for_declined']);
+  $email_subject = token_replace($email['decline']['subject']);
+  $email_message = token_replace($email['decline']['body']);
 
   $content = '<h5>Subject:</h5>';
   $content .= $email_subject;
