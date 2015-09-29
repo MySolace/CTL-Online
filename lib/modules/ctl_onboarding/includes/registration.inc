@@ -56,9 +56,11 @@ function ctl_onboarding_form($form, &$form_state) {
   // TODO later ?
   // - add visual indicators for statuses
 
+  $register_text = isset($pages_text['register']) ? $pages_text['register'] : NULL;
+
   $registration_period = intval(variable_get('ctl_onboarding_registration_period', CTL_ONBOARDING_REGISTRATION_CLOSED));
   if ($registration_period === CTL_ONBOARDING_REGISTRATION_CLOSED) {
-    $registration_closed_text = isset($pages_text['registration_closed']) ? token_replace($pages_text['registration_closed']) : '';
+    $registration_closed_text = isset($register_text['closed_message']) ? token_replace($register_text['closed_message']) : '';
     $form['registration_closed'] = array(
       '#type'   => 'markup',
       '#markup' => $registration_closed_text,
@@ -66,7 +68,7 @@ function ctl_onboarding_form($form, &$form_state) {
     return $form;
   }
 
-  $registration_open_text = isset($pages_text['registration_open']) ? token_replace($pages_text['registration_open']) : '';
+  $registration_open_text = isset($register_text['open_message']) ? token_replace($register_text['open_message']) : '';
 
   $form['registration'] = array(
     '#type'   => 'markup',
