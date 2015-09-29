@@ -7,7 +7,13 @@ define('CTL_ONBOARDING_HTTP_CODE_CREATED', 201);
 
 
 function _ctl_onboarding_do_background_check($user) {
-  $goodhire     = variable_get('ctl_onboarding_goodhire');
+  $goodhire = variable_get('ctl_onboarding_goodhire');
+
+  $enabled = isset($goodhire['enabled']) ? $goodhire['enabled'] : FALSE;
+  if (!$enabled) {
+    return;
+  }
+
   $endpoint     = isset($goodhire['endpoint']) ? $goodhire['endpoint'] : '';
   $username     = isset($goodhire['username']) ? $goodhire['username'] : '';
   $password     = isset($goodhire['password']) ? $goodhire['password'] : '';
