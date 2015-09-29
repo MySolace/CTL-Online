@@ -136,7 +136,7 @@ function _ctl_onboarding_slot_register($slot_code, $uid) {
             break 2;
           }
           else {
-            $error_msg = t('You can only register for one time slot!');
+            $error_msg = t('You already registered for a time slot. Need to reschedule? email <a href="mailto:volunteers@crisistextline.org">volunteers@crisistextline.org</a>.');
           }
       }
     }

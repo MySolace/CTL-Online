@@ -314,8 +314,7 @@ function _ctl_onboarding_set_slots($cohort_id, $slot_trainers) {
         'slot_code' => $slot_code,
       ))
       ->fields(array(
-        'num_trainers'    => $num_trainers,
-        'num_registrants' => 0,
+        'num_trainers' => $num_trainers,
       ))
       ->execute();
   }
