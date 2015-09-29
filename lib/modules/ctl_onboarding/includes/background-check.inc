@@ -52,7 +52,7 @@ function _ctl_onboarding_do_background_check($user) {
 
   $result = drupal_http_request($url, $options);
   if (intval($result->code) === CTL_ONBOARDING_HTTP_CODE_CREATED) {
-    drupal_set_message(t('A request for your background check has been made. You should receive an email from <a href="https://www.goodhire.com/">GoodHire</a> shortly.'));
+    drupal_set_message(t('A request for your background check has been made. You should receive an email from <a href="https://www.goodhire.com/">GoodHire</a> soon.'));
   }
   else {
     // Everything else is considered an error.
