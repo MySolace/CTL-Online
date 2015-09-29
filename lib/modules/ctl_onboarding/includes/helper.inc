@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Displays times in 12-hour clock style.
+ * Renders a 24-hour clock style time into 12-hour clock style.
  * @param  int $hour    24-hour clock time.
  * @return string       12-hour clock time for display.
  */
@@ -13,6 +13,33 @@ function _ctl_onboarding_format_hour_display($hour) {
     return ($hour / 100) . 'pm';
   }
   return ($hour / 100) . 'am';
+}
+
+
+/**
+ * Renders a slot code into a textual representation.
+ * @param  string $slot_code    The slot_code to render.
+ * @return string               The rendered text.
+ */
+function _ctl_onboarding_format_slot_code_display($slot_code) {
+  $output = '';
+  $parts  = explode('-', $slot_code);
+  if (empty($parts)) {
+    return $output;
+  }
+  $day  = $parts[0];
+  $hour = $parts[1];
+  switch ($day) {
+    case 'su': $output = 'Sundays'; break;
+    case 'm':  $output = 'Mondays'; break;
+    case 'tu': $output = 'Tuesdays'; break;
+    case 'w':  $output = 'Wednesdays'; break;
+    case 'th': $output = 'Thursdays'; break;
+    case 'f':  $output = 'Fridays'; break;
+    case 'sa': $output = 'Saturdays';
+  }
+  $output .= ' at ' . _ctl_onboarding_format_hour_display($hour) . ' ET';
+  return $output;
 }
 
 

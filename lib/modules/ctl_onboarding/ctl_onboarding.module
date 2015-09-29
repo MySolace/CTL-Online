@@ -156,9 +156,9 @@ function ctl_onboarding_token_info() {
     'name'        => t('Cohort'),
     'description' => t('The cohort number.'),
   );
-  $info['tokens']['ronboarding']['slot'] = array(
+  $info['tokens']['ronboarding']['slot_code'] = array(
     'name'        => t('Cohort'),
-    'description' => t('The cohort number.'),
+    'description' => t('The time slot code.'),
   );
   $info['tokens']['ronboarding']['name'] = array(
     'name'        => t('Name'),
@@ -197,16 +197,12 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
           $value  = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
           break;
 
-        // TODO
-        case 'slot':
-          // session token
-          // - day of the week - time ET
-          $value = 'TODO';
-          // $value  = format_date(strtotime("$year-$month-$day"), 'custom', 'F j, Y');
+        case 'slot_code':
+          $slot_code = isset($data['slot_code']) ? $data['slot_code'] : '';
+          $value     = _ctl_onboarding_format_slot_code_display($slot_code);
           break;
 
         case 'name':
-          // TODO
           $value = isset($data['name']) ? $data['name'] : '';
           break;
       }

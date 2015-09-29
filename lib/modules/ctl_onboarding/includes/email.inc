@@ -3,7 +3,6 @@
 /**
  * Implements hook_mail().
  */
-// TODO
 function ctl_onboarding_mail($key, &$message, $params) {
   $statuses = array('register', 'defer', 'decline');
   if (!in_array($key, $statuses)) {
@@ -28,10 +27,23 @@ function ctl_onboarding_mail($key, &$message, $params) {
 
   switch ($key) {
     case 'register':
+      $slot_code = '';
+
+      $query = db_select('ctl_onboarding_registrant', 'r');
+      $query->addField('r', 'slot_code');
+      $result = $query
+        ->condition('r.uid', $user->uid)
+        ->execute()
+        ->fetchAll();
+
+      if (!empty($result)) {
+        $slot_code = $result[0]['slot_code'];
+      }
+
       $register_email = isset($email['register']) ? $email['register'] : NULL;
       $subject        = isset($register_email['subject']) ? $register_email['subject'] : '';
       $body           = isset($register_email['body']) ? $register_email['body'] : '';
-      $replacements   = array('name' => $name);
+      $replacements   = array('name' => $name, 'slot_code' => $slot_code);
       break;
 
     case 'defer':
