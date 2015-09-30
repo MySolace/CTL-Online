@@ -126,7 +126,7 @@ function ctl_onboarding_schema() {
       ),
       'status' => array(
         'type'        => 'int',
-        'description' => 'The acceptance status of the registrant.',
+        'description' => 'The training status of the registrant.',
         'not null'    => TRUE,
         'unsigned'    => TRUE,
       ),

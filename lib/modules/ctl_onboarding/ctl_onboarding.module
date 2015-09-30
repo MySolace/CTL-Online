@@ -28,8 +28,9 @@ define('CTL_ONBOARDING_LAST_START_HOUR', 2000);
 define('CTL_ONBOARDING_ONE_HOUR', 100);
 define('CTL_ONBOARDING_SESSION_DURATION', 400);
 
-require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/email.inc';
-require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
+$path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding');
+require_once "$path/includes/email.inc";
+require_once "$path/includes/helper.inc";
 
 
 // TODO later ?

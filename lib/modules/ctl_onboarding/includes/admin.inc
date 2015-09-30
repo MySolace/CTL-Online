@@ -1,6 +1,7 @@
 <?php
 
-require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/team.inc';
+$path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding');
+require_once "$path/includes/team.inc";
 
 
 function _ctl_onboarding_settings_form() {

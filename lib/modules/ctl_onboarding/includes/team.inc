@@ -1,6 +1,7 @@
 <?php
 
-require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
+$path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding');
+require_once "$path/includes/helper.inc";
 
 
 // TODO later
