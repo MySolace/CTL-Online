@@ -36,7 +36,7 @@ function _ctl_onboarding_trainer_selection_form($form, &$form_state, $node) {
     $field_last_name     = field_get_items('user', $user, 'field_last_name');
     $first_name          = $field_first_name ? $field_first_name[0]['value'] : '';
     $last_name           = $field_last_name ? $field_last_name[0]['value'] : '';
-    $options[$user->uid] = "$first_name $last_name";;
+    $options[$user->uid] = "$first_name $last_name";
   }
 
   $form['trainer_uid'] = array(
