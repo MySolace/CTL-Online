@@ -152,6 +152,14 @@ function _ctl_onboarding_slot_register($slot_code, $uid) {
     return FALSE;
   }
 
+  // TODO
+
+  // Assign the cohort number to the user profile.
+  $user = user_load($uid);
+  $user->field_cohort[LANGUAGE_NONE][0]['value'] = $cohort_id;
+  user_save($user);
+
+
   // One more registrant has signed up.
   db_update('ctl_onboarding_slot')
     ->fields(array('num_registrants' => $slot_status['num_registrants'] + 1))

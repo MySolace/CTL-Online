@@ -223,3 +223,8 @@ function ctl_onboarding_views_api() {
     'path' => drupal_get_path('module', 'ctl_onboarding') . '/includes',
   );
 }
+
+
+function ctl_onboarding_form_alter() {
+  dsm();
+}

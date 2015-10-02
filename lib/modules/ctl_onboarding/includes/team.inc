@@ -137,6 +137,7 @@ function _ctl_onboarding_setup_teams($cohort_id) {
 }
 
 
+// TODO later
 function _ctl_onboarding_create_team_node($cohort_id, $slot_code, $team_number) {
   $node           = new stdClass();
   $node->type     = 'training_team';
