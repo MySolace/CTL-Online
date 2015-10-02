@@ -89,3 +89,8 @@ projects[views_role_based_global_text][version] = "1.1"
 projects[webform][version] = "4.7"
 projects[webform_validation][version] = "1.9"
 projects[webform_references][version] = "1.6"
+
+; Forums
+projects[advanced_forum][version] = "2.5"
+projects[advanced_forum_bootstrap][version] = "3.x-dev"
+projects[forum_access][version] = "1.2"
