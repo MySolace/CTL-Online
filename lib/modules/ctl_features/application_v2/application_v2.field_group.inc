@@ -8,42 +8,7 @@
  * Implements hook_field_group_info().
  */
 function application_v2_field_group_info() {
-  $export = array();
-
-  $field_group = new stdClass();
-  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
-  $field_group->api_version = 1;
-  $field_group->identifier = 'group_about|user|user|form';
-  $field_group->group_name = 'group_about';
-  $field_group->entity_type = 'user';
-  $field_group->bundle = 'user';
-  $field_group->mode = 'form';
-  $field_group->parent_name = '';
-  $field_group->data = array(
-    'label' => 'Contact Information',
-    'weight' => '2',
-    'children' => array(
-      0 => 'field_birthdate',
-      1 => 'field_first_name',
-      2 => 'field_last_name',
-      3 => 'field_phone_number',
-      4 => 'field_zip_code',
-      5 => 'field_zip_code_text',
-      6 => 'field_preferred_name',
-      7 => 'field_address',
-    ),
-    'format_type' => 'fieldset',
-    'format_settings' => array(
-      'label' => 'Contact Information',
-      'instance_settings' => array(
-        'required_fields' => 1,
-        'classes' => 'group-about field-group-fieldset',
-        'description' => '',
-      ),
-      'formatter' => 'collapsible',
-    ),
-  );
-  $export['group_about|user|user|form'] = $field_group;
+  $field_groups = array();
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -53,29 +18,33 @@ function application_v2_field_group_info() {
   $field_group->entity_type = 'node';
   $field_group->bundle = 'application_2';
   $field_group->mode = 'form';
-  $field_group->parent_name = 'group_mp';
+  $field_group->parent_name = 'group_more_info';
   $field_group->data = array(
     'label' => 'Additional Info',
-    'weight' => '11',
+    'weight' => '8',
     'children' => array(
       0 => 'field_armed_forces_2',
       1 => 'field_disabilities_',
-      2 => 'field_race',
-      3 => 'field_race_other',
-      4 => 'field_disabilities_other',
-      5 => 'group_counseling',
+      2 => 'field_disabilities_other',
+      3 => 'field_race',
+      4 => 'field_race_other',
     ),
-    'format_type' => 'multipage',
+    'format_type' => 'div',
     'format_settings' => array(
-      'formatter' => 'no-start',
+      'formatter' => 'open',
       'instance_settings' => array(
         'description' => '',
-        'classes' => 'group-additional',
+        'show_label' => 1,
+        'label_element' => 'h3',
+        'effect' => 'none',
+        'speed' => 'fast',
+        'classes' => '',
         'required_fields' => 1,
+        'id' => '',
       ),
     ),
   );
-  $export['group_additional|node|application_2|form'] = $field_group;
+  $field_groups['group_additional|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -85,14 +54,16 @@ function application_v2_field_group_info() {
   $field_group->entity_type = 'node';
   $field_group->bundle = 'application_2';
   $field_group->mode = 'form';
-  $field_group->parent_name = 'group_additional';
+  $field_group->parent_name = 'group_you';
   $field_group->data = array(
     'label' => 'Counseling',
-    'weight' => '125',
+    'weight' => '131',
     'children' => array(
-      0 => 'field_in_counseling',
-      1 => 'field_in_counseling_spoke',
-      2 => 'field_in_counseling_spoke_ready',
+      0 => 'field_crisis_services_2',
+      1 => 'field_in_counseling',
+      2 => 'field_in_counseling_spoke',
+      3 => 'field_in_counseling_spoke_ready',
+      4 => 'field_used_crisis_support',
     ),
     'format_type' => 'div',
     'format_settings' => array(
@@ -110,7 +81,7 @@ function application_v2_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_counseling|node|application_2|form'] = $field_group;
+  $field_groups['group_counseling|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -125,34 +96,34 @@ function application_v2_field_group_info() {
     'label' => 'empathytest',
     'weight' => '16',
     'children' => array(
-      0 => 'field_likert_emergency',
-      1 => 'field_likert_helpless',
-      2 => 'field_likert_less_fortunate',
-      3 => 'field_likert_not_sorry',
-      4 => 'field_likert_other_hurt',
-      5 => 'field_likert_others_opinions',
-      6 => 'field_likert_shoes',
-      7 => 'field_likert_touched',
-      8 => 'field_likert_two_sides',
-      9 => 'field_empathytest_daydream',
-      10 => 'field_likert_pov',
-      11 => 'field_likert_novel',
-      12 => 'field_likert_emergency_situation',
-      13 => 'field_likert_movie',
-      14 => 'field_likert_protective',
-      15 => 'field_likert_perspective',
-      16 => 'field_likert_book',
-      17 => 'field_likert_misfortunes',
-      18 => 'field_likert_arguments',
-      19 => 'field_likert_characters',
-      20 => 'field_likert_scares',
-      21 => 'field_likert_pity',
-      22 => 'field_emergencies',
-      23 => 'field_likert_myself',
-      24 => 'field_likert_characterplace',
-      25 => 'field_likert_control',
-      26 => 'field_likert_storyevents',
-      27 => 'field_likert_place',
+      0 => 'field_emergencies',
+      1 => 'field_empathytest_daydream',
+      2 => 'field_likert_arguments',
+      3 => 'field_likert_book',
+      4 => 'field_likert_characterplace',
+      5 => 'field_likert_characters',
+      6 => 'field_likert_control',
+      7 => 'field_likert_emergency',
+      8 => 'field_likert_emergency_situation',
+      9 => 'field_likert_helpless',
+      10 => 'field_likert_less_fortunate',
+      11 => 'field_likert_misfortunes',
+      12 => 'field_likert_movie',
+      13 => 'field_likert_myself',
+      14 => 'field_likert_not_sorry',
+      15 => 'field_likert_novel',
+      16 => 'field_likert_other_hurt',
+      17 => 'field_likert_others_opinions',
+      18 => 'field_likert_perspective',
+      19 => 'field_likert_pity',
+      20 => 'field_likert_place',
+      21 => 'field_likert_pov',
+      22 => 'field_likert_protective',
+      23 => 'field_likert_scares',
+      24 => 'field_likert_shoes',
+      25 => 'field_likert_storyevents',
+      26 => 'field_likert_touched',
+      27 => 'field_likert_two_sides',
     ),
     'format_type' => 'div',
     'format_settings' => array(
@@ -170,7 +141,7 @@ function application_v2_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_empathytest|node|application_2|form'] = $field_group;
+  $field_groups['group_empathytest|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -183,11 +154,10 @@ function application_v2_field_group_info() {
   $field_group->parent_name = 'group_mp';
   $field_group->data = array(
     'label' => 'Attitude',
-    'weight' => '8',
+    'weight' => '9',
     'children' => array(
       0 => 'field_friend_words',
-      1 => 'field_motivation',
-      2 => 'group_empathytest',
+      1 => 'group_empathytest',
     ),
     'format_type' => 'multipage',
     'format_settings' => array(
@@ -200,7 +170,7 @@ function application_v2_field_group_info() {
       'formatter' => 'no-start',
     ),
   );
-  $export['group_empathy|node|application_2|form'] = $field_group;
+  $field_groups['group_empathy|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -215,12 +185,12 @@ function application_v2_field_group_info() {
     'label' => 'Counselor Expectations',
     'weight' => '7',
     'children' => array(
-      0 => 'field_commitment_2',
-      1 => 'field_english',
-      2 => 'field_felony',
-      3 => 'field_felony_violent_sex',
-      4 => 'field_misdemeanor_violent_sex',
-      5 => 'field_bkg_check',
+      0 => 'field_bkg_check',
+      1 => 'field_commitment_2',
+      2 => 'field_english',
+      3 => 'field_felony',
+      4 => 'field_felony_violent_sex',
+      5 => 'field_misdemeanor_violent_sex',
       6 => 'field_triggers',
       7 => 'field_triggers_list',
       8 => 'group_time',
@@ -237,7 +207,79 @@ function application_v2_field_group_info() {
       'formatter' => 'no-start',
     ),
   );
-  $export['group_expectations|node|application_2|form'] = $field_group;
+  $field_groups['group_expectations|node|application_2|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_family_planning|node|application_2|form';
+  $field_group->group_name = 'group_family_planning';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'application_2';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_uncomfortable';
+  $field_group->data = array(
+    'label' => 'Family Planning',
+    'weight' => '4',
+    'children' => array(
+      0 => 'field_familyplanning_1',
+      1 => 'field_familyplanning_2',
+      2 => 'field_familyplanning_3',
+      3 => 'field_familyplanning_4',
+    ),
+    'format_type' => 'div',
+    'format_settings' => array(
+      'label' => 'Family Planning',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => '',
+        'classes' => 'group-family-planning field-group-div',
+        'description' => 'Crisis Text Line believes in supporting  texters in making choices that are best for them. This might mean discussing birth control and abortion and possibly, directing a texter to a local clinic. Your answers to the questions below help us to know that you’re on board in doing so. ',
+        'show_label' => '1',
+        'label_element' => 'h3',
+        'effect' => 'none',
+        'speed' => 'fast',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_family_planning|node|application_2|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_lgbtq|node|application_2|form';
+  $field_group->group_name = 'group_lgbtq';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'application_2';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_uncomfortable';
+  $field_group->data = array(
+    'label' => 'LGBTQ',
+    'weight' => '5',
+    'children' => array(
+      0 => 'field_lgbtq_1',
+      1 => 'field_lgbtq_2',
+      2 => 'field_lgbtq_3',
+      3 => 'field_lgbtq_4',
+    ),
+    'format_type' => 'div',
+    'format_settings' => array(
+      'label' => 'LGBTQ',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => '',
+        'classes' => 'group-lgbtq field-group-div',
+        'description' => 'Crisis Text Line believes in supporting texters in living their true identities. This might mean discussing LGBTQ related issues with a texter. Your answers to the questions below help us to know that you’re on board in doing so. ',
+        'show_label' => '1',
+        'label_element' => 'h3',
+        'effect' => 'none',
+        'speed' => 'fast',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_lgbtq|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -250,13 +292,16 @@ function application_v2_field_group_info() {
   $field_group->parent_name = 'group_mp';
   $field_group->data = array(
     'label' => 'More About You',
-    'weight' => '9',
+    'weight' => '10',
     'children' => array(
       0 => 'field_education',
       1 => 'field_education_field',
       2 => 'field_education_field_other',
       3 => 'field_employment_2',
       4 => 'field_employment_2_requirement',
+      5 => 'field_employment_school',
+      6 => 'field_employment_employer',
+      7 => 'group_additional',
     ),
     'format_type' => 'multipage',
     'format_settings' => array(
@@ -268,7 +313,7 @@ function application_v2_field_group_info() {
       ),
     ),
   );
-  $export['group_more_info|node|application_2|form'] = $field_group;
+  $field_groups['group_more_info|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -283,11 +328,10 @@ function application_v2_field_group_info() {
     'label' => 'CTL Application',
     'weight' => '1',
     'children' => array(
-      0 => 'group_additional',
-      1 => 'group_more_info',
-      2 => 'group_you',
-      3 => 'group_empathy',
-      4 => 'group_expectations',
+      0 => 'group_empathy',
+      1 => 'group_expectations',
+      2 => 'group_more_info',
+      3 => 'group_you',
     ),
     'format_type' => 'multipage-group',
     'format_settings' => array(
@@ -304,7 +348,43 @@ function application_v2_field_group_info() {
       ),
     ),
   );
-  $export['group_mp|node|application_2|form'] = $field_group;
+  $field_groups['group_mp|node|application_2|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_religion|node|application_2|form';
+  $field_group->group_name = 'group_religion';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'application_2';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_uncomfortable';
+  $field_group->data = array(
+    'label' => 'Religious  questions',
+    'weight' => '6',
+    'children' => array(
+      0 => 'field_religion_1',
+      1 => 'field_religion_2',
+      2 => 'field_religion_3',
+      3 => 'field_religion_4',
+    ),
+    'format_type' => 'div',
+    'format_settings' => array(
+      'label' => 'Religious  questions',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => '',
+        'classes' => 'group-religion field-group-div',
+        'description' => 'Crisis Text Line believes in supporting texters in making choices that are best for them. This might mean conversing with texters who are devoutly religious. Your answers to the questions below help us to know that you’re on board in doing so. ',
+        'show_label' => '1',
+        'label_element' => 'h3',
+        'effect' => 'none',
+        'speed' => 'fast',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_religion|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -329,7 +409,7 @@ function application_v2_field_group_info() {
         'required_fields' => 1,
         'id' => '',
         'classes' => '',
-        'description' => 'Volunteering with Crisis Text Line is a serious (and incredibly rewarding) commitment. We invest a lot in you during training. It costs us money to hire trainers, build the training modules, support the technology, etc. In return, we count on you to staff a 4 hour shift every week for a year. Yes. Thats a heavy commitment. (We do understand that there might be an exceptional reason why you’d need to miss a shift.)',
+        'description' => '',
         'show_label' => '0',
         'label_element' => 'h2',
         'effect' => 'none',
@@ -338,7 +418,7 @@ function application_v2_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_time|node|application_2|form'] = $field_group;
+  $field_groups['group_time|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -355,6 +435,9 @@ function application_v2_field_group_info() {
     'children' => array(
       0 => 'field_uncomfortable_2',
       1 => 'field_uncomfortable_2_cont',
+      2 => 'group_family_planning',
+      3 => 'group_lgbtq',
+      4 => 'group_religion',
     ),
     'format_type' => 'div',
     'format_settings' => array(
@@ -363,7 +446,7 @@ function application_v2_field_group_info() {
         'required_fields' => 1,
         'id' => '',
         'classes' => '',
-        'description' => 'Occasionally, some of our conversations bring up controversial topics. We are looking for volunteers who are open-minded and willing to text with people regardless of the issue(s) they are facing. Below are situations that HAVE happened on our platform.',
+        'description' => '',
         'show_label' => '0',
         'label_element' => 'h2',
         'effect' => 'none',
@@ -372,7 +455,7 @@ function application_v2_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_uncomfortable|node|application_2|form'] = $field_group;
+  $field_groups['group_uncomfortable|node|application_2|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -385,17 +468,17 @@ function application_v2_field_group_info() {
   $field_group->parent_name = 'group_mp';
   $field_group->data = array(
     'label' => 'Why Crisis Text Line',
-    'weight' => '10',
+    'weight' => '8',
     'children' => array(
-      0 => 'field_past_crisis_work_type',
-      1 => 'field_used_crisis_support',
-      2 => 'field_crisis_services_2',
-      3 => 'field_referal_friend',
+      0 => 'field_motivation',
+      1 => 'field_past_crisis_work_type',
+      2 => 'field_referal_friend',
+      3 => 'field_referral_2',
       4 => 'field_referral_2_news',
       5 => 'field_referral_2_other',
-      6 => 'field_referral_2',
-      7 => 'field_referral_2_celeb',
-      8 => 'field_referral_2_other_keyword',
+      6 => 'field_referral_2_other_keyword',
+      7 => 'field_referral_2_social_media',
+      8 => 'group_counseling',
     ),
     'format_type' => 'multipage',
     'format_settings' => array(
@@ -408,7 +491,23 @@ function application_v2_field_group_info() {
       'formatter' => 'no-start',
     ),
   );
-  $export['group_you|node|application_2|form'] = $field_group;
+  $field_groups['group_you|node|application_2|form'] = $field_group;
 
-  return $export;
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Additional Info');
+  t('Attitude');
+  t('CTL Application');
+  t('Counseling');
+  t('Counselor Expectations');
+  t('Family Planning');
+  t('LGBTQ');
+  t('More About You');
+  t('Religious  questions');
+  t('Why Crisis Text Line');
+  t('empathytest');
+  t('shift attendance ');
+  t('uncomfortable');
+
+  return $field_groups;
 }
