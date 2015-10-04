@@ -48,6 +48,22 @@ function _ctl_onboarding_format_slot_code_display($slot_code) {
 
 
 /**
+ * Checks if a given slot code is valid.
+ * @param  string $slot_code    The slot_code to check.
+ * @return bool                 Whether the slot code is valid.
+ */
+function _ctl_onboarding_validate_slot_code($slot_code) {
+  $days  = array('su', 'm', 'tu', 'w', 'th', 'f', 'sa');
+  $hours = range(CTL_ONBOARDING_FIRST_START_HOUR, CTL_ONBOARDING_LAST_START_HOUR, CTL_ONBOARDING_ONE_HOUR);
+  $parts = explode('-', $slot_code);
+  if (count($parts) !== 2 || !in_array($parts[0], $days, TRUE) || !in_array(intval($parts[1]), $hours, TRUE)) {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+
+/**
  * Ensures that a user has only a one role out of a set of related roles.
  * @param int    $uid               The user ID.
  * @param string $next_role_name    The name of the role to set.

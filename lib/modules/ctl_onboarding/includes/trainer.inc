@@ -59,7 +59,7 @@ function _ctl_onboarding_trainer_selection_form_submit($form, &$form_state) {
   $values      = $form_state['values'];
   $trainer_uid = $values['trainer_uid'];
   $nid         = arg(1);
-  $node        = node_load($nid);
+  // $node        = node_load($nid);
 
   _ctl_onboarding_set_team_trainer($nid, $trainer_uid);
 

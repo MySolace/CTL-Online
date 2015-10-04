@@ -1,5 +1,7 @@
 <?php
 
+define('CTL_ONBOARDING_FIRST_COHORT_TO_USE_REGISTRATION_SYSTEM', 8);
+
 define('CTL_ONBOARDING_ROLE_ACCEPTED', 'Accepted');
 define('CTL_ONBOARDING_ROLE_INVITED', 'Invited');
 define('CTL_ONBOARDING_ROLE_DEFERRED', 'Deferred');
@@ -10,6 +12,8 @@ define('CTL_ONBOARDING_ROLE_TRAINER', 'Trainer');
 define('CTL_ONBOARDING_REGISTRATION_CLOSED', 0);
 define('CTL_ONBOARDING_REGISTRATION_OPEN', 1);
 
+// TODO later ?
+// - maybe these should be role IDs...
 define('CTL_ONBOARDING_STATUS_PENDING', 0);
 define('CTL_ONBOARDING_STATUS_ACCEPTED', 1);
 define('CTL_ONBOARDING_STATUS_ASSIGNED', 2);
@@ -82,6 +86,8 @@ function ctl_onboarding_menu() {
     'file'             => 'includes/registration.inc',
   );
 
+// TODO later
+// - separate this into a submodule
   $items['registration-email-test'] = array(
     'title'            => 'Registration Email Test',
     'page callback'    => '_ctl_onboarding_registration_email_test',
@@ -181,6 +187,8 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
           break;
 
         case 'registration-start':
+          // TODO later
+          // - handle default case
           $start = variable_get('ctl_onboarding_registration_start_date', '[X]');
           $year  = $start['year'];
           $month = $start['month'];
@@ -189,6 +197,8 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
           break;
 
         case 'registration-finish':
+          // TODO later
+          // - handle default case
           $finish = variable_get('ctl_onboarding_registration_finish_date', '[X]');
           $year   = $finish['year'];
           $month  = $finish['month'];
@@ -225,6 +235,157 @@ function ctl_onboarding_views_api() {
 }
 
 
-function ctl_onboarding_form_alter() {
-  dsm();
+function ctl_onboarding_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
+  $form['slot_code'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Slot code'),
+    '#default_value' => '',
+    '#weight'        => 90,
+  );
+
+  $form['#validate'][] = '_ctl_onboarding_form_user_profile_form_validate_extra';
+  $form['#submit'][]   = '_ctl_onboarding_form_user_profile_form_submit_extra';
+}
+
+
+function _ctl_onboarding_form_user_profile_form_validate_extra($form, &$form_state) {
+  dsm('_ctl_onboarding_form_user_profile_form_validate_extra');
+
+  $values    = $form_state['values'];
+  $cohort_id = $values['field_cohort'];
+  $slot_code = $values['slot_code'];
+
+  dsm($cohort_id);
+  dsm(gettype($cohort_id));
+  dsm($slot_code);
+  dsm(gettype($slot_code));
+
+  // If a cohort is defined and at least the first cohort to use the
+  // registration system then make sure that a slot code is defined too.
+  // Earlier cohorts are exempt because the registration system didn't
+  // exist back then.
+  if ($cohort_id < 1) {
+    if (!empty($slot_code)) {
+      form_set_error('slot_code', t('There must be a cohort assigned in order for a slot code to be assigned.'));
+      return;
+    }
+  }
+  if ($cohort_id >= CTL_ONBOARDING_FIRST_COHORT_TO_USE_REGISTRATION_SYSTEM) {
+    if (empty($slot_code)) {
+      form_set_error('slot_code', t('For cohorts ' . CTL_ONBOARDING_FIRST_COHORT_TO_USE_REGISTRATION_SYSTEM . ' and above there must a slot code given.'));
+      return;
+    }
+  }
+  if (!empty($slot_code)) {
+    if (!_ctl_onboarding_validate_slot_code($slot_code)) {
+      form_set_error('slot_code', t('The slot code is not in a valid format.'));
+      return;
+    }
+  }
+
+  // Check if the slot code is valid within the given cohort.
+  $query  = 'SELECT uid '
+          . 'FROM {ctl_onboarding_registrant} '
+          . 'WHERE cohort_id = :cohort_id AND slot_code = :slot_code';
+  $args   = array(':cohort_id' => $cohort_id, ':slot_code' => $slot_code);
+  $result = db_query($query, $args);
+
+  // TODO
+
+  // Check if the user had already registered for the time slot.
+
+  // if so return without error
+
+  dsm($result);
+
+  if (empty($result)) {
+    $error_msg = 'Cohort @cohort does not include the @slot_code time slot.';
+    $error_msg = t($error_msg, array(
+      '@cohort'    => $cohort_id,
+      '@slot_code' => $slot_code,
+    ));
+    form_set_error('slot_code', $error_msg);
+    return;
+  }
+
+  // Check that the slot code is available.
+  $query  = 'SELECT num_trainers, num_registrants '
+          . 'FROM {ctl_onboarding_slot} '
+          . 'WHERE cohort_id = :cohort_id AND slot_code = :slot_code';
+  $args   = array(':cohort_id' => $cohort_id, ':slot_code' => $slot_code);
+  $result = db_query($query, $args);
+
+  dsm($result);
+
+  if (empty($result)) {
+    // 'error_message' => t("Could not find info for the !slot_code time slot!  Please notify a trainer or site administrator.", array('!slot_code' => $slot_code)),
+    $error_msg = 'Cohort @cohort time slot @slot_code is full.';
+    $error_msg = t($error_msg, array(
+      '@cohort'    => $cohort_id,
+      '@slot_code' => $slot_code,
+    ));
+    form_set_error('slot_code', $error_msg);
+    return;
+  }
+
+  dsm($result);
+
+  if (empty($result)) {
+    $error_msg = 'Cohort @cohort time slot @slot_code is full.';
+    $error_msg = t($error_msg, array(
+      '@cohort'    => $cohort_id,
+      '@slot_code' => $slot_code,
+    ));
+    form_set_error('slot_code', $error_msg);
+    return;
+  }
+}
+
+
+function _ctl_onboarding_form_user_profile_form_submit_extra($form, &$form_state) {
+  dsm('_ctl_onboarding_form_user_profile_form_submit_extra');
+
+  $values    = $form_state['values'];
+  $cohort_id = $values['field_cohort'];
+  $slot_code = $values['slot_code'];
+
+  // TODO
+
+  // if the user had already registered for the time slot.
+  // return without saving the time slot change and without a message
+  // saying that the time slot was saved
+
+
+  // dsm($values);
+
+  // TODO
+  // - on cohort change
+  //   - check that
+  // - on slot code change
+  //   - validate
+  //   - check that
+  // - update the user's registry entry
+  // - remove their previous entry
+  // - add their new entry
+
+  // The user's cohort must be defined on the
+
+  // field_cohort
+
+
+  // Update the user's training session registration info.
+
+  //
+
+  // // See if the user has attempted registering already.
+  // $query = db_select('ctl_onboarding_registrant', 'r');
+  // $query->addField('r', 'slot_code');
+  // $query->addField('r', 'status');
+  // $result = $query
+  //   ->condition('r.uid', $uid)
+  //   ->condition('r.cohort_id', $cohort_id)
+  //   ->execute()
+  //   ->fetchAll();
+
+  // dsm($slot_code);
 }
