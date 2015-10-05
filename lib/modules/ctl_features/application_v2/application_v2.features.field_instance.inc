@@ -459,7 +459,7 @@ function application_v2_field_default_field_instances() {
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'If you fulfill all requirements, you should check all of the boxes. ',
+    'description' => 'If you fulfill all requirements, you should check all of the boxes. We cannot accept you if you do not fulfill our requirements. ',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -4306,7 +4306,7 @@ function application_v2_field_default_field_instances() {
   t('If I\'m sure I\'m right about something, I don\'t waste much time listening to other people\'s arguments.');
   t('If a friend were to describe you in three words, what would they be?');
   t('If you checked any of the above scenarios, please elaborate on why.');
-  t('If you fulfill all requirements, you should check all of the boxes. ');
+  t('If you fulfill all requirements, you should check all of the boxes. We cannot accept you if you do not fulfill our requirements. ');
   t('In emergency situations, I feel apprehensive and ill-at-ease.');
   t('I’d feel comfortable listening to LGBTQ texter and exploring their feelings to help them out of their moment of crisis.');
   t('I’m comfortable respecting a texter’s religious beliefs while listening to and exploring their feelings.');

@@ -148,8 +148,8 @@ function application_v2_field_default_field_bases() {
       'allowed_values' => array(
         'password' => 'I have a consistent and password-protected internet connection.',
         'computer' => 'I have a personal, family or work computer with password protection (with Chrome, Safari or Firefox installed).',
-        'space' => 'I have space to work in which others cannot see my screen.',
-        'keyboard' => 'I have a keyboard, webcam and headphones. (Webcam used in live sessions during training.)',
+        'space' => 'I have space to work in which others cannot see my screen (i.e. not a coffee shop, library or other public setting).',
+        'keyboard' => 'I have a keyboard and headphones.',
       ),
       'allowed_values_function' => '',
     ),
