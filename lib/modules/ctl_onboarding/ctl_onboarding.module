@@ -236,6 +236,8 @@ function ctl_onboarding_views_api() {
 
 
 function ctl_onboarding_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
+  // TODO nice to have
+  // - make this a drop-down
   $form['slot_code'] = array(
     '#type'          => 'textfield',
     '#title'         => t('Slot code'),
@@ -388,4 +390,6 @@ function _ctl_onboarding_form_user_profile_form_submit_extra($form, &$form_state
   //   ->fetchAll();
 
   // dsm($slot_code);
+
+  // Update the num_registrants in the relevant slots.
 }
