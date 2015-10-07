@@ -83,7 +83,7 @@ function ctl_onboarding_form($form, &$form_state) {
       $times               = explode('-', $slot_code);
       $start_hour_display  = _ctl_onboarding_format_hour_display($times[1]);
       $finish_hour_display = _ctl_onboarding_format_hour_display($times[1] + CTL_ONBOARDING_SESSION_DURATION);
-      $slots[$slot_code]   = $start_hour_display . ' - ' . $finish_hour_display . ' ET';
+      $slots[$slot_code]   = "$start_hour_display - $finish_hour_display ET";
     }
   }
 

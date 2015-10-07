@@ -159,6 +159,9 @@ function _ctl_onboarding_slot_register($slot_code, $uid) {
   $user->field_cohort[LANGUAGE_NONE][0]['value'] = $cohort_id;
   user_save($user);
 
+  // TODO later
+  // - use DBTNG's expression() to do an increment update query
+  //   - http://drupal.stackexchange.com/a/101496
 
   // One more registrant has signed up.
   db_update('ctl_onboarding_slot')
@@ -186,7 +189,7 @@ function _ctl_onboarding_slot_status($slot_code) {
   if (empty($result)) {
     return array(
       'available'     => FALSE,
-      'error_message' => t("Could not find info for the !slot_code time slot!  Please notify a trainer or site administrator.", array('!slot_code' => $slot_code)),
+      'error_message' => t('Could not find info for the @slot_code time slot!  Please notify a trainer or site administrator.', array('@slot_code' => $slot_code)),
     );
   }
 
