@@ -40,7 +40,7 @@ function _ctl_onboarding_form_user_profile_form_validate_extra($form, &$form_sta
   // Older cohorts don't have valid slots.
   if ($cohort_id < CTL_ONBOARDING_FIRST_COHORT_TO_USE_REGISTRATION_SYSTEM) {
     if (empty($slot_code)) {
-      $form_state['storage']['cohort_is_older'] = TRUE;
+      $form_state['storage']['switching'] = FALSE;
     }
     else {
       form_set_error('slot_code', t('There are no valid slot codes for cohorts older than ' . CTL_ONBOARDING_FIRST_COHORT_TO_USE_REGISTRATION_SYSTEM . '.  For these cohorts the slot code should be left blank.'));
@@ -108,7 +108,6 @@ function _ctl_onboarding_form_user_profile_form_validate_extra($form, &$form_sta
     return;
   }
 
-  // At this point we've cleared all the checks.
   $form_state['storage']['switching'] = TRUE;
   $form_state['storage']['uid'] = $uid;
 }
@@ -118,14 +117,9 @@ function _ctl_onboarding_form_user_profile_form_validate_extra($form, &$form_sta
  * Updates registration info.
  */
 function _ctl_onboarding_form_user_profile_form_submit_extra($form, &$form_state) {
-  // We don't need to do any custom saving for older cohorts.
-  $cohort_is_older = !empty($form_state['storage']['cohort_is_older']);
-  if ($cohort_is_older) {
-    return;
-  }
-
-  $switching = !empty($form_state['storage']['switching']);
-  if (!$switching) {
+  $switching     = !empty($form_state['storage']['switching']);
+  $unregistering = !empty($form_state['storage']['unregistering']);
+  if (!$switching && !$unregistering) {
     return;
   }
 
@@ -138,10 +132,26 @@ function _ctl_onboarding_form_user_profile_form_submit_extra($form, &$form_state
   $args   = array(':uid' => $uid);
   $result = db_query($query, $args)->fetchAll();
 
-  $unregistering = !empty($form_state['storage']['unregistering']);
-  if ($unregistering) {
+  if (empty($result)) {
     // If we couldn't find the registrant's info then they're
     // already not registered.
+    if ($unregistering) {
+      return;
+    }
+
+    // db_merge ?
+  }
+
+    // if ($unregistering) {
+    //   return;
+    // }
+
+
+
+
+
+
+  if ($unregistering) {
     if (empty($result)) {
       return;
     }
