@@ -123,6 +123,23 @@ function _ctl_onboarding_form_user_profile_form_submit_extra($form, &$form_state
     return;
   }
 
+  // // Remove the user's registration.
+
+  // $slot_info     = $result[0];
+  // $cur_cohort_id = intval($slot_info->cohort_id);
+  // $cur_slot_code = $slot_info->slot_code;
+
+  // db_update('ctl_onboarding_slot')
+  //   // ->expression('num_registrants', 'num_registrants - :amount', array(':amount' => 1))
+  //   ->expression('num_registrants', 'num_registrants - 1')
+  //   ->condition('cohort_id', $cur_cohort_id)
+  //   ->condition('slot_code', $cur_slot_code)
+  //   ->execute();
+
+
+
+
+
   $uid = $form_state['storage']['uid'];
 
   // Get the user's current relevant training session registration info.
@@ -145,9 +162,11 @@ function _ctl_onboarding_form_user_profile_form_submit_extra($form, &$form_state
     if ($unregistering) {
       // Remove the user's registration.
 
-      // db_merge ?
+      // db_delete ?
       return;
     }
+
+    // db_merge
   }
 
 
@@ -158,9 +177,12 @@ function _ctl_onboarding_form_user_profile_form_submit_extra($form, &$form_state
 
 
   if ($unregistering) {
+    // If we couldn't find the registrant's info then they're
+    // already not registered.
     if (empty($result)) {
       return;
     }
+
 
     // Remove the user's registration.
 
