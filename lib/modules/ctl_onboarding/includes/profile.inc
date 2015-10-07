@@ -141,10 +141,16 @@ function _ctl_onboarding_form_user_profile_form_submit_extra($form, &$form_state
 
     // db_merge ?
   }
+  else {
+    if ($unregistering) {
+      // Remove the user's registration.
 
-    // if ($unregistering) {
-    //   return;
-    // }
+      // db_merge ?
+      return;
+    }
+  }
+
+
 
 
 
