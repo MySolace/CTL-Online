@@ -36,18 +36,21 @@ function ctl_onboarding_form_user_profile_form_alter(&$form, &$form_state, $form
 function _ctl_onboarding_form_user_profile_form_validate_extra($form, &$form_state) {
   $values    = $form_state['values'];
   $cohort_id = intval($values['field_cohort'][LANGUAGE_NONE][0]['value']);
+  $slot_code = $values['slot_code'];
   $parts     = explode('/', current_path());
   $uid       = intval($parts[1]);
 
   // No cohort means unregister.
   if ($cohort_id < 1) {
+    if (!empty($slot_code)) {
+      form_set_error('slot_code', t('No cohort is selected so the slot code should be left blank.'));
+      return;
+    }
     $parts = explode('/', current_path());
     $form_state['storage']['unregistering'] = TRUE;
     $form_state['storage']['uid'] = $uid;
     return;
   }
-
-  $slot_code = $values['slot_code'];
 
   // Older cohorts don't have valid slots.
   if ($cohort_id < CTL_ONBOARDING_FIRST_COHORT_TO_USE_REGISTRATION_SYSTEM) {
