@@ -86,11 +86,7 @@ function _ctl_onboarding_set_team_trainer($nid, $trainer_uid) {
       }
       // Trainees get their trainer assigned to them.
       else {
-        $user->field_trainer = array(
-          LANGUAGE_NONE => array(
-            array('target_id' => $trainer_uid),
-          ),
-        );
+        $user->field_trainer[LANGUAGE_NONE][0]['target_id'] = $trainer_uid;
         user_save($user);
       }
     }

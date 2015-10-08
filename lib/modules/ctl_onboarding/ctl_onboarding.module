@@ -12,8 +12,8 @@ define('CTL_ONBOARDING_ROLE_TRAINER', 'Trainer');
 define('CTL_ONBOARDING_REGISTRATION_CLOSED', 0);
 define('CTL_ONBOARDING_REGISTRATION_OPEN', 1);
 
-// TODO later ?
-// - maybe these should be role IDs...
+// TODO later
+// - retire the status field and use roles instead
 define('CTL_ONBOARDING_STATUS_PENDING', 0);
 define('CTL_ONBOARDING_STATUS_ACCEPTED', 1);
 define('CTL_ONBOARDING_STATUS_ASSIGNED', 2);

@@ -4,12 +4,21 @@
  * Implements hook_form_FORM_ID_alter().
  */
 function ctl_onboarding_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
+  // Get the user's current slot code.
+  $query  = 'SELECT slot_code '
+          . 'FROM {ctl_onboarding_registrant} '
+          . 'WHERE uid = :uid';
+  $args   = array(':uid' => $uid);
+  $result = db_query($query, $args)->fetchAll();
+
+  $default_slot_code = !empty($result) ? $result[0]->slot_code : '';
+
   // TODO nice to have
   // - make this a drop-down
   $form['slot_code'] = array(
     '#type'          => 'textfield',
     '#title'         => t('Slot code'),
-    '#default_value' => '',
+    '#default_value' => $default_slot_code,
     '#weight'        => 90,
   );
 
@@ -82,7 +91,9 @@ function _ctl_onboarding_form_user_profile_form_validate_extra($form, &$form_sta
   // Check if the user had already registered for the slot.
   $query = 'SELECT uid '
          . 'FROM {ctl_onboarding_registrant} '
-         . 'WHERE uid = :uid AND cohort_id = :cohort_id AND slot_code';
+         . 'WHERE uid = :uid '
+         . '  AND cohort_id = :cohort_id '
+         . '  AND slot_code = :slot_code;';
   $args = array(
     ':uid'       => $uid,
     ':cohort_id' => $cohort_id,
@@ -98,6 +109,15 @@ function _ctl_onboarding_form_user_profile_form_validate_extra($form, &$form_sta
   $num_trainers     = intval($slot_info->num_trainers);
   $num_registrants  = intval($slot_info->num_registrants);
   $trainer_capacity = intval(variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY));
+  if ($num_trainers < 1) {
+    $error_msg = 'Cohort @cohort time slot @slot_code is unavailable.';
+    $error_msg = t($error_msg, array(
+      '@cohort'    => $cohort_id,
+      '@slot_code' => $slot_code,
+    ));
+    form_set_error('slot_code', $error_msg);
+    return;
+  }
   if ($num_registrants >= $trainer_capacity * $num_trainers) {
     $error_msg = 'Cohort @cohort time slot @slot_code is full.';
     $error_msg = t($error_msg, array(
@@ -146,7 +166,6 @@ function _ctl_onboarding_form_user_profile_form_submit_extra($form, &$form_state
 
     // Decrease the registrant count of the user's current slot.
     db_update('ctl_onboarding_slot')
-      // ->expression('num_registrants', 'num_registrants - :amount', array(':amount' => 1))
       ->expression('num_registrants', 'num_registrants - 1')
       ->condition('cohort_id', $cur_cohort_id)
       ->condition('slot_code', $cur_slot_code)
@@ -167,14 +186,21 @@ function _ctl_onboarding_form_user_profile_form_submit_extra($form, &$form_state
 
   // Increase the registrant count of the user's new slot.
   db_update('ctl_onboarding_slot')
-    // ->expression('num_registrants', 'num_registrants - :amount', array(':amount' => 1))
     ->expression('num_registrants', 'num_registrants + 1')
     ->condition('cohort_id', $cohort_id)
     ->condition('slot_code', $slot_code)
     ->execute();
 
-  db_update('ctl_onboarding_registrant')
-    ->fields(array('cohort_id' => $cohort_id, 'slot_code' => $slot_code))
-    ->condition('uid', $uid)
+  // Upsert time slot info.
+  // TODO later
+  // - account for the status field
+  //   - or not since it's being retired in the future
+  db_merge('ctl_onboarding_registrant')
+    ->key(array('uid' => $uid))
+    ->fields(array(
+      'cohort_id' => $cohort_id,
+      'slot_code' => $slot_code,
+      'status'    => CTL_ONBOARDING_STATUS_ACCEPTED,
+    ))
     ->execute();
 }
