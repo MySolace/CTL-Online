@@ -1,6 +1,7 @@
 <?php
 
-require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
+$path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding');
+require_once "$path/includes/helper.inc";
 
 
 // TODO later
@@ -136,6 +137,7 @@ function _ctl_onboarding_setup_teams($cohort_id) {
 }
 
 
+// TODO later
 function _ctl_onboarding_create_team_node($cohort_id, $slot_code, $team_number) {
   $node           = new stdClass();
   $node->type     = 'training_team';

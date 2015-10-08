@@ -1,6 +1,7 @@
 <?php
 
-require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/team.inc';
+$path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding');
+require_once "$path/includes/team.inc";
 
 
 function _ctl_onboarding_settings_form() {
@@ -309,13 +310,8 @@ function _ctl_onboarding_set_slots($cohort_id, $slot_trainers) {
 
     // Upsert time slot info.
     db_merge('ctl_onboarding_slot')
-      ->key(array(
-        'cohort_id' => $cohort_id,
-        'slot_code' => $slot_code,
-      ))
-      ->fields(array(
-        'num_trainers' => $num_trainers,
-      ))
+      ->key(array('cohort_id' => $cohort_id, 'slot_code' => $slot_code))
+      ->fields(array('num_trainers' => $num_trainers))
       ->execute();
   }
 }

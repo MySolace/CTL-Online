@@ -1,5 +1,7 @@
 <?php
 
+define('CTL_ONBOARDING_FIRST_COHORT_TO_USE_REGISTRATION_SYSTEM', 8);
+
 define('CTL_ONBOARDING_ROLE_ACCEPTED', 'Accepted');
 define('CTL_ONBOARDING_ROLE_INVITED', 'Invited');
 define('CTL_ONBOARDING_ROLE_DEFERRED', 'Deferred');
@@ -10,6 +12,8 @@ define('CTL_ONBOARDING_ROLE_TRAINER', 'Trainer');
 define('CTL_ONBOARDING_REGISTRATION_CLOSED', 0);
 define('CTL_ONBOARDING_REGISTRATION_OPEN', 1);
 
+// TODO later
+// - retire the status field and use roles instead
 define('CTL_ONBOARDING_STATUS_PENDING', 0);
 define('CTL_ONBOARDING_STATUS_ACCEPTED', 1);
 define('CTL_ONBOARDING_STATUS_ASSIGNED', 2);
@@ -28,8 +32,10 @@ define('CTL_ONBOARDING_LAST_START_HOUR', 2000);
 define('CTL_ONBOARDING_ONE_HOUR', 100);
 define('CTL_ONBOARDING_SESSION_DURATION', 400);
 
-require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/email.inc';
-require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding') . '/includes/helper.inc';
+$path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'ctl_onboarding');
+require_once "$path/includes/email.inc";
+require_once "$path/includes/helper.inc";
+require_once "$path/includes/profile.inc";
 
 
 // TODO later ?
@@ -81,6 +87,8 @@ function ctl_onboarding_menu() {
     'file'             => 'includes/registration.inc',
   );
 
+// TODO later
+// - separate this into a submodule
   $items['registration-email-test'] = array(
     'title'            => 'Registration Email Test',
     'page callback'    => '_ctl_onboarding_registration_email_test',
@@ -180,6 +188,8 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
           break;
 
         case 'registration-start':
+          // TODO later
+          // - handle default case
           $start = variable_get('ctl_onboarding_registration_start_date', '[X]');
           $year  = $start['year'];
           $month = $start['month'];
@@ -188,6 +198,8 @@ function ctl_onboarding_tokens($type, $tokens, array $data = array(), array $opt
           break;
 
         case 'registration-finish':
+          // TODO later
+          // - handle default case
           $finish = variable_get('ctl_onboarding_registration_finish_date', '[X]');
           $year   = $finish['year'];
           $month  = $finish['month'];
