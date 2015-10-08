@@ -4,6 +4,9 @@
  * Implements hook_form_FORM_ID_alter().
  */
 function ctl_onboarding_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
+  $parts = explode('/', current_path());
+  $uid   = intval($parts[1]);
+
   // Get the user's current slot code.
   $query  = 'SELECT slot_code '
           . 'FROM {ctl_onboarding_registrant} '
