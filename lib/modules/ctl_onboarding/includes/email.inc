@@ -83,6 +83,8 @@ function _ctl_onboarding_mail_send($data) {
 }
 
 
+// TODO later
+// - separate this into a submodule
 function _ctl_onboarding_registration_email_test() {
   $email = variable_get('ctl_onboarding_email');
   $email_subject = token_replace($email['register']['subject']);
@@ -105,6 +107,8 @@ function _ctl_onboarding_registration_email_test() {
 }
 
 
+// TODO later
+// - separate this into a submodule
 function _ctl_onboarding_deferred_email_test() {
   $email = variable_get('ctl_onboarding_email');
   $email_subject = token_replace($email['defer']['subject']);
@@ -119,6 +123,8 @@ function _ctl_onboarding_deferred_email_test() {
 }
 
 
+// TODO later
+// - separate this into a submodule
 function _ctl_onboarding_declined_email_test() {
   $email = variable_get('ctl_onboarding_email');
   $email_subject = token_replace($email['decline']['subject']);

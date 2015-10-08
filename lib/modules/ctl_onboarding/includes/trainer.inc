@@ -36,7 +36,7 @@ function _ctl_onboarding_trainer_selection_form($form, &$form_state, $node) {
     $field_last_name     = field_get_items('user', $user, 'field_last_name');
     $first_name          = $field_first_name ? $field_first_name[0]['value'] : '';
     $last_name           = $field_last_name ? $field_last_name[0]['value'] : '';
-    $options[$user->uid] = "$first_name $last_name";;
+    $options[$user->uid] = "$first_name $last_name";
   }
 
   $form['trainer_uid'] = array(
@@ -59,7 +59,7 @@ function _ctl_onboarding_trainer_selection_form_submit($form, &$form_state) {
   $values      = $form_state['values'];
   $trainer_uid = $values['trainer_uid'];
   $nid         = arg(1);
-  $node        = node_load($nid);
+  // $node        = node_load($nid);
 
   _ctl_onboarding_set_team_trainer($nid, $trainer_uid);
 
@@ -86,11 +86,7 @@ function _ctl_onboarding_set_team_trainer($nid, $trainer_uid) {
       }
       // Trainees get their trainer assigned to them.
       else {
-        $user->field_trainer = array(
-          LANGUAGE_NONE => array(
-            array('target_id' => $trainer_uid),
-          ),
-        );
+        $user->field_trainer[LANGUAGE_NONE][0]['target_id'] = $trainer_uid;
         user_save($user);
       }
     }
