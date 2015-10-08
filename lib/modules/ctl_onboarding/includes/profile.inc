@@ -123,23 +123,6 @@ function _ctl_onboarding_form_user_profile_form_submit_extra($form, &$form_state
     return;
   }
 
-  // // Remove the user's registration.
-
-  // $slot_info     = $result[0];
-  // $cur_cohort_id = intval($slot_info->cohort_id);
-  // $cur_slot_code = $slot_info->slot_code;
-
-  // db_update('ctl_onboarding_slot')
-  //   // ->expression('num_registrants', 'num_registrants - :amount', array(':amount' => 1))
-  //   ->expression('num_registrants', 'num_registrants - 1')
-  //   ->condition('cohort_id', $cur_cohort_id)
-  //   ->condition('slot_code', $cur_slot_code)
-  //   ->execute();
-
-
-
-
-
   $uid = $form_state['storage']['uid'];
 
   // Get the user's current relevant training session registration info.
@@ -155,41 +138,13 @@ function _ctl_onboarding_form_user_profile_form_submit_extra($form, &$form_state
     if ($unregistering) {
       return;
     }
-
-    // db_merge ?
   }
   else {
-    if ($unregistering) {
-      // Remove the user's registration.
-
-      // db_delete ?
-      return;
-    }
-
-    // db_merge
-  }
-
-
-
-
-
-
-
-
-  if ($unregistering) {
-    // If we couldn't find the registrant's info then they're
-    // already not registered.
-    if (empty($result)) {
-      return;
-    }
-
-
-    // Remove the user's registration.
-
     $slot_info     = $result[0];
     $cur_cohort_id = intval($slot_info->cohort_id);
     $cur_slot_code = $slot_info->slot_code;
 
+    // Decrease the registrant count of the user's current slot.
     db_update('ctl_onboarding_slot')
       // ->expression('num_registrants', 'num_registrants - :amount', array(':amount' => 1))
       ->expression('num_registrants', 'num_registrants - 1')
@@ -197,74 +152,29 @@ function _ctl_onboarding_form_user_profile_form_submit_extra($form, &$form_state
       ->condition('slot_code', $cur_slot_code)
       ->execute();
 
-    db_delete('ctl_onboarding_registrant')
-      ->condition('uid', $uid)
-      ->execute();
-
-    drupal_set_message(t('Successfully unregistered.'));
+    if ($unregistering) {
+      db_delete('ctl_onboarding_registrant')
+        ->condition('uid', $uid)
+        ->execute();
+      drupal_set_message(t('Successfully unregistered.'));
+      return;
+    }
   }
-
-
-
-
-
-
-
-
 
   $values    = $form_state['values'];
   $cohort_id = intval($values['field_cohort'][LANGUAGE_NONE][0]['value']);
   $slot_code = $values['slot_code'];
 
-
-
-
-
-    db_update('ctl_onboarding_slot')
-      // ->expression('num_registrants', 'num_registrants - :amount', array(':amount' => 1))
-      ->expression('num_registrants', 'num_registrants - 1')
-      ->condition('cohort_id', $cur_cohort_id)
-      ->condition('slot_code', $cur_slot_code)
-      ->execute();
-
-    db_delete('ctl_onboarding_registrant')
-      ->condition('uid', $uid)
-      ->execute();
-
-    drupal_set_message(t('Successfully unregistered.'));
-
-
-
-
+  // Increase the registrant count of the user's new slot.
+  db_update('ctl_onboarding_slot')
+    // ->expression('num_registrants', 'num_registrants - :amount', array(':amount' => 1))
+    ->expression('num_registrants', 'num_registrants + 1')
+    ->condition('cohort_id', $cohort_id)
+    ->condition('slot_code', $slot_code)
+    ->execute();
 
   db_update('ctl_onboarding_registrant')
     ->fields(array('cohort_id' => $cohort_id, 'slot_code' => $slot_code))
     ->condition('uid', $uid)
     ->execute();
-
-  // // One more registrant has signed up.
-  // db_update('ctl_onboarding_slot')
-  //   ->fields(array('num_registrants' => $slot_status['num_registrants'] + 1))
-  //   ->condition('cohort_id', $cohort_id)
-  //   ->condition('slot_code', $slot_code)
-  //   ->execute();
-
-  return;
-
-  // dpm($values);
-
-  // TODO
-  // - save the cohort number to the registrant table
-  // - update the user's registry entry
-  //   - update the user profile
-  //   - remove their previous entry
-  //   - add their new entry
-
-
-
-  // Update the user's training session registration info.
-
-  // dpm($slot_code);
-
-  // Update the num_registrants in the relevant slots.
 }
