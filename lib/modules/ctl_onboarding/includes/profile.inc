@@ -27,6 +27,15 @@ function ctl_onboarding_form_user_profile_form_alter(&$form, &$form_state, $form
 
   $form['#validate'][] = '_ctl_onboarding_form_user_profile_form_validate_extra';
   $form['#submit'][]   = '_ctl_onboarding_form_user_profile_form_submit_extra';
+
+
+
+
+
+  // $cohort_id = 2;
+  // $user = user_load($uid);
+  // $user->field_cohort[LANGUAGE_NONE][0]['value'] = $cohort_id;
+  // user_save($user);
 }
 
 

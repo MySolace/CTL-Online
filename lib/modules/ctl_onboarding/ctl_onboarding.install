@@ -143,7 +143,6 @@ function ctl_onboarding_schema() {
 // function ctl_onboarding_update_7001() {
 //   // Create a new slot code field for user profiles.
 
-//   // // TODO
 //   // if (!field_info_field('slot_code')) {
 //   //   $field = array(
 //   //     'field_name' => 'slot_code',
