@@ -2,7 +2,6 @@ node default {
     include ::php
     include ::nginx
     include ::mysql::server
-    include ::php
     include ctl_online
 
     include drush
