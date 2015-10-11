@@ -18,7 +18,7 @@ libraries[twilio][download][url] = "https://github.com/twilio/twilio-php/archive
 libraries[twilio][directory_name] = "twilio"
 
 ; Modules
-projects[addressfield][version] = "1.1"
+projects[addressfield][version] = "1.2"
 projects[admin_menu][version] = "3.0-rc5"
 projects[admin_views][version] = "1.5"
 projects[auto_nodetitle][version] = "1.0"
@@ -77,7 +77,7 @@ projects[rules][patch][] = https://www.drupal.org/files/rules-site-property-meta
 projects[rules_conditional][version] = "1.0-beta2"
 projects[token][version] = "1.6"
 projects[twilio][version] = "1.10"
-projects[uuid][version] = "1.0-alpha6"
+projects[uuid][version] = "1.0-beta1"
 projects[video][version] = "2.11"
 projects[views][version] = "3.10"
 projects[views][patch][] = https://www.drupal.org/files/issues/views-data-cache-rebuild-1944674-42.patch
