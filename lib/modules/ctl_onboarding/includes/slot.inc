@@ -152,20 +152,17 @@ function _ctl_onboarding_slot_register($slot_code, $uid) {
     return FALSE;
   }
 
-  // TODO
+  // TODO later
+  // - check that the cohort field on the user profile is updated appropriately
 
   // Assign the cohort number to the user profile.
   $user = user_load($uid);
   $user->field_cohort[LANGUAGE_NONE][0]['value'] = $cohort_id;
   user_save($user);
 
-  // TODO later
-  // - use DBTNG's expression() to do an increment update query
-  //   - http://drupal.stackexchange.com/a/101496
-
   // One more registrant has signed up.
   db_update('ctl_onboarding_slot')
-    ->fields(array('num_registrants' => $slot_status['num_registrants'] + 1))
+    ->expression('num_registrants', 'num_registrants + 1')
     ->condition('cohort_id', $cohort_id)
     ->condition('slot_code', $slot_code)
     ->execute();
@@ -206,8 +203,5 @@ function _ctl_onboarding_slot_status($slot_code) {
   }
 
   // If we haven't aborted yet, the slot is available.
-  return array(
-    'available'       => TRUE,
-    'num_registrants' => $slot->num_registrants,
-  );
+  return array('available' => TRUE);
 }

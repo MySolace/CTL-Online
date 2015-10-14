@@ -143,7 +143,6 @@ function ctl_onboarding_schema() {
 // function ctl_onboarding_update_7001() {
 //   // Create a new slot code field for user profiles.
 
-//   // // TODO
 //   // if (!field_info_field('slot_code')) {
 //   //   $field = array(
 //   //     'field_name' => 'slot_code',
@@ -161,3 +160,25 @@ function ctl_onboarding_schema() {
 //   //   field_create_instance($instance);
 //   // }
 // }
+
+
+/**
+ * Implements hook_update_N().
+ */
+function ctl_onboarding_update_7001() {
+  // Find all the cohort 8 users and make sure their cohort user field and training registration.
+  $query  = 'SELECT uid FROM {ctl_onboarding_registrant} WHERE cohort_id = 8;';
+  $result = db_query($query)->fetchAll();
+  if (empty($result)) {
+    return;
+  }
+  $uids = array();
+  foreach ($result as $v) {
+    $uids[] = $v->uid;
+  }
+  $users = user_load_multiple($uids);
+  foreach ($users as $user) {
+    $user->field_cohort[LANGUAGE_NONE][0]['value'] = 8;
+    field_attach_update('user', $user);
+  }
+}
