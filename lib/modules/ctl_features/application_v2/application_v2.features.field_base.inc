@@ -10,27 +10,6 @@
 function application_v2_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'body'
-  $field_bases['body'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(
-      0 => 'node',
-    ),
-    'field_name' => 'body',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'text_with_summary',
-  );
-
   // Exported field_base: 'comment_body'
   $field_bases['comment_body'] = array(
     'active' => 1,
@@ -209,7 +188,7 @@ function application_v2_field_default_field_bases() {
   // Exported field_base: 'field_disabilities_'
   $field_bases['field_disabilities_'] = array(
     'active' => 1,
-    'cardinality' => 1,
+    'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_disabilities_',
@@ -1855,26 +1834,31 @@ function application_v2_field_default_field_bases() {
     'settings' => array(
       'allowed_values' => array(
         'ACC' => 'Atlanta City Council',
+        'bgs' => 'Black Girls Smile',
+        'bystander' => 'Bystander Revolution',
         'CSA' => 'Center for Suicide Awareness',
         'charlotte' => 'Charlotte Behavioral Healthcare',
-        'tacoma' => 'City of Tacoma',
         'clemson' => 'Clemson University',
         'cwc' => 'Contact We Care',
         'google' => 'Google',
         'iava' => 'IAVA',
+        'IGF' => 'I\'ll Go First',
         'muskogee' => 'Muskogee Creek Nation',
-        'nclr' => 'National Center for Lesbian Rights',
         'nebraska' => 'Nebraska Region 1',
         'nevada' => 'Nevada Coalition',
         'nmn' => 'Now Matters Now',
+        'PreventionManagementOrganizationofWyoming' => 'Prevention Management Organization of Wyoming',
+        'rutgers' => 'Rutgers',
         'SFsuicide' => 'San Francisco Suicide Prevention',
-        'SoH' => 'Seeds of Hope',
-        'sju' => 'St. John\'s University',
-        'ssUSA' => 'Stand Strong USA',
-        'stark' => 'Stark Country',
-        'switchboard' => 'Switchboard Miami',
-        'twloha' => 'To Write Love on Her Arms',
         'skimm' => 'TheSkimm',
+        'SoH' => 'Seeds of Hope',
+        'ssu' => 'Shawnee State University',
+        'standstrong' => 'Stand Strong USA',
+        'stark' => 'Stark County',
+        'sju' => 'St. John\'s University',
+        'switchboard' => 'Switchboard Miami',
+        'tacoma' => 'City of Tacoma',
+        'twloha' => 'To Write Love on Her Arms',
         'youtube' => 'YouTube',
       ),
       'allowed_values_function' => '',
@@ -1981,11 +1965,11 @@ function application_v2_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'lgbt' => 'Use terms by which a texter chooses to be identified, such as gay, lesbian, transgendered or queer',
+        'lgbt' => 'Use terms by which a texter chooses to be identified, such as gay, lesbian, transgender or queer',
         'sexual_victim' => 'Accept a survivor of sexual assault’s decision to decline a medical exam or press charges',
         'perpetrator' => 'Text with a perpetrator of domestic violence without contacting the police',
-        'young_sex' => 'Text with a adult man who initiated sex with a teenager without contacting the police',
-        'trafficking_choice' => 'Accept a victim of sex trafficking’s decision not to contact the police about her experience.',
+        'young_sex' => 'Text with an adult man who initiated sex with a teenager without contacting the police',
+        'trafficking_choice' => 'Accept a victim of sex trafficking’s decision not to contact the police about her experience',
       ),
       'allowed_values_function' => '',
     ),

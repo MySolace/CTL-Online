@@ -170,7 +170,7 @@ function application_v2_views_default_views() {
   $handler->display->display_options['fields']['status']['field'] = 'status';
   $handler->display->display_options['fields']['status']['label'] = 'Status';
   $handler->display->display_options['fields']['status']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['status']['alter']['path'] = 'application';
+  $handler->display->display_options['fields']['status']['alter']['path'] = 'node/[nid]/edit';
   $handler->display->display_options['fields']['status']['empty'] = 'Submitted';
   $handler->display->display_options['fields']['status']['type'] = 'custom';
   $handler->display->display_options['fields']['status']['type_custom_false'] = '! Not Submitted';
@@ -215,6 +215,7 @@ function application_v2_views_default_views() {
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
+    'application' => 'application',
     'application_2' => 'application_2',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
@@ -245,16 +246,73 @@ function application_v2_views_default_views() {
   $handler->display->display_options['empty']['area_1']['table'] = 'views';
   $handler->display->display_options['empty']['area_1']['field'] = 'area';
   $handler->display->display_options['empty']['area_1']['empty'] = TRUE;
-  $handler->display->display_options['empty']['area_1']['content'] = '<h2>Please wait while we review Part 1 of your application. We will email you when you are eligible to apply for Part 2.</h2>';
+  $handler->display->display_options['empty']['area_1']['content'] = '<h2>Alright! Thanks for creating your account. <a href="/application">Let\'s get started!</a></h2>';
   $handler->display->display_options['empty']['area_1']['format'] = 'html';
   $handler->display->display_options['empty']['area_1']['roles_fieldset'] = array(
     'roles' => array(
       'Lead' => 'Lead',
       'anonymous user' => 0,
-      'authenticated user' => 'Authenticated User',
+      'authenticated user' => 0,
       'administrator' => 0,
       'Staff' => 0,
       'Applicant' => 0,
+      'Trainer' => 0,
+      'Trainee' => 0,
+      'Applied' => 0,
+      'Applicant-Reminded' => 0,
+      'Submitted' => 0,
+      'Incomplete' => 0,
+      'Accepted' => 0,
+      'Pending' => 0,
+      'Pending-failed' => 0,
+      'Rejected' => 0,
+      'Dropout' => 0,
+      'Test Account' => 0,
+      'Supervisor' => 0,
+      'Crisis Counselor I' => 0,
+      'Crisis Counselor II' => 0,
+      'Crisis Counselor III' => 0,
+      'Former Counselor' => 0,
+      'Deferred' => 0,
+    ),
+  );
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area_2']['id'] = 'area_2';
+  $handler->display->display_options['empty']['area_2']['table'] = 'views';
+  $handler->display->display_options['empty']['area_2']['field'] = 'area';
+  $handler->display->display_options['empty']['area_2']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area_2']['content'] = 'Oops! Looks like you haven\'t started your application yet.
+
+<a href="/application">Get started now.</a>';
+  $handler->display->display_options['empty']['area_2']['format'] = 'auto_breaking';
+  $handler->display->display_options['empty']['area_2']['roles_fieldset'] = array(
+    'roles' => array(
+      'Applicant' => 'Applicant',
+      'Applicant-Reminded' => 'Applicant-Reminded',
+      'Submitted' => 'Submitted',
+      'Incomplete' => 'Incomplete',
+      'Lead' => 'Lead',
+      'Accepted' => 'Accepted',
+      'anonymous user' => 0,
+      'authenticated user' => 0,
+      'administrator' => 0,
+      'Staff' => 0,
+      'Trainer' => 0,
+      'Offboarder' => 0,
+      'Trainee' => 0,
+      'Graduate' => 0,
+      'Applied' => 0,
+      'Pending' => 0,
+      'Pending-failed' => 0,
+      'Rejected' => 0,
+      'Dropout' => 0,
+      'Test Account' => 0,
+      'Supervisor' => 0,
+      'Crisis Counselor I' => 0,
+      'Crisis Counselor II' => 0,
+      'Crisis Counselor III' => 0,
+      'Former Counselor' => 0,
+      'Deferred' => 0,
     ),
   );
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
@@ -264,6 +322,7 @@ function application_v2_views_default_views() {
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
+    'application' => 'application',
     'application_2' => 'application_2',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
@@ -327,7 +386,7 @@ function application_v2_views_default_views() {
   $handler->display->display_options['fields']['status']['field'] = 'status';
   $handler->display->display_options['fields']['status']['label'] = 'Status';
   $handler->display->display_options['fields']['status']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['status']['alter']['path'] = 'application';
+  $handler->display->display_options['fields']['status']['alter']['path'] = 'node/[nid]/edit';
   $handler->display->display_options['fields']['status']['empty'] = '[field_status]';
   $handler->display->display_options['fields']['status']['type'] = 'custom';
   $handler->display->display_options['fields']['status']['type_custom_false'] = 'Incomplete';
