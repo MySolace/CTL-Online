@@ -166,7 +166,8 @@ function ctl_onboarding_schema() {
  * Implements hook_update_N().
  */
 function ctl_onboarding_update_7001() {
-  // Find all the cohort 8 users and make sure their cohort user field and training registration.
+  // Find all the cohort 8 users and make sure their cohort user field is set
+  // to their associated registration info's cohort.
   $query  = 'SELECT uid FROM {ctl_onboarding_registrant} WHERE cohort_id = 8;';
   $result = db_query($query)->fetchAll();
   if (empty($result)) {
