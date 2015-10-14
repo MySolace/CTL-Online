@@ -409,7 +409,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 128,
+      'weight' => 129,
     ),
   );
 
@@ -438,11 +438,39 @@ function application_v2_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_bkg_check',
-    'label' => 'Do you have a US SSN and agree to undergo a background check? ',
+    'label' => 'Do you have a US Social Security Number and agree to undergo a background check? ',
     'required' => 1,
     'settings' => array(
       'course_enrollment' => FALSE,
-      'required_by_role' => array(),
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -450,7 +478,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 9,
+      'weight' => 13,
     ),
   );
 
@@ -459,7 +487,7 @@ function application_v2_field_default_field_instances() {
     'bundle' => 'application_2',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'If you fulfill all requirements, you should check all of the boxes. ',
+    'description' => 'If you fulfill all requirements, you should check all of the boxes. We cannot accept you if you do not fulfill our requirements.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -509,6 +537,8 @@ function application_v2_field_default_field_instances() {
         25 => 0,
         26 => 0,
         27 => 0,
+        28 => 0,
+        29 => 0,
       ),
       'user_register_form' => FALSE,
     ),
@@ -517,7 +547,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 14,
+      'weight' => 11,
     ),
   );
 
@@ -562,7 +592,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 132,
+      'weight' => 28,
     ),
   );
 
@@ -647,7 +677,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 127,
+      'weight' => 128,
     ),
   );
 
@@ -688,7 +718,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 4,
+      'weight' => 9,
     ),
   );
 
@@ -729,7 +759,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 5,
+      'weight' => 10,
     ),
   );
 
@@ -772,7 +802,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 11,
     ),
   );
 
@@ -813,7 +843,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 86,
+      'weight' => 89,
     ),
   );
 
@@ -854,7 +884,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 68,
+      'weight' => 71,
     ),
   );
 
@@ -895,7 +925,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 1,
+      'weight' => 4,
     ),
   );
 
@@ -941,7 +971,151 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 3,
+      'weight' => 8,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_employment_employer'
+  $field_instances['node-application_2-field_employment_employer'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'text_default',
+        'weight' => 136,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_employment_employer',
+    'label' => 'What is the name of the primary company you work for?',
+    'required' => 0,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 5,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_employment_school'
+  $field_instances['node-application_2-field_employment_school'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'text_default',
+        'weight' => 137,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_employment_school',
+    'label' => 'What school do you attend?',
+    'required' => 0,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 7,
     ),
   );
 
@@ -982,7 +1156,355 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 13,
+      'weight' => 17,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_essay_criticized'
+  $field_instances['node-application_2-field_essay_criticized'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'text_default',
+        'weight' => 150,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_essay_criticized',
+    'label' => 'Think of a time when someone criticized you or offered you constructive feedback. How did you respond?',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 24,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_familyplanning_1'
+  $field_instances['node-application_2-field_familyplanning_1'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'list_default',
+        'weight' => 146,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_familyplanning_1',
+    'label' => 'I believe every woman should have access to contraception regardless of age.',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 16,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_familyplanning_2'
+  $field_instances['node-application_2-field_familyplanning_2'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'list_default',
+        'weight' => 147,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_familyplanning_2',
+    'label' => 'I strongly believe against abortion FOR ME but would still listen to a texter and explore their feelings. ',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 17,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_familyplanning_3'
+  $field_instances['node-application_2-field_familyplanning_3'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'list_default',
+        'weight' => 148,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_familyplanning_3',
+    'label' => ' I am against abortion and would not feel comfortable discussing abortion as an option for a texter or providing resources.',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 18,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_familyplanning_4'
+  $field_instances['node-application_2-field_familyplanning_4'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'list_default',
+        'weight' => 149,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_familyplanning_4',
+    'label' => 'I wouldn’t be comfortable providing abortion resources but would be able to transfer the conversation to a counselor who is.',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 19,
     ),
   );
 
@@ -1023,7 +1545,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 10,
+      'weight' => 14,
     ),
   );
 
@@ -1068,7 +1590,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 11,
+      'weight' => 15,
     ),
   );
 
@@ -1111,7 +1633,76 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 14,
+      'weight' => 23,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_friends_crisis'
+  $field_instances['node-application_2-field_friends_crisis'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'list_default',
+        'weight' => 135,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_friends_crisis',
+    'label' => 'Have any of your friends, family members, or coworkers volunteered for CTL or another crisis center?',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 12,
     ),
   );
 
@@ -1152,7 +1743,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 122,
+      'weight' => 29,
     ),
   );
 
@@ -1193,7 +1784,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 123,
+      'weight' => 30,
     ),
   );
 
@@ -1239,7 +1830,283 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 125,
+      'weight' => 31,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_lgbt_2'
+  $field_instances['node-application_2-field_lgbt_2'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'list_default',
+        'weight' => 139,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_lgbt_2',
+    'label' => 'I’d feel comfortable listening to LGBTQ texter and exploring their feelings to help them out of their moment of crisis.',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 11,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_lgbtq_1'
+  $field_instances['node-application_2-field_lgbtq_1'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'list_default',
+        'weight' => 138,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_lgbtq_1',
+    'label' => 'I believe everybody should have the right to express their gender identity and sexual preference.',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 10,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_lgbtq_3'
+  $field_instances['node-application_2-field_lgbtq_3'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'list_default',
+        'weight' => 140,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_lgbtq_3',
+    'label' => 'I would not feel comfortable discussing LGBTQ related issues with a texter or providing LGBTQ resources to a texter.',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 12,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_lgbtq_4'
+  $field_instances['node-application_2-field_lgbtq_4'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'list_default',
+        'weight' => 141,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_lgbtq_4',
+    'label' => ' I’m uncomfortable discussing LGBTQ-related issues with a texter or providing resources, but I would transfer the conversation.',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 13,
     ),
   );
 
@@ -1280,7 +2147,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 82,
+      'weight' => 85,
     ),
   );
 
@@ -1321,7 +2188,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 79,
+      'weight' => 82,
     ),
   );
 
@@ -1362,7 +2229,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 90,
+      'weight' => 93,
     ),
   );
 
@@ -1403,7 +2270,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 83,
+      'weight' => 86,
     ),
   );
 
@@ -1444,7 +2311,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 91,
+      'weight' => 94,
     ),
   );
 
@@ -1484,7 +2351,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 94,
+      'weight' => 97,
     ),
   );
 
@@ -1526,7 +2393,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 73,
+      'weight' => 76,
     ),
   );
 
@@ -1566,7 +2433,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 77,
+      'weight' => 80,
     ),
   );
 
@@ -1606,7 +2473,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 69,
+      'weight' => 72,
     ),
   );
 
@@ -1647,7 +2514,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 81,
+      'weight' => 84,
     ),
   );
 
@@ -1688,7 +2555,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 74,
+      'weight' => 77,
     ),
   );
 
@@ -1729,7 +2596,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 89,
+      'weight' => 92,
     ),
   );
 
@@ -1770,7 +2637,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 71,
+      'weight' => 74,
     ),
   );
 
@@ -1811,7 +2678,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 72,
+      'weight' => 75,
     ),
   );
 
@@ -1851,7 +2718,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 80,
+      'weight' => 83,
     ),
   );
 
@@ -1892,7 +2759,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 75,
+      'weight' => 78,
     ),
   );
 
@@ -1933,7 +2800,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 78,
+      'weight' => 81,
     ),
   );
 
@@ -1974,7 +2841,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 85,
+      'weight' => 88,
     ),
   );
 
@@ -2015,7 +2882,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 95,
+      'weight' => 98,
     ),
   );
 
@@ -2056,7 +2923,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 70,
+      'weight' => 73,
     ),
   );
 
@@ -2097,7 +2964,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 76,
+      'weight' => 79,
     ),
   );
 
@@ -2138,7 +3005,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 84,
+      'weight' => 87,
     ),
   );
 
@@ -2179,7 +3046,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 92,
+      'weight' => 95,
     ),
   );
 
@@ -2220,7 +3087,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 93,
+      'weight' => 96,
     ),
   );
 
@@ -2261,7 +3128,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 87,
+      'weight' => 90,
     ),
   );
 
@@ -2301,7 +3168,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 88,
+      'weight' => 91,
     ),
   );
 
@@ -2346,7 +3213,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 12,
+      'weight' => 16,
     ),
   );
 
@@ -2416,7 +3283,7 @@ function application_v2_field_default_field_instances() {
         'rows' => 8,
       ),
       'type' => 'text_textarea',
-      'weight' => 13,
+      'weight' => 21,
     ),
   );
 
@@ -2456,7 +3323,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 130,
+      'weight' => 22,
     ),
   );
 
@@ -2497,7 +3364,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 129,
+      'weight' => 130,
     ),
   );
 
@@ -2541,7 +3408,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 130,
+      'weight' => 131,
     ),
   );
 
@@ -2570,11 +3437,39 @@ function application_v2_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_referal_friend',
-    'label' => 'Who?',
+    'label' => 'What is your friend\'s name?',
     'required' => 0,
     'settings' => array(
       'course_enrollment' => FALSE,
-      'required_by_role' => array(),
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
       'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
@@ -2585,7 +3480,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 125,
+      'weight' => 16,
     ),
   );
 
@@ -2652,51 +3547,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 124,
-    ),
-  );
-
-  // Exported field_instance: 'node-application_2-field_referral_2_celeb'
-  $field_instances['node-application_2-field_referral_2_celeb'] = array(
-    'bundle' => 'application_2',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(
-          'field_formatter_class' => '',
-        ),
-        'type' => 'text_default',
-        'weight' => 133,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_referral_2_celeb',
-    'label' => 'Who?',
-    'required' => 0,
-    'settings' => array(
-      'course_enrollment' => FALSE,
-      'required_by_role' => array(),
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 126,
+      'weight' => 15,
     ),
   );
 
@@ -2729,7 +3580,35 @@ function application_v2_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'course_enrollment' => FALSE,
-      'required_by_role' => array(),
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
       'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
@@ -2740,7 +3619,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 127,
+      'weight' => 17,
     ),
   );
 
@@ -2784,7 +3663,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 129,
+      'weight' => 20,
     ),
   );
 
@@ -2814,7 +3693,7 @@ function application_v2_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_referral_2_other_keyword',
-    'label' => 'Other',
+    'label' => 'Was it one of our partners (see list)?',
     'required' => 0,
     'settings' => array(
       'course_enrollment' => FALSE,
@@ -2854,7 +3733,355 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 128,
+      'weight' => 18,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_referral_social_media_2'
+  $field_instances['node-application_2-field_referral_social_media_2'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'text_default',
+        'weight' => 151,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_referral_social_media_2',
+    'label' => 'What is their user name or twitter handle?',
+    'required' => 0,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 19,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_religion_1'
+  $field_instances['node-application_2-field_religion_1'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'I’m comfortable supporting a texter of any religion out of their moment of crisis while respecting their religious beliefs.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'list_default',
+        'weight' => 142,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_religion_1',
+    'label' => 'I believe every texter has the right to practice any religion and its accompanying beliefs. ',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 10,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_religion_2'
+  $field_instances['node-application_2-field_religion_2'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'list_default',
+        'weight' => 143,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_religion_2',
+    'label' => ' I’m comfortable respecting a texter’s religious beliefs while listening to and exploring their feelings.',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 11,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_religion_3'
+  $field_instances['node-application_2-field_religion_3'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'list_default',
+        'weight' => 144,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_religion_3',
+    'label' => 'I’m not comfortable engaging texters varied religions or supporting a texter in ways that respect their religious beliefs. ',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 12,
+    ),
+  );
+
+  // Exported field_instance: 'node-application_2-field_religion_4'
+  $field_instances['node-application_2-field_religion_4'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'list_default',
+        'weight' => 145,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_religion_4',
+    'label' => 'I’m not comfortable supporting texters of varied religions but would be comfortable transferring those conversations.',
+    'required' => 1,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(
+        1 => 0,
+        3 => 0,
+        4 => 0,
+        5 => 0,
+        6 => 0,
+        7 => 0,
+        8 => 0,
+        9 => 0,
+        10 => 0,
+        11 => 0,
+        12 => 0,
+        13 => 0,
+        14 => 0,
+        15 => 0,
+        16 => 0,
+        18 => 0,
+        19 => 0,
+        20 => 0,
+        21 => 0,
+        22 => 0,
+        23 => 0,
+        24 => 0,
+        25 => 0,
+        26 => 0,
+        27 => 0,
+        28 => 0,
+        29 => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 13,
     ),
   );
 
@@ -2936,7 +4163,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 16,
+      'weight' => 27,
     ),
   );
 
@@ -2980,7 +4207,7 @@ function application_v2_field_default_field_instances() {
         'rows' => 2,
       ),
       'type' => 'text_textarea',
-      'weight' => 17,
+      'weight' => 28,
     ),
   );
 
@@ -3021,7 +4248,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 10,
+      'weight' => 9,
     ),
   );
 
@@ -3065,7 +4292,7 @@ function application_v2_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 11,
+      'weight' => 10,
     ),
   );
 
@@ -3106,7 +4333,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 131,
+      'weight' => 27,
     ),
   );
 
@@ -3672,9 +4899,16 @@ function application_v2_field_default_field_instances() {
     'description' => 'We appreciate you and want to be able to send you goodies!',
     'display' => array(
       'default' => array(
-        'label' => 'hidden',
-        'settings' => array(),
-        'type' => 'hidden',
+        'label' => 'above',
+        'module' => 'addressfield',
+        'settings' => array(
+          'field_formatter_class' => '',
+          'format_handlers' => array(
+            0 => 'address',
+          ),
+          'use_widget_handlers' => 1,
+        ),
+        'type' => 'addressfield_default',
         'weight' => 17,
       ),
     ),
@@ -3735,135 +4969,6 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_first_name'
-  $field_instances['user-user-field_first_name'] = array(
-    'bundle' => 'user',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'user',
-    'field_name' => 'field_first_name',
-    'label' => 'Legal First Name',
-    'required' => 0,
-    'settings' => array(
-      'course_enrollment' => FALSE,
-      'required_by_role' => array(
-        1 => 1,
-        3 => 0,
-        4 => 0,
-        5 => 5,
-        6 => 6,
-        7 => 7,
-        8 => 8,
-        9 => 9,
-        10 => 10,
-        11 => 11,
-        12 => 12,
-        13 => 0,
-        14 => 14,
-        15 => 15,
-        16 => 16,
-        18 => 18,
-        19 => 0,
-        20 => 20,
-        21 => 21,
-        22 => 22,
-        23 => 23,
-        24 => 24,
-        25 => 25,
-        26 => 26,
-        27 => 0,
-      ),
-      'text_processing' => 0,
-      'user_register_form' => 1,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 2,
-    ),
-  );
-
-  // Exported field_instance: 'user-user-field_last_name'
-  $field_instances['user-user-field_last_name'] = array(
-    'bundle' => 'user',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 2,
-      ),
-    ),
-    'entity_type' => 'user',
-    'field_name' => 'field_last_name',
-    'label' => 'Last Name',
-    'required' => 1,
-    'settings' => array(
-      'required_by_role' => array(),
-      'text_processing' => 0,
-      'user_register_form' => 1,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 4,
-    ),
-  );
-
-  // Exported field_instance: 'user-user-field_phone_number'
-  $field_instances['user-user-field_phone_number'] = array(
-    'bundle' => 'user',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 4,
-      ),
-    ),
-    'entity_type' => 'user',
-    'field_name' => 'field_phone_number',
-    'label' => 'Mobile Number',
-    'required' => 1,
-    'settings' => array(
-      'required_by_role' => array(),
-      'text_processing' => 0,
-      'user_register_form' => 1,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 5,
-    ),
-  );
-
   // Exported field_instance: 'user-user-field_preferred_name'
   $field_instances['user-user-field_preferred_name'] = array(
     'bundle' => 'user',
@@ -3873,8 +4978,11 @@ function application_v2_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
+        'module' => 'text',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'text_default',
         'weight' => 1,
       ),
     ),
@@ -3902,6 +5010,9 @@ function application_v2_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t(' Great! Please explain briefly how you will make time for your weekly 4-hour shift, given your other time commitments.');
+  t(' I am against abortion and would not feel comfortable discussing abortion as an option for a texter or providing resources.');
+  t(' I’m comfortable respecting a texter’s religious beliefs while listening to and exploring their feelings.');
+  t(' I’m uncomfortable discussing LGBTQ-related issues with a texter or providing resources, but I would transfer the conversation.');
   t('<a href="https://en.wikipedia.org/wiki/List_of_expressions_related_to_death" target="_blank">Here are some examples of common English idioms for death.</a>');
   t('After receiving proper training and resources, would you NOT be willing to...');
   t('After seeing a play or movie, I have felt as though I were one of the characters.');
@@ -3914,9 +5025,10 @@ function application_v2_field_default_field_instances() {
   t('Body');
   t('Comment');
   t('Do you agree to commit to being a volunteer for one year, completing a recurring weekly four-hour shift, if accepted.');
-  t('Do you have a US SSN and agree to undergo a background check? ');
+  t('Do you have a US Social Security Number and agree to undergo a background check? ');
   t('Does your counselor feel like you are ready to take on this difficult but meaningful work?');
   t('Example Conversation');
+  t('Have any of your friends, family members, or coworkers volunteered for CTL or another crisis center?');
   t('Have you been charged with a misdemeanor for a violent crime or sex offense?');
   t('Have you ever been convicted of or charged with a felony?');
   t('Have you ever provided crisis intervention, counseling, or therapy, either as a volunteer or as paid staff?');
@@ -3927,6 +5039,9 @@ function application_v2_field_default_field_instances() {
   t('I am often quite touched by things that I see happen. ');
   t('I am usually objective when I watch a movie or play, and I don\'t often get completely caught up in it.');
   t('I am usually pretty effective in dealing with emergencies.');
+  t('I believe every texter has the right to practice any religion and its accompanying beliefs. ');
+  t('I believe every woman should have access to contraception regardless of age.');
+  t('I believe everybody should have the right to express their gender identity and sexual preference.');
   t('I believe that there are two sides to every question and try to look at them both.');
   t('I daydream and fantasize, with some regularity, about things that might happen to me.');
   t('I often have tender, concerned feelings for people less fortunate than me.');
@@ -3934,22 +5049,26 @@ function application_v2_field_default_field_instances() {
   t('I sometimes feel helpless when I am in the middle of a very emotional situation.');
   t('I sometimes find it difficult to see things from the "other person\'s" point of view.');
   t('I sometimes try to understand my friends better by imagining how things look from their perspective. ');
+  t('I strongly believe against abortion FOR ME but would still listen to a texter and explore their feelings. ');
   t('I tend to lose control during emergencies.');
   t('I try to look at everybody\'s side of a disagreement before I make a decision. ');
   t('I would describe myself as a pretty soft-hearted person.');
+  t('I would not feel comfortable discussing LGBTQ related issues with a texter or providing LGBTQ resources to a texter.');
+  t('I wouldn’t be comfortable providing abortion resources but would be able to transfer the conversation to a counselor who is.');
   t('If I\'m sure I\'m right about something, I don\'t waste much time listening to other people\'s arguments.');
   t('If a friend were to describe you in three words, what would they be?');
   t('If you checked any of the above scenarios, please elaborate on why.');
-  t('If you fulfill all requirements, you should check all of the boxes. ');
+  t('If you fulfill all requirements, you should check all of the boxes. We cannot accept you if you do not fulfill our requirements.');
   t('In emergency situations, I feel apprehensive and ill-at-ease.');
-  t('Last Name');
-  t('Legal First Name');
+  t('I’d feel comfortable listening to LGBTQ texter and exploring their feelings to help them out of their moment of crisis.');
+  t('I’m comfortable supporting a texter of any religion out of their moment of crisis while respecting their religious beliefs.');
+  t('I’m not comfortable engaging texters varied religions or supporting a texter in ways that respect their religious beliefs. ');
+  t('I’m not comfortable supporting texters of varied religions but would be comfortable transferring those conversations.');
   t('Lesson Transcript');
   t('Lesson audio');
   t('Lesson images');
   t('Many active servicemembers and veterans use our textline, and we gladly welcome volunteers who have had experience serving in the Air Force, Army or Navy, either full-time or in the reserves. 
 ');
-  t('Mobile Number');
   t('Occasionally, some of our conversations bring up controversial topics. We are looking for volunteers who are open-minded and willing to text with people regardless of the issue(s) they are facing. Below are situations that HAVE happened on our platform.');
   t('Other');
   t('Other people\'s misfortunes do not usually disturb me a great deal.');
@@ -3964,18 +5083,24 @@ function application_v2_field_default_field_instances() {
   t('Slide content');
   t('Sometimes I don\'t feel very sorry for other people when they are having problems.');
   t('Such as abuse, stalking, solicitation of a child, or child pornography');
+  t('Think of a time when someone criticized you or offered you constructive feedback. How did you respond?');
   t('Volunteering with Crisis Text Line is a serious (and incredibly rewarding) commitment. We invest a lot in you during training. It costs us money to hire trainers, build the training modules, support the technology, etc. In return, we count on you to staff a 4 hour shift every week for a year. Yes. Thats a heavy commitment. (We do understand that there might be an exceptional reason why you’d need to miss a shift.)');
   t('WARNING: The work that Crisis Counselors do, both during training and on the platform, can trigger strong emotions for people with a history of physical or mental health issues such as abuse or suicidal thoughts. We want to remind you that self-care is extremely important to us at Crisis Text Line. ');
   t('Was it a violent crime or sex offense, such as abuse, stalking, solicitation of a child, or child pornography?');
+  t('Was it one of our partners (see list)?');
   t('We appreciate you and want to be able to send you goodies!');
   t('We are proud that so many people living with physical disabilities have found our service to be helpful and our volunteer program to be meaningful. We try to provide accommodations to crisis counselors from any of the following communities. ');
   t('We request that you disclose possible triggers to ensure that we can provide extra support to you.');
   t('We suggest discussing this opportunity with your counselor or therapist before completing this application. ');
   t('We would love to know if you identify as:');
   t('What is the highest level of education you\'ve completed?');
+  t('What is the name of the primary company you work for?');
+  t('What is their user name or twitter handle?');
+  t('What is your friend\'s name?');
   t('What is your postal address?');
   t('What is your race/ethnicity? Check all that apply. ');
   t('What prompted you to apply to be a Crisis Counselor with Crisis Text Line? ');
+  t('What school do you attend?');
   t('What source? ');
   t('What was your primary field of study?');
   t('When I am reading an interesting story or novel, I imagine how I would feel if the events in the story were happening to me.');
@@ -3986,7 +5111,6 @@ function application_v2_field_default_field_instances() {
   t('When I watch a good movie, I can very easily put myself in the place of a leading character. ');
   t('When I\'m upset at someone, I usually try to "put myself in their shoes" for a while.');
   t('Which of the following best describes your current occupation?');
-  t('Who?');
   t('Will volunteering at CTL help to fulfill a community service or class requirement at your school or for your program?');
   t('Wish submission requirement');
   t('Wishes');

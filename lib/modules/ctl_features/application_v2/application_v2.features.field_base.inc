@@ -148,8 +148,8 @@ function application_v2_field_default_field_bases() {
       'allowed_values' => array(
         'password' => 'I have a consistent and password-protected internet connection.',
         'computer' => 'I have a personal, family or work computer with password protection (with Chrome, Safari or Firefox installed).',
-        'space' => 'I have space to work in which others cannot see my screen.',
-        'keyboard' => 'I have a keyboard, webcam and headphones. (Webcam used in live sessions during training.)',
+        'space' => 'I have space to work in which others cannot see my screen (i.e. not a coffee shop, library or other public setting).',
+        'keyboard' => 'I have a keyboard and headphones.',
       ),
       'allowed_values_function' => '',
     ),
@@ -225,96 +225,6 @@ function application_v2_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_disabilities_other',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'max_length' => 255,
-    ),
-    'translatable' => 0,
-    'type' => 'text',
-  );
-
-  // Exported field_base: 'field_education'
-  $field_bases['field_education'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_education',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        'elementary' => 'Elementary school',
-        'middle' => 'Middle School',
-        'high' => 'High School',
-        'college' => 'Some college',
-        'bachelor' => 'Bachelor\'s degree',
-        'masters' => 'Master\'s Degree',
-        'doctoral' => 'Doctoral Degree',
-        'other' => 'Other',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_text',
-  );
-
-  // Exported field_base: 'field_education_field'
-  $field_bases['field_education_field'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_education_field',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        'social_work' => 'Social Work',
-        'psychology' => 'Psychology',
-        'psychiatry' => 'Psychiatry',
-        'health_care' => 'Health Care',
-        'crisis_care' => 'Crisis Care',
-        'other' => 'Other',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_text',
-  );
-
-  // Exported field_base: 'field_education_field_other'
-  $field_bases['field_education_field_other'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_education_field_other',
     'field_permissions' => array(
       'type' => 0,
     ),
@@ -455,13 +365,13 @@ function application_v2_field_default_field_bases() {
     'type' => 'list_boolean',
   );
 
-  // Exported field_base: 'field_english'
-  $field_bases['field_english'] = array(
+  // Exported field_base: 'field_familyplanning_1'
+  $field_bases['field_familyplanning_1'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_english',
+    'field_name' => 'field_familyplanning_1',
     'field_permissions' => array(
       'type' => 0,
     ),
@@ -474,197 +384,10 @@ function application_v2_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        0 => 'No',
-        1 => 'Yes',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_boolean',
-  );
-
-  // Exported field_base: 'field_felony'
-  $field_bases['field_felony'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_felony',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        0 => 'No',
-        1 => 'Yes',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_boolean',
-  );
-
-  // Exported field_base: 'field_felony_violent_sex'
-  $field_bases['field_felony_violent_sex'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_felony_violent_sex',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        0 => 'No',
-        1 => 'Yes',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_boolean',
-  );
-
-  // Exported field_base: 'field_first_name'
-  $field_bases['field_first_name'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_first_name',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'max_length' => 64,
-    ),
-    'translatable' => 0,
-    'type' => 'text',
-  );
-
-  // Exported field_base: 'field_friend_words'
-  $field_bases['field_friend_words'] = array(
-    'active' => 1,
-    'cardinality' => 3,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_friend_words',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'max_length' => 255,
-    ),
-    'translatable' => 0,
-    'type' => 'text',
-  );
-
-  // Exported field_base: 'field_in_counseling'
-  $field_bases['field_in_counseling'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_in_counseling',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        0 => 'No',
-        1 => 'Yes',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_boolean',
-  );
-
-  // Exported field_base: 'field_in_counseling_spoke'
-  $field_bases['field_in_counseling_spoke'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_in_counseling_spoke',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        0 => 'No',
-        1 => 'Yes',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_boolean',
-  );
-
-  // Exported field_base: 'field_in_counseling_spoke_ready'
-  $field_bases['field_in_counseling_spoke_ready'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_in_counseling_spoke_ready',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        'yes' => 'Yes',
-        'hesitation' => 'They have some hesitation',
-        'no' => 'No',
+        'stronglyAgree' => 'Strongly Agree',
+        'agree' => 'Agree',
+        'disagree' => 'Disagree',
+        'stronglyDisagree' => 'Strongly Disagree',
       ),
       'allowed_values_function' => '',
     ),
@@ -672,28 +395,214 @@ function application_v2_field_default_field_bases() {
     'type' => 'list_text',
   );
 
-  // Exported field_base: 'field_last_name'
-  $field_bases['field_last_name'] = array(
+  // Exported field_base: 'field_familyplanning_2'
+  $field_bases['field_familyplanning_2'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_last_name',
+    'field_name' => 'field_familyplanning_2',
     'field_permissions' => array(
       'type' => 0,
     ),
     'indexes' => array(
-      'format' => array(
-        0 => 'format',
+      'value' => array(
+        0 => 'value',
       ),
     ),
     'locked' => 0,
-    'module' => 'text',
+    'module' => 'list',
     'settings' => array(
-      'max_length' => 64,
+      'allowed_values' => array(
+        'stronglyAgree' => 'Strongly Agree',
+        'agree' => 'Agree',
+        'disagree' => 'Disagree',
+        'stronglyDisagree' => 'Strongly Disagree',
+      ),
+      'allowed_values_function' => '',
     ),
     'translatable' => 0,
-    'type' => 'text',
+    'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_familyplanning_3'
+  $field_bases['field_familyplanning_3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_familyplanning_3',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'stronglyAgree' => 'Strongly Agree',
+        'agree' => 'Agree',
+        'disagree' => 'Disagree',
+        'stronglyDisagree' => 'Strongly Disagree',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_familyplanning_4'
+  $field_bases['field_familyplanning_4'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_familyplanning_4',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'stronglyAgree' => 'Strongly Agree',
+        'agree' => 'Agree',
+        'disagree' => 'Disagree',
+        'stronglyDisagree' => 'Strongly Disagree',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_lgbt_2'
+  $field_bases['field_lgbt_2'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_lgbt_2',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'stronglyAgree' => 'Strongly Agree',
+        'agree' => 'Agree',
+        'disagree' => 'Disagree',
+        'stronglyDisagree' => 'Strongly Disagree',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_lgbtq_1'
+  $field_bases['field_lgbtq_1'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_lgbtq_1',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'stronglyAgree' => 'Strongly Agree',
+        'agree' => 'Agree',
+        'disagree' => 'Disagree',
+        'stronglyDisagree' => 'Strongly Disagree',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_lgbtq_3'
+  $field_bases['field_lgbtq_3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_lgbtq_3',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'stronglyAgree' => 'Strongly Agree',
+        'agree' => 'Agree',
+        'disagree' => 'Disagree',
+        'stronglyDisagree' => 'Strongly Disagree',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_lgbtq_4'
+  $field_bases['field_lgbtq_4'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_lgbtq_4',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'stronglyAgree' => 'Strongly Agree',
+        'agree' => 'Agree',
+        'disagree' => 'Disagree',
+        'stronglyDisagree' => 'Strongly Disagree',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
   );
 
   // Exported field_base: 'field_likert_arguments'
@@ -851,37 +760,6 @@ function application_v2_field_default_field_bases() {
     'type' => 'list_integer',
   );
 
-  // Exported field_base: 'field_likert_emergency'
-  $field_bases['field_likert_emergency'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_likert_emergency',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        1 => '1 (Does not describe me well)',
-        2 => 2,
-        3 => 3,
-        4 => 4,
-        5 => '5 (Describes me very well)',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_integer',
-  );
-
   // Exported field_base: 'field_likert_emergency_situation'
   $field_bases['field_likert_emergency_situation'] = array(
     'active' => 1,
@@ -889,68 +767,6 @@ function application_v2_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_likert_emergency_situation',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        1 => '1 (Does not describe me well)',
-        2 => 2,
-        3 => 3,
-        4 => 4,
-        5 => '5 (Describes me very well)',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_integer',
-  );
-
-  // Exported field_base: 'field_likert_helpless'
-  $field_bases['field_likert_helpless'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_likert_helpless',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        1 => '1 (Does not describe me well)',
-        2 => 2,
-        3 => 3,
-        4 => 4,
-        5 => '5 (Describes me very well)',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_integer',
-  );
-
-  // Exported field_base: 'field_likert_less_fortunate'
-  $field_bases['field_likert_less_fortunate'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_likert_less_fortunate',
     'field_permissions' => array(
       'type' => 0,
     ),
@@ -1068,37 +884,6 @@ function application_v2_field_default_field_bases() {
     'type' => 'list_integer',
   );
 
-  // Exported field_base: 'field_likert_not_sorry'
-  $field_bases['field_likert_not_sorry'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_likert_not_sorry',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        5 => '1 (Does not describe me well)',
-        4 => 2,
-        3 => 3,
-        2 => 4,
-        1 => '5 (Describes me very well)',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_integer',
-  );
-
   // Exported field_base: 'field_likert_novel'
   $field_bases['field_likert_novel'] = array(
     'active' => 1,
@@ -1106,68 +891,6 @@ function application_v2_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_likert_novel',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        1 => '1 (Does not describe me well)',
-        2 => 2,
-        3 => 3,
-        4 => 4,
-        5 => '5 (Describes me very well)',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_integer',
-  );
-
-  // Exported field_base: 'field_likert_other_hurt'
-  $field_bases['field_likert_other_hurt'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_likert_other_hurt',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        1 => '1 (Does not describe me well)',
-        2 => 2,
-        3 => 3,
-        4 => 4,
-        5 => '5 (Describes me very well)',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_integer',
-  );
-
-  // Exported field_base: 'field_likert_others_opinions'
-  $field_bases['field_likert_others_opinions'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_likert_others_opinions',
     'field_permissions' => array(
       'type' => 0,
     ),
@@ -1378,37 +1101,6 @@ function application_v2_field_default_field_bases() {
     'type' => 'list_integer',
   );
 
-  // Exported field_base: 'field_likert_shoes'
-  $field_bases['field_likert_shoes'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_likert_shoes',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        1 => '1 (Does not describe me well)',
-        2 => 2,
-        3 => 3,
-        4 => 4,
-        5 => '5 (Describes me very well)',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_integer',
-  );
-
   // Exported field_base: 'field_likert_storyevents'
   $field_bases['field_likert_storyevents'] = array(
     'active' => 1,
@@ -1440,96 +1132,6 @@ function application_v2_field_default_field_bases() {
     'type' => 'list_integer',
   );
 
-  // Exported field_base: 'field_likert_touched'
-  $field_bases['field_likert_touched'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_likert_touched',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        1 => '1 (Does not describe me well)',
-        2 => 2,
-        3 => 3,
-        4 => 4,
-        5 => '5 (Describes me very well)',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_integer',
-  );
-
-  // Exported field_base: 'field_likert_two_sides'
-  $field_bases['field_likert_two_sides'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_likert_two_sides',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        1 => '1 (Does not describe me well)',
-        2 => 2,
-        3 => 3,
-        4 => 4,
-        5 => '5 (Describes me very well)',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_integer',
-  );
-
-  // Exported field_base: 'field_misdemeanor_violent_sex'
-  $field_bases['field_misdemeanor_violent_sex'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_misdemeanor_violent_sex',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        0 => 'No',
-        1 => 'Yes',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_boolean',
-  );
-
   // Exported field_base: 'field_motivation'
   $field_bases['field_motivation'] = array(
     'active' => 1,
@@ -1550,59 +1152,6 @@ function application_v2_field_default_field_bases() {
     'settings' => array(),
     'translatable' => 0,
     'type' => 'text_long',
-  );
-
-  // Exported field_base: 'field_past_crisis_work_type'
-  $field_bases['field_past_crisis_work_type'] = array(
-    'active' => 1,
-    'cardinality' => -1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_past_crisis_work_type',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        'volunteer' => 'Yes, volunteered',
-        'paid' => 'Yes, worked as paid staff',
-        'none' => 'No',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_text',
-  );
-
-  // Exported field_base: 'field_phone_number'
-  $field_bases['field_phone_number'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_phone_number',
-    'field_permissions' => array(
-      'type' => 1,
-    ),
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'max_length' => 24,
-    ),
-    'translatable' => 0,
-    'type' => 'text',
   );
 
   // Exported field_base: 'field_preferred_name'
@@ -1742,30 +1291,6 @@ function application_v2_field_default_field_bases() {
     'type' => 'list_text',
   );
 
-  // Exported field_base: 'field_referral_2_celeb'
-  $field_bases['field_referral_2_celeb'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_referral_2_celeb',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'max_length' => 255,
-    ),
-    'translatable' => 0,
-    'type' => 'text',
-  );
-
   // Exported field_base: 'field_referral_2_news'
   $field_bases['field_referral_2_news'] = array(
     'active' => 1,
@@ -1834,32 +1359,177 @@ function application_v2_field_default_field_bases() {
     'settings' => array(
       'allowed_values' => array(
         'ACC' => 'Atlanta City Council',
-        'bgs' => 'Black Girls Smile',
-        'bystander' => 'Bystander Revolution',
         'CSA' => 'Center for Suicide Awareness',
         'charlotte' => 'Charlotte Behavioral Healthcare',
+        'tacoma' => 'City of Tacoma',
         'clemson' => 'Clemson University',
         'cwc' => 'Contact We Care',
         'google' => 'Google',
         'iava' => 'IAVA',
         'IGF' => 'I\'ll Go First',
         'muskogee' => 'Muskogee Creek Nation',
+        'nclr' => 'National Center for Lesbian Rights',
         'nebraska' => 'Nebraska Region 1',
         'nevada' => 'Nevada Coalition',
         'nmn' => 'Now Matters Now',
-        'PreventionManagementOrganizationofWyoming' => 'Prevention Management Organization of Wyoming',
-        'rutgers' => 'Rutgers',
         'SFsuicide' => 'San Francisco Suicide Prevention',
-        'skimm' => 'TheSkimm',
         'SoH' => 'Seeds of Hope',
-        'ssu' => 'Shawnee State University',
-        'standstrong' => 'Stand Strong USA',
-        'stark' => 'Stark County',
         'sju' => 'St. John\'s University',
+        'ssUSA' => 'Stand Strong USA',
+        'stark' => 'Stark Country',
         'switchboard' => 'Switchboard Miami',
-        'tacoma' => 'City of Tacoma',
         'twloha' => 'To Write Love on Her Arms',
+        'skimm' => 'TheSkimm',
         'youtube' => 'YouTube',
+        'bgs' => 'Black Girls Smile',
+        'rutgers' => 'Rutgers',
+        'standstrong' => 'Stand Strong USA',
+        'bystander' => 'Bystander Revolution',
+        'ssu' => 'Shawnee State University',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_referral_social_media_2'
+  $field_bases['field_referral_social_media_2'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_referral_social_media_2',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
+  // Exported field_base: 'field_religion_1'
+  $field_bases['field_religion_1'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_religion_1',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'stronglyAgree' => 'Strongly Agree',
+        'agree' => 'Agree',
+        'disagree' => 'Disagree',
+        'stronglyDisagree' => 'Strongly Disagree',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_religion_2'
+  $field_bases['field_religion_2'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_religion_2',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'stronglyAgree' => 'Strongly Agree',
+        'agree' => 'Agree',
+        'disagree' => 'Disagree',
+        'stronglyDisagree' => 'Strongly Disagree',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_religion_3'
+  $field_bases['field_religion_3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_religion_3',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'stronglyAgree' => 'Strongly Agree',
+        'agree' => 'Agree',
+        'disagree' => 'Disagree',
+        'stronglyDisagree' => 'Strongly Disagree',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_religion_4'
+  $field_bases['field_religion_4'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_religion_4',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'stronglyAgree' => 'Strongly Agree',
+        'agree' => 'Agree',
+        'disagree' => 'Disagree',
+        'stronglyDisagree' => 'Strongly Disagree',
       ),
       'allowed_values_function' => '',
     ),
@@ -1984,56 +1654,6 @@ function application_v2_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_uncomfortable_2_cont',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'text_long',
-  );
-
-  // Exported field_base: 'field_used_crisis_support'
-  $field_bases['field_used_crisis_support'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_used_crisis_support',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        0 => 'No',
-        1 => 'Yes',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_boolean',
-  );
-
-  // Exported field_base: 'field_yes'
-  $field_bases['field_yes'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_yes',
     'field_permissions' => array(
       'type' => 0,
     ),
