@@ -24,7 +24,7 @@ function lesson_ajax_audio_progress($nid) {
 
   $progress = floatval($_REQUEST['progress']);
 
-  if ($progress >= 0.98) {
+  if ($progress >= 0.90) {
     $progress = 1;
   }
 

@@ -1,5 +1,5 @@
 Vagrant.configure("2") do |config|
-# Every Vagrant virtual environment requires a box to build off of.
+    # Every Vagrant virtual environment requires a box to build off of.
     config.vm.box = "puppetlabs/centos-6.6-64-puppet"
     config.vm.box_version = "1.0.1"
 
@@ -11,17 +11,16 @@ Vagrant.configure("2") do |config|
 
     config.vm.network :forwarded_port, guest: 80, host: 8080
 
-
-    config.vm.provider :virtualbox do |v| 
+    config.vm.provider :virtualbox do |v|
         v.name = "ctl-drupal"
         v.customize ["modifyvm", :id, "--memory", "2048"]
         v.customize ["modifyvm", :id, "--cpus", "2"]
-    end 
+    end
 
     config.vm.provision :puppet do |puppet|
         puppet.manifests_path = "puppet/manifests"
         puppet.manifest_file = "site.pp"
-        puppet.module_path  = "puppet/modules"
-        puppet.options =  ["--verbose", "--hiera_config /data/puppet/hiera.yaml"]
+        puppet.module_path = "puppet/modules"
+        puppet.options = ["--verbose", "--hiera_config /data/puppet/hiera.yaml"]
     end
 end
