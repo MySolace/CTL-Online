@@ -633,7 +633,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 126,
+      'weight' => 127,
     ),
   );
 
@@ -718,7 +718,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 9,
+      'weight' => 8,
     ),
   );
 
@@ -759,7 +759,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 10,
+      'weight' => 9,
     ),
   );
 
@@ -971,7 +971,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 8,
+      'weight' => 7,
     ),
   );
 
@@ -1115,7 +1115,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 6,
     ),
   );
 
@@ -1228,7 +1228,7 @@ function application_v2_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 24,
+      'weight' => 25,
     ),
   );
 
@@ -1633,7 +1633,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 23,
+      'weight' => 24,
     ),
   );
 
@@ -3283,7 +3283,7 @@ function application_v2_field_default_field_instances() {
         'rows' => 8,
       ),
       'type' => 'text_textarea',
-      'weight' => 21,
+      'weight' => 22,
     ),
   );
 
@@ -3323,7 +3323,7 @@ function application_v2_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 22,
+      'weight' => 23,
     ),
   );
 
@@ -3551,6 +3551,50 @@ function application_v2_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-application_2-field_referral_2_celeb'
+  $field_instances['node-application_2-field_referral_2_celeb'] = array(
+    'bundle' => 'application_2',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(
+          'field_formatter_class' => '',
+        ),
+        'type' => 'text_default',
+        'weight' => 133,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_referral_2_celeb',
+    'label' => 'Who?',
+    'required' => 0,
+    'settings' => array(
+      'course_enrollment' => FALSE,
+      'required_by_role' => array(),
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 19,
+    ),
+  );
+
   // Exported field_instance: 'node-application_2-field_referral_2_news'
   $field_instances['node-application_2-field_referral_2_news'] = array(
     'bundle' => 'application_2',
@@ -3663,7 +3707,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 20,
+      'weight' => 21,
     ),
   );
 
@@ -3805,7 +3849,7 @@ function application_v2_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 19,
+      'weight' => 20,
     ),
   );
 
@@ -5111,6 +5155,7 @@ function application_v2_field_default_field_instances() {
   t('When I watch a good movie, I can very easily put myself in the place of a leading character. ');
   t('When I\'m upset at someone, I usually try to "put myself in their shoes" for a while.');
   t('Which of the following best describes your current occupation?');
+  t('Who?');
   t('Will volunteering at CTL help to fulfill a community service or class requirement at your school or for your program?');
   t('Wish submission requirement');
   t('Wishes');
