@@ -6,7 +6,7 @@ core = 7.x
 defaults[projects][subdir] = "contrib"
 
 ; Theme
-projects[adminimal_theme][version] = "1.22"
+projects[adminimal_theme][version] = "1.23"
 
 ; Libraries
 libraries[mandrill][download][type] = "get"
