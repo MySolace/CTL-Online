@@ -76,7 +76,7 @@ projects[rules][patch][] = https://www.drupal.org/files/rules-site-property-meta
 
 projects[rules_conditional][version] = "1.0-beta2"
 projects[token][version] = "1.6"
-projects[twilio][version] = "1.10"
+projects[twilio][version] = "1.11"
 projects[uuid][version] = "1.0-beta1"
 projects[video][version] = "2.11"
 projects[views][version] = "3.11"
