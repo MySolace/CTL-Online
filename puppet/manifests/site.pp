@@ -43,18 +43,18 @@ node default {
   exec { 'build':
     require => File['build-script', '/usr/local/bin/drush'],
     command => '/bin/sh /home/vagrant/build.sh &',
-    creates => '/var/www/online.crisistextline.org/current'
+    creates => '/var/www/online.crisistextline.org/html/current'
   }
 
   nginx::resource::vhost { 'ctl_online.dev':
-    www_root  => '/var/www/online.crisistextline.org/current',
+    www_root  => '/var/www/online.crisistextline.org/html/current',
     try_files => ['$uri', '$uri/', "/index.php?\$args"],
   }
 
   nginx::resource::location { "${name}_root":
     ensure              => present,
     vhost               => 'ctl_online.dev',
-    www_root            => '/var/www/online.crisistextline.org/current/',
+    www_root            => '/var/www/online.crisistextline.org/html/current/',
     location            => '~ \.php$',
     index_files         => ['index.php'],
     proxy               => undef,
