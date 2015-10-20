@@ -6,7 +6,7 @@ core = 7.x
 defaults[projects][subdir] = "contrib"
 
 ; Theme
-projects[adminimal_theme][version] = "1.22"
+projects[adminimal_theme][version] = "1.23"
 
 ; Libraries
 libraries[mandrill][download][type] = "get"
@@ -37,15 +37,15 @@ projects[custom_webform_comments][download][revision] = "77ac3b1a1c12cf044e81188
 projects[custom_webform_comments][patch][] = https://www.drupal.org/files/issues/custom_webform_comments-timestamp-format-2527778-1.patch
 projects[date][version] = "2.9"
 projects[devel][version] = "1.x-dev"
-projects[drupalchat][version] = "1.5"
-projects[drupalchat][patch][] = https://www.drupal.org/files/issues/drupalchat-format-username-2507175-2.patch
+projects[drupalchat][version] = "1.7"
+projects[drupalchat][patch][] = https://www.drupal.org/files/issues/drupalchat-format-username-2507175-4.patch
 projects[editablefields][version] = "1.0-alpha2"
 projects[email][version] = "1.3"
 projects[email_registration][version] = "1.3"
 projects[entity][version] = "1.6"
 projects[entityreference][version] = "1.1"
 projects[entityreference_prepopulate][version] = "1.5"
-projects[features][version] = "2.6"
+projects[features][version] = "2.7"
 projects[field_formatter_class][version] = "1.1"
 projects[field_formatter_settings][version] = "1.1"
 projects[field_group][version] = "1.x-dev"
@@ -76,11 +76,10 @@ projects[rules][patch][] = https://www.drupal.org/files/rules-site-property-meta
 
 projects[rules_conditional][version] = "1.0-beta2"
 projects[token][version] = "1.6"
-projects[twilio][version] = "1.10"
+projects[twilio][version] = "1.11"
 projects[uuid][version] = "1.0-beta1"
 projects[video][version] = "2.11"
-projects[views][version] = "3.10"
-projects[views][patch][] = https://www.drupal.org/files/issues/views-data-cache-rebuild-1944674-42.patch
+projects[views][version] = "3.11"
 projects[views_bulk_operations][version] = "3.3"
 projects[views_field_view][version] = "1.2"
 projects[views_fieldsets][version] = "1.3"
