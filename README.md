@@ -50,7 +50,7 @@ If you've already provisioned the Vagrant box a while ago and are seeing funky t
 
 ```
 vagrant ssh
-cd /var/www/online.crisistextline.org/current
+cd /var/www/online.crisistextline.org/html/current
 drush cc all
 ```
 

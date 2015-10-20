@@ -1,6 +1,6 @@
 #!/bin/sh
 
-WEB_ROOT='/var/www/online.crisistextline.org/current'
+WEB_ROOT='/var/www/online.crisistextline.org/html/current'
 DATA_ROOT='/data'
 LIB_DIR=$DATA_ROOT/lib
 
