@@ -46,12 +46,13 @@ gulp
 This will compile the SASS into /lib/themes/ctl_theme/css, where it can then be used by the Drupal custom theming system.
 Stem files with imports back to Lauren's submoduled repository are provided, which we can build off of for actual implementation in the site.
 
-If you've already provisioned the Vagrant box a while ago and are seeing funky things happen after updating to the latest commit, clearing cache will likely solve 99% of your problems:
+If you've already provisioned the Vagrant box a while ago and are seeing funky things happen after updating to the latest commit, clearing cache and restarting PHP-FPM will likely solve 99% of your problems:
 
 ```
 vagrant ssh
 cd /var/www/online.crisistextline.org/html/current
 drush cc all
+sudo service php-fpm restart
 ```
 
 # Enjoy
