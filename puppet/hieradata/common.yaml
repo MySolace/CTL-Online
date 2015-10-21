@@ -2,6 +2,10 @@ php::settings:
   Date/date.timezone: America/New_York
   display_errors: On
   display_startup_errors: On
+  PHP/memory_limit: 512M
+
+php::cli::settings:
+  PHP/memory_limit: 512M
 
 php::extensions:
   mysql: {}
