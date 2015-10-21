@@ -14,7 +14,7 @@ cd $WEB_ROOT
 drush site-install ctl --db-url=mysql://root@localhost/ctl --site-name="CTL Online" --yes
 
 # TODO
-# - add the usage of `--writable`.  i.e.:
+# - try adding the usage of `--writable`.  i.e.:
 # drush site-install ctl --writable --db-url=mysql://root@localhost/ctl --site-name="CTL Online" --yes
 
 # FileField Nginx Progress provides support for upload progress bars
