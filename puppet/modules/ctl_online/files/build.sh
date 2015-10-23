@@ -37,6 +37,9 @@ drush pm-enable devel --yes
 drush pm-download reroute_email
 drush pm-enable reroute_email --yes
 
+# https://www.drupal.org/node/498140#comment-2978658
+drush php-eval 'node_access_rebuild();'
+
 # http://dropbucket.org/node/216
 # http://stackoverflow.com/questions/4990172/how-to-append-several-lines-of-text-in-a-file-using-a-shell-script/4990185#4990185
 cat <<EOF >> sites/default/settings.php
