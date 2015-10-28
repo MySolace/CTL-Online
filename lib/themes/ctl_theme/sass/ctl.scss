@@ -128,3 +128,27 @@ th.views-field-views-bulk-operations {
 .form-type-date-select label {
     display: block;
 }
+
+
+// Bootstrap overrides.
+// TODO
+// - see if there's a better solution.
+.form-type-radios {
+  .radio {
+    display: inline;
+    &:before {
+      display: none;
+    }
+  }
+  .radio {
+    &:before {
+      border-radius: 0;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+    }
+  }
+  input[type=radio]:checked + .radio:before {
+    content: '';
+    text-shadow: none;
+  }
+}
