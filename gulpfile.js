@@ -1,4 +1,4 @@
-var gulp       = require('gulp'),;
+var gulp       = require('gulp');
 var sass       = require('gulp-ruby-sass');
 var autoprefix = require('gulp-autoprefixer');
 var notify     = require("gulp-notify");
@@ -20,21 +20,24 @@ gulp.task('icons', function () {
 });
 
 gulp.task('css', function () {
-  return gulp.src(config.themeBase + '/sass/' + config.source)
-    .pipe(sass({
-      style: 'compressed',
-      loadPath: [
-        './resources/sass',
-        config.bowerDir + '/bootstrap-sass-official/assets/stylesheets',
-        config.bowerDir + '/fontawesome/scss',
-      ]
-    })
-    .on("error", notify.onError(function (error) {
-      return "Error: " + error.message;
-    })))
-    .pipe(autoprefix('last 2 version'))
-    .pipe(gulp.dest(config.themeBase + '/css'));
+  return sass(config.themeBase + '/sass/' + config.source, {
+    sourcemap: false,
+    style: 'compressed',
+    // style: 'nested',
+    lineNumbers: true,
+    loadPath: [
+      './resources/sass',
+      config.bowerDir + '/bootstrap-sass-official/assets/stylesheets',
+      config.bowerDir + '/fontawesome/scss',
+    ]
+  })
+  .on("error", notify.onError(function (error) {
+    return "Error: " + error.message;
+  }))
+  .pipe(autoprefix('last 2 version'))
+  .pipe(gulp.dest(config.themeBase + '/css'));
 });
+
 
 // Rerun the task when a file changes
 gulp.task('watch', function () {
