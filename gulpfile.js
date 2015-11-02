@@ -1,47 +1,25 @@
-var gulp       = require('gulp');
-var sass       = require('gulp-ruby-sass');
-var autoprefix = require('gulp-autoprefixer');
-var notify     = require("gulp-notify");
-var bower      = require('gulp-bower');
+var elixir = require('laravel-elixir');
 
-var config = {
-  themeBase:'./lib/themes/ctl_theme',
-  bowerDir: './bower_components',
-  source:   'ctl.scss'
-};
+require('laravel-elixir-bower-io');
 
-gulp.task('bower', function () {
-  return bower().pipe(gulp.dest(config.bowerDir))
+elixir.config.production = true;
+
+elixir.config.assetsPath = 'lib/themes/ctl_theme';
+elixir.config.publicPath = 'lib/themes/ctl_theme';
+elixir.config.sourcemaps = false;
+elixir.config.css.sass.pluginOptions.includePaths = [
+  'bower_components/bootstrap-sass-official/assets/stylesheets',
+  'bower_components/fontawesome/scss'
+];
+
+// Output line numbers during development for debugging.
+if (!elixir.production) {
+  elixir.config.css.sass.pluginOptions.sourceComments = 'map';
+}
+
+elixir(function (mix) {
+  mix.Bower();
+  mix.copy('bower_components/fontawesome/fonts', elixir.config.publicPath + '/fonts');
+  mix.copy('bower_components/bootstrap-sass-official/assets/fonts/bootstrap', elixir.config.publicPath + '/fonts/bootstrap');
+  mix.sass('ctl.scss');
 });
-
-gulp.task('icons', function () {
-  return gulp.src(config.bowerDir + '/fontawesome/fonts/**.*')
-    .pipe(gulp.dest(config.themeBase + '/fonts'));
-});
-
-gulp.task('css', function () {
-  return sass(config.themeBase + '/sass/' + config.source, {
-    sourcemap: false,
-    style: 'compressed',
-    // style: 'nested',
-    lineNumbers: true,
-    loadPath: [
-      './resources/sass',
-      config.bowerDir + '/bootstrap-sass-official/assets/stylesheets',
-      config.bowerDir + '/fontawesome/scss',
-    ]
-  })
-  .on("error", notify.onError(function (error) {
-    return "Error: " + error.message;
-  }))
-  .pipe(autoprefix('last 2 version'))
-  .pipe(gulp.dest(config.themeBase + '/css'));
-});
-
-
-// Rerun the task when a file changes
-gulp.task('watch', function () {
-  gulp.watch(config.sassPath + '/**/*.scss', ['css']);
-});
-
-gulp.task('default', ['bower', 'icons', 'css']);

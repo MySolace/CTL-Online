@@ -23,26 +23,24 @@ drush pm-disable filefield_nginx_progress --yes
 
 # Coder checks Drupal code against coding standards and best practices.
 drush pm-download coder-7.x-2.x-dev
-drush pm-enable coder --yes
 
 # Coder Tough Love goes further and is more opinionated than Coder.
 drush pm-download coder_tough_love
-drush pm-enable coder_tough_love --yes
 
 # Devel is a suite of tools for assisting development.
 drush pm-download devel
-drush pm-enable devel --yes
 
 # Reroute Email reroutes outgoing emails to a configurable email address.
 drush pm-download reroute_email
-drush pm-enable reroute_email --yes
+
+drush pm-enable coder coder_tough_love devel reroute_email --yes
 
 # https://www.drupal.org/node/498140#comment-2978658
 drush php-eval 'node_access_rebuild();'
 
 # http://dropbucket.org/node/216
 # http://stackoverflow.com/questions/4990172/how-to-append-several-lines-of-text-in-a-file-using-a-shell-script/4990185#4990185
-cat <<EOF >> sites/default/settings.php
+cat <<EOF >> ${WEB_ROOT}/sites/default/settings.php
 
 // Have PHP complain about everything.
 // http://php.net/manual/en/errorfunc.constants.php#103504
@@ -52,11 +50,11 @@ error_reporting(~0);
 ini_set('display_errors', TRUE);
 ini_set('display_startup_errors', TRUE);
 
-# Settings defined here in the `$conf` array will override
-# similar settings in the `variable` database table.
+# Settings defined here in the \`\$conf\` array will override
+# similar settings in the \`variable\` database table.
 
 // Show all messages on the screen.
-// We use `2` instead of ERROR_REPORTING_DISPLAY_ALL
+// We use \`2\` instead of ERROR_REPORTING_DISPLAY_ALL
 // since error.inc would not yet be loaded.
 \$conf['error_level'] = 2;
 
