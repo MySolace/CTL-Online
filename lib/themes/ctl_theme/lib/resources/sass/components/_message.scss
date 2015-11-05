@@ -1,0 +1,82 @@
+// message styling will go here
+
+.message {
+  background-color: $blue;
+  border: 1px solid darken($blue, 10%);
+  border-radius: 3px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+  margin-bottom: 24px;
+  padding: 18px 24px;
+  position: relative;
+
+  .message-inner {
+    font-size: 20px;
+    margin: 0;
+    color: $off-white;
+    max-width: 85%;
+
+    .message-icon {
+      color: $white;
+      font-size: 24px;
+      margin-right: 10px;
+    }
+  }
+
+  button {
+    background-color: transparent;
+    color: lighten($blue, 10%);
+    padding: 0;
+    position: absolute;
+    right: 24px;
+    top: 10px;
+  }
+
+  button:hover {
+    color: lighten($brand-primary, 20%);
+  }
+}
+
+.message--error {
+  background-color: $brand-primary-dark;
+  border: 1px solid darken($brand-primary-dark, 5%);
+
+  .message-inner {
+    color: $off-white;
+
+    .message-icon {
+      color: $white;
+    }
+  }
+
+  button {
+    background-color: transparent;
+    color: $brand-primary;
+  }
+
+  button:hover {
+    color: lighten($brand-primary, 20%);
+  }
+}
+
+.message--warning {
+  background-color: #BAD320;
+  border: 1px solid darken(#BAD320, 10%);
+
+  .message-inner {
+    color: $off-white;
+
+    .message-icon {
+      color: $white;
+    }
+  }
+
+  button {
+    background-color: transparent;
+    color: lighten(#BAD320, 10%);
+  }
+
+  button:hover {
+    color: lighten($brand-primary, 20%);
+  }
+}

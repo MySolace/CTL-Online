@@ -1,0 +1,130 @@
+// This will style the patterns.html page. This file SHOULD NOT include global elements,
+// only specific styling that helps explain patterns visually.
+
+// It's important to be mindful of class selectors here.
+
+.page--patterns {
+
+  .row {
+    border-bottom: 1px solid #eaeaea;
+    margin-bottom: 50px;
+    padding-bottom: 50px;
+
+    &.typography, &.components {
+      h4 {
+        padding-bottom: 16px
+      }
+    }
+
+    &.typography:last-of-type, &.components:last-of-type {
+      border-bottom: 1px solid #eaeaea;
+    }
+  }
+
+  .section-header--h2 {
+    padding-top: 20px;
+  }
+
+  .section-header--h3 {
+    padding-top: 40px;
+  }
+
+  //////////////////////////////////////////
+  // Main Elements /////////////////////////
+  //////////////////////////////////////////
+
+  .color-block {
+    height: 200px;
+    width: auto;
+  }
+
+  .color-block--red {
+    background-color: $brand-primary;
+  }
+
+  .color-block--black {
+    background-color: $black;
+  }
+
+  .color-block--brand-gray {
+    background-color: $brand-gray;
+  }
+
+  .color-block--blue {
+    background-color: $blue;
+  }
+
+  .color-block__titles {
+    h4 {
+      color: $gray;
+    }
+  }
+
+  //////////////////////////////////////////
+
+  img.murray-placeholder {
+    height: 200px;
+    width: 200px;
+  }
+
+  //////////////////////////////////////////
+
+  .headings {
+    span {
+      font-size: $hero-font-size;
+      font-weight: $weight-bold;
+    }
+  }
+
+  .font--roboto {
+    span, p {
+      font-family: $font-family-base;
+    }
+
+    span {
+      font-size: 35px;
+    }
+  }
+
+  .font--oswald {
+    span, p {
+      font-family: $font-family-decor;
+      font-weight: $weight-light;
+    }
+
+    span {
+      font-size: 35px;
+    }
+  }
+
+  .example-pairing {
+    border: 1px solid $light-gray;
+    padding: 30px 20px;
+    margin-top: 30px;
+    text-align: center;
+
+    span {
+      color: $dark-gray;
+      font-family: $font-family-decor;
+      font-size: 18px;
+      font-weight: $weight-light;
+      letter-spacing: .2rem;
+      text-transform: uppercase;
+    }
+
+    p {
+      color: $black;
+      font-size: $large-font-size;
+      font-weight: $weight-black;
+    }
+  }
+
+  //////////////////////////////////////////
+  // Components ////////////////////////////
+  //////////////////////////////////////////
+
+  .button-group {
+    padding-bottom: 20px;
+  }
+
+}
