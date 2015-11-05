@@ -1,0 +1,67 @@
+// speech bubbles
+
+.c-speech-bubbles {
+  position: relative;
+  padding: 15px;
+  margin: 50px 0 0.5em;
+  color: $white;
+  background: $brand-primary;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+
+  :after {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    left: 12%;
+    border-width: 20px 20px 0 20px;
+    border-style: solid;
+    border-color: $brand-primary transparent;
+    display: block;
+    width: 0;
+  }
+
+  p {
+    font-size: 18px;
+    letter-spacing: .04rem;
+    margin: 0;
+    padding: 18px;
+  }
+}
+
+.c-speech-bubbles--teen {
+  background: $blue;
+  margin-right: 10%;
+
+  :after {
+    border-color: $blue transparent;
+  }
+}
+
+.c-speech-bubbles--ctl {
+  margin-left: 10%;
+
+  :after {
+    left: 80%;
+  }
+}
+
+.texter__name {
+  color: #969696;
+  display: inline-block;
+  font-family: $font-family-decorative;
+  font-weight: $weight-light;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.texter__name--user {
+  text-align: right;
+  padding-right: 10%;
+}
+
+.texter__name--ctl {
+  margin-left: 10%;
+}
