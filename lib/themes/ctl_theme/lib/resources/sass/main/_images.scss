@@ -1,0 +1,14 @@
+// image styling will go here
+
+img {
+  height: auto;
+  max-width: 100%;
+
+  &.circle-crop {
+    border-radius: 100px;
+-webkit-border-radius: 100px;
+-moz-border-radius: 100px;
+    object-fit: cover;
+  }
+
+}

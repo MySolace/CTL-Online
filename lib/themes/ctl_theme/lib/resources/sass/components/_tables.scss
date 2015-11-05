@@ -1,0 +1,25 @@
+// table styling will go here
+
+.table--default {
+  caption {
+    color: $dark-gray;
+    font-family: $font-family-sans-serif;
+    font-weight: $weight-bold;
+  }
+
+  thead {
+    border-bottom: 2px solid $light-gray;
+    color: $brand-primary;
+    font-weight: $weight-medium;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+  }
+
+  th {
+    padding: 10px 15px;
+  }
+
+  tr {
+    border-bottom: 1px solid #eaeaea;
+  }
+}

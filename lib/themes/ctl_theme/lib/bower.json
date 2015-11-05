@@ -1,0 +1,21 @@
+{
+  "name": "ctl",
+  "version": "0.0.0",
+  "homepage": "https://github.com/smithln/ctl",
+  "authors": [
+    "Lauren Smith <laurenicolesmith@gmail.com>"
+  ],
+  "description": "A layout and patterns resource for CTL Online Training",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass-official": "~3.3.4",
+    "fontawesome": "~4.3.0"
+  }
+}

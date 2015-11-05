@@ -1,0 +1,133 @@
+// form styling will go here
+
+button {
+  color: $light-gray;
+  background: $brand-gray;
+  border: 2px solid transparent;
+  border-radius: 0px;
+-webkit-border-radius: 0px;
+-moz-border-radius: 0px;
+  display: inline-block;
+  font-size: $base-font-size;
+  font-weight: $weight-bold;
+  letter-spacing: .2rem;
+  line-height: 1;
+  margin-bottom: 2%;
+  padding: 15px 30px;
+  text-transform: uppercase;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background: lighten($brand-gray, 10%);
+  }
+
+  &.primary {
+    background: $blue;
+    color: $white;
+
+    &:hover {
+      background: lighten($blue, 10%);
+    }
+  }
+
+  &.secondary {
+    background: transparent;
+    border: 2px solid $brand-gray;
+    color: $brand-gray;
+
+    &:hover {
+      background: #eaeaea;
+    }
+  }
+
+}
+
+.form-group {
+  label {
+    &.field-label {
+      display: block;
+      font-size: $base-font-size;
+      font-weight: $weight-normal;
+    }
+  }
+
+  input {
+    border: 1px solid $light-gray;
+    padding: 14px;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  select {
+    border: 1px solid gainsboro;
+    padding: 7px;
+    option {
+      padding: 7px;
+    }
+  }
+}
+
+.checkbox, .radio {
+	display: block;
+  font-weight: 400;
+	cursor: pointer;
+  margin: 10px 0;
+
+  &:before {
+    content: "";
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    background-color: $light-gray;
+    color: #f3f3f3;
+    text-align: center;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    border-radius: 3px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+    margin-right: 3%;
+  }
+}
+
+.checkbox {
+  &:before {
+    border-radius: 3px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+  }
+}
+
+.radio {
+  &:before {
+    border-radius: 10px;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+  }
+}
+
+// input[type=checkbox], input[type=radio] {
+//  display:none;
+// }
+
+input[type=checkbox]:checked + .checkbox:before {
+  color: $dark-gray;
+	content: "\f00c";
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+	font: normal normal normal 12px/1.5 FontAwesome;
+  vertical-align: middle;
+}
+
+input[type=radio]:checked + .radio:before {
+  color: $dark-gray;
+	content: "\f111";
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+	font: normal normal normal 12px/1.5 FontAwesome;
+  vertical-align: middle;
+}

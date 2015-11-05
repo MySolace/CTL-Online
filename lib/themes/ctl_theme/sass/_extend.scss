@@ -1,6 +1,9 @@
 // .form-type-checkbox label {
 //     @extend .checkbox;
 // }
+// .form-type-checkbox input[type="checkbox"] {
+//   display: none !important;
+// }
 
 th.checkbox, td.checkbox {
     display: table-cell;
