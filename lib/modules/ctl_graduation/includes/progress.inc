@@ -57,10 +57,15 @@ function _ctl_graduation_progress_page($user) {
  */
 function ctl_graduation_form($form, &$form_state, $uid) {
   $query = db_select('ctl_graduation_progress', 'gp');
-  $query->addField('gp', 'did_live_sessions');
-  $query->addField('gp', 'did_observation_shift');
-  $query->addField('gp', 'did_roleplays');
-  $query->addField('gp', 'passed_final_evaluation');
+  // $query->addField('gp', 'did_live_sessions');
+  // $query->addField('gp', 'did_observation_shift');
+  // $query->addField('gp', 'did_roleplays');
+  // $query->addField('gp', 'passed_final_evaluation');
+  $query->addField('gp', 'follows_protocol');
+  $query->addField('gp', 'shows_progress');
+  $query->addField('gp', 'engaged');
+  $query->addField('gp', 'participates');
+  $query->addField('gp', 'honors_agreements');
   $result = $query
     ->condition('uid', $uid)
     ->execute()
@@ -81,12 +86,18 @@ function ctl_graduation_form($form, &$form_state, $uid) {
     '#title' => t('Additional requirements'),
     '#default_value' => $defaults,
     '#options' => array(
-      'did_live_sessions'       => t('This trainee has attended the required live sessions.'),
-      'did_observation_shift'   => t('This trainee has completed the required observation shift.'),
-      'did_roleplays'           => t('This trainee has completed the required roleplays.'),
-      'passed_final_evaluation' => t('This trainee has passed the final evaluation.'),
+      // 'did_live_sessions'       => t('This trainee has attended the required live sessions.'),
+      // 'did_observation_shift'   => t('This trainee has completed the required observation shift.'),
+      // 'did_roleplays'           => t('This trainee has completed the required roleplays.'),
+      // 'passed_final_evaluation' => t('This trainee has passed the final evaluation.'),
+      'follows_protocol'  => t('Follows risk assessment protocol'),
+      'shows_progress'    => t("Considers + implements trainer's feedback (shows progress)"),
+      'engaged'           => t('Present, prepared, + engaged in ALL live training sessions/observations'),
+      'participates'      => t('Participates in activities and acts in helpful and respectful ways.'),
+      'honors_agreements' => t('Agrees to CTL TOS, maintains confidentiality, maintains appropriate boundaries'),
     ),
   );
+
 
   $form['uid'] = array(
     '#type'  => 'hidden',
@@ -122,19 +133,29 @@ function _ctl_graduation_form_submit_update($form, &$form_state) {
   $form_values             = $form_state['values'];
   $uid                     = $form_values['uid'];
   $additional_requirements = $form_values['additional_requirements'];
-  $did_live_sessions       = intval(!empty($additional_requirements['did_live_sessions']));
-  $did_observation_shift   = intval(!empty($additional_requirements['did_observation_shift']));
-  $did_roleplays           = intval(!empty($additional_requirements['did_roleplays']));
-  $passed_final_evaluation = intval(!empty($additional_requirements['passed_final_evaluation']));
+  // $did_live_sessions       = intval(!empty($additional_requirements['did_live_sessions']));
+  // $did_observation_shift   = intval(!empty($additional_requirements['did_observation_shift']));
+  // $did_roleplays           = intval(!empty($additional_requirements['did_roleplays']));
+  // $passed_final_evaluation = intval(!empty($additional_requirements['passed_final_evaluation']));
+  $follows_protocol  = intval(!empty($additional_requirements['follows_protocol']));
+  $shows_progress    = intval(!empty($additional_requirements['shows_progress']));
+  $engaged           = intval(!empty($additional_requirements['engaged']));
+  $participates      = intval(!empty($additional_requirements['participates']));
+  $honors_agreements = intval(!empty($additional_requirements['honors_agreements']));
 
   // Upsert trainee info.
   db_merge('ctl_graduation_progress')
     ->key(array('uid' => $uid))
     ->fields(array(
-      'did_live_sessions'       => $did_live_sessions,
-      'did_observation_shift'   => $did_observation_shift,
-      'did_roleplays'           => $did_roleplays,
-      'passed_final_evaluation' => $passed_final_evaluation,
+      // 'did_live_sessions'       => $did_live_sessions,
+      // 'did_observation_shift'   => $did_observation_shift,
+      // 'did_roleplays'           => $did_roleplays,
+      // 'passed_final_evaluation' => $passed_final_evaluation,
+      'follows_protocol'  => $follows_protocol,
+      'shows_progress'    => $shows_progress,
+      'engaged'           => $engaged,
+      'participates'      => $participates,
+      'honors_agreements' => $honors_agreements,
     ))
     ->execute();
 
