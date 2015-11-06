@@ -51,9 +51,6 @@
   </li>
 </ul>
 
-<p><strong>Facebook.</strong></p>
-<p>Join us on our Crisis Text Line Crisis Counselor Facebook group where you can stay up-to-date on spike alerts, platform updates, continuing education and topics related to mental health. This is a great opportunity to connect with all of the Crisis Counselors and to get know one another! Join here: <a href="https://www.facebook.com/groups/252241994946156/">https://www.facebook.com/groups/252241994946156/</a></p>
-
 <p><br />
 Onward,</p>
 
