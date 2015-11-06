@@ -35,6 +35,7 @@ function ctl_features_update_roles() {
 
     $roles = array(
         1 => 'Crisis Counselor I',
+        1.5 => 'Crisis Counselor I plus',
         2 => 'Crisis Counselor II',
         3 => 'Crisis Counselor III',
     );
