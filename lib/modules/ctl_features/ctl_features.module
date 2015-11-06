@@ -120,7 +120,7 @@ function ctl_features_form_alter(&$form, &$form_state, $form_id) {
         if (isset($form['field_partner_referral'])) {
             $form['field_partner_referral'][LANGUAGE_NONE][0]['value']['#type'] = 'hidden';
             if (isset($_GET['campaign'])) {
-                $form['field_partner_referral'][LANGUAGE_NONE][0]['value']['#default_value'] = $_GET['campaign'];
+                $form['field_partner_referral'][LANGUAGE_NONE][0]['value']['#default_value'] = check_plain($_GET['campaign']);
             }
         }
     }
