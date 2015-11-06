@@ -13,25 +13,55 @@ function ctl_graduation_schema() {
         'not null'    => TRUE,
         'unsigned'    => TRUE,
       ),
-      'did_live_sessions' => array(
+      // 'did_live_sessions' => array(
+      //   'type'     => 'int',
+      //   'not null' => TRUE,
+      //   'size'     => 'tiny',
+      //   'default'  => 0,
+      // ),
+      // 'did_observation_shift' => array(
+      //   'type'     => 'int',
+      //   'not null' => TRUE,
+      //   'size'     => 'tiny',
+      //   'default'  => 0,
+      // ),
+      // 'did_roleplays' => array(
+      //   'type'     => 'int',
+      //   'not null' => TRUE,
+      //   'size'     => 'tiny',
+      //   'default'  => 0,
+      // ),
+      // 'passed_final_evaluation' => array(
+      //   'type'     => 'int',
+      //   'not null' => TRUE,
+      //   'size'     => 'tiny',
+      //   'default'  => 0,
+      // ),
+      'follows_protocol' => array(
         'type'     => 'int',
         'not null' => TRUE,
         'size'     => 'tiny',
         'default'  => 0,
       ),
-      'did_observation_shift' => array(
+      'shows_progress' => array(
         'type'     => 'int',
         'not null' => TRUE,
         'size'     => 'tiny',
         'default'  => 0,
       ),
-      'did_roleplays' => array(
+      'engaged' => array(
         'type'     => 'int',
         'not null' => TRUE,
         'size'     => 'tiny',
         'default'  => 0,
       ),
-      'passed_final_evaluation' => array(
+      'participates' => array(
+        'type'     => 'int',
+        'not null' => TRUE,
+        'size'     => 'tiny',
+        'default'  => 0,
+      ),
+      'honors_agreements' => array(
         'type'     => 'int',
         'not null' => TRUE,
         'size'     => 'tiny',
@@ -46,4 +76,22 @@ function ctl_graduation_schema() {
     'primary key' => array('uid'),
   );
   return $schema;
+}
+
+
+/**
+ * Implements hook_update_N().
+ */
+function ctl_graduation_update_7001(&$sandbox) {
+  $spec = array(
+    'type'     => 'int',
+    'not null' => TRUE,
+    'size'     => 'tiny',
+    'default'  => 0,
+  );
+  db_add_field('ctl_graduation_progress', 'follows_protocol', $spec);
+  db_add_field('ctl_graduation_progress', 'shows_progress', $spec);
+  db_add_field('ctl_graduation_progress', 'engaged', $spec);
+  db_add_field('ctl_graduation_progress', 'participates', $spec);
+  db_add_field('ctl_graduation_progress', 'honors_agreements', $spec);
 }
