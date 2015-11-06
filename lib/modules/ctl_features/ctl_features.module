@@ -115,6 +115,15 @@ function ctl_features_form_alter(&$form, &$form_state, $form_id) {
     else if ($form_id == 'recommendation_node_form') {
         $form['actions']['submit']['#value'] = 'Submit';
     }
+
+    else if ($form_id == 'user_register_form') {
+        if (isset($form['field_partner_referral'])) {
+            $form['field_partner_referral'][LANGUAGE_NONE][0]['value']['#type'] = 'hidden';
+            if (isset($_GET['campaign'])) {
+                $form['field_partner_referral'][LANGUAGE_NONE][0]['value']['#default_value'] = check_plain($_GET['campaign']);
+            }
+        }
+    }
 }
 
 /**
