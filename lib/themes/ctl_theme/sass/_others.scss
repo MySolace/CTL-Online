@@ -1,11 +1,121 @@
-img {
-  height:    auto;
-  max-width: 100%;
-  &.circle-crop {
-    border-radius: 100px;
-    object-fit:    cover;
+body {
+  &.admin-menu .navbar {
+    margin-top: 30px;
+  }
+  #admin-menu {
+    z-index: 2000;
   }
 }
+
+.field-multiple-table td {
+  position: relative;
+
+  .form-item {
+    width: calc(100% - 250px);
+  }
+
+  input.multiple-fields-remove-button {
+    margin:   0;
+    position: absolute;
+    right:    6px;
+    top:      7px;
+    width:    230px;
+  }
+}
+
+.form-group {
+  select {
+    display:       block;
+    padding-right: 20px;
+  }
+}
+
+.region-sidebar-left h1, h2 {
+  font-size: 1em;
+}
+
+.course-take-course-link {
+  @extend button.primary;
+}
+
+.region-site-nav {
+  .block {
+    margin: 0 auto;
+    ul, li {
+      margin:  0;
+      padding: 0;
+    }
+  }
+}
+
+.nav-tabs {
+  margin: 0;
+}
+
+.node-nav {
+  margin-bottom: 1em;
+}
+
+#block-course-navigation {
+  text-align: center;
+}
+
+#field-comments-add-more-wrapper .form-item {
+  margin-top: 0;
+}
+
+.course-outline {
+  .not-accessible .course-outline-status .placeholder:first-child {
+    display: none;
+  }
+  .item-list ul li {
+    &.completed {
+      a {
+        margin-left: 0;
+      }
+    }
+    &:nth-child(odd) {
+      background: #f3f4ee;
+    }
+    list-style-type: none;
+    line-height:     4em;
+    br {
+      display: none;
+    }
+    a {
+      display:     inline-block;
+      margin-left: 11px;
+      width:       50%;
+    }
+  }
+}
+
+.node-course {
+  .form-item-parent {
+    display: none;
+  }
+  .form-submit {
+    display: none;
+  }
+}
+
+.slide .c-speech-bubbles {
+  margin-top: 25px;
+  padding:    5px;
+}
+
+th.views-field-views-bulk-operations {
+  min-width: 50px;
+}
+
+#drupalchat-wrapper {
+  box-sizing: content-box;
+}
+
+.form-type-date-select label {
+  display: block;
+}
+
 
 
 
@@ -70,8 +180,8 @@ div.breadcrumb a, #branding div.breadcrumb {
 
 @media (min-width: 1200px) {
   #page {
-    width:  1200px;
     margin: 0 auto;
+    width:  1200px;
   }
 }
 
@@ -634,30 +744,27 @@ body {
       font-family: $font-family-decor;
       font-weight: $weight-light;
     }
-
     span {
       font-size: 35px;
     }
   }
 
   .example-pairing {
-    border: 1px solid $light-gray;
-    padding: 30px 20px;
+    border:     1px solid $light-gray;
     margin-top: 30px;
+    padding:    30px 20px;
     text-align: center;
-
     span {
-      color: $dark-gray;
-      font-family: $font-family-decor;
-      font-size: 18px;
-      font-weight: $weight-light;
-      letter-spacing: .2rem;
+      color:          $dark-gray;
+      font-family:    $font-family-decor;
+      font-size:      18px;
+      font-weight:    $weight-light;
+      letter-spacing: 0.2rem;
       text-transform: uppercase;
     }
-
     p {
-      color: $black;
-      font-size: $large-font-size;
+      color:       $black;
+      font-size:   $large-font-size;
       font-weight: $weight-black;
     }
   }

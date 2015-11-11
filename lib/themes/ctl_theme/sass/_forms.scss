@@ -1,3 +1,7 @@
+form[id^=course-relationships] .description {
+  display: none;
+}
+
 button {
   color:          $light-gray;
   background:     $brand-gray;
@@ -45,11 +49,38 @@ button {
   @extend .radio;
 }
 
+// input[type=checkbox], input[type=radio] {
+//  display:none;
+// }
+
+input[type=checkbox]:checked + .checkbox:before {
+  color:          $dark-gray;
+  content:         "\f00c";
+  text-shadow:     1px 1px 1px rgba(0, 0, 0, .2);
+  font:            normal normal normal 12px/1.5 FontAwesome;
+  vertical-align: middle;
+}
+
+input[type=radio]:checked + .radio:before {
+  color:          $dark-gray;
+  content:        "\f111";
+  text-shadow:    1px 1px 1px rgba(0, 0, 0, .2);
+  font:           normal normal normal 12px/1.5 FontAwesome;
+  vertical-align: middle;
+}
+
 input[type="submit"],button {
   @extend button.primary;
 }
 
-input[type="submit"][id^="edit-submit"], input#edit-actions-submit, input[id^="save-continue"], input[type="submit"][id^="edit-save"], input#edit-save, input#edit-submit, input#edit-actions-save, #media-browser-page a.button-yes {
+input[type="submit"][id^="edit-submit"],
+input[type="submit"][id^="edit-save"],
+input[id^="save-continue"],
+input#edit-actions-submit,
+input#edit-save,
+input#edit-submit,
+input#edit-actions-save,
+#media-browser-page a.button-yes {
   @extend button.primary;
 }
 
@@ -88,17 +119,17 @@ input[type="submit"][id^="edit-submit"], input#edit-actions-submit, input[id^="s
 	cursor:      pointer;
   margin:      10px 0;
   &:before {
+    background-color: $light-gray;
+    border-radius:    3px;
+    box-shadow:       inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    color:            #F3F3F3;
     content:          "";
     display:          inline-block;
-    width:            18px;
     height:           18px;
-    vertical-align:   middle;
-    background-color: $light-gray;
-    color:            #f3f3f3;
-    text-align:       center;
-    box-shadow:       inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
-    border-radius:    3px;
     margin-right:     3%;
+    text-align:       center;
+    vertical-align:   middle;
+    width:            18px;
   }
 }
 
@@ -114,22 +145,23 @@ input[type="submit"][id^="edit-submit"], input#edit-actions-submit, input[id^="s
   }
 }
 
-// input[type=checkbox], input[type=radio] {
-//  display:none;
-// }
-
-input[type=checkbox]:checked + .checkbox:before {
-  color:          $dark-gray;
-	content:         "\f00c";
-	text-shadow:     1px 1px 1px rgba(0, 0, 0, .2);
-	font:            normal normal normal 12px/1.5 FontAwesome;
-  vertical-align: middle;
-}
-
-input[type=radio]:checked + .radio:before {
-  color:          $dark-gray;
-	content:        "\f111";
-	text-shadow:    1px 1px 1px rgba(0, 0, 0, .2);
-	font:           normal normal normal 12px/1.5 FontAwesome;
-  vertical-align: middle;
+// Bootstrap overrides.
+// TODO
+// - see if there's a better solution.
+.form-type-radios {
+  .radio {
+    display: inline;
+    &:before {
+      display: none;
+    }
+  }
+  .radio {
+    &:before {
+      border-radius: 0;
+    }
+  }
+  input[type=radio]:checked + .radio:before {
+    content:     '';
+    text-shadow: none;
+  }
 }

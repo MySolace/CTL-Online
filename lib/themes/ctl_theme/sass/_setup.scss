@@ -27,10 +27,9 @@ $font-family-sans-serif: Roboto, sans-serif;
 $font-family-decorative: Oswald, sans-serif;
 
 // Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
-//
-// $font-family-monospace:   Monaco, Consolas, monospace;
-// $font-family-base:        $font-family-sans-serif;
-// $font-family-decor:       $font-family-decorative;
+$font-family-monospace: Monaco, Consolas, monospace;
+$font-family-base:      $font-family-sans-serif;
+$font-family-decor:     $font-family-decorative;
 
 
 // -----------------------------------------------------------------------------
