@@ -44,14 +44,6 @@ mark {
   background-color: #F6FF71;
 }
 
-a {
-  color: $brand-primary;
-  &.secondary {
-    color:           $brand-gray;
-    text-decoration: underline;
-  }
-}
-
 span {
   &.intro {
     color:          #767676;
