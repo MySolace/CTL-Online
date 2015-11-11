@@ -3,17 +3,25 @@
 
 function schedule_recurring_time_off_entity() {
   return array(
-    'label'            => t('Time Off'),
-    'base table'       => 'time_off',
-    'fieldable'        => TRUE,
-    'uri_callback'     => 'time_off_uri',
-    'controller class' => 'TimeOffController',
-    'entity class'     => 'TimeOff',
-    'entity keys'      => array(
-      'id' => 'id',
+    'label'                  => t('Time Off'),
+    'base table'             => 'time_off',
+    'fieldable'              => TRUE,
+    'uri_callback'           => 'time_off_uri',
+    'controller class'       => 'TimeOffController',
+    'entity class'           => 'TimeOff',
+    'views controller class' => 'EntityDefaultViewsController',
+    'entity keys' => array(
+      'id'     => 'id',
       'bundle' => 'type',
     ),
   );
+}
+
+/**
+ * Implements hook_entity_property_info_alter().
+ */
+function schedule_recurring_entity_property_info_alter(&$info) {
+  $info['time_off']['properties']['id']['type'] = 'user';
 }
 
 class TimeOff extends Entity {
