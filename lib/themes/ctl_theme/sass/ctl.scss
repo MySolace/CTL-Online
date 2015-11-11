@@ -1,132 +1,150 @@
-@import "../lib/resources/sass/style.scss";
+@import "bootstrap";
+@import "font-awesome";
+
+@import "variables";
+@import "fonts";
+@import "images";
+@import "typography";
+@import "message";
+@import "speech-bubbles";
+@import "patterns";
+@import "misc";
 @import "brand";
 @import "extend";
 
-body {
-    //padding-top: 0;
-    &.admin-menu .navbar {
-        margin-top: 30px;
-    }
+@import "forms";
+@import "general";
+@import "links";
+@import "others";
+@import "setup";
+@import "tables";
+@import "text";
 
-    #admin-menu {
-        z-index: 2000;
-    }
+body {
+  //padding-top: 0;
+  &.admin-menu .navbar {
+    margin-top: 30px;
+  }
+
+  #admin-menu {
+    z-index: 2000;
+  }
 }
 
 .field-multiple-table td {
-    position: relative;
+  position: relative;
 
-    .form-item {
-        width: -moz-calc(100% - 250px);
-        width: -webkit-calc(100% - 250px);
-        width: calc(100% - 250px);
-    }
+  .form-item {
+    width: -moz-calc(100% - 250px);
+    width: -webkit-calc(100% - 250px);
+    width: calc(100% - 250px);
+  }
 
-    input.multiple-fields-remove-button {
-          position: absolute;
-          right: 6px;
-          top: 7px;
-          margin: 0;
-          width: 230px;
-    }
+  input.multiple-fields-remove-button {
+    position: absolute;
+    right: 6px;
+    top: 7px;
+    margin: 0;
+    width: 230px;
+  }
 }
 
 .form-group {
-    select {
-        padding-right: 20px;
-        display: block;
-    }
+  select {
+    padding-right: 20px;
+    display: block;
+  }
 }
 
 .region-sidebar-left h1, h2 {
-    font-size: 1em;
+  font-size: 1em;
 }
 
 .course-take-course-link {
-    @extend button.primary;
+  @extend button.primary;
 }
 
 form[id^=course-relationships] .description {
-    display: none;
+  display: none;
 }
 
 .region-site-nav {
-    .block {
-        margin: 0 auto;
+  .block {
+    margin: 0 auto;
 
-        ul, li {
-            margin: 0;
-            padding: 0;
-        }
+    ul, li {
+      margin: 0;
+      padding: 0;
     }
+  }
 }
 
 .nav-tabs {
-    margin: 0;
+  margin: 0;
 }
 
 .node-nav {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 #block-course-navigation {
-    text-align: center;
+  text-align: center;
 }
 
 #field-comments-add-more-wrapper .form-item {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .course-outline {
-    .not-accessible .course-outline-status .placeholder:first-child {
-        display: none;
+  .not-accessible .course-outline-status .placeholder:first-child {
+    display: none;
+  }
+
+  .item-list ul li {
+    &.completed {
+      a { margin-left: 0; }
     }
 
-    .item-list ul li {
-        &.completed {
-            a { margin-left: 0; }
-        }
-
-        &:nth-child(odd) {
-            background: #f3f4ee;
-        }
-        list-style-type: none;
-        line-height: 4em;
-
-        br { display: none; }
-        a {
-            display: inline-block;
-            width: 50%;
-            margin-left: 11px;
-        }
+    &:nth-child(odd) {
+      background: #f3f4ee;
     }
+    list-style-type: none;
+    line-height: 4em;
+
+    br { display: none; }
+    a {
+      display: inline-block;
+      width: 50%;
+      margin-left: 11px;
+    }
+  }
 }
 
 .node-course {
-    .form-item-parent {
-        display: none;
-    }
+  .form-item-parent {
+    display: none;
+  }
 
-    .form-submit {
-        display: none;
-    }
+  .form-submit {
+    display: none;
+  }
 }
 
 .slide .c-speech-bubbles {
-    margin-top: 25px;
-    padding: 5px;
+  margin-top: 25px;
+  padding: 5px;
 }
 
 th.views-field-views-bulk-operations {
-    min-width: 50px;
+  min-width: 50px;
 }
 
 #drupalchat-wrapper {
-    box-sizing: content-box;
+  box-sizing: content-box;
 }
 
 .form-type-date-select label {
-    display: block;
+  display: block;
 }
 
 

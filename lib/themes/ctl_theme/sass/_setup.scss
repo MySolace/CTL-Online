@@ -1,0 +1,52 @@
+// -----------------------------------------------------------------------------
+//  Type
+// -----------------------------------------------------------------------------
+
+@import url(//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700,900,900italic);
+@import url(//fonts.googleapis.com/css?family=Oswald:400,300,700);
+
+$font-family-base: 'Roboto', sans-serif;
+$font-size-base:   16px;
+
+// Font sizes are based on a 1.500 Scale (Perfect Fifth)
+$hero-font-size:    5.063em;
+$larger-font-size:  3.375em;
+$large-font-size:   2.25em;
+$medium-font-size:  1.5em;
+$base-font-size:    1.125em;
+$small-font-size:   1em;
+$smaller-font-size: 0.667em;
+
+$weight-light:  300;
+$weight-normal: 400;
+$weight-medium: 500;
+$weight-bold:   700;
+$weight-black:  900;
+
+$font-family-sans-serif: Roboto, sans-serif;
+$font-family-decorative: Oswald, sans-serif;
+
+// Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+//
+// $font-family-monospace:   Monaco, Consolas, monospace;
+// $font-family-base:        $font-family-sans-serif;
+// $font-family-decor:       $font-family-decorative;
+
+
+// -----------------------------------------------------------------------------
+//  Colors
+// -----------------------------------------------------------------------------
+
+$brand-primary:      #ED1A34;
+$brand-gray:         #A9A9A9;
+$brand-primary-dark: darken($brand-primary, 15%);
+$light-gray:         lighten($brand-gray, 20%);
+$dark-gray:          darken($brand-gray, 20%);
+$black:              #222;
+$white:              #FFFFFF;
+$off-white:          #FEFEFE;
+$blue:               #13B7FF;
+
+// Adding in brand-black and brand-blue, to match with other brand colors
+$brand-black: $black;
+$brand-blue:  $blue;
