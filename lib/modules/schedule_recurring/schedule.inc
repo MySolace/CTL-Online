@@ -229,20 +229,35 @@ function schedule_recurring_wrapping_shifts($start) {
 }
 
 function schedule_recurring_confirm() {
-  list($day, $start, $end) = explode(':', $_GET['shift']);
+  list($day, $start, $end) = explode(':', check_plain($_GET['shift']));
 
-  $days = _schedule_recurring_days();
+  $days        = _schedule_recurring_days();
+  $day         = $days[$day];
   $start_times = _schedule_recurring_times();
-  $end_times = _schedule_recurring_times(TRUE);
+  $start       = $start_times[$start];
+  $start_date  = date('l, F dS, Y', strtotime('next ' . $day));
 
-  $text = t('Shift confirmed for @day from @start to @end', array(
-    '@day' => $days[$day] . 's',
-    '@start' => $start_times[$start],
-    '@end' => $end_times[$end],
+  // $end_times   = _schedule_recurring_times(TRUE);
+
+  // $text = t('Shift confirmed for @day from @start to @end', array(
+  //   '@day' => $days[$day] . 's',
+  //   '@start' => $start_times[$start],
+  //   '@end' => $end_times[$end],
+  // ));
+
+  $raw_text = '<h1>Confirmed! Thank you for signing up for a shift. You are scheduled for a four-hour shift every @day at @start. See you on the platform on @start_date. Look for more details in a confirmation email.'
+            . '<br />'
+            . '<br />'
+            . "If you aren't able to make your first shift, please request time off here.</h1>";
+
+  $text = t($raw_text, array(
+    '@day'        => $day,
+    '@start'      => $start,
+    '@start_date' => $start_date,
   ));
 
   return array(
-    '#markup' => '<h1>'.$text.'</h1>',
+    '#markup' => $text,
   );
 }
 
@@ -283,7 +298,7 @@ function schedule_recurring_available_submit($form, &$form_state) {
 
   $mail_params = array(
     'account' => $account,
-    'shift' => $shifts[0],
+    'shift'   => $shifts[0],
   );
 
   drupal_mail('schedule_recurring', 'shift_confirmation', $account->mail, user_preferred_language($account), $mail_params);

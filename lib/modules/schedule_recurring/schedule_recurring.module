@@ -366,16 +366,48 @@ function schedule_recurring_next_shift($num_increments = 1) {
 function schedule_recurring_mail($key, &$message, $params) {
   switch ($key) {
     case 'shift_confirmation':
-      $days = _schedule_recurring_days();
+      $days  = _schedule_recurring_days();
+      $day   = $days[$params['shift']['day']];
       $times = _schedule_recurring_times();
+      $start = $times[$params['shift']['start']];
+      $name  = format_username($params['account']);
 
-      $message['subject'] = t('Crisis Text Line Shift Confirmation');
-      $message['body'][] = t("@name,\n\nYour @time shift has been confirmed for @day starting at @start.\n\n@message", array(
-        '@name' => format_username($params['account']),
-        '@time' => (variable_get('schedule_recurring_shift_duration') / 60) . ' hour',
-        '@day' => $days[$params['shift']['day']],
-        '@start' => $times[$params['shift']['start']],
-        '@message' => variable_get('schedule_recurring_shift_email', ''),
+      $message['subject'] = t('Welcome aboard!');
+
+      $raw_message = implode(PHP_EOL, array(
+        '<p>Congrats, @name!</p>',
+        '',
+        "<p>All graduated and signed up for your shift time, that's HUGE!</p>",
+        '',
+        '<p><strong>Your first shift is @day at @start.</strong></p>'
+        '',
+        '<p>Here are a few pro tips to help you rock your first shift:</p>',
+        '',
+        '<ul>',
+          "<li>Your supervisor's name is on the upper left corner of your screen (say hello!)</li>",
+          '<li>Enter your status under your name (suggestion: "First Shift" - or some funky version of this, so your fellow crisis counselors know to say hello!)</li>',
+          '<li>Only take 1 conversation at a time</li>',
+          '<li>NEVER feel like you are alone, your peers and supervisors are there to help!</li>',
+          '<li>Say hi to everyone in the Global Chat let them know you are new - join the convo (it’s a fun crew!)</li>',
+          "<li>If you aren't able to make your first shift, please <a href=\"https://online.crisistextline.org/time-off\">request time off</a> here.",
+        '</ul>',
+        '',
+        '<p>You passed training. You have all of the tools and knowledge you need to be great crisis counselor - you got this!</p>',
+        '',
+        "<p>Oh! And who the heck am I? I'm Jen James,  Director of Crisis Counselors. I'm your ears and eyes on the platform; if you have questions, suggestions, or concerns you can come to me!</p>",
+        '',
+        '<p>Cheers,<br />',
+        'Jen James<br />',
+        'Director of Crisis Counselors<br />',
+        'Crisis Text Line</p>',
+        '',
+        "P.S. I like to jam out during my shifts. Here's a <a href=\"https://play.spotify.com/user/crisistextlinecounselors/playlist/0gXOfDnE8h8G5o7iYaCiN0\">Spotify Playlist for Crisis Counselors</a> - jam out with me!",
+      ));
+
+      $message['body'][] = t($raw_message, array(
+        '@name'  => $name,
+        '@day'   => $day,
+        '@start' => $start,
       ));
 
       break;
