@@ -18,7 +18,7 @@
   <li>Contact <a href="mailto:volunteers@crisistextline.org">volunteers@crisistextline.org</a> for any questions about scheduling policies or the scheduling tool</li>
 </ul>
 
-<p>Once you schedule a shift, you’ll receive an email from Jen James, Director of Crisis Counselors, who will introduce you to "the Platform,"" which is where you’ll go each week for your crisis counseling shift.</p>
+<p>Once you schedule a shift, you'll receive an email from Jen James, Director of Crisis Counselors, who will introduce you to "the Platform,"" which is where you'll go each week for your crisis counseling shift.</p>
 
 <p>In the meantime, celebrate! Access your certificate of completion here: <a href="https://online.crisistextline.org/user/<?php print $graduate_uid; ?>/certificate">https://online.crisistextline.org/user/<?php print $graduate_uid; ?>/certificate</a><br />
 Print it out and display it proudly!</p>
