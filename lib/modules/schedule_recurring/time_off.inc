@@ -7,7 +7,7 @@ function schedule_recurring_time_off_entity() {
     'base table'             => 'time_off',
     'fieldable'              => TRUE,
     'uri_callback'           => 'time_off_uri',
-    'controller class'       => 'TimeOffController',
+    'controller class'       => 'EntityAPIController',
     'entity class'           => 'TimeOff',
     'views controller class' => 'EntityDefaultViewsController',
     'entity keys' => array(
@@ -22,15 +22,14 @@ function schedule_recurring_time_off_entity() {
  */
 function schedule_recurring_entity_property_info_alter(&$info) {
   $info['time_off']['properties']['id']['type'] = 'user';
+  $info['time_off']['properties']['start']['handler'] = 'date_views_filter_handler';
+  $info['time_off']['properties']['start']['is date'] = TRUE;
 }
 
 class TimeOff extends Entity {
   protected function defaultUri() {
     return array('path' => 'time-off/' . $this->identifier());
   }
-}
-
-class TimeOffController extends EntityAPIController {
 }
 
 function time_off_uri($entity) {
