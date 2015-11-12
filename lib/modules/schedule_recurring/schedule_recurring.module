@@ -369,14 +369,34 @@ function schedule_recurring_mail($key, &$message, $params) {
       $days = _schedule_recurring_days();
       $times = _schedule_recurring_times();
 
-      $message['subject'] = t('Crisis Text Line Shift Confirmation');
-      $message['body'][] = t("@name,\n\nYour @time shift has been confirmed for @day starting at @start.\n\n@message", array(
-        '@name' => format_username($params['account']),
-        '@time' => (variable_get('schedule_recurring_shift_duration') / 60) . ' hour',
-        '@day' => $days[$params['shift']['day']],
-        '@start' => $times[$params['shift']['start']],
-        '@message' => variable_get('schedule_recurring_shift_email', ''),
+      $message['subject'] = t('Scheduling Your First Shift');
+
+      // $message['body'][] = t("@name,\n\nYour @time shift has been confirmed for @day starting at @start.\n\n@message", array(
+      //   '@name' => format_username($params['account']),
+      //   '@time' => (variable_get('schedule_recurring_shift_duration') / 60) . ' hour',
+      //   '@day' => $days[$params['shift']['day']],
+      //   '@start' => $times[$params['shift']['start']],
+      //   '@message' => variable_get('schedule_recurring_shift_email', ''),
+      // ));
+
+      $raw_message = implode(PHP_EOL, array(
+        '<p>Hi!</p>',
+        "<p>It's important to put your new skills to use so you can keep them sharp! If you're feeling like you need some more practice, I'm happy to shadow you on the platform for a convo. Sign up here: <a href=\"http://firstconversation.youcanbook.me/\">http://firstconversation.youcanbook.me/</a></p>",
+        '',
+        "<p>Want to schedule your shift now? Use our handy <a href=\"https://online.crisistextline.org/schedule/\">scheduling tool</a> to get started. Here's how:</p>",
+        '<p>Click <strong>"Sign up for Shift"</strong></p>',
+        '<p>Choose a day of the week</p>',
+        '<p>Select an available shift (note: all times are in EST)</p>',
+        '<p>Confirm by hitting the "Sign up for this shift" button at the bottom</p>',
+        '',
+        '<p>Questions? Refer to our instructional video on how to schedule your first shift, take time off, and make up a shift.</p>',
+        '',
+        '',
+        '<p>You got this!</p>',
+        '<p>@trainer_name, Crisis Counselor Trainer</p>',
       ));
+
+      $message['body'][] = t($raw_message, array('@trainer_name' => $params['trainer']));
 
       break;
   }
