@@ -245,10 +245,10 @@ function schedule_recurring_confirm() {
   //   '@end' => $end_times[$end],
   // ));
 
-  $raw_text = 'Confirmed! Thank you for signing up for a shift. You are scheduled for a four-hour shift every @day at @start. See you on the platform on @start_date. Look for more details in a confirmation email.'
+  $raw_text = '<h1>Confirmed! Thank you for signing up for a shift. You are scheduled for a four-hour shift every @day at @start. See you on the platform on @start_date. Look for more details in a confirmation email.'
             . '<br />'
             . '<br />'
-            . "If you aren't able to make your first shift, please request time off here.";
+            . "If you aren't able to make your first shift, please request time off here.</h1>";
 
   $text = t($raw_text, array(
     '@day'        => $day,
@@ -257,7 +257,7 @@ function schedule_recurring_confirm() {
   ));
 
   return array(
-    '#markup' => '<h1>'.$text.'</h1>',
+    '#markup' => $text,
   );
 }
 
@@ -286,18 +286,6 @@ function schedule_recurring_available_submit($form, &$form_state) {
     $shifts[0]['end'] = $shift[2];
   }
 
-  $trainer_name  = '';
-  $field_trainer = field_get_items('user', $account, 'field_trainer');
-  $trainer_uid   = $field_trainer ? $field_trainer[0]['target_id'] : '';
-  $trainer_user  = user_load($trainer_uid);
-  if ($trainer_user) {
-    $field_first_name = field_get_items('user', $trainer_user, 'field_first_name');
-    $field_last_name  = field_get_items('user', $trainer_user, 'field_last_name');
-    $first_name       = $field_first_name ? $field_first_name[0]['value'] : '';
-    $last_name        = $field_last_name ? $field_last_name[0]['value'] : '';
-    $trainer_name     = implode(' ', array($first_name, $last_name));
-  }
-
   if (!$account->field_shifts) {
     $account->field_shifts = array(
       LANGUAGE_NONE => array(),
@@ -309,9 +297,8 @@ function schedule_recurring_available_submit($form, &$form_state) {
   user_save($account);
 
   $mail_params = array(
-    'account'      => $account,
-    'shift'        => $shifts[0],
-    'trainer_name' => $trainer_name,
+    'account' => $account,
+    'shift'   => $shifts[0],
   );
 
   drupal_mail('schedule_recurring', 'shift_confirmation', $account->mail, user_preferred_language($account), $mail_params);
