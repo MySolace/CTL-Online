@@ -229,16 +229,31 @@ function schedule_recurring_wrapping_shifts($start) {
 }
 
 function schedule_recurring_confirm() {
-  list($day, $start, $end) = explode(':', $_GET['shift']);
+  list($day, $start, $end) = explode(':', check_plain($_GET['shift']));
 
-  $days = _schedule_recurring_days();
+  $days        = _schedule_recurring_days();
+  $day         = $days[$day];
   $start_times = _schedule_recurring_times();
-  $end_times = _schedule_recurring_times(TRUE);
+  $start       = $start_times[$start];
+  $start_date  = date('l, F dS, Y', strtotime('next ' . $day));
 
-  $text = t('Shift confirmed for @day from @start to @end', array(
-    '@day' => $days[$day] . 's',
-    '@start' => $start_times[$start],
-    '@end' => $end_times[$end],
+  // $end_times   = _schedule_recurring_times(TRUE);
+
+  // $text = t('Shift confirmed for @day from @start to @end', array(
+  //   '@day' => $days[$day] . 's',
+  //   '@start' => $start_times[$start],
+  //   '@end' => $end_times[$end],
+  // ));
+
+  $raw_text = 'Confirmed! Thank you for signing up for a shift. You are scheduled for a four-hour shift every @day at @start. See you on the platform on @start_date. Look for more details in a confirmation email.'
+            . '<br />'
+            . '<br />'
+            . "If you aren't able to make your first shift, please request time off here.";
+
+  $text = t($raw_text, array(
+    '@day'        => $day,
+    '@start'      => $start,
+    '@start_date' => $start_date,
   ));
 
   return array(
@@ -271,6 +286,18 @@ function schedule_recurring_available_submit($form, &$form_state) {
     $shifts[0]['end'] = $shift[2];
   }
 
+  $trainer_name  = '';
+  $field_trainer = field_get_items('user', $account, 'field_trainer');
+  $trainer_uid   = $field_trainer ? $field_trainer[0]['target_id'] : '';
+  $trainer_user  = user_load($trainer_uid);
+  if ($trainer_user) {
+    $field_first_name = field_get_items('user', $trainer_user, 'field_first_name');
+    $field_last_name  = field_get_items('user', $trainer_user, 'field_last_name');
+    $first_name       = $field_first_name ? $field_first_name[0]['value'] : '';
+    $last_name        = $field_last_name ? $field_last_name[0]['value'] : '';
+    $trainer_name     = implode(' ', array($first_name, $last_name));
+  }
+
   if (!$account->field_shifts) {
     $account->field_shifts = array(
       LANGUAGE_NONE => array(),
@@ -282,8 +309,9 @@ function schedule_recurring_available_submit($form, &$form_state) {
   user_save($account);
 
   $mail_params = array(
-    'account' => $account,
-    'shift' => $shifts[0],
+    'account'      => $account,
+    'shift'        => $shifts[0],
+    'trainer_name' => $trainer_name,
   );
 
   drupal_mail('schedule_recurring', 'shift_confirmation', $account->mail, user_preferred_language($account), $mail_params);
