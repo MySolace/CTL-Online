@@ -41,38 +41,38 @@ function schedule_recurring_disable() {
 
 function schedule_recurring_schema() {
   $schema['time_off'] = array(
-    'description' => 'The main store for time off entities',
+    'description' => 'The main store for time off entities.',
     'fields' => array(
       'id' => array(
-        'description' => 'The id of the time off entity.',
+        'description' => 'The ID of the time off entity.',
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
       'type' => array(
-        'description' => 'The type of time off',
+        'description' => 'The type of time off (which is named after a user role).',
         'type' => 'varchar',
         'length' => '64',
         'default' => 'vacation',
         'not null' => TRUE,
       ),
       'author' => array(
-        'description' => 'Who is reqesting time off',
+        'description' => 'The ID of who is requesting time off.',
         'type' => 'int',
         'not null' => TRUE,
       ),
       'start' => array(
-        'description' => 'The start date of the time off',
+        'description' => 'The start date of the time off.',
         'type' => 'int',
         'not null' => TRUE,
       ),
       'end' => array(
-        'description' => 'The end date of the time off',
+        'description' => 'The end date of the time off.',
         'type' => 'int',
         'not null' => TRUE,
       ),
       'reason' => array(
-        'description' => 'Reason for taking time off',
+        'description' => 'Reason for taking time off.',
         'type' => 'text',
         'not null' => FALSE,
       ),
