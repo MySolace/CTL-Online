@@ -235,20 +235,13 @@ function schedule_recurring_confirm() {
   $day         = $days[$day];
   $start_times = _schedule_recurring_times();
   $start       = $start_times[$start];
-  $start_date  = date('l, F dS, Y', strtotime('next ' . $day));
+  $start_date  = date('l, F dS', strtotime('next ' . $day));
 
-  // $end_times   = _schedule_recurring_times(TRUE);
-
-  // $text = t('Shift confirmed for @day from @start to @end', array(
-  //   '@day' => $days[$day] . 's',
-  //   '@start' => $start_times[$start],
-  //   '@end' => $end_times[$end],
-  // ));
-
-  $raw_text = '<h1>Confirmed! Thank you for signing up for a shift. You are scheduled for a four-hour shift every @day at @start. See you on the platform on @start_date. Look for more details in a confirmation email.'
-            . '<br />'
-            . '<br />'
-            . "If you aren't able to make your first shift, please request time off here.</h1>";
+  $raw_text = implode('<br />', array(
+    '<h1>Confirmed! Thank you for signing up for a shift. You are scheduled for a four-hour shift every @day at @start. See you on the platform on @start_date. Look for more details in a confirmation email.',
+    '',
+    "If you aren't able to make your first shift, please <a href=\"https://online.crisistextline.org/time-off\">request time off here</a>.</h1>",
+  ));
 
   $text = t($raw_text, array(
     '@day'        => $day,
