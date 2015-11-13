@@ -28,12 +28,68 @@ function schedule_recurring_permission() {
 function schedule_recurring_entity_info() {
   $entities = array(
     'time_off' => schedule_recurring_time_off_entity(),
-    'make_up' => schedule_recurring_make_up_entity(),
+    'make_up'  => schedule_recurring_make_up_entity(),
   );
-
   return $entities;
 }
 
+/**
+ * Implements hook_entity_property_info().
+ */
+function schedule_recurring_entity_property_info() {
+  $info = array(
+    'time_off' => array(
+      'properties' => array(
+        'id' => array(
+          'label'        => t('ID'),
+          'description'  => t('The ID of the time off entity.'),
+          'type'         => 'integer',
+          'schema field' => 'id',
+        ),
+        'author' => array(
+          'label'        => t('Author'),
+          'description'  => t('The ID of who is requesting time off.'),
+          'type'         => 'integer',
+          'schema field' => 'author',
+        ),
+        'start' => array(
+          'label'        => t('Start date'),
+          'description'  => t('The start date of the time off.'),
+          'type'         => 'date',
+          'schema field' => 'start',
+        ),
+        'end' => array(
+          'label'        => t('End date'),
+          'description'  => t('The end date of the time off.'),
+          'type'         => 'date',
+          'schema field' => 'end',
+        ),
+        'reason' => array(
+          'label'        => t('Reason'),
+          'description'  => t('Reason for taking time off.'),
+          'type'         => 'text',
+          'schema field' => 'reason',
+        ),
+        'type' => array(
+          'label'        => t('Time off type'),
+          'description'  => t('The type of time off (which is named after a user role).'),
+          'type'         => 'text',
+          'schema field' => 'type',
+        ),
+      ),
+    ),
+  );
+  return $info;
+}
+
+/**
+ * Implements hook_entity_property_info_alter().
+ */
+function schedule_recurring_entity_property_info_alter(&$info) {
+  $info['time_off']['properties']['id']['type'] = 'user';
+  // $info['time_off']['properties']['start']['handler'] = 'date_views_filter_handler';
+  // $info['time_off']['properties']['start']['is date'] = TRUE;
+}
 
 /**
  * Implements hook_menu().
