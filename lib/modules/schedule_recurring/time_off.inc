@@ -7,7 +7,7 @@ function schedule_recurring_time_off_entity() {
     'base table'             => 'time_off',
     'fieldable'              => TRUE,
     'uri_callback'           => 'time_off_uri',
-    'controller class'       => 'TimeOffController',
+    'controller class'       => 'EntityAPIController',
     'entity class'           => 'TimeOff',
     'views controller class' => 'EntityDefaultViewsController',
     'entity keys' => array(
@@ -17,20 +17,10 @@ function schedule_recurring_time_off_entity() {
   );
 }
 
-/**
- * Implements hook_entity_property_info_alter().
- */
-function schedule_recurring_entity_property_info_alter(&$info) {
-  $info['time_off']['properties']['id']['type'] = 'user';
-}
-
 class TimeOff extends Entity {
   protected function defaultUri() {
     return array('path' => 'time-off/' . $this->identifier());
   }
-}
-
-class TimeOffController extends EntityAPIController {
 }
 
 function time_off_uri($entity) {
@@ -52,11 +42,11 @@ function time_off_load_multiple($ids = array(), $conditions = array(), $reset = 
 
 function time_off_add() {
   $time_off = entity_create('time_off', array(
-    'id' => '',
-    'start' => time(),
-    'end' => strtotime('+7 days'),
+    'id'     => '',
+    'start'  => time(),
+    'end'    => strtotime('+7 days'),
     'reason' => '',
-    'type' => 'user',
+    'type'   => 'user',
   ));
 
   return drupal_get_form('time_off_form', $time_off);

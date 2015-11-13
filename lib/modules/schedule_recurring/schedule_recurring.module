@@ -28,12 +28,21 @@ function schedule_recurring_permission() {
 function schedule_recurring_entity_info() {
   $entities = array(
     'time_off' => schedule_recurring_time_off_entity(),
-    'make_up' => schedule_recurring_make_up_entity(),
+    'make_up'  => schedule_recurring_make_up_entity(),
   );
-
   return $entities;
 }
 
+/**
+ * Implements hook_entity_property_info_alter().
+ */
+function schedule_recurring_entity_property_info_alter(&$info) {
+  $info['time_off']['properties']['id']['type']            = 'user';
+  $info['time_off']['properties']['start']['type']         = 'date';
+  $info['time_off']['properties']['start']['schema field'] = 'start';
+  $info['time_off']['properties']['end']['type']           = 'date';
+  $info['time_off']['properties']['end']['schema field']   = 'end';
+}
 
 /**
  * Implements hook_menu().
