@@ -70,69 +70,69 @@ function _ctl_onboarding_form_user_profile_form_validate_extra($form, &$form_sta
   //   }
   // }
 
-  // Slot codes must be formatted correctly.
-  if (!_ctl_onboarding_validate_slot_code($slot_code)) {
-    form_set_error('slot_code', t('The slot code is not in a valid format.'));
-    return;
-  }
+  // // Slot codes must be formatted correctly.
+  // if (!_ctl_onboarding_validate_slot_code($slot_code)) {
+  //   form_set_error('slot_code', t('The slot code is not in a valid format.'));
+  //   return;
+  // }
 
-  // Check if the slot code exists within the given cohort.
-  $query  = 'SELECT num_trainers, num_registrants '
-          . 'FROM {ctl_onboarding_slot} '
-          . 'WHERE cohort_id = :cohort_id AND slot_code = :slot_code';
-  $args   = array(':cohort_id' => $cohort_id, ':slot_code' => $slot_code);
-  $result = db_query($query, $args)->fetchAll();
-  if (empty($result)) {
-    $error_msg = 'Cohort @cohort does not include the @slot_code time slot.';
-    $error_msg = t($error_msg, array(
-      '@cohort'    => $cohort_id,
-      '@slot_code' => $slot_code,
-    ));
-    form_set_error('slot_code', $error_msg);
-    return;
-  }
+  // // Check if the slot code exists within the given cohort.
+  // $query  = 'SELECT num_trainers, num_registrants '
+  //         . 'FROM {ctl_onboarding_slot} '
+  //         . 'WHERE cohort_id = :cohort_id AND slot_code = :slot_code';
+  // $args   = array(':cohort_id' => $cohort_id, ':slot_code' => $slot_code);
+  // $result = db_query($query, $args)->fetchAll();
+  // if (empty($result)) {
+  //   $error_msg = 'Cohort @cohort does not include the @slot_code time slot.';
+  //   $error_msg = t($error_msg, array(
+  //     '@cohort'    => $cohort_id,
+  //     '@slot_code' => $slot_code,
+  //   ));
+  //   form_set_error('slot_code', $error_msg);
+  //   return;
+  // }
 
-  $slot_info = $result[0];
+  // $slot_info = $result[0];
 
-  // Check if the user had already registered for the slot.
-  $query = 'SELECT uid '
-         . 'FROM {ctl_onboarding_registrant} '
-         . 'WHERE uid = :uid '
-         . '  AND cohort_id = :cohort_id '
-         . '  AND slot_code = :slot_code;';
-  $args = array(
-    ':uid'       => $uid,
-    ':cohort_id' => $cohort_id,
-    ':slot_code' => $slot_code,
-  );
-  $result = db_query($query, $args)->fetchAll();
-  if (!empty($result)) {
-    $form_state['storage']['switching'] = FALSE;
-    return;
-  }
+  // // Check if the user had already registered for the slot.
+  // $query = 'SELECT uid '
+  //        . 'FROM {ctl_onboarding_registrant} '
+  //        . 'WHERE uid = :uid '
+  //        . '  AND cohort_id = :cohort_id '
+  //        . '  AND slot_code = :slot_code;';
+  // $args = array(
+  //   ':uid'       => $uid,
+  //   ':cohort_id' => $cohort_id,
+  //   ':slot_code' => $slot_code,
+  // );
+  // $result = db_query($query, $args)->fetchAll();
+  // if (!empty($result)) {
+  //   $form_state['storage']['switching'] = FALSE;
+  //   return;
+  // }
 
-  // Check if the slot is available.
-  $num_trainers     = intval($slot_info->num_trainers);
-  $num_registrants  = intval($slot_info->num_registrants);
-  $trainer_capacity = intval(variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY));
-  if ($num_trainers < 1) {
-    $error_msg = 'Cohort @cohort time slot @slot_code is unavailable.';
-    $error_msg = t($error_msg, array(
-      '@cohort'    => $cohort_id,
-      '@slot_code' => $slot_code,
-    ));
-    form_set_error('slot_code', $error_msg);
-    return;
-  }
-  if ($num_registrants >= $trainer_capacity * $num_trainers) {
-    $error_msg = 'Cohort @cohort time slot @slot_code is full.';
-    $error_msg = t($error_msg, array(
-      '@cohort'    => $cohort_id,
-      '@slot_code' => $slot_code,
-    ));
-    form_set_error('slot_code', $error_msg);
-    return;
-  }
+  // // Check if the slot is available.
+  // $num_trainers     = intval($slot_info->num_trainers);
+  // $num_registrants  = intval($slot_info->num_registrants);
+  // $trainer_capacity = intval(variable_get('ctl_onboarding_trainer_capacity', CTL_ONBOARDING_DEFAULT_TRAINER_CAPACITY));
+  // if ($num_trainers < 1) {
+  //   $error_msg = 'Cohort @cohort time slot @slot_code is unavailable.';
+  //   $error_msg = t($error_msg, array(
+  //     '@cohort'    => $cohort_id,
+  //     '@slot_code' => $slot_code,
+  //   ));
+  //   form_set_error('slot_code', $error_msg);
+  //   return;
+  // }
+  // if ($num_registrants >= $trainer_capacity * $num_trainers) {
+  //   $error_msg = 'Cohort @cohort time slot @slot_code is full.';
+  //   $error_msg = t($error_msg, array(
+  //     '@cohort'    => $cohort_id,
+  //     '@slot_code' => $slot_code,
+  //   ));
+  //   form_set_error('slot_code', $error_msg);
+  //   return;
+  // }
 
   $form_state['storage']['switching'] = TRUE;
   $form_state['storage']['uid'] = $uid;
