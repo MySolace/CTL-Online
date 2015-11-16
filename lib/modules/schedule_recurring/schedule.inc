@@ -294,8 +294,6 @@ function schedule_recurring_available_submit($form, &$form_state) {
     'shift'   => $shifts[0],
   );
 
-  drupal_mail('schedule_recurring', 'shift_confirmation', $account->mail, user_preferred_language($account), $mail_params);
-
   $form_state['redirect'] = array(
     'schedule/confirm',
     array(
@@ -304,6 +302,10 @@ function schedule_recurring_available_submit($form, &$form_state) {
       ),
     ),
   );
+
+  if (in_array('Crisis Counselor I', $account->roles)) {
+    drupal_mail('schedule_recurring', 'shift_confirmation', $account->mail, user_preferred_language($account), $mail_params);
+  }
 }
 
 function schedule_recurring_get_mapping_value($searchField, $returnField) {
