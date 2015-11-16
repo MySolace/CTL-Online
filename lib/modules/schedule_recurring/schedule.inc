@@ -409,7 +409,7 @@ function schedule_recurring_get_on($day, $exclude = array(), $all_shifts = FALSE
       if ($shift['day'] == $day) {
         switch ($format) {
           case 'output':
-            $today[$shift['day'] . ':' . $shift['start'] . ':' . $user->uid] = array(
+            $today[$shift['day'] . ':' . $shift['start'] . ':' . $shift['end'] . ':' . $user->uid] = array(
               '<a href="/user/'.$user->uid.'">'.format_username($user).'</a>',
               $times_start[$shift['start']] . ' - ' . $times_end[$shift['end']],
               implode(', ', $user->roles)
@@ -428,10 +428,10 @@ function schedule_recurring_get_on($day, $exclude = array(), $all_shifts = FALSE
 
   if ($format == 'output') {
     uksort($today, function ($a, $b) {
-      list($day_a, $time_a,) = explode(':', $a);
-      list($day_b, $time_b,) = explode(':', $b);
+      list($day_a, $start_a, $end_a,) = explode(':', $a);
+      list($day_b, $start_b, $end_b,) = explode(':', $b);
 
-      return (($day_a * 100000) + $time_a) - (($day_b * 100000) + $time_b);
+      return (($day_a * 100000) + ($start_a * 100) + $end_a) - (($day_b * 100000) + ($start_b * 100) + $end_b);
     });
   }
 
@@ -662,7 +662,6 @@ function schedule_recurring_my_time_off() {
   $query->fields('u', array('uid', 'name'));
   $query->condition('t.end', time(), '>=');
   $query->orderBy('t.end', 'ASC');
-  $query->orderBy('t.start', 'ASC');
 
   $results = $query->execute()->fetchAll();
 
