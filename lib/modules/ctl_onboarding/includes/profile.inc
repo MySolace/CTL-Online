@@ -62,13 +62,13 @@ function _ctl_onboarding_form_user_profile_form_validate_extra($form, &$form_sta
     }
     return;
   }
-  else {
-    // Newer cohorts require a valid slot code to be given.
-    if (empty($slot_code)) {
-      form_set_error('slot_code', t('For cohorts ' . CTL_ONBOARDING_FIRST_COHORT_TO_USE_REGISTRATION_SYSTEM . ' and above there must a slot code given.'));
-      return;
-    }
-  }
+  // else {
+  //   // Newer cohorts require a valid slot code to be given.
+  //   if (empty($slot_code)) {
+  //     form_set_error('slot_code', t('For cohorts ' . CTL_ONBOARDING_FIRST_COHORT_TO_USE_REGISTRATION_SYSTEM . ' and above there must a slot code given.'));
+  //     return;
+  //   }
+  // }
 
   // Slot codes must be formatted correctly.
   if (!_ctl_onboarding_validate_slot_code($slot_code)) {
