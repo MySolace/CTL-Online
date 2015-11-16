@@ -662,6 +662,7 @@ function schedule_recurring_my_time_off() {
   $query->fields('u', array('uid', 'name'));
   $query->condition('t.end', time(), '>=');
   $query->orderBy('t.end', 'ASC');
+  $query->orderBy('t.start', 'ASC');
 
   $results = $query->execute()->fetchAll();
 
