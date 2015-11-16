@@ -231,16 +231,16 @@ function schedule_recurring_wrapping_shifts($start) {
 function schedule_recurring_confirm() {
   list($day, $start, $end) = explode(':', check_plain($_GET['shift']));
 
-  $days        = _schedule_recurring_days();
+  $days        = _schedule_recurring_days(FALSE);
   $day         = $days[$day];
   $start_times = _schedule_recurring_times();
   $start       = $start_times[$start];
   $start_date  = date('l, F dS', strtotime('next ' . $day));
 
   $raw_text = implode('<br />', array(
-    '<h1>Confirmed! Thank you for signing up for a shift. You are scheduled for a four-hour shift every @day at @start. See you on the platform on @start_date. Look for more details in a confirmation email.',
+    '<p>Confirmed! Thank you for signing up for a shift. You are scheduled for a four-hour shift every @day at @start. See you on the platform on @start_date. Look for more details in a confirmation email.',
     '',
-    "If you aren't able to make your first shift, please <a href=\"https://online.crisistextline.org/time-off\">request time off here</a>.</h1>",
+    "If you aren't able to make your first shift, please <a href=\"https://online.crisistextline.org/time-off\">request time off here</a>.</p>",
   ));
 
   $text = t($raw_text, array(
