@@ -21,7 +21,7 @@ function ctl_graduation_views_data() {
     ),
   );
 
-  $data['ctl_graduation_info'] = array(
+  $data['ctl_graduation_progress'] = array(
     'table' => array(
       'group' => t('CTL Graduation Info'),
       'base' => array(
@@ -71,6 +71,10 @@ function ctl_graduation_views_data() {
     'graduation_timestamp' => array_merge($default_field_info, array(
       'title' => t('Graduation timestamp'),
       'help'  => t('Agrees to CTL TOS, maintains confidentiality, maintains appropriate boundaries'),
+      'field' => array(
+        'handler' => 'views_handler_field_date',
+        'click sortable' => TRUE,
+      ),
       'filter' => array(
         'handler' => 'views_handler_filter_date',
       ),
