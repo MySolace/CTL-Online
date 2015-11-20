@@ -66,3 +66,14 @@ function ctl_graduation_theme($existing, $type, $theme, $path) {
   }
   return $themes;
 }
+
+
+/**
+ * Implements hook_views_api().
+ */
+function ctl_graduation_views_api() {
+  return array(
+    'api'  => 3,
+    'path' => drupal_get_path('module', 'ctl_graduation') . '/includes',
+  );
+}
