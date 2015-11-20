@@ -1,3 +1,5 @@
+/* */
+
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-weight: $weight-bold;
 }
@@ -29,6 +31,8 @@ h6, .h6 {
   font-size: $smaller-font-size;
 }
 
+/* */
+
 code, kbd, pre, samp {
   font-family: $font-family-monospace;
 }
@@ -48,8 +52,8 @@ span {
   &.intro {
     color:          #767676;
     font-family:    Oswald, sans-serif;
-    font-weight:    300;
     font-size:      18px;
+    font-weight:    300;
     letter-spacing: 0.2rem;
     text-transform: uppercase;
   }
@@ -115,7 +119,7 @@ ol {
   > li {
     line-height: 2rem;
     list-style:  none;
-    margin:      0 0 (20px) 2em;
+    margin:      0 0 20px 2em;
     padding:     0 16px;
     position:    relative;
   }
@@ -133,6 +137,8 @@ ol {
 }
 
 ul {
+  margin:       0 0 0 1.5em;
+  padding-left: 0;
   &.styled {
     list-style-type: none;
     margin-left:     0;
@@ -143,7 +149,7 @@ ul {
       font-weight:    $weight-medium;
       letter-spacing: 0.1rem;
       line-height:    2rem;
-      margin:         0 0 (20px) 2em;
+      margin:         0 0 20px 2em;
       padding-bottom: 16px;
       position:       relative;
       text-transform: uppercase;
@@ -157,4 +163,12 @@ ul {
       font-size: 20px;
     }
   }
+  li {
+    list-style-type: square;
+    + * {
+      margin-top: 0;
+    }
+  }
 }
+
+/* */

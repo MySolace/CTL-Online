@@ -1,0 +1,354 @@
+/* Style checkbox and radio buttons in Chrome + Safari + Opera */
+@supports (-webkit-appearance:none) {
+  input[type=checkbox],
+  input[type=radio],
+  input[type=checkbox]#edit-delete {
+    -webkit-appearance:none;
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    line-height: normal;
+    margin-right: 0.25em;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #B5B5B5;
+    width: 16px !important;
+    height: 16px !important;
+    transition: background 0.5s ease;
+    outline: none;
+    vertical-align: baseline;
+  }
+
+  .adminimal-theme .location .form-item input.form-checkbox {
+    width: 16px;
+    display: inline-block;
+  }
+
+  input[type=checkbox]#edit-delete {
+    margin-bottom: 0;
+  }
+
+  input[type=radio] {
+    border-radius: 50%;
+  }
+
+  input[type=checkbox]:hover,
+  input[type=checkbox]:focus,
+  input[type=radio]:hover,
+  input[type=radio]:focus {
+    border-color: #0074BD;
+    cursor: pointer;
+  }
+
+  input[type=checkbox]#edit-delete:hover,
+  input[type=checkbox]#edit-delete:focus {
+    border-color: #D01616;
+    cursor: pointer;
+  }
+
+  input[type=checkbox]:checked,
+  input[type=checkbox]:disabled:checked,
+  input[type=radio]:checked,
+  input[type=radio]:disabled:checked{
+    background: #0074BD;
+    box-shadow: inset 0px 0px 0px 4px #fff;
+  }
+
+  input[type=checkbox]#edit-delete:checked,
+  input[type=checkbox]#edit-delete:disabled:checked {
+    background: #D01616;
+    box-shadow: inset 0px 0px 0px 4px #fff;
+  }
+
+  input[type=checkbox]:disabled,
+  input[type=radio]:disabled {
+    opacity: .5;
+    background: #E2E2E2;
+  }
+
+  input[type=checkbox]#edit-delete:disabled {
+    opacity: .5;
+    background: #E88181;
+  }
+
+  input[type=checkbox]:disabled:hover {
+    border-color: #B5B5B5;
+    cursor: default;
+  }
+
+  input[type=checkbox]:disabled:hover,
+  input[type=radio]:disabled:hover {
+    border-color: #B5B5B5;
+    cursor: default;
+    /*cursor: not-allowed;*/
+  }
+
+}
+
+/* *
+
+button {
+  background:     $brand-gray;
+  border:         2px solid transparent;
+  border-radius:  0;
+  color:          $light-gray;
+  display:        inline-block;
+  font-size:      $base-font-size;
+  font-weight:    $weight-bold;
+  letter-spacing: 0.2rem;
+  line-height:    1;
+  margin-bottom:  2%;
+  padding:        15px 30px;
+  text-transform: uppercase;
+  &:hover {
+    background: lighten($brand-gray, 10%);
+  }
+  &:focus {
+    outline: none;
+  }
+  &.primary {
+    background: $blue;
+    color:      $white;
+    &:hover {
+      background: lighten($blue, 10%);
+    }
+  }
+  &.secondary {
+    background: transparent;
+    border:     2px solid $brand-gray;
+    color:      $brand-gray;
+    &:hover {
+      background: #EAEAEA;
+    }
+  }
+}
+
+
+form[id^=course-relationships] .description {
+  display: none;
+}
+
+button,
+input[type="submit"],
+input[id^="save-continue"],
+input#edit-actions-submit,
+input#edit-save,
+input#edit-submit,
+input#edit-actions-save,
+#media-browser-page a.button-yes {
+  @extend button.primary;
+}
+
+input[type=checkbox]:checked + .checkbox:before {
+  color:          $dark-gray;
+  content:         "\f00c";
+  text-shadow:     1px 1px 1px rgba(0, 0, 0, .2);
+  font:            normal normal normal 12px/1.5 FontAwesome;
+  vertical-align: middle;
+}
+
+input[type=radio]:checked + .radio:before {
+  color:          $dark-gray;
+  content:        "\f111";
+  text-shadow:    1px 1px 1px rgba(0, 0, 0, .2);
+  font:           normal normal normal 12px/1.5 FontAwesome;
+  vertical-align: middle;
+}
+
+// .form-type-checkbox label {
+//     @extend .checkbox;
+// }
+// .form-type-checkbox input[type="checkbox"] {
+//   display: none !important;
+// }
+
+.form-type-radio label {
+  @extend .radio;
+}
+
+// input[type=checkbox], input[type=radio] {
+//  display:none;
+// }
+
+.form-group {
+  select {
+    display:       block;
+    padding-right: 20px;
+  }
+}
+
+.form-item {
+  @extend .form-group;
+}
+
+.form-group {
+  label {
+    &.field-label {
+      display:     block;
+      font-size:   $base-font-size;
+      font-weight: $weight-normal;
+    }
+  }
+  input {
+    border:  1px solid $light-gray;
+    padding: 14px;
+    width:   100%;
+    &:focus {
+      outline: none;
+    }
+  }
+  select {
+    border: 1px solid gainsboro;
+    padding: 7px;
+    option {
+      padding: 7px;
+    }
+  }
+}
+
+.checkbox, .radio {
+  display: inline-block;
+  font-weight: 400;
+	cursor:      pointer;
+  margin:      10px 0;
+  &:before {
+    background-color: $light-gray;
+    border-radius:    3px;
+    box-shadow:       inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    color:            #F3F3F3;
+    content:          "";
+    display:          inline-block;
+    height:           18px;
+    margin-right:     3%;
+    text-align:       center;
+    vertical-align:   middle;
+    width:            18px;
+  }
+}
+
+.checkbox {
+  &:before {
+    border-radius: 3px;
+  }
+}
+
+.radio {
+  &:before {
+    border-radius: 10px;
+  }
+}
+
+// Bootstrap overrides.
+// TODO
+// - see if there's a better solution.
+.form-type-radios {
+  .radio {
+    display: inline;
+    &:before {
+      display: none;
+    }
+  }
+  .radio {
+    &:before {
+      border-radius: 0;
+    }
+  }
+  input[type=radio]:checked + .radio:before {
+    content:     '';
+    text-shadow: none;
+  }
+}
+
+/* */
+
+
+/* Style checkbox and radio buttons in Chrome + Safari + Opera */
+/* From the Adminimal theme */
+/* *
+@supports (-webkit-appearance:none) {
+  .style-checkboxes input[type=checkbox],
+  .style-checkboxes input[type=radio],
+  .style-checkboxes input[type=checkbox]#edit-delete {
+    -webkit-appearance:none;
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    margin-right: 0.25em;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #B5B5B5;
+    width: 16px !important;
+    height: 16px !important;
+    -webkit-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: background 0.5s ease;
+    outline: none;
+  }
+
+  .adminimal-theme .location .form-item input.form-checkbox {
+    width: 16px;
+    display: inline-block;
+  }
+
+  .style-checkboxes input[type=checkbox]#edit-delete {
+    margin-bottom: 0;
+  }
+
+  .style-checkboxes input[type=radio] {
+    border-radius: 50%;
+  }
+
+  .style-checkboxes input[type=checkbox]:hover,
+  .style-checkboxes input[type=checkbox]:focus,
+  .style-checkboxes input[type=radio]:hover,
+  .style-checkboxes input[type=radio]:focus {
+    border-color: #0074BD;
+    cursor: pointer;
+  }
+
+  .style-checkboxes input[type=checkbox]#edit-delete:hover,
+  .style-checkboxes input[type=checkbox]#edit-delete:focus {
+    border-color: #D01616;
+    cursor: pointer;
+  }
+
+  .style-checkboxes input[type=checkbox]:checked,
+  .style-checkboxes input[type=checkbox]:disabled:checked,
+  .style-checkboxes input[type=radio]:checked,
+  .style-checkboxes input[type=radio]:disabled:checked{
+    background: #0074BD;
+    box-shadow: inset 0px 0px 0px 4px #fff;
+  }
+
+  .style-checkboxes input[type=checkbox]#edit-delete:checked,
+  .style-checkboxes input[type=checkbox]#edit-delete:disabled:checked {
+    background: #D01616;
+    box-shadow: inset 0px 0px 0px 4px #fff;
+  }
+
+  .style-checkboxes input[type=checkbox]:disabled,
+  .style-checkboxes input[type=radio]:disabled {
+    opacity: .5;
+    background: #E2E2E2;
+  }
+
+  .style-checkboxes input[type=checkbox]#edit-delete:disabled {
+    opacity: .5;
+    background: #E88181;
+  }
+
+  .style-checkboxes input[type=checkbox]:disabled:hover {
+    border-color: #B5B5B5;
+    cursor: default;
+  }
+
+  .style-checkboxes input[type=checkbox]:disabled:hover,
+  .style-checkboxes input[type=radio]:disabled:hover {
+    border-color: #B5B5B5;
+    cursor: default;
+    // cursor: not-allowed;
+  }
+
+}
+
+/* */

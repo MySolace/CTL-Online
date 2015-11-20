@@ -1,32 +1,40 @@
-body {
-  &.admin-menu .navbar {
-    margin-top: 30px;
-  }
-  #admin-menu {
-    z-index: 2000;
+// -----------------------------------------------------------------------------
+//  Layout
+// -----------------------------------------------------------------------------
+
+#page {
+  background: #FFF;
+  color:      #333;
+  margin-top: 22px;
+  padding:    20px 40px;
+  position:   relative;
+  @media (min-width: 1200px) {
+    margin: 0 auto !important;
+    width:  1200px !important;
   }
 }
 
+.nav-tabs {
+  margin: 0;
+}
+
+// .node-nav {
+//   margin-bottom: 1em;
+// }
+
+/* *
+
 .field-multiple-table td {
   position: relative;
-
   .form-item {
     width: calc(100% - 250px);
   }
-
   input.multiple-fields-remove-button {
     margin:   0;
     position: absolute;
     right:    6px;
     top:      7px;
     width:    230px;
-  }
-}
-
-.form-group {
-  select {
-    display:       block;
-    padding-right: 20px;
   }
 }
 
@@ -48,20 +56,13 @@ body {
   }
 }
 
-.nav-tabs {
-  margin: 0;
+#field-comments-add-more-wrapper .form-item {
+  margin-top: 0;
 }
 
-.node-nav {
-  margin-bottom: 1em;
-}
 
 #block-course-navigation {
   text-align: center;
-}
-
-#field-comments-add-more-wrapper .form-item {
-  margin-top: 0;
 }
 
 .course-outline {
@@ -69,6 +70,8 @@ body {
     display: none;
   }
   .item-list ul li {
+    line-height:     4em;
+    list-style-type: none;
     &.completed {
       a {
         margin-left: 0;
@@ -77,15 +80,13 @@ body {
     &:nth-child(odd) {
       background: #f3f4ee;
     }
-    list-style-type: none;
-    line-height:     4em;
-    br {
-      display: none;
-    }
     a {
       display:     inline-block;
       margin-left: 11px;
       width:       50%;
+    }
+    br {
+      display: none;
     }
   }
 }
@@ -98,6 +99,7 @@ body {
     display: none;
   }
 }
+
 
 .slide .c-speech-bubbles {
   margin-top: 25px;
@@ -140,25 +142,25 @@ div.breadcrumb a, #branding div.breadcrumb {
 }
 
 .multipage-controls-list input.form-submit {
-  cursor:        pointer;
   background:    #E3E3E3;
   border:        none;
   border-radius: 0;
-  padding:       6px 10px;
+  color:         #555;
+  cursor:        pointer;
+  font-family:   "Lucida Grande", Verdana, sans-serif;
+  font-size:     1.077em;
+  font-weight:   normal;
   margin-bottom: 1em;
   margin-right:  1em;
-  color:         #555;
+  padding:       6px 10px;
   text-align:    center;
-  font-weight:   normal;
-  font-size:     1.077em;
-  font-family:   "Lucida Grande", Verdana, sans-serif;
   text-shadow:   none;
 }
 
 .multipage-controls-list input.form-submit:hover {
-  background:         #0074BD;
-  color:              #FFF;
-  -webkit-box-shadow: none;
+  background: #0074BD;
+  box-shadow: none;
+  color:      #FFF;
 }
 
 .multipage-pane-title {
@@ -178,60 +180,49 @@ div.breadcrumb a, #branding div.breadcrumb {
   display: none;
 }
 
-@media (min-width: 1200px) {
-  #page {
-    margin: 0 auto;
-    width:  1200px;
-  }
-}
 
 
 
 
 .message {
   background-color: $blue;
-  border: 1px solid darken($blue, 10%);
-  border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  margin-bottom: 24px;
-  padding: 18px 24px;
-  position: relative;
+  border:           1px solid darken($blue, 10%);
+  border-radius:    3px;
+  margin-bottom:    24px;
+  padding:          18px 24px;
+  position:         relative;
 
   .message-inner {
+    color:     $off-white;
     font-size: 20px;
-    margin: 0;
-    color: $off-white;
+    margin:    0;
     max-width: 85%;
-
     .message-icon {
-      color: $white;
-      font-size: 24px;
+      color:        $white;
+      font-size:    24px;
       margin-right: 10px;
     }
   }
 
   button {
     background-color: transparent;
-    color: lighten($blue, 10%);
-    padding: 0;
-    position: absolute;
-    right: 24px;
-    top: 10px;
-  }
-
-  button:hover {
-    color: lighten($brand-primary, 20%);
+    color:            lighten($blue, 10%);
+    padding:          0;
+    position:         absolute;
+    right:            24px;
+    top:              10px;
+    &:hover {
+      color: lighten($brand-primary, 20%);
+    }
   }
 }
 
 .message--error {
   background-color: $brand-primary-dark;
-  border: 1px solid darken($brand-primary-dark, 5%);
+  border:           1px solid darken($brand-primary-dark, 5%);
 
   .message-inner {
     color: $off-white;
-
     .message-icon {
       color: $white;
     }
@@ -239,21 +230,19 @@ div.breadcrumb a, #branding div.breadcrumb {
 
   button {
     background-color: transparent;
-    color: $brand-primary;
-  }
-
-  button:hover {
-    color: lighten($brand-primary, 20%);
+    color:            $brand-primary;
+    &:hover {
+      color: lighten($brand-primary, 20%);
+    }
   }
 }
 
 .message--warning {
   background-color: #BAD320;
-  border: 1px solid darken(#BAD320, 10%);
+  border:           1px solid darken(#BAD320, 10%);
 
   .message-inner {
     color: $off-white;
-
     .message-icon {
       color: $white;
     }
@@ -261,11 +250,10 @@ div.breadcrumb a, #branding div.breadcrumb {
 
   button {
     background-color: transparent;
-    color: lighten(#BAD320, 10%);
-  }
-
-  button:hover {
-    color: lighten($brand-primary, 20%);
+    color:            lighten(#BAD320, 10%);
+    &:hover {
+      color: lighten($brand-primary, 20%);
+    }
   }
 }
 
@@ -284,9 +272,9 @@ div.breadcrumb a, #branding div.breadcrumb {
     margin: 0 auto;
     display: block;
   }
-  &>div {
+  > div {
     height: 100%;
-    &>div {
+    > div {
       height: 100%;
     }
   }
@@ -333,19 +321,18 @@ div.breadcrumb a, #branding div.breadcrumb {
       @extend .z-300;
     }
 
-    .titles:after {
-      content: ' ';
-      background: url('../images/speech-bubble-01.svg');
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      @extend img;
-      margin-top: -27.5%;
-      width: 400px;
-    }
-
     .titles {
       top: 20%;
+      &:after {
+        @extend img;
+        background:   url('../images/speech-bubble-01.svg');
+        content:      ' ';
+        display:      block;
+        margin-left:  auto;
+        margin-right: auto;
+        margin-top:   -27.5%;
+        width:        400px;
+      }
     }
   }
 
@@ -362,11 +349,6 @@ input.vbo-select, input.vbo-table-select-all {
 
 
 
-
-// Bootstrap Starter Template Styles
-body {
-  padding-top: 50px;
-}
 
 .lesson__title {
   color: #222;
@@ -453,12 +435,12 @@ body {
 }
 
 .closed-caption {
-  border: 1px solid #e7e7e7;
-  border-top: 0;
-  height: 200px;
-  width: 1180px;
-  padding: 20px;
   background-color: $white;
+  border:           1px solid #E7E7E7;
+  border-top:       0;
+  height:           200px;
+  padding:          20px;
+  width:            1180px;
 }
 
 // Title Page
@@ -466,16 +448,16 @@ body {
 
 .template--title-page {
   background-color: $brand-primary;
-  text-align: center;
+  text-align:       center;
   .lesson__module-name {
     background-color: $brand-primary-dark;
-    color: $brand-primary;
-    display: inline-block;
-    padding: 10px 15px;
-    text-transform: uppercase;
-    font-weight: $weight-black;
-    font-style: italic;
-    letter-spacing: .3rem;
+    color:            $brand-primary;
+    display:          inline-block;
+    font-style:       italic;
+    font-weight:      $weight-black;
+    letter-spacing:   0.3rem;
+    padding:          10px 15px;
+    text-transform:   uppercase;
   }
   .titles {
     text-align: center;
@@ -859,3 +841,5 @@ body {
 .texter__name--ctl {
   margin-left: 10%;
 }
+
+/* */

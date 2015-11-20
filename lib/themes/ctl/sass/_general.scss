@@ -1,0 +1,55 @@
+// -----------------------------------------------------------------------------
+//  `box-sizing` best practice.
+//  http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/#comment-1583754
+// -----------------------------------------------------------------------------
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+img {
+  box-sizing: content-box;
+}
+
+
+// -----------------------------------------------------------------------------
+//  The "lobotomized owl selector".
+//  http://alistapart.com/article/axiomatic-css-and-lobotomized-owls
+// -----------------------------------------------------------------------------
+
+* + * {
+  margin-top: 1.5em;
+}
+
+
+// -----------------------------------------------------------------------------
+
+
+// font_helvetica              = "Helvetica Neue", Helvetica, Arial, sans-serif
+
+body {
+  font-family:             Helvetica;
+  font-size:               16px;
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-top:             50px;
+  &.admin-menu .navbar {
+    margin-top: 30px;
+  }
+  #admin-menu {
+    z-index: 2000;
+  }
+}
+
+img {
+  height:    auto;
+  max-width: 100%;
+  &.circle-crop {
+    border-radius: 100px;
+    object-fit:    cover;
+  }
+}
