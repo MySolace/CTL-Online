@@ -76,5 +76,6 @@ function ctl_graduation_views_data() {
       ),
     )),
   );
+
   return $data;
 }
