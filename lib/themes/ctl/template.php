@@ -49,285 +49,285 @@ function ctl_node_add_list($variables) {
   return $output;
 }
 
-/**
- * Implements theme_adminimal_block_content().
- *
- * Use unordered list markup in both compact and extended mode.
- */
-function ctl_adminimal_block_content($variables) {
-  $content = $variables['content'];
-  $output = '';
-  if (!empty($content)) {
-    $output = system_ctl_compact_mode() ? '<ul class="admin-list compact">' : '<ul class="admin-list">';
-    foreach ($content as $item) {
-      $output .= '<li class="leaf">';
-      $output .= l($item['title'], $item['href'], $item['localized_options']);
-      if (isset($item['description']) && !system_ctl_compact_mode()) {
-        $output .= '<div class="description">' . filter_xss_admin($item['description']) . '</div>';
-      }
-      $output .= '</li>';
-    }
-    $output .= '</ul>';
-  }
-  return $output;
-}
+// /**
+//  * Implements theme_adminimal_block_content().
+//  *
+//  * Use unordered list markup in both compact and extended mode.
+//  */
+// function ctl_adminimal_block_content($variables) {
+//   $content = $variables['content'];
+//   $output = '';
+//   if (!empty($content)) {
+//     $output = system_ctl_compact_mode() ? '<ul class="admin-list compact">' : '<ul class="admin-list">';
+//     foreach ($content as $item) {
+//       $output .= '<li class="leaf">';
+//       $output .= l($item['title'], $item['href'], $item['localized_options']);
+//       if (isset($item['description']) && !system_ctl_compact_mode()) {
+//         $output .= '<div class="description">' . filter_xss_admin($item['description']) . '</div>';
+//       }
+//       $output .= '</li>';
+//     }
+//     $output .= '</ul>';
+//   }
+//   return $output;
+// }
 
-/**
- * Implements theme_tablesort_indicator().
- *
- * Use our own image versions, so they show up as black and not gray on gray.
- */
-function ctl_tablesort_indicator($variables) {
-  $style = $variables['style'];
-  $theme_path = drupal_get_path('theme', 'ctl_theme');
-  if ($style == 'asc') {
-    return theme('image', array('path' => $theme_path . '/images/arrow-asc.png', 'alt' => t('sort ascending'), 'width' => 13, 'height' => 13, 'title' => t('sort ascending')));
-  }
-  else {
-    return theme('image', array('path' => $theme_path . '/images/arrow-desc.png', 'alt' => t('sort descending'), 'width' => 13, 'height' => 13, 'title' => t('sort descending')));
-  }
-}
+// /**
+//  * Implements theme_tablesort_indicator().
+//  *
+//  * Use our own image versions, so they show up as black and not gray on gray.
+//  */
+// function ctl_tablesort_indicator($variables) {
+//   $style = $variables['style'];
+//   $theme_path = drupal_get_path('theme', 'ctl');
+//   if ($style == 'asc') {
+//     return theme('image', array('path' => $theme_path . '/images/arrow-asc.png', 'alt' => t('sort ascending'), 'width' => 13, 'height' => 13, 'title' => t('sort ascending')));
+//   }
+//   else {
+//     return theme('image', array('path' => $theme_path . '/images/arrow-desc.png', 'alt' => t('sort descending'), 'width' => 13, 'height' => 13, 'title' => t('sort descending')));
+//   }
+// }
 
-/**
- * Implements hook_css_alter().
- */
-function ctl_css_alter(&$css) {
-  // Use Seven's vertical tabs style instead of the default one.
-  if (isset($css['misc/vertical-tabs.css'])) {
-    $css['misc/vertical-tabs.css']['data'] = drupal_get_path('theme', 'ctl_theme') . '/css/vertical-tabs.css';
-  }
-  if (isset($css['misc/vertical-tabs-rtl.css'])) {
-    $css['misc/vertical-tabs-rtl.css']['data'] = drupal_get_path('theme', 'ctl_theme') . '/css/vertical-tabs-rtl.css';
-  }
-  // Use Seven's jQuery UI theme style instead of the default one.
-  if (isset($css['misc/ui/jquery.ui.theme.css'])) {
-    $css['misc/ui/jquery.ui.theme.css']['data'] = drupal_get_path('theme', 'ctl_theme') . '/css/jquery.ui.theme.css';
-  }
-}
+// /**
+//  * Implements hook_css_alter().
+//  */
+// function ctl_css_alter(&$css) {
+//   // Use Seven's vertical tabs style instead of the default one.
+//   if (isset($css['misc/vertical-tabs.css'])) {
+//     $css['misc/vertical-tabs.css']['data'] = drupal_get_path('theme', 'ctl') . '/css/vertical-tabs.css';
+//   }
+//   if (isset($css['misc/vertical-tabs-rtl.css'])) {
+//     $css['misc/vertical-tabs-rtl.css']['data'] = drupal_get_path('theme', 'ctl') . '/css/vertical-tabs-rtl.css';
+//   }
+//   // Use Seven's jQuery UI theme style instead of the default one.
+//   if (isset($css['misc/ui/jquery.ui.theme.css'])) {
+//     $css['misc/ui/jquery.ui.theme.css']['data'] = drupal_get_path('theme', 'ctl') . '/css/jquery.ui.theme.css';
+//   }
+// }
 
-/**
- * Implements hook_js_alter().
- */
-function ctl_js_alter(&$javascript) {
-  // Fix module filter available updates page.
-  if (isset($javascript[drupal_get_path('module','module_filter').'/js/update_status.js'])) {
-    $javascript[drupal_get_path('module','module_filter').'/js/update_status.js']['data'] = drupal_get_path('theme', 'ctl_theme') . '/js/update_status.js';
-  }
-}
+// /**
+//  * Implements hook_js_alter().
+//  */
+// function ctl_js_alter(&$javascript) {
+//   // Fix module filter available updates page.
+//   if (isset($javascript[drupal_get_path('module','module_filter').'/js/update_status.js'])) {
+//     $javascript[drupal_get_path('module','module_filter').'/js/update_status.js']['data'] = drupal_get_path('theme', 'ctl') . '/js/update_status.js';
+//   }
+// }
 
-/**
- * Implements theme_admin_block().
- * Adding classes to the administration blocks see issue #1869690.
- */
-function ctl_admin_block($variables) {
-  $block = $variables['block'];
-  $output = '';
+// /**
+//  * Implements theme_admin_block().
+//  * Adding classes to the administration blocks see issue #1869690.
+//  */
+// function ctl_admin_block($variables) {
+//   $block = $variables['block'];
+//   $output = '';
 
-  // Don't display the block if it has no content to display.
-  if (empty($block['show'])) {
-    return $output;
-  }
+//   // Don't display the block if it has no content to display.
+//   if (empty($block['show'])) {
+//     return $output;
+//   }
 
-  if (!empty($block['path'])) {
-    $output .= '<div class="admin-panel ' . check_plain(str_replace("/", " ", $block['path'])) . ' ">';
-  }
-  elseif (!empty($block['title'])) {
-    $output .= '<div class="admin-panel ' . check_plain(strtolower($block['title'])) . '">';
-  }
-  else {
-    $output .= '<div class="admin-panel">';
-  }
+//   if (!empty($block['path'])) {
+//     $output .= '<div class="admin-panel ' . check_plain(str_replace("/", " ", $block['path'])) . ' ">';
+//   }
+//   elseif (!empty($block['title'])) {
+//     $output .= '<div class="admin-panel ' . check_plain(strtolower($block['title'])) . '">';
+//   }
+//   else {
+//     $output .= '<div class="admin-panel">';
+//   }
 
-  if (!empty($block['title'])) {
-    $output .= '<h3 class="title">' . $block['title'] . '</h3>';
-  }
+//   if (!empty($block['title'])) {
+//     $output .= '<h3 class="title">' . $block['title'] . '</h3>';
+//   }
 
-  if (!empty($block['content'])) {
-    $output .= '<div class="body">' . $block['content'] . '</div>';
-  }
-  else {
-    $output .= '<div class="description">' . $block['description'] . '</div>';
-  }
+//   if (!empty($block['content'])) {
+//     $output .= '<div class="body">' . $block['content'] . '</div>';
+//   }
+//   else {
+//     $output .= '<div class="description">' . $block['description'] . '</div>';
+//   }
 
-  $output .= '</div>';
+//   $output .= '</div>';
 
-  return $output;
-}
+//   return $output;
+// }
 
-/**
- * Implements theme_admin_block_content().
- * Adding classes to the administration blocks see issue #1869690.
- */
-function ctl_admin_block_content($variables) {
-  $content = $variables['content'];
-  $output = '';
+// /**
+//  * Implements theme_admin_block_content().
+//  * Adding classes to the administration blocks see issue #1869690.
+//  */
+// function ctl_admin_block_content($variables) {
+//   $content = $variables['content'];
+//   $output = '';
 
-  if (!empty($content)) {
-    $class = 'admin-list';
-    if ($compact = system_admin_compact_mode()) {
-      $class .= ' compact';
-    }
-    $output .= '<dl class="' . $class . '">';
-    foreach ($content as $item) {
-      if (!isset($item['path'])) {
-          $item['path']='';
-      }
-      $output .= '<div class="admin-block-item ' . check_plain(str_replace("/", "-", $item['path'])) . '"><dt>' . l($item['title'], $item['href'], $item['localized_options']) . '</dt>';
-      if (!$compact && isset($item['description'])) {
-        $output .= '<dd class="description">' . filter_xss_admin($item['description']) . '</dd>';
-      }
-      $output .= '</div>';
-    }
-    $output .= '</dl>';
-  }
-  return $output;
-}
+//   if (!empty($content)) {
+//     $class = 'admin-list';
+//     if ($compact = system_admin_compact_mode()) {
+//       $class .= ' compact';
+//     }
+//     $output .= '<dl class="' . $class . '">';
+//     foreach ($content as $item) {
+//       if (!isset($item['path'])) {
+//           $item['path']='';
+//       }
+//       $output .= '<div class="admin-block-item ' . check_plain(str_replace("/", "-", $item['path'])) . '"><dt>' . l($item['title'], $item['href'], $item['localized_options']) . '</dt>';
+//       if (!$compact && isset($item['description'])) {
+//         $output .= '<dd class="description">' . filter_xss_admin($item['description']) . '</dd>';
+//       }
+//       $output .= '</div>';
+//     }
+//     $output .= '</dl>';
+//   }
+//   return $output;
+// }
 
-/**
- * Implements theme_table().
- */
-function ctl_table($variables) {
-  $header = $variables['header'];
-  $rows = $variables['rows'];
-  $attributes = $variables['attributes'];
-  $caption = $variables['caption'];
-  $colgroups = $variables['colgroups'];
-  $sticky = $variables['sticky'];
-  $empty = $variables['empty'];
+// /**
+//  * Implements theme_table().
+//  */
+// function ctl_table($variables) {
+//   $header = $variables['header'];
+//   $rows = $variables['rows'];
+//   $attributes = $variables['attributes'];
+//   $caption = $variables['caption'];
+//   $colgroups = $variables['colgroups'];
+//   $sticky = $variables['sticky'];
+//   $empty = $variables['empty'];
 
-  // Add sticky headers, if applicable.
-  if (count($header) && $sticky) {
-    drupal_add_js('misc/tableheader.js');
-    // Add 'sticky-enabled' class to the table to identify it for JS.
-    // This is needed to target tables constructed by this function.
-    $attributes['class'][] = 'sticky-enabled';
-  }
+//   // Add sticky headers, if applicable.
+//   if (count($header) && $sticky) {
+//     drupal_add_js('misc/tableheader.js');
+//     // Add 'sticky-enabled' class to the table to identify it for JS.
+//     // This is needed to target tables constructed by this function.
+//     $attributes['class'][] = 'sticky-enabled';
+//   }
 
-  $output = '<div class="overflow-fix">';
-  $output .= '<table' . drupal_attributes($attributes) . ">\n";
+//   $output = '<div class="overflow-fix">';
+//   $output .= '<table' . drupal_attributes($attributes) . ">\n";
 
-  if (isset($caption)) {
-    $output .= '<caption>' . $caption . "</caption>\n";
-  }
+//   if (isset($caption)) {
+//     $output .= '<caption>' . $caption . "</caption>\n";
+//   }
 
-  // Format the table columns:
-  if (count($colgroups)) {
-    foreach ($colgroups as $number => $colgroup) {
-      $attributes = array();
+//   // Format the table columns:
+//   if (count($colgroups)) {
+//     foreach ($colgroups as $number => $colgroup) {
+//       $attributes = array();
 
-      // Check if we're dealing with a simple or complex column
-      if (isset($colgroup['data'])) {
-        foreach ($colgroup as $key => $value) {
-          if ($key == 'data') {
-            $cols = $value;
-          }
-          else {
-            $attributes[$key] = $value;
-          }
-        }
-      }
-      else {
-        $cols = $colgroup;
-      }
+//       // Check if we're dealing with a simple or complex column
+//       if (isset($colgroup['data'])) {
+//         foreach ($colgroup as $key => $value) {
+//           if ($key == 'data') {
+//             $cols = $value;
+//           }
+//           else {
+//             $attributes[$key] = $value;
+//           }
+//         }
+//       }
+//       else {
+//         $cols = $colgroup;
+//       }
 
-      // Build colgroup
-      if (is_array($cols) && count($cols)) {
-        $output .= ' <colgroup' . drupal_attributes($attributes) . '>';
-        $i = 0;
-        foreach ($cols as $col) {
-          $output .= ' <col' . drupal_attributes($col) . ' />';
-        }
-        $output .= " </colgroup>\n";
-      }
-      else {
-        $output .= ' <colgroup' . drupal_attributes($attributes) . " />\n";
-      }
-    }
-  }
+//       // Build colgroup
+//       if (is_array($cols) && count($cols)) {
+//         $output .= ' <colgroup' . drupal_attributes($attributes) . '>';
+//         $i = 0;
+//         foreach ($cols as $col) {
+//           $output .= ' <col' . drupal_attributes($col) . ' />';
+//         }
+//         $output .= " </colgroup>\n";
+//       }
+//       else {
+//         $output .= ' <colgroup' . drupal_attributes($attributes) . " />\n";
+//       }
+//     }
+//   }
 
-  // Add the 'empty' row message if available.
-  if (!count($rows) && $empty) {
-    $header_count = 0;
-    foreach ($header as $header_cell) {
-      if (is_array($header_cell)) {
-        $header_count += isset($header_cell['colspan']) ? $header_cell['colspan'] : 1;
-      }
-      else {
-        ++$header_count;
-      }
-    }
-    $rows[] = array(array(
-      'data' => $empty,
-      'colspan' => $header_count,
-      'class' => array('empty', 'message'),
-    ));
-  }
+//   // Add the 'empty' row message if available.
+//   if (!count($rows) && $empty) {
+//     $header_count = 0;
+//     foreach ($header as $header_cell) {
+//       if (is_array($header_cell)) {
+//         $header_count += isset($header_cell['colspan']) ? $header_cell['colspan'] : 1;
+//       }
+//       else {
+//         ++$header_count;
+//       }
+//     }
+//     $rows[] = array(array(
+//       'data' => $empty,
+//       'colspan' => $header_count,
+//       'class' => array('empty', 'message'),
+//     ));
+//   }
 
-  // Format the table header:
-  if (count($header)) {
-    $ts = tablesort_init($header);
-    // HTML requires that the thead tag has tr tags in it followed by tbody
-    // tags. Using ternary operator to check and see if we have any rows.
-    $output .= (count($rows) ? ' <thead><tr>' : ' <tr>');
-    foreach ($header as $cell) {
-      $cell = tablesort_header($cell, $header, $ts);
-      $output .= _theme_table_cell($cell, TRUE);
-    }
-    // Using ternary operator to close the tags based on whether or not there are rows
-    $output .= (count($rows) ? " </tr></thead>\n" : "</tr>\n");
-  }
-  else {
-    $ts = array();
-  }
+//   // Format the table header:
+//   if (count($header)) {
+//     $ts = tablesort_init($header);
+//     // HTML requires that the thead tag has tr tags in it followed by tbody
+//     // tags. Using ternary operator to check and see if we have any rows.
+//     $output .= (count($rows) ? ' <thead><tr>' : ' <tr>');
+//     foreach ($header as $cell) {
+//       $cell = tablesort_header($cell, $header, $ts);
+//       $output .= _theme_table_cell($cell, TRUE);
+//     }
+//     // Using ternary operator to close the tags based on whether or not there are rows
+//     $output .= (count($rows) ? " </tr></thead>\n" : "</tr>\n");
+//   }
+//   else {
+//     $ts = array();
+//   }
 
-  // Format the table rows:
-  if (count($rows)) {
-    $output .= "<tbody>\n";
-    $flip = array(
-      'even' => 'odd',
-      'odd' => 'even',
-    );
-    $class = 'even';
-    foreach ($rows as $number => $row) {
-      // Check if we're dealing with a simple or complex row
-      if (isset($row['data'])) {
-        $cells = $row['data'];
-        $no_striping = isset($row['no_striping']) ? $row['no_striping'] : FALSE;
+//   // Format the table rows:
+//   if (count($rows)) {
+//     $output .= "<tbody>\n";
+//     $flip = array(
+//       'even' => 'odd',
+//       'odd' => 'even',
+//     );
+//     $class = 'even';
+//     foreach ($rows as $number => $row) {
+//       // Check if we're dealing with a simple or complex row
+//       if (isset($row['data'])) {
+//         $cells = $row['data'];
+//         $no_striping = isset($row['no_striping']) ? $row['no_striping'] : FALSE;
 
-        // Set the attributes array and exclude 'data' and 'no_striping'.
-        $attributes = $row;
-        unset($attributes['data']);
-        unset($attributes['no_striping']);
-      }
-      else {
-        $cells = $row;
-        $attributes = array();
-        $no_striping = FALSE;
-      }
-      if (count($cells)) {
-        // Add odd/even class
-        if (!$no_striping) {
-          $class = $flip[$class];
-          $attributes['class'][] = $class;
-        }
+//         // Set the attributes array and exclude 'data' and 'no_striping'.
+//         $attributes = $row;
+//         unset($attributes['data']);
+//         unset($attributes['no_striping']);
+//       }
+//       else {
+//         $cells = $row;
+//         $attributes = array();
+//         $no_striping = FALSE;
+//       }
+//       if (count($cells)) {
+//         // Add odd/even class
+//         if (!$no_striping) {
+//           $class = $flip[$class];
+//           $attributes['class'][] = $class;
+//         }
 
-        // Build row
-        $output .= ' <tr' . drupal_attributes($attributes) . '>';
-        $i = 0;
-        foreach ($cells as $cell) {
-          $cell = tablesort_cell($cell, $header, $ts, $i++);
-          $output .= _theme_table_cell($cell);
-        }
-        $output .= " </tr>\n";
-      }
-    }
-    $output .= "</tbody>\n";
-  }
+//         // Build row
+//         $output .= ' <tr' . drupal_attributes($attributes) . '>';
+//         $i = 0;
+//         foreach ($cells as $cell) {
+//           $cell = tablesort_cell($cell, $header, $ts, $i++);
+//           $output .= _theme_table_cell($cell);
+//         }
+//         $output .= " </tr>\n";
+//       }
+//     }
+//     $output .= "</tbody>\n";
+//   }
 
-  $output .= "</table>\n";
-  $output .= "</div>\n";
-  return $output;
-}
+//   $output .= "</table>\n";
+//   $output .= "</div>\n";
+//   return $output;
+// }
 
 
 
@@ -346,8 +346,13 @@ function ctl_table($variables) {
  */
 function ctl_preprocess_html(&$vars) {
 
-  // Get ctl_theme folder path.
-  $ctl_path = drupal_get_path('theme', 'ctl_theme');
+  $ctl_path = drupal_get_path('theme', 'ctl');
+
+  // Load Font Awesome.
+  // https://fortawesome.github.io/Font-Awesome/
+  drupal_add_css('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', array(
+    'type' => 'external'
+  ));
 
   // // Add default styles.
   // drupal_add_css($ctl_path . '/css/reset.css', array('group' => CSS_THEME, 'media' => 'all', 'weight' => -999));
@@ -368,7 +373,7 @@ function ctl_preprocess_html(&$vars) {
   // }
 
   // // Add theme name to body class.
-  // $vars['classes_array'][] = 'ctl_theme-theme';
+  // $vars['classes_array'][] = 'ctl-theme';
 
   // // Style checkbox and radio buttons in Webkit Browsers.
   // if (theme_get_setting('style_checkboxes')) {
@@ -405,21 +410,21 @@ function ctl_preprocess_html(&$vars) {
     $media_query_tablet = theme_get_setting('media_query_tablet');
   }
 
-  // // Load custom ctl_theme skin.
+  // // Load custom ctl skin.
   // $ctl_skin = theme_get_setting('ctl_theme_skin');
   // if ((!is_null($ctl_skin))) {
   //   drupal_add_css($ctl_path . '/skins/' . $ctl_skin . '/' . $ctl_skin . '.css', array('group' => CSS_THEME, 'weight' => 900, 'preprocess' => TRUE));
   //   // Add conditional CSS for Mac OS X.
   //   drupal_add_css($ctl_path . '/skins/' . $ctl_skin . '/mac_os_x.css', array('group' => CSS_THEME, 'weight' => 950, 'preprocess' => TRUE));
   //   drupal_add_js($ctl_path . '/skins/' . $ctl_skin . '/' . $ctl_skin . '.js');
-  //   $vars['classes_array'][] = 'ctl_theme-skin-' . $ctl_skin ;
+  //   $vars['classes_array'][] = 'ctl-skin-' . $ctl_skin ;
   // }
   // else {
   //   drupal_add_css($ctl_path . '/skins/default/default.css', array('group' => CSS_THEME, 'weight' => 900, 'preprocess' => TRUE));
   //   // Add conditional CSS for Mac OS X.
   //   drupal_add_css($ctl_path . '/skins/default/mac_os_x.css', array('group' => CSS_THEME, 'weight' => 950, 'preprocess' => TRUE));
   //   drupal_add_js($ctl_path . '/skins/default/default.js');
-  //   $vars['classes_array'][] = 'ctl_theme-skin-default' ;
+  //   $vars['classes_array'][] = 'ctl-skin-default' ;
   // }
 
   // // Add responsive styles.
@@ -427,7 +432,7 @@ function ctl_preprocess_html(&$vars) {
   // drupal_add_css($ctl_path . '/css/tablet.css', array('group' => CSS_THEME, 'media' => $media_query_tablet, 'weight' => 1000));
 
   // // Add custom CSS.
-  // $custom_css_path = 'public://ctl_theme-custom.css';
+  // $custom_css_path = 'public://ctl-custom.css';
   // if (theme_get_setting('custom_css') && file_exists($custom_css_path)) {
   //   drupal_add_css($custom_css_path, array('group' => CSS_THEME, 'weight' => 9999, 'preprocess' => TRUE));
   // }
@@ -463,9 +468,9 @@ function ctl_preprocess_html(&$vars) {
     $vars['classes_array'][] = 'no-sidebars';
   }
 
-  $ctl_path = drupal_get_path('theme', 'ctl_theme');
+  $ctl_path = drupal_get_path('theme', 'ctl');
 
-  drupal_add_css($ctl_path . '/css/ctl.css', array(
+  drupal_add_css($ctl_path . '/main.css', array(
     'group'  => CSS_THEME,
     'media'  => 'all',
     'weight' => 5,

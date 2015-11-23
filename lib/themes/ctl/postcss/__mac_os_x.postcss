@@ -8,24 +8,28 @@ body.mac .exposed-filters .form-item label {
   line-height: 38px;
 }
 
-body.mac.style-checkboxes input[type=checkbox] {
-  width: 14px;
-  height: 14px;
-  border-radius: 2px;
-  top: 2px;
-}
+body.mac.style-checkboxes {
 
-body.mac.style-checkboxes input[type=radio] {
-  width: 14px;
-  height: 14px;
-  top: 2px;
-}
+  input[type=checkbox] {
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+    top: 2px;
+  }
 
-body.mac.style-checkboxes input[type=checkbox]:checked,
-body.mac.style-checkboxes input[type=checkbox]:disabled:checked,
-body.mac.style-checkboxes input[type=radio]:checked,
-body.mac.style-checkboxes input[type=radio]:disabled:checked {
-  box-shadow: inset 0px 0px 0px 4px #fff;
+  input[type=radio] {
+    width: 14px;
+    height: 14px;
+    top: 2px;
+  }
+
+  input[type=checkbox]:checked,
+  input[type=checkbox]:disabled:checked,
+  input[type=radio]:checked,
+  input[type=radio]:disabled:checked {
+    box-shadow: inset 0px 0px 0px 4px #fff;
+  }
+
 }
 
 body.mac table th {

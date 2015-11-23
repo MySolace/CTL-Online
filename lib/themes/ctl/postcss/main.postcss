@@ -1,0 +1,64 @@
+//
+// Styles are written in a generally verbose fashion for ease of readability
+// and maintainability.  Automated processing is relied upon to take care of
+// producing production-ready CSS.
+//
+// Rules are ordered according to criteria of subsequently increasing priority:
+//
+//   1.  Collect into distinct ordered groups:
+//       a.  Elements
+//       b.  Pseudo-Selectors
+//       c.  Classes
+//       d.  IDs
+//       e.  Hacks
+//       f.  Development-Oriented (e.g. diagnostic styles)
+//
+//   2.  Within each group order rules according to priority:
+//       a.  Nesting order if there is one (e.g. '.main-wrapper' before '.main').
+//       b.  Rules with multiple selectors are grouped together by similar
+//           starting selectors.
+//       c.  Increasing cascade level.
+//       d.  Increasing specificity.
+//       e.  Sibling order if there is one (e.g. '.main-header' before '.main-footer').
+//       f.  HTML document order.
+//       g.  Alphabetical order.
+//       h.  Numerical order.
+//
+// Selectors and properties are arranged alphabetically by default.
+//
+// Shorthand notations are used when they enhance readability.
+//
+// Hex notation is used for opaque color values.
+//
+// Percentages are used when defining font sizes.
+// http://www.kyleschaeffer.com/best-practices/css-font-size-em-vs-px-vs-pt-vs/
+//
+// Stylus is the preferred preprocessing language.
+//
+// In HTML element tags, attributes related to CSS are ideally order by
+// increasing CSS specificity (i.e. first "class" then "id" then "style").
+//
+
+
+/* */
+
+// @import "bootstrap";
+// @import "font-awesome";
+
+@import '_setup.postcss';
+
+// @import '__default.postcss';
+// @import '__mac_os_x.postcss';
+
+// @import '_forms.postcss';
+@import '_general.postcss';
+@import '_links.postcss';
+@import '_others.postcss';
+// @import '_tables.postcss';
+@import '_text.postcss';
+
+
+// -----------------------------------------------------------------------------
+//  Shame Styles
+//  http://csswizardry.com/2013/04/shame-css/
+// -----------------------------------------------------------------------------

@@ -1,20 +1,3 @@
-table {
-  @extend .table--default;
-  th, td {
-    background: none;
-  }
-}
-
-th.checkbox, td.checkbox {
-  display: table-cell;
-  &:before, label:before {
-    display: none;
-  }
-  input[type=checkbox] {
-    display: inline;
-  }
-}
-
 .table--default {
   caption {
     color:       $dark-gray;
@@ -33,5 +16,22 @@ th.checkbox, td.checkbox {
   }
   tr {
     border-bottom: 1px solid #EAEAEA;
+  }
+}
+
+table {
+  @extend .table--default;
+  th, td {
+    background: none;
+  }
+}
+
+th.checkbox, td.checkbox {
+  display: table-cell;
+  &:before, label:before {
+    display: none;
+  }
+  input[type=checkbox] {
+    display: inline;
   }
 }

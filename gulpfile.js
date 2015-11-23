@@ -1,7 +1,19 @@
+// var autoprefixer = require('autoprefixer');
+// var cssnext = require('cssnext');
+// var precss = require('precss');
+
+// var processors = [
+//   autoprefixer,
+//   cssnext,
+//   precss
+// ];
+
 var elixir = require('laravel-elixir');
 
 require('laravel-elixir-bower-io');
 // require('laravel-elixir-postcss');
+
+// postcss([ require('postcss-normalize') ])
 
 elixir.config.production = true;
 

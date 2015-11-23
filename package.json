@@ -3,11 +3,27 @@
   "repository": {},
   "private": true,
   "devDependencies": {
+    "autoprefixer": "^6.1.0",
+    "cssnano": "^3.3.2",
+    "cssnext": "^1.8.4",
     "gulp": "^3.9.0",
     "laravel-elixir": "^3.4.2",
     "laravel-elixir-bower-io": "^0.1.1",
     "laravel-elixir-postcss": "^0.3.1",
-    "postcss-advanced-variables": "^1.2.2",
-    "postcss-extend": "^1.0.1"
+    "postcss-cli": "^2.3.2",
+    "postcss-normalize": "^0.1.2",
+    "postcss-scss": "^0.1.3",
+    "precss": "^1.3.0",
+    "strip-css-singleline-comments": "^1.1.0",
+    "stylelint": "^2.3.2"
+  },
+  "scripts": {
+    "build:css": "postcss --config postcss.json && strip-css-singleline-comments < lib/themes/ctl/tmp.css > lib/themes/ctl/main.css && rm lib/themes/ctl/tmp.css",
+    "build": "npm run build:css",
+    "lint:css": "postcss --use stylelint lib/themes/ctl/main.css",
+    "lint": "npm run lint:css",
+    "minify:css": "postcss --use cssnano --output lib/themes/ctl/main.css lib/themes/ctl/main.css",
+    "minify": "npm run minify:css",
+    "it": "npm run build; npm run minify"
   }
 }
