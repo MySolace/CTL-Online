@@ -15,9 +15,9 @@ th.checkbox, td.checkbox {
     }
 }
 
-.form-type-radio label {
-    @extend .radio;
-}
+// .form-type-radio label {
+//     @extend .radio;
+// }
 
 table {
     @extend .table--default;
