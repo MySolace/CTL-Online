@@ -1,5 +1,5 @@
 {
-  "use": ["precss", "postcss-normalize"],
+  "use": ["precss", "rucksack-css", "postcss-normalize"],
   "syntax": "postcss-scss",
   "//": "\"autoprefixer\": {\"browsers\": \"> 5%\"}",
   "input": "lib/themes/ctl/postcss/main.postcss",
