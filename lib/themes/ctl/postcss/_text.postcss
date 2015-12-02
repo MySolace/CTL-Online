@@ -124,17 +124,17 @@ ol {
     margin:      0 0 20px 2em;
     padding:     0 16px;
     position:    relative;
-  }
-  > li:before {
-    box-sizing:        border-box;
-    color:             $brand-primary;
-    content:           counter(li);
-    counter-increment: li;
-    font-size:         $base-font-size;
-    font-weight:       $weight-black;
-    left:              -2em;
-    padding:           0 12px;
-    position:          absolute;
+    &:before {
+      box-sizing:        border-box;
+      color:             $brand-primary;
+      content:           counter(li);
+      counter-increment: li;
+      font-size:         $base-font-size;
+      font-weight:       $weight-black;
+      left:              -2em;
+      padding:           0 12px;
+      position:          absolute;
+    }
   }
 }
 

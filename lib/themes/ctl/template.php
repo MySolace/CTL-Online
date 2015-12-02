@@ -1,5 +1,10 @@
 <?php
 
+// registry_rebuild();
+// system_rebuild_theme_data();
+// drupal_theme_rebuild();
+
+
 // Based on the Adminimal theme.
 
 /**
@@ -27,27 +32,27 @@ function ctl_preprocess_page(&$vars) {
   unset($vars['page']['hidden']);
 }
 
-/**
- * Display the list of available node types for node creation.
- */
-function ctl_node_add_list($variables) {
-  $content = $variables['content'];
-  $output = '';
-  if ($content) {
-    $output = '<ul class="admin-list">';
-    foreach ($content as $item) {
-      $output .= '<li class="clearfix">';
-      $output .= '<span class="label">' . l($item['title'], $item['href'], $item['localized_options']) . '</span>';
-      $output .= '<div class="description">' . filter_xss_admin($item['description']) . '</div>';
-      $output .= '</li>';
-    }
-    $output .= '</ul>';
-  }
-  else {
-    $output = '<p>' . t('You have not created any content types yet. Go to the <a href="@create-content">content type creation page</a> to add a new content type.', array('@create-content' => url('admin/structure/types/add'))) . '</p>';
-  }
-  return $output;
-}
+// /**
+//  * Display the list of available node types for node creation.
+//  */
+// function ctl_node_add_list($variables) {
+//   $content = $variables['content'];
+//   $output = '';
+//   if ($content) {
+//     $output = '<ul class="admin-list">';
+//     foreach ($content as $item) {
+//       $output .= '<li class="clearfix">';
+//       $output .= '<span class="label">' . l($item['title'], $item['href'], $item['localized_options']) . '</span>';
+//       $output .= '<div class="description">' . filter_xss_admin($item['description']) . '</div>';
+//       $output .= '</li>';
+//     }
+//     $output .= '</ul>';
+//   }
+//   else {
+//     $output = '<p>' . t('You have not created any content types yet. Go to the <a href="@create-content">content type creation page</a> to add a new content type.', array('@create-content' => url('admin/structure/types/add'))) . '</p>';
+//   }
+//   return $output;
+// }
 
 // /**
 //  * Implements theme_adminimal_block_content().
@@ -88,9 +93,37 @@ function ctl_node_add_list($variables) {
 //   }
 // }
 
-// /**
-//  * Implements hook_css_alter().
-//  */
+/**
+ * Implements hook_css_alter().
+ */
+function ctl_css_alter(&$css) {
+  $core_css = array(
+    'system' => array('system.menus'),
+  );
+  foreach ($core_css as $module => $styles) {
+    $path = drupal_get_path('module', $module);
+    foreach ($styles as $style) {
+      unset($css["$path/$style.css"]);
+    }
+  }
+
+  // @import url("http://192.168.7.7/modules/book/book.css?nydi2p");
+  // @import url("http://192.168.7.7/modules/comment/comment.css?nydi2p");
+  // @import url("http://192.168.7.7/profiles/ctl/modules/contrib/custom_webform_comments/custom_webform_comments.css?nydi2p");
+  // @import url("http://192.168.7.7/profiles/ctl/modules/contrib/date/date_api/date.css?nydi2p");
+  // @import url("http://192.168.7.7/profiles/ctl/modules/contrib/date/date_popup/themes/datepicker.1.7.css?nydi2p");
+  // @import url("http://192.168.7.7/modules/field/theme/field.css?nydi2p");
+  // @import url("http://192.168.7.7/modules/node/node.css?nydi2p");
+  // @import url("http://192.168.7.7/profiles/ctl/modules/contrib/quiz/quiz.css?nydi2p");
+  // @import url("http://192.168.7.7/modules/search/search.css?nydi2p");
+  // @import url("http://192.168.7.7/modules/user/user.css?nydi2p");
+  // @import url("http://192.168.7.7/modules/forum/forum.css?nydi2p");
+  // @import url("http://192.168.7.7/profiles/ctl/modules/contrib/views/css/views.css?nydi2p");
+  // @import url("http://192.168.7.7/profiles/ctl/modules/contrib/admin_menu/admin_menu.css?nydi2p");
+  // @import url("http://192.168.7.7/profiles/ctl/modules/contrib/admin_menu/admin_menu.uid1.css?nydi2p");
+  // @import url("http://192.168.7.7/profiles/ctl/modules/contrib/admin_menu/admin_menu_toolbar/admin_menu_toolbar.css?nydi2p");
+}
+
 // function ctl_css_alter(&$css) {
 //   // Use Seven's vertical tabs style instead of the default one.
 //   if (isset($css['misc/vertical-tabs.css'])) {
@@ -350,9 +383,10 @@ function ctl_preprocess_html(&$vars) {
 
   // Load Font Awesome.
   // https://fortawesome.github.io/Font-Awesome/
-  drupal_add_css('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', array(
-    'type' => 'external'
-  ));
+  drupal_add_css(
+    'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css',
+    array('type' => 'external')
+  );
 
   // // Add default styles.
   // drupal_add_css($ctl_path . '/css/reset.css', array('group' => CSS_THEME, 'media' => 'all', 'weight' => -999));
