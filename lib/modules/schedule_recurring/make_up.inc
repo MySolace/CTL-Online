@@ -157,7 +157,9 @@ function make_up_get_shifts_for_day($date) {
   }
 
   foreach ($make_ups as $m) {
-    $available_make_ups[$res->field_shifts_start]--;
+    if (isset($available_make_ups[$m->field_shifts_start])) {
+      $available_make_ups[$m->field_shifts_start]--;
+    }
   }
 
   $time_off = array(
