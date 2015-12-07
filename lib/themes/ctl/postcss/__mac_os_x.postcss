@@ -10,24 +10,25 @@ body.mac .exposed-filters .form-item label {
 
 body.mac.style-checkboxes {
 
-  input[type=checkbox] {
+  input[type="checkbox"] {
     width: 14px;
     height: 14px;
     border-radius: 2px;
     top: 2px;
+    &:checked,
+    &:disabled:checked {
+      // box-shadow: inset 0 0 0 4px #fff;
+    }
   }
 
-  input[type=radio] {
+  input[type="radio"] {
     width: 14px;
     height: 14px;
     top: 2px;
-  }
-
-  input[type=checkbox]:checked,
-  input[type=checkbox]:disabled:checked,
-  input[type=radio]:checked,
-  input[type=radio]:disabled:checked {
-    box-shadow: inset 0px 0px 0px 4px #fff;
+    &:checked,
+    &:disabled:checked {
+      // box-shadow: inset 0 0 0 4px #fff;
+    }
   }
 
 }

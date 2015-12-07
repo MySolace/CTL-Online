@@ -3,26 +3,29 @@
 // and maintainability.  Automated processing is relied upon to take care of
 // producing production-ready CSS.
 //
-// Rules are ordered according to criteria of subsequently increasing priority:
+// Rules are ordered first by grouping them according to purpose.
 //
-//   1.  Collect into distinct ordered groups:
-//       a.  Elements
-//       b.  Pseudo-Selectors
-//       c.  Classes
-//       d.  IDs
-//       e.  Hacks
-//       f.  Development-Oriented (e.g. diagnostic styles)
+// Then they are grouped according to type in the following order:
 //
-//   2.  Within each group order rules according to priority:
-//       a.  Nesting order if there is one (e.g. '.main-wrapper' before '.main').
-//       b.  Rules with multiple selectors are grouped together by similar
-//           starting selectors.
-//       c.  Increasing cascade level.
-//       d.  Increasing specificity.
-//       e.  Sibling order if there is one (e.g. '.main-header' before '.main-footer').
-//       f.  HTML document order.
-//       g.  Alphabetical order.
-//       h.  Numerical order.
+//     1.  Elements
+//     2.  Pseudo-Elements
+//     3.  Pseudo-Selectors
+//     4.  Classes
+//     5.  IDs
+//     6.  Hacks
+//     7.  Development-Oriented (e.g. diagnostic styles)
+//
+// Then they are further ordered according to priority:
+//
+//     1.  Nesting order if there is one (e.g. `.main-wrapper` before `.main`).
+//     2.  Rules with multiple selectors are grouped together by similar
+//         starting selectors.
+//     3.  Increasing cascade level.
+//     4.  Increasing specificity.
+//     5.  Sibling order if there is one (e.g. `.first` before `.last`).
+//     6.  HTML document order.
+//     7.  Alphabetical order.
+//     8.  Numerical order.
 //
 // Selectors and properties are arranged alphabetically by default.
 //
@@ -33,8 +36,8 @@
 // Percentages are used when defining font sizes.
 // http://www.kyleschaeffer.com/best-practices/css-font-size-em-vs-px-vs-pt-vs/
 //
-// In HTML element tags, attributes related to CSS are ideally order by
-// increasing CSS specificity (i.e. first "class" then "id" then "style").
+// In HTML element tags, attributes related to CSS are ordered by increasing
+// CSS specificity (i.e. first `class` then `id` then `style`).
 //
 
 
