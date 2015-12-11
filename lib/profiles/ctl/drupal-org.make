@@ -73,6 +73,9 @@ projects[redirect][version] = "1.0-rc3"
 projects[required_by_role][version] = "1.7"
 projects[rules][version] = "2.9"
 projects[rules][patch][] = https://www.drupal.org/files/rules-site-property-metadata-fix-1423234-15.patch
+projects[services][version] = "3.x-dev"
+projects[services_api_key_auth][version] = "1.0"
+projects[services_entity][version] = "2.0-alpha8"
 
 projects[rules_conditional][version] = "1.0-beta2"
 projects[token][version] = "1.6"
