@@ -45,3 +45,10 @@ projects[ctl_onboarding][type] = "module"
 projects[ctl_onboarding][subdir] = "ctl"
 projects[ctl_onboarding][download][type] = local
 projects[ctl_onboarding][download][source] = './lib/modules/ctl_onboarding'
+
+; WhenIWork Scheduling
+projects[wheniwork][type] = "module"
+projects[wheniwork][subdir] = "ctl"
+projects[wheniwork][download][type] = local
+projects[wheniwork][download][source] = './lib/modules/wheniwork'
+

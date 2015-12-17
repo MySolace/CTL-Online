@@ -1,0 +1,34 @@
+<?php
+
+function wheniwork_menu() {
+	$items = array();
+
+	$items['wiw/schedule'] = array(
+		'title' => t('Shift management'),
+		'page callback' => 'wheniwork_schedule',
+		'access callback' => 'user_is_logged_in',
+	);
+
+	return $items;
+}
+
+function wheniwork_schedule() {
+	global $user;
+
+	return array(
+		'#markup' => t('
+			<a href="https://api.crisistextline.org/scheduling/login?email=@email&token=@token" class="btn btn-primary btn-lg">Schedule a shift</a>
+			<a href="https://api.crisistextline.org/scheduling/login?email=@email&token=@token" class="btn btn-primary btn-lg">View my schedule</a>
+			<a href="https://api.crisistextline.org/scheduling/login?email=@email&token=@token" class="btn btn-primary btn-lg">Take time off</a>
+			<a href="https://api.crisistextline.org/scheduling/cancel-shift?email=@email&token=@token" class="btn btn-primary btn-lg">Permanently swap shifts</a>', array(
+			'@email' => $user->mail,
+			'@token' => wheniwork_generate_token($user->mail),
+		)),
+	);
+}
+
+function wheniwork_generate_token($email) {
+	$token = $email . variable_get('wheniwork_token', 'bananas');
+
+	return sha1($token);
+}
