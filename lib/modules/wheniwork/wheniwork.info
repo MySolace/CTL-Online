@@ -1,0 +1,4 @@
+core = "7.x"
+description = "WhenIWork SSO"
+name = "WhenIWork"
+
