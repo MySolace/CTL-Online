@@ -1,5 +1,7 @@
 <?php
 
+define('WHENIWORK_API_URL', 'https://api.crisistextline.org/scheduling');
+
 function wheniwork_menu() {
 	$items = array();
 
@@ -16,17 +18,18 @@ function wheniwork_schedule() {
 	global $user;
 
     $user = user_load($user->uid);
-var_dump($user);
+
 	return array(
 		'#markup' => t('
-			<a href="https://api.crisistextline.org/scheduling/login?email=@email&token=@token&fn=@first&ln=@last" class="btn btn-primary btn-lg">Schedule a shift</a>
-			<a href="https://api.crisistextline.org/scheduling/login?email=@email&token=@token&fn=@first&ln=@last" class="btn btn-primary btn-lg">View my schedule</a>
-			<a href="https://api.crisistextline.org/scheduling/login?email=@email&token=@token&fn=@first&ln=@last" class="btn btn-primary btn-lg">Take time off</a>
-			<a href="https://api.crisistextline.org/scheduling/cancel-shift?email=@email&token=@token" class="btn btn-primary btn-lg">Permanently swap shifts</a>', array(
-			'@email' => $user->mail,
+			<a href="@API/login?email=@email&token=@token&fn=@first&ln=@last" class="btn btn-primary btn-lg">Schedule a shift</a>
+			<a href="@API/login?email=@email&token=@token&fn=@first&ln=@last" class="btn btn-primary btn-lg">View my schedule</a>
+			<a href="@API/login?email=@email&token=@token&fn=@first&ln=@last" class="btn btn-primary btn-lg">Take time off</a>
+			<a href="@API/cancel-shift?email=@email&token=@token" class="btn btn-primary btn-lg">Permanently swap shifts</a>', array(
+			'@email' => urlencode($user->mail),
 			'@token' => wheniwork_generate_token($user->mail),
-            '@first' => $user->field_first_name[LANGUAGE_NONE][0]['value'],
-            '@last' => $user->field_last_name[LANGUAGE_NONE][0]['value'],
+            '@first' => urlencode($user->field_first_name[LANGUAGE_NONE][0]['value']),
+            '@last' => urlencode($user->field_last_name[LANGUAGE_NONE][0]['value']),
+            '@API' => WHENIWORK_API_URL,
 		)),
 	);
 }
@@ -36,6 +39,7 @@ function wheniwork_generate_token($email) {
 
 	return sha1($token);
 }
+<<<<<<< HEAD
 
 function wheniwork_access() {
     global $user;
@@ -44,3 +48,5 @@ function wheniwork_access() {
 
     return count(array_intersect($roles, $user->roles));
 }
+=======
+>>>>>>> master
