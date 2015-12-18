@@ -472,6 +472,10 @@ function schedule_recurring_schedule($form, $form_state) {
   global $user;
   $uid = $user->uid;
 
+  if (in_array('Beta', $user->roles)) {
+    drupal_goto('wiw/schedule');
+  }
+
   if (!schedule_recurring_is_publisher()) {
     drupal_goto('schedule/my-schedule');
     return;
