@@ -37,7 +37,7 @@ function ctl_graduation_mail($key, &$message, $params) {
     'langcode' => $message['language']->language,
   );
 
-  $message['subject'] = t('Congratulations, @graduate_name, you are a counselor now!', array('@graduate_name' => "$graduate_first_name $graduate_last_name"), $options);
+  $message['subject'] = t('Congratulations!', array(), $options);
   $message['body']    = explode(PHP_EOL, $email_message);
 }
 
@@ -52,7 +52,7 @@ function _ctl_graduation_mail_send($form_values) {
   $uid      = $form_values['uid'];
   $user     = user_load($uid);
   $language = user_preferred_language($user);
-  $from     = 'volunteers@crisistextline.org';
+  $from     = 'support@crisistextline.org';
   $to       = $user->mail;
   $send     = TRUE;
   $result   = drupal_mail($module, $key, $to, $language, $params, $from, $send);
