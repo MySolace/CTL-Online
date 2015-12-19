@@ -1,6 +1,6 @@
 <?php
 
-define('WHENIWORK_API_URL', 'https://api.crisistextline.org/scheduling');
+define('WHENIWORK_API_URL', 'http://api.crisistextline.org/scheduling');
 
 function wheniwork_menu() {
 	$items = array();

@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function ctl_training_reports_menu() {
+    $items = array();
+
+    $items['training/reports'] = array(
+        'title' => 'Training Report',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => 'ctl_training_reports_form',
+        'access arguments' => '',
+        'type' => MENU_CALLBACK,
+    );
+}
+
+
+function ctl_training_reports_form($form, &$form_state) {
+    global $user;
+
+    $trainer = (in_array('trainer', $user->roles)) ? $user : null;
+
+    // Get Form
+    $form = array();
+    $form['filter'] = array(
+        '#type' => 'fieldset',
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#title' => t('Filter'),
+    );
+
+    if (is_null($trainer)) {
+        $q = db_select('users', 'u');
+        $q->join('users_roles', 'ur', 'u.uid=ur.uid');
+        $q->join('roles', 'r', 'r.rid=u.rid');
+        $q->condition('r.name', 'trainer');
+
+        $trainers = $q->execute();
+
+        $form['filter']['trainer'] = array(
+            
+        );
+    }
+
+    $cohort_field = field_info_instance('user', 'cohort', 'user');
+    $options = list_allowed_values($cohort_field);
+
+    $form['filter']['cohort'] = array(
+        '#type' => 'select',
+        '#options' => $options,
+    );
+
+    $path = drupal_lookup_path('source', 'training');
+    $training = menu_get_object('node', 1, $path);
+
+    $q = db_select('users', 'u');
+    // Select only users who belong to this trainer
+    $q->join('field_data_field_trainer', 't', 't.entity_id = u.uid');
+    $q->condition('t.target_id', $trainer->uid);
+
+
+    return $form;
+}
