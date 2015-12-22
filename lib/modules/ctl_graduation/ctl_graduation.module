@@ -38,13 +38,17 @@ function ctl_graduation_menu() {
  */
 function ctl_graduation_permission() {
   return array(
+    'administer graduation' => array(
+      'title'       => t('Administer graduation'),
+      'description' => t('Manage graduation settings.'),
+    ),
     'view certificate' => array(
       'title' => t('View certificate'),
-      'description' => t('View the graduation certificate'),
+      'description' => t('View the graduation certificate.'),
     ),
     'view graduates' => array(
       'title' => t('View graduates'),
-      'description' => t('View the list of graduates'),
+      'description' => t('View the list of graduates.'),
     ),
   );
 }
