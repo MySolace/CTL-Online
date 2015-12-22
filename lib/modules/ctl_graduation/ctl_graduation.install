@@ -1,6 +1,25 @@
 <?php
 
 /**
+ * Implements hook_install().
+ */
+function ctl_graduation_install() {
+  $t = get_t();
+  drupal_set_message($t("Settings for the CTL Graduation module are available at !link",
+    array('!link' => l($t('Administer > Crisis Text Line > CTL Graduation'), 'admin/config/ctl/graduation'))
+  ));
+}
+
+
+/**
+ * Implements hook_uninstall().
+ */
+function ctl_graduation_uninstall() {
+  variable_del('ctl_graduation_message');
+}
+
+
+/**
  * Implements hook_schema().
  */
 function ctl_graduation_schema() {
