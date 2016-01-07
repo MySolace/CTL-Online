@@ -14,31 +14,34 @@ function ctl_graduation_mail($key, &$message, $params) {
   $graduate_last_name  = $graduate_user->field_last_name[LANGUAGE_NONE][0]['safe_value'];
   $graduate_name       = "$graduate_first_name $graduate_last_name";
 
-  $trainer_uid = $graduate_user->field_trainer[LANGUAGE_NONE][0]['target_id'];
+  $trainer_uid  = $graduate_user->field_trainer[LANGUAGE_NONE][0]['target_id'];
   $trainer_user = user_load($trainer_uid);
   if ($trainer_user) {
-    // $trainer_name = format_username($user);
     $trainer_first_name = $trainer_user->field_first_name[LANGUAGE_NONE][0]['safe_value'];
     $trainer_last_name  = $trainer_user->field_last_name[LANGUAGE_NONE][0]['safe_value'];
-    $trainer_name = "$trainer_first_name $trainer_last_name";
+    $trainer_name       = "$trainer_first_name $trainer_last_name";
+    $trainer_email      = $trainer_user->mail;
   }
   else {
-    $trainer_name = 'Patty Morrissey';
+    $trainer_name  = 'Patty Morrissey';
+    $trainer_email = 'patty@crisistextline.org';
   }
 
-  $email_message = theme('graduation_message', array(
+  $body = variable_get('ctl_graduation_message');
+  $body = isset($body) ? $body : '';
+  $replacements = array(
     'graduate_name' => $graduate_name,
     'graduate_uid'  => $graduate_uid,
     'trainer_name'  => $trainer_name,
-  ));
-  $email_message = token_replace($email_message);
+    'trainer_email' => $trainer_email,
+  );
 
   $options = array(
     'langcode' => $message['language']->language,
   );
 
-  $message['subject'] = t('Congratulations, @graduate_name, you are a counselor now!', array('@graduate_name' => "$graduate_first_name $graduate_last_name"), $options);
-  $message['body']    = explode(PHP_EOL, $email_message);
+  $message['subject'] = t('Congratulations!', array(), $options);
+  $message['body']    = explode(PHP_EOL, token_replace($body, $replacements));
 }
 
 
@@ -52,7 +55,7 @@ function _ctl_graduation_mail_send($form_values) {
   $uid      = $form_values['uid'];
   $user     = user_load($uid);
   $language = user_preferred_language($user);
-  $from     = 'volunteers@crisistextline.org';
+  $from     = 'support@crisistextline.org';
   $to       = $user->mail;
   $send     = TRUE;
   $result   = drupal_mail($module, $key, $to, $language, $params, $from, $send);

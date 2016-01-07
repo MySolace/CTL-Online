@@ -4,6 +4,14 @@
  * Implements hook_menu().
  */
 function ctl_graduation_menu() {
+  $items['admin/config/ctl/graduation'] = array(
+    'title'            => 'CTL Graduation',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('_ctl_graduation_settings_form'),
+    'access arguments' => array('administer graduation'),
+    'type'             => MENU_NORMAL_ITEM,
+    'file'             => 'includes/admin.inc',
+  );
   $items['user/%user/certificate'] = array(
     'title'            => 'Certificate',
     'description'      => 'The CTL certificate for graduates.',
@@ -30,13 +38,17 @@ function ctl_graduation_menu() {
  */
 function ctl_graduation_permission() {
   return array(
+    'administer graduation' => array(
+      'title'       => t('Administer graduation'),
+      'description' => t('Manage graduation settings.'),
+    ),
     'view certificate' => array(
       'title' => t('View certificate'),
-      'description' => t('View the graduation certificate'),
+      'description' => t('View the graduation certificate.'),
     ),
     'view graduates' => array(
       'title' => t('View graduates'),
-      'description' => t('View the list of graduates'),
+      'description' => t('View the list of graduates.'),
     ),
   );
 }
@@ -55,16 +67,70 @@ function ctl_graduation_theme($existing, $type, $theme, $path) {
         'graduation_date'   => NULL,
       ),
     );
-    $themes['graduation_message'] = array(
-      'template' => 'templates/graduation_message',
-      'variables' => array(
-        'graduate_name' => NULL,
-        'graduate_uid'  => NULL,
-        'trainer_name'  => NULL,
-      ),
-    );
   }
   return $themes;
+}
+
+
+/**
+ * Implements hook_token_info().
+ */
+function ctl_graduation_token_info() {
+  $info['types']['ctl_graduation'] = array(
+    'name'        => t('CTL Graduation'),
+    'description' => t('The token type for CTL Graduation tokens.'),
+  );
+  $info['tokens']['ctl_graduation']['graduate_name'] = array(
+    'name'        => t('Graduate name'),
+    'description' => t('The name of the graduate.'),
+  );
+  $info['tokens']['ctl_graduation']['graduate_uid'] = array(
+    'name'        => t('Graduate ID'),
+    'description' => t('The user ID of the graduate.'),
+  );
+  $info['tokens']['ctl_graduation']['trainer_name'] = array(
+    'name'        => t('Trainer name'),
+    'description' => t('The name of the trainer.'),
+  );
+  $info['tokens']['ctl_graduation']['trainer_email'] = array(
+    'name'        => t('Trainer email'),
+    'description' => t('The email of the trainer.'),
+  );
+  return $info;
+}
+
+
+/**
+ * Implements hook_tokens().
+ */
+function ctl_graduation_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+  if ($type === 'ctl_graduation') {
+    foreach ($tokens as $name => $original) {
+      $value = NULL;
+      switch ($name) {
+        case 'graduate_name':
+          $value = isset($data['graduate_name']) ? $data['graduate_name'] : '';
+          break;
+
+        case 'graduate_uid':
+          $value = isset($data['graduate_uid']) ? $data['graduate_uid'] : '';
+          break;
+
+        case 'trainer_name':
+          $value = isset($data['trainer_name']) ? $data['trainer_name'] : '';
+          break;
+
+        case 'trainer_email':
+          $value = isset($data['trainer_email']) ? $data['trainer_email'] : '';
+          break;
+      }
+      if ($value) {
+        $replacements[$original] = $value;
+      }
+    }
+  }
+  return $replacements;
 }
 
 

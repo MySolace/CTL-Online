@@ -6,7 +6,7 @@
 function ctl_onboarding_install() {
   $t = get_t();
   drupal_set_message($t("Settings for the CTL Onboarding module are available at !link",
-    array('!link' => l($t('Administer > Crisis Text Line > CTL Onboarding'), 'admin/config/ctl/ctl-onboarding'))
+    array('!link' => l($t('Administer > Crisis Text Line > CTL Onboarding'), 'admin/config/ctl/onboarding'))
   ));
 }
 
