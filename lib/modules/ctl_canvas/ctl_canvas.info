@@ -1,0 +1,4 @@
+name = "CTL Canvas"
+description = "Provides SSO integration with Canvas."
+package = "Crisis Text Line"
+core = "7.x"
