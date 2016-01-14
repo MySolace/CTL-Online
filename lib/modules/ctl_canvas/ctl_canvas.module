@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function ctl_canvas_menu() {
+  $items['user/%user/training'] = array(
+    'title'            => 'Training',
+    'page callback'    => '_ctl_canvas_training_page',
+    'access arguments' => array('access content'),
+    'type'             => MENU_LOCAL_TASK,
+  );
+  return $items;
+}
+
+
+function _ctl_canvas_training_page() {
+  drupal_goto('https://crisistextline.instructure.com/');
+}
+
+
+/**
+ * Implements hook_user_presave().
+ */
+function ctl_canvas_user_presave(&$edit, $account, $category) {
+  // Makes sure that the username is the user's email in order for
+  // SSO integration between Drupal and Canvas to work correctly.
+  $edit['name'] = $edit['mail'];
+}
