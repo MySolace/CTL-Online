@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * Implements hook_update_N().
+ */
+function ctl_canvas_update_7001(&$sandbox) {
+  // Make sure that each user's username is the user's email in order
+  // for SSO integration between Drupal and Canvas to work correctly.
+  db_query('UPDATE {users} AS u SET name = u.mail');
+}
