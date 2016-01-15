@@ -34,6 +34,12 @@ projects[schedule_recurring][subdir] = "ctl"
 projects[schedule_recurring][download][type] = local
 projects[schedule_recurring][download][source] = './lib/modules/schedule_recurring'
 
+; CTL Online and Canvas integration
+projects[ctl_canvas][type] = "module"
+projects[ctl_canvas][subdir] = "ctl"
+projects[ctl_canvas][download][type] = local
+projects[ctl_canvas][download][source] = './lib/modules/ctl_canvas'
+
 ; Graduation button
 projects[ctl_graduation][type] = "module"
 projects[ctl_graduation][subdir] = "ctl"
