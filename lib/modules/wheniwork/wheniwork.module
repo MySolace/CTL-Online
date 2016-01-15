@@ -54,10 +54,6 @@ function wheniwork_generate_token($email) {
 }
 
 function wheniwork_access() {
-    global $user;
-
-    $roles = array('Trainer', 'Beta', 'administrator', 'Staff');
-
-    return count(array_intersect($roles, $user->roles));
+    return user_is_logged_in();
 }
 
