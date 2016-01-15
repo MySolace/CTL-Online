@@ -6,7 +6,7 @@ function wheniwork_menu() {
 	$items = array();
 
 	$items['wiw/schedule'] = array(
-		'title' => t('Shift management'),
+		'title' => t('Shift scheduling'),
 		'page callback' => 'wheniwork_schedule',
 		'access callback' => 'wheniwork_access',
 	);
@@ -21,10 +21,23 @@ function wheniwork_schedule() {
 
 	return array(
 		'#markup' => t('
+			<p>Welcome to the Crisis Text Line Scheduling tool!</p>
+            <h2>Scheduling Your Permanent Shift</h2>
+            <ul>
+                <li><strong>Shifts.</strong> All shifts are two hours each. Select 2 two hour shift to fulfill your 4 hour weekly commitment.</li>
+                <li><strong>Every week.</strong> Sign up for shifts this week, but remember: our system will automatically copy this shift from week to week automatically.</li>
+                <li><strong>Pro tip.</strong> Stack \'em! Take your two shifts back to back (less hourly turnover allows for a smoother experience for our texters). </li>
+            </ul>
 			<a href="@API/login?email=@email&token=@token&fn=@first&ln=@last" class="btn btn-primary btn-lg">Schedule a shift</a>
 			<a href="@API/login?email=@email&token=@token&fn=@first&ln=@last" class="btn btn-primary btn-lg">View my schedule</a>
-			<a href="@API/login?email=@email&token=@token&fn=@first&ln=@last" class="btn btn-primary btn-lg">Take time off</a>
-			<a href="@API/cancel-shift?email=@email&token=@token" class="btn btn-primary btn-lg">Permanently swap shifts</a>', array(
+            <h2>Taking Time off & Permanent Schedule Changes</h2>
+            <ul>
+                <li><strong>Taking time off.</strong> Going on a great trip? (Nice!) When you log in, click in the inbox icon in the top right and click "Request Time Off". We review and approve time off requests twice a day, at 11am and 11pm est. You\'ll receive a confirmation email. </li>
+                <li><strong>Permanent shift change.</strong> Click the Permanently drop shift button below to cancel all future shifts. Then, sign up for a new one.
+</li>
+            </ul>
+			<a href="@API/login?email=@email&token=@token&fn=@first&ln=@last&destination=requests" class="btn btn-primary btn-lg">Take time off</a>
+			<a href="@API/cancel-shift?email=@email&token=@token" class="btn btn-primary btn-lg">Permanently drop shifts</a>', array(
 			'@email' => urlencode($user->mail),
 			'@token' => wheniwork_generate_token($user->mail),
             '@first' => urlencode($user->field_first_name[LANGUAGE_NONE][0]['value']),
