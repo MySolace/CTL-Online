@@ -26,7 +26,7 @@ function wheniwork_schedule() {
             <ul>
                 <li><strong>Shifts.</strong> All shifts are two hours each. Select 2 two hour shift to fulfill your 4 hour weekly commitment.</li>
                 <li><strong>Every week.</strong> Sign up for shifts this week, but remember: our system will automatically copy this shift from week to week automatically.</li>
-                <li><strong>Pro tip.</strong> Stack \'em! Take your two shifts back to back (less hourly turnover allows for a smoother experience for our texters). </li>
+                <li><strong>Pro tip.</strong> Stack \'em! Take your two shifts back to back (less hourly turnover allows for a smoother experience for our texters). Want to take more shifts? Cool with us - but you\'re capped at 12 hours per week (we don\'t want you to burn out!) </li>
             </ul>
 			<a href="@API/login?email=@email&token=@token&fn=@first&ln=@last" class="btn btn-primary btn-lg">Schedule a shift</a>
 			<a href="@API/login?email=@email&token=@token&fn=@first&ln=@last" class="btn btn-primary btn-lg">View my schedule</a>
