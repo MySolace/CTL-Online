@@ -21,7 +21,7 @@ function wheniwork_schedule() {
 
 	return array(
 		'#markup' => t('
-			<p>Welcome to the Crisis Text Line Scheduling tool!</p>
+			<p>Welcome to the Crisis Text Line Scheduling tool! Bookmark this page to access the scheduling tool in the future.</p>
             <h2>Scheduling Your Permanent Shift</h2>
             <ul>
                 <li><strong>Shifts.</strong> All shifts are two hours each. Select 2 two hour shift to fulfill your 4 hour weekly commitment.</li>
