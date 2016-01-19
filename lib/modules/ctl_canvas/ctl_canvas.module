@@ -25,5 +25,9 @@ function _ctl_canvas_training_page() {
 function ctl_canvas_user_presave(&$edit, $account, $category) {
   // Makes sure that the username is the user's email in order for
   // SSO integration between Drupal and Canvas to work correctly.
-  $edit['name'] = $edit['mail'];
+  if (isset($edit['mail'])) {
+    $edit['name'] = $edit['mail'];
+  } else {
+    $edit['name'] = $account->mail;
+  }
 }
