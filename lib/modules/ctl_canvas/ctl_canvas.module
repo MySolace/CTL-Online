@@ -4,20 +4,47 @@
  * Implements hook_menu().
  */
 function ctl_canvas_menu() {
-  $items['user/%user/training'] = array(
-    'title'            => 'Training',
-    'page callback'    => '_ctl_canvas_training_page',
-    'access arguments' => array('access content'),
-    'type'             => MENU_LOCAL_TASK,
+
+  $items = array(
+    'training' => array(
+      'title'            => 'Training',
+      'page callback'    => '_ctl_canvas_training_page',
+      'access callback'  => '_ctl_canvas_training_access',
+      'type'             => MENU_LOCAL_TASK,
+    ),
   );
+
   return $items;
 }
 
 
 function _ctl_canvas_training_page() {
-  drupal_goto('https://crisistextline.instructure.com/');
+  global $user;
+
+  $account = user_load($user->uid);
+
+  if (isset($account->field_canvas) && $account->field_canvas[LANGUAGE_NONE][0]['value'] == 1) {
+    drupal_goto('https://crisistextline.instructure.com/');
+  } else {
+    drupal_goto('training-archives');
+  }
 }
 
+function _ctl_canvas_training_access() {
+  global $user;
+
+  $access = array(
+    'Trainee',
+    'Staff',
+    'Trainer',
+    'administrator',
+    'Graduate'
+  );
+
+  $collision = array_intersect(array_values($user->roles), $access);
+
+  return count($collision > 0);
+}
 
 /**
  * Implements hook_user_presave().
