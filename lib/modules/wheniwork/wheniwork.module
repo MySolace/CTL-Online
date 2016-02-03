@@ -33,11 +33,11 @@ function wheniwork_schedule() {
             <h2>Taking Time off & Permanent Schedule Changes</h2>
             <ul>
                 <li><strong>Taking time off.</strong> Going on a great trip? (Nice!) When you log in, click in the inbox icon in the top right and click "Request Time Off". We review and approve time off requests twice a day, at 11am and 11pm est. You\'ll receive a confirmation email. </li>
-                <li><strong>Permanent shift change.</strong> Click the Permanently drop shift button below to cancel all future shifts. Then, sign up for a new one.
+                <li><strong>Permanent shift change.</strong> Click the Permanently delete shift button below to cancel all future shifts. Then, sign up for a new one.
 </li>
             </ul>
 			<a href="@API/login?email=@email&token=@token&fn=@first&ln=@last&destination=requests" class="btn btn-primary btn-lg">Take time off</a>
-			<a href="@API/cancel-shift?email=@email&token=@token" class="btn btn-primary btn-lg">Permanently drop shifts</a>', array(
+			<a href="@API/shifts?email=@email&token=@token" class="btn btn-primary btn-lg">Permanently delete shifts</a>', array(
 			'@email' => urlencode($user->mail),
 			'@token' => wheniwork_generate_token($user->mail),
             '@first' => urlencode($user->field_first_name[LANGUAGE_NONE][0]['value']),
