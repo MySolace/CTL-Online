@@ -107,7 +107,7 @@ projects[webform_validation][version] = "1.10"
 # projects[acl][version] = "1.1"
 
 # DrupalAuth
-projects[drupalauth][type] = "module"
-projects[drupalauth][subdir] = "ctl"
-projects[drupalauth][download][type] = "get"
-projects[drupalauth][download][source] = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/drupalauth/drupalauth-1.2.2_1.x_7.x.tar.gz"
+#projects[drupalauth][type] = "module"
+#projects[drupalauth][subdir] = "ctl"
+#projects[drupalauth][download][type] = "get"
+#projects[drupalauth][download][source] = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/drupalauth/drupalauth-1.2.2_1.x_7.x.tar.gz"
