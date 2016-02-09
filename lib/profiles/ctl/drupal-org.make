@@ -17,6 +17,10 @@ libraries[twilio][download][type] = "get"
 libraries[twilio][download][url] = "https://github.com/twilio/twilio-php/archive/master.zip"
 libraries[twilio][directory_name] = "twilio"
 
+libraries[SimpleSAMLphp][download][type] = "get"
+libraries[SimpleSAMLphp][download][url] = "https://simplesamlphp.org/res/downloads/simplesamlphp-1.13.2.tar.gz"
+libraries[SimpleSAMLphp][directory_name] = "simplesamlphp"
+
 ; Modules
 projects[addressfield][version] = "1.2"
 projects[admin_menu][version] = "3.0-rc5"
@@ -78,7 +82,7 @@ projects[rules][patch][] = https://www.drupal.org/files/rules-site-property-meta
 projects[services][version] = "3.x-dev"
 projects[services_api_key_auth][version] = "1.0"
 projects[services_entity][version] = "2.0-alpha8"
-
+projects[simplesamlphp_auth][version] = "2.x-dev"
 projects[rules_conditional][version] = "1.0-beta2"
 projects[token][version] = "1.6"
 projects[twilio][version] = "1.11"
@@ -101,3 +105,9 @@ projects[webform_validation][version] = "1.10"
 # projects[forum_access][version] = "1.2"
 # projects[chain_menu_access][version] = "2.0"
 # projects[acl][version] = "1.1"
+
+# DrupalAuth
+projects[drupalauth][type] = "module"
+projects[drupalauth][subdir] = "ctl"
+projects[drupalauth][download][type] = "get"
+projects[drupalauth][download][source] = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/drupalauth/drupalauth-1.2.2_1.x_7.x.tar.gz"
