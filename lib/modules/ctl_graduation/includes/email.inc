@@ -23,8 +23,8 @@ function ctl_graduation_mail($key, &$message, $params) {
     $trainer_email      = $trainer_user->mail;
   }
   else {
-    $trainer_name  = 'Patty Morrissey';
-    $trainer_email = 'patty@crisistextline.org';
+    $trainer_name  = 'Michelle Kuchuk';
+    $trainer_email = 'michelle@crisistextline.org';
   }
 
   $body = variable_get('ctl_graduation_message');
