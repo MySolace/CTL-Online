@@ -7,7 +7,6 @@ project = ctl_training
 
 dependencies[] = course
 dependencies[] = course_content
-dependencies[] = course_quiz
 dependencies[] = course_lesson
 dependencies[] = entity
 dependencies[] = entityreference
