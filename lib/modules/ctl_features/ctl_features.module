@@ -159,3 +159,22 @@ function ctl_features_field_widget_form_alter(&$element, &$form_state, $context)
         $element['#options'] = array_reverse($element['#options'], TRUE);
     }
 }
+
+/**
+ * Implements hook_filter_info().
+ */
+function ctl_features_filter_info() {
+    $filters = array();
+
+    $filters['markdown'] = array(
+        'title' => t('Markdown'),
+        'description' => t('Parsed as markdown. Do not enable any other filters.'),
+        'process callback' => '_ctl_features_preprocess_markdown'
+    );
+
+    return $filters;
+}
+
+function _ctl_features_preprocess_markdown($text, $format) {
+    return '<div class="parse-md">' . $text . '</div>';
+}
