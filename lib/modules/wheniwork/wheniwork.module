@@ -32,7 +32,7 @@ function wheniwork_schedule() {
 			<a href="@API/login?email=@email&token=@token&fn=@first&ln=@last" class="btn btn-primary btn-lg">View my schedule</a>
             <h2>Missing shifts & Permanent Schedule Changes</h2>
             <ul>
-                <li><strong>Missing shifts.</strong> Going on a great trip? (Nice!) When you log in, click in the inbox icon in the top right and click "Request Time Off". We review and approve time off requests twice a day, at 11am and 11pm est. You\'ll receive a confirmation email. <img src="@image" /></li>
+                <li><strong>Missing shifts.</strong> Going on a great trip? (Nice!) When you log in, click in the inbox icon in the top right and click "Request Time Off". We review and approve time off requests twice a day, at 11am and 11pm est. You\'ll receive a confirmation email. <br><img src="@image" width="250" /></li>
                 <li><strong>Permanent shift change.</strong> Click the Change my Schedule button below to cancel all future shifts. Then, sign up for a new one.
 </li>
             </ul>
