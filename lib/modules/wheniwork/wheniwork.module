@@ -33,12 +33,12 @@ function wheniwork_schedule() {
             <h2>Missing shifts & Permanent Schedule Changes</h2>
             <ul>
                 <li><strong>Missing shifts.</strong> Going on a great trip? (Nice!) When you log in, click in the inbox icon in the top right and click "Request Time Off". We review and approve time off requests twice a day, at 11am and 11pm est. You\'ll receive a confirmation email. <br><img src="@image" width="250" /></li>
-                <li><strong>Permanent shift change.</strong> Click the Change my Schedule button below to choose which shifts you\'d like to cancel. Then, sign up for a new one.
+                <li><strong>Permanent shift change.</strong> Click to permanently delete your weekly shift or any one time shift on your schedule.
 </li>
             </ul>
             <h3>
 			<a href="@API/login?email=@email&token=@token&fn=@first&ln=@last&destination=requests" class="btn btn-primary btn-lg">Miss a Shift</a>
-			<a href="@API/shifts?email=@email&token=@token" class="btn btn-primary btn-lg">Change my Schedule</a>', array(
+			<a href="@API/shifts?email=@email&token=@token" class="btn btn-primary btn-lg">Permanently Delete Shift</a>', array(
 			'@image' => '/' . drupal_get_path('module', 'wheniwork') . '/ss.png',
 			'@email' => urlencode($user->mail),
 			'@token' => wheniwork_generate_token($user->mail),
