@@ -524,7 +524,7 @@ function application_v2_node_insert($node) {
       application_v2_update_role($applicant, 'Applied');
 
       $params = array('user' => $applicant);
-      drupal_mail('application_v2', 'reference_recvd', $applicant->mail, user_preferred_language($applicant), $params);
+      //drupal_mail('application_v2', 'reference_recvd', $applicant->mail, user_preferred_language($applicant), $params);
     }
   }
 }
