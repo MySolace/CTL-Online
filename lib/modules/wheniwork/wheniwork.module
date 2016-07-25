@@ -19,6 +19,16 @@ function wheniwork_schedule() {
 
     $user = user_load($user->uid);
 
+    $now = time();
+
+    if ($now > 1469601000 && $now < 1469608200) {
+        return array(
+            '#markup' => t('
+                <h2>WhenIWork, the tool we use for scheduling, is currently down for maintenance. We should be back in business around 4:30 AM EST.</h2>
+            ')
+        );
+    }
+
 	return array(
 		'#markup' => t('
 			<p>Welcome to the Crisis Text Line Scheduling tool! Bookmark this page to access the scheduling tool in the future.</p>
