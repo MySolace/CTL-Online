@@ -82,6 +82,7 @@ projects[rules][patch][] = https://www.drupal.org/files/rules-site-property-meta
 projects[services][version] = "3.x-dev"
 projects[services_api_key_auth][version] = "1.0"
 projects[services_entity][version] = "2.0-alpha8"
+projects[services_rules][version] = "1.0-beta1"
 projects[simplesamlphp_auth][version] = "2.x-dev"
 projects[rules_conditional][version] = "1.0-beta2"
 projects[token][version] = "1.6"
