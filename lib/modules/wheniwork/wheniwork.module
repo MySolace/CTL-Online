@@ -21,7 +21,7 @@ function wheniwork_schedule() {
 
     $now = time();
 
-    if ($now > 1470115800 && $now < 1470123000) {
+    if ($now > 1470119400 && $now < 1470126600) {
         return array(
             '#markup' => t('
                 <h2>WhenIWork, the tool we use for scheduling, is currently down for maintenance. We should be back in business around 4:30 AM EST.</h2>
