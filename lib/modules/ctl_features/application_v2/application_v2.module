@@ -476,8 +476,8 @@ function application_v2_mail($key, &$message, $params) {
   }
 
   if (isset($params['user'])) {
-    $message['body'][] = "\n\n";
-    $message['body'][] = application_v2_unsubscribe_link($params['user']);
+    // $message['body'][] = "\n\n";
+    // $message['body'][] = application_v2_unsubscribe_link($params['user']);
   }
 }
 
