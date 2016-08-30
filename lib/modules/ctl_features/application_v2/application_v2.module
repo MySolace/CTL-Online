@@ -82,10 +82,13 @@ function _application_v2_email_token($account) {
 }
 
 function application_v2_application() {
+  global $user;
   if (!user_is_logged_in()) {
     drupal_goto('user/register', array('query' => array('destination' => 'application')));
     return;
   }
+
+  drupal_add_js(array('currentUser' => $user->uid), 'setting');
 
   drupal_get_messages('status');
   $existing = application_v2_load();
@@ -110,7 +113,14 @@ function application_v2_application() {
       $form = drupal_get_form(APP_V2_CONTENT_TYPE . '_node_form', $existing);
     }
   } else {
-    $form = node_add(APP_V2_CONTENT_TYPE);
+    $node = new stdClass();
+    $node->type = APP_V2_CONTENT_TYPE;
+    $node->status = NODE_NOT_PUBLISHED;
+    node_object_prepare($node);
+    node_save($node);
+
+    $form = drupal_get_form(APP_V2_CONTENT_TYPE . '_node_form', $node);
+
     drupal_set_title('Start your application.');
   }
 
