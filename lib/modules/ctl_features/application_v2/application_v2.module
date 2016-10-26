@@ -630,7 +630,8 @@ function application_v2_submission_handler($node) {
     $params['exclusions'] = '  - ' . implode("\n  - ", $exclusions);
     drupal_mail('application_v2', 'rejection', $author->mail, user_preferred_language($author), $params);
     $author->status = 0;
-    user_save($author);
+    application_v2_update_role($author, 'Rejected'); // calls save
+    // user_save($author);
     drupal_set_message(t('We have received your application. Look for an email from us soon!'), 'info');
     drupal_goto('application-submitted');
   } else {
