@@ -1,0 +1,121 @@
+<?php
+
+define('GOTO_HOME', 'https://login.crisistextline.org');
+define('GOTO_APPLICATION', 'https://dashboard.crisistextline.org');
+
+/**
+ * Implements hook_cron_queue_info().
+ */
+function ctl_migration_cron_queue_info() {
+  $queues = array(
+    'migrate_users' => array(
+      'worker callback' => '_ctl_migration_process_email'
+    )
+  );
+
+  return $queues;
+}
+
+/**
+ * Processing function for migrated email addresses.
+ *
+ * @param  string  $item Email address to migrate
+ */
+function _ctl_migration_process_email($item) {
+  $account = user_load_by_mail($item);
+  $account->field_migrated[LANGUAGE_NONE][0]['value'] = 1;
+  user_save($account);
+}
+
+/**
+ * Implements hook_init().
+ */
+function ctl_migration_init() {
+  global $user;
+
+  if (!user_is_logged_in()) {
+    $menu = menu_get_item();
+
+    switch ($menu['path']) {
+      case 'landing':
+      case 'user':
+      case 'user/login':
+      case 'user/password':
+        break;
+
+      case 'user/register':
+        drupal_goto(GOTO_APPLICATION);
+        break;
+
+      default:
+        drupal_goto('/landing');
+    }
+  }
+
+  $account = user_load($user->uid);
+
+  if (
+    isset($account->field_migrated[LANGUAGE_NONE]) &&
+    isset($account->field_migrated[LANGUAGE_NONE][0]['value']) &&
+    $account->field_migrated[LANGUAGE_NONE][0]['value'] == '1'
+  ) {
+    if ($admin = user_role_load_by_name('administrator')) {
+      if (user_has_role($admin->rid)) {
+        return;
+      }
+    } elseif ($staff = user_role_load_by_name('Staff')) {
+      if (user_has_role($staff->rid)) {
+        return;
+      }
+    }
+
+    drupal_goto(GOTO_APPLICATION);
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function ctl_migration_menu() {
+  $items = array(
+    'landing' => array(
+      'title' => 'We\'ve changed some things.',
+      'page callback' => 'ctl_migration_landing',
+      'access callback' => TRUE,
+    ),
+  );
+
+  return $items;
+}
+
+/**
+ * Menu callback for /landing.
+ */
+function ctl_migration_landing() {
+  return theme('migration_landing');
+}
+
+/**
+ * Implements hook_theme().
+ */
+ function ctl_migration_theme() {
+   return array(
+     'migration_landing' => array(
+    	 'render element' => 'elements',
+       'template' => 'ctl_migration_landing',
+     ),
+   );
+ }
+
+/**
+ * Implements hook_user_login().
+ */
+function ctl_migration_user_login(&$edit, $account) {
+  if (
+    !isset($account->field_migrated[LANGUAGE_NONE]) ||
+    !isset($account->field_migrated[LANGUAGE_NONE][0]['value']) ||
+    $account->field_migrated[LANGUAGE_NONE][0]['value'] != '1'
+  ) {
+    drupal_goto('/apply');
+  }
+}

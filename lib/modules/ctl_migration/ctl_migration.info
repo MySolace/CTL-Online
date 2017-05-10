@@ -1,0 +1,15 @@
+core = "7.x"
+description = "CTL Salesforce Migration module"
+name = "Crisis Text Line Salesforce Migration"
+dependencies[] = features
+dependencies[] = field_permissions
+dependencies[] = list
+dependencies[] = options
+features[features_api][] = api:2
+features[field_base][] = field_migrated
+features[field_instance][] = user-user-field_migrated
+features[user_permission][] = create field_migrated
+features[user_permission][] = edit field_migrated
+features[user_permission][] = edit own field_migrated
+features[user_permission][] = view field_migrated
+features[user_permission][] = view own field_migrated

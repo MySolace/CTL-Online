@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function ctl_migration_install() {
+  _ctl_migration_process_txt('./migrated_users/first_batch.txt');
+}
+
+/**
+ * Add more migrated users
+ */
+// function ctl_migration_update_1() {
+//   _ctl_migration_process_txt('./migrated_users/update1.txt');
+// }
+
+function _ctl_migration_process_txt($filename) {
+  $fh = fopen(drupal_get_path('module', 'ctl_migration') . '/' . $filename, 'r');
+  $queue = DrupalQueue::get('migrate_users');
+
+  while (($data = fgets($fh)) !== FALSE) {
+    $queue->createItem(trim($data));
+  }
+}

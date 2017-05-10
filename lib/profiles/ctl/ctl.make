@@ -58,3 +58,8 @@ projects[wheniwork][subdir] = "ctl"
 projects[wheniwork][download][type] = local
 projects[wheniwork][download][source] = './lib/modules/wheniwork'
 
+; SF Migration
+projects[ctl_migration][type] = "module"
+projects[ctl_migration][subdir] = "ctl"
+projects[ctl_migration][download][type] = local
+projects[ctl_migration][download][source] = './lib/modules/ctl_migration'
