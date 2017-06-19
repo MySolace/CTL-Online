@@ -1,7 +1,22 @@
 <?php
 
-define('GOTO_HOME', 'https://login.crisistextline.org');
-define('GOTO_APPLICATION', 'https://dashboard.crisistextline.org');
+define('GOTO_HOME', 'https://home.crisistextline.org');
+define('GOTO_APPLICATION', 'https://application.crisistextline.org/3');
+define('ADMISSIONS_EMAIL', 'admissions@crisistextline.org');
+
+define('JUNE_21', 1498050000);
+define('JUNE_28', 1498654800);
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function ctl_migration_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'menu_alter') {
+    $group = $implementations['ctl_migration'];
+    unset($implementations['ctl_migration']);
+    $implementations['ctl_migration'] = $group;
+  }
+}
 
 /**
  * Implements hook_cron_queue_info().
@@ -14,6 +29,96 @@ function ctl_migration_cron_queue_info() {
   );
 
   return $queues;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function ctl_migration_cron() {
+  // Add a drupal variable to only run these once
+  if (time() > JUNE_21 || ctl_migration_is_dev()) {
+    if (variable_get('ctl_migration_june_21', 0) == 0) {
+      variable_set('user_register', 0);
+      variable_set('site_403', 'landing');
+      variable_set('site_frontpage', 'home2');
+
+      db_update('block')
+        ->fields(['status' => 0])
+        ->condition('module', 'block')
+        ->condition('delta', [6, 7], 'IN')
+        ->execute();
+
+      variable_set('ctl_migration_june_21', 1);
+      drupal_flush_all_caches();
+    }
+  }
+
+  if (time() > JUNE_28 || ctl_migration_is_test()) {
+    if (variable_get('ctl_migration_june_28', 0) == 0) {
+      variable_set('site_frontpage', 'landing');
+
+      db_update('block')
+        ->fields(['status' => 0])
+        ->condition('module', 'menu')
+        ->condition('delta', 'menu-site-navigation')
+        ->execute();
+
+      db_update('block')
+        ->fields(['status' => 0])
+        ->condition('module', 'block')
+        ->condition('delta', [3, 8], 'IN')
+        ->execute();
+
+      db_update('block')
+        ->fields(['status' => 0])
+        ->condition('module', 'views')
+        ->condition('delta', 'app_status-block_1')
+        ->execute();
+
+      variable_set('ctl_migration_june_28', 1);
+      drupal_flush_all_caches();
+    }
+  }
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+function ctl_migration_menu_alter(&$items) {
+  if (time() < JUNE_21 && !ctl_migration_is_dev()) {
+    return;
+  }
+
+  $apply_paths = [
+    'apply',
+    'node/add/application-2',
+    'application',
+  ];
+
+  foreach ($apply_paths as $path) {
+    $items[$path] = [
+      'title' => 'Just a few more days...',
+      'page callback' => 'theme',
+      'page arguments' => ['migrate_apply'],
+      'load arguments' => [],
+      'access callback' => TRUE,
+    ];
+  }
+
+  $items['node/%node/edit']['page callback'] = 'ctl_migration_node_edit';
+
+  // The prod path to the registration form
+  $items['node/13655'] = [
+    'title' => 'Almost there...',
+    'page callback' => 'theme',
+    'page arguments' => ['migrate_training'],
+    'access callback' => TRUE,
+  ];
+
+  $items['user/%user']['access arguments'] = array('access user profiles');
+  $items['user/%user']['access callback'] = 'user_access';
+  $items['user/%user/edit']['access arguments'] = array('administer users');
+  $items['user/%user/edit']['access callback'] = 'user_access';
 }
 
 /**
@@ -33,7 +138,11 @@ function _ctl_migration_process_email($item) {
 function ctl_migration_init() {
   global $user;
 
-  if (!user_is_logged_in()) {
+  if (time() < JUNE_28 && !ctl_migration_is_test()) {
+    return;
+  }
+
+  if (!user_is_logged_in() || !user_access('administer site configuration')) {
     $menu = menu_get_item();
 
     switch ($menu['path']) {
@@ -41,6 +150,10 @@ function ctl_migration_init() {
       case 'user':
       case 'user/login':
       case 'user/password':
+      case 'user/logout':
+      case 'node/add/recommendation':
+      case 'node/1094':
+      case 'reference-received':
         break;
 
       case 'user/register':
@@ -59,14 +172,8 @@ function ctl_migration_init() {
     isset($account->field_migrated[LANGUAGE_NONE][0]['value']) &&
     $account->field_migrated[LANGUAGE_NONE][0]['value'] == '1'
   ) {
-    if ($admin = user_role_load_by_name('administrator')) {
-      if (user_has_role($admin->rid)) {
-        return;
-      }
-    } elseif ($staff = user_role_load_by_name('Staff')) {
-      if (user_has_role($staff->rid)) {
-        return;
-      }
+    if (user_access('administer site configuration')) {
+      return;
     }
 
     drupal_goto(GOTO_APPLICATION);
@@ -80,7 +187,14 @@ function ctl_migration_menu() {
   $items = array(
     'landing' => array(
       'title' => 'We\'ve changed some things.',
-      'page callback' => 'ctl_migration_landing',
+      'page callback' => 'theme',
+      'page arguments' => ['migration_landing'],
+      'access callback' => TRUE,
+    ),
+    'home2' => array(
+      'title' => 'CTL Online',
+      'page callback' => 'theme',
+      'page arguments' => ['migrate_home'],
       'access callback' => TRUE,
     ),
   );
@@ -99,12 +213,24 @@ function ctl_migration_landing() {
  * Implements hook_theme().
  */
  function ctl_migration_theme() {
-   return array(
-     'migration_landing' => array(
+   return [
+     'migration_landing' => [
     	 'render element' => 'elements',
        'template' => 'ctl_migration_landing',
-     ),
-   );
+     ],
+     'migrate_apply' => [
+       'render element' => 'elements',
+       'template' => 'ctl_migration_apply',
+     ],
+     'migrate_training' => [
+       'render element' => 'elements',
+       'template' => 'ctl_migration_training',
+     ],
+     'migrate_home' => [
+       'renter element' => 'elements',
+       'template' => 'ctl_migration_home',
+     ]
+   ];
  }
 
 /**
@@ -118,4 +244,52 @@ function ctl_migration_user_login(&$edit, $account) {
   ) {
     drupal_goto('/apply');
   }
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function ctl_migration_node_insert($node) {
+  if ($node->type == 'recommendation') {
+    drupal_mail('ctl_migration', 'recommendation', ADMISSIONS_EMAIL, language_default(), [
+      'nid' => $node->nid,
+    ]);
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function ctl_migration_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'recommendation':
+      $message['subject'] = 'New Recommendation from CTL Online';
+      $message['body'][] = 'New rec submitted. https://online.crisistextline.org/user?destination=node/'.$params['nid'];
+      break;
+  }
+}
+
+function ctl_migration_node_edit($node) {
+  $type_name = node_type_get_name($node);
+
+  if ($type_name == 'Application_v2') {
+    drupal_set_title('Just a few more days...');
+    return theme('migrate_apply');
+  } else {
+    return node_page_edit($node);
+  }
+}
+
+function ctl_migration_is_dev() {
+  return false;
+  // return isset($_ENV['PANTHEON_ENVIRONMENT']) && $_ENV['PANTHEON_ENVIRONMENT'] == 'dev';
+}
+
+function ctl_migration_is_test() {
+  return false;
+  // return isset($_ENV['PANTHEON_ENVIRONMENT']) && $_ENV['PANTHEON_ENVIRONMENT'] == 'test';
+}
+
+function should_display_login() {
+  return time() < JUNE_28 && !ctl_migration_is_test();
 }

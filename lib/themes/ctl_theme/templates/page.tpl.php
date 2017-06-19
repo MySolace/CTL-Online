@@ -22,7 +22,7 @@
             <li><a href="/user/logout">Log Out</a></li>
           </ul>
         </li>
-        <?php else: ?>
+        <?php elseif (should_display_login()): ?>
             <li><a href="/user">Log In</a></li>
         <?php endif; ?>
         </ul>
