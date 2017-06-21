@@ -10,9 +10,9 @@ function ctl_migration_install() {
 /**
  * Add more migrated users
  */
-// function ctl_migration_update_1() {
-//   _ctl_migration_process_txt('./migrated_users/update1.txt');
-// }
+function ctl_migration_update_1() {
+  _ctl_migration_process_txt('./migrated_users/sf1.txt');
+}
 
 function _ctl_migration_process_txt($filename) {
   $fh = fopen(drupal_get_path('module', 'ctl_migration') . '/' . $filename, 'r');
