@@ -264,7 +264,7 @@ function ctl_migration_mail($key, &$message, $params) {
   switch ($key) {
     case 'recommendation':
       $message['subject'] = 'New Recommendation from CTL Online';
-      $message['body'][] = 'New rec submitted. https://online.crisistextline.org/user?destination=node/'.$params['nid'];
+      $message['body'][] = 'New rec submitted. https://online.crisistextline.org/user/login?destination=node/'.$params['nid'];
       break;
   }
 }
