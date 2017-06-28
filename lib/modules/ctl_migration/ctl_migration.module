@@ -136,6 +136,10 @@ function _ctl_migration_process_email($item) {
  * Implements hook_init().
  */
 function ctl_migration_init() {
+  if (function_exists('drush_main')) {
+    return;
+  }
+
   global $user;
 
   if (time() < JUNE_28 && !ctl_migration_is_test()) {
