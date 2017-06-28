@@ -180,6 +180,8 @@ function ctl_migration_init() {
       return;
     }
 
+    drupal_goto(GOTO_HOME);
+  } else {
     drupal_goto(GOTO_APPLICATION);
   }
 }
