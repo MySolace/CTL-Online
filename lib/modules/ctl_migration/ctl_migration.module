@@ -160,29 +160,9 @@ function ctl_migration_init() {
       case 'reference-received':
         break;
 
-      case 'user/register':
-        drupal_goto(GOTO_APPLICATION);
-        break;
-
       default:
         drupal_goto('/landing');
     }
-  }
-
-  $account = user_load($user->uid);
-
-  if (
-    isset($account->field_migrated[LANGUAGE_NONE]) &&
-    isset($account->field_migrated[LANGUAGE_NONE][0]['value']) &&
-    $account->field_migrated[LANGUAGE_NONE][0]['value'] == '1'
-  ) {
-    if (user_access('administer site configuration')) {
-      return;
-    }
-
-    drupal_goto(GOTO_HOME);
-  } else {
-    drupal_goto(GOTO_APPLICATION);
   }
 }
 
