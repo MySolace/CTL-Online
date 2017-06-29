@@ -1,7 +1,7 @@
 <?php
 
-define('GOTO_HOME', 'https://home.crisistextline.org');
-define('GOTO_APPLICATION', 'https://application.crisistextline.org/3');
+define('GOTO_HOME', 'https://online.crisistextline.org/landing');
+define('GOTO_APPLICATION', 'https://online.crisistextline.org/landing');
 define('ADMISSIONS_EMAIL', 'admissions@crisistextline.org');
 
 define('JUNE_21', 1498050000);
