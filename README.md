@@ -1,3 +1,7 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/99f54b0bcd254add71c5/maintainability)](https://codeclimate.com/github/MySolace/CTL-Online/maintainability)
+
+---
+
 # Overview
 
 This is the internal counselor application/scheduling/management system, built in Drupal 7.
