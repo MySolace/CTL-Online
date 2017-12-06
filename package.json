@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "gulp": "^3.9.0",
-    "laravel-elixir": "^3.4.2",
+    "laravel-elixir": "^5.0.0",
     "laravel-elixir-bower-io": "^0.1.1"
   }
 }
