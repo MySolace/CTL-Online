@@ -1,3 +1,7 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/99f54b0bcd254add71c5/maintainability)](https://codeclimate.com/github/MySolace/CTL-Online/maintainability)
+
+---
+
 # Overview
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/238101e1a0f24f86938b7ec777d53853)](https://www.codacy.com/app/MySolace/CTL-Online?utm_source=github.com&utm_medium=referral&utm_content=MySolace/CTL-Online&utm_campaign=badger)
